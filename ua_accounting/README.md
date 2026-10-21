@@ -44,6 +44,24 @@ the name of `UA Subconto Type`. VAT registers: `ua_accounting.accounting.vat.pos
 
 The full design note is in the task comment "Architect: technical design T-424".
 
+## Reports
+
+Pages in the workspace, section "Звіти": `ua-osv` (Оборотно-сальдова відомість),
+`ua-osv-account` (ОСВ по рахунку), `ua-account-card` (Картка рахунку).
+Click an account row in OSV to open OSV by account. Click a row there to open the account card.
+Click a document in the card to open it. Print and Excel are in the page toolbar.
+
+Server code is in `ua_accounting/reporting/`:
+
+- `filters.py` one filter format for all reports (period, organizations, accounts, subconto, currency).
+- `query.py` the shared query layer. Whole months are read from the monthly totals
+  (`UA Account Turnover`). Only the partial months at the edges are read from entries.
+  A subconto that is "turnover only" is not in the totals, so such accounts are read from entries.
+- `balance.py` rows opening / turnover / closing for OSV and OSV by account.
+- `api.py` whitelisted methods. A new report is `build(filters) -> table model` plus one line in `REPORTS`.
+
+Client code: `public/js/ua_report.js` (one page class for all reports) and `public/css/ua_report.css`.
+
 ## Tests
 
 Tests need a bench site with the app installed:

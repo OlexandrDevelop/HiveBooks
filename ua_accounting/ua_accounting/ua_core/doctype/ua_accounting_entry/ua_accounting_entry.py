@@ -17,6 +17,9 @@ def on_doctype_update():
     frappe.db.add_index(
         table, ["organization", "account_cr", "posting_date"], "idx_ua_ae_org_cr_date"
     )
+    # reports without an organization filter read one account by date
+    frappe.db.add_index(table, ["account_dr", "posting_date"], "idx_ua_ae_dr_date")
+    frappe.db.add_index(table, ["account_cr", "posting_date"], "idx_ua_ae_cr_date")
     frappe.db.add_index(table, ["posting_date"], "idx_ua_ae_date")
     frappe.db.add_index(table, ["period", "organization"], "idx_ua_ae_period_org")
     for side in ("dr", "cr"):

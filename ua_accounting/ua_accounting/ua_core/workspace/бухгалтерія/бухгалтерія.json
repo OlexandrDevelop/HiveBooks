@@ -230,9 +230,36 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Звіти",
-   "link_count": 1,
+   "link_count": 4,
    "onboard": 0,
    "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Оборотно-сальдова відомість",
+   "link_to": "ua-osv",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "ОСВ по рахунку",
+   "link_to": "ua-osv-account",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Картка рахунку",
+   "link_to": "ua-account-card",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
   },
   {
    "hidden": 0,

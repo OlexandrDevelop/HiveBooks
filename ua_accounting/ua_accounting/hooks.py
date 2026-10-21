@@ -17,10 +17,14 @@ add_to_apps_screen = [
     }
 ]
 
-app_include_css = "/assets/ua_accounting/css/ua_desk.css"
+app_include_css = [
+    "/assets/ua_accounting/css/ua_desk.css",
+    "/assets/ua_accounting/css/ua_report.css",
+]
 app_include_js = [
     "/assets/ua_accounting/js/ua_desk.js",
     "/assets/ua_accounting/js/ua_tree_sidebar.js",
+    "/assets/ua_accounting/js/ua_report.js",
 ]
 
 before_install = "ua_accounting.install.before_install"

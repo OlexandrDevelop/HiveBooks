@@ -1,0 +1,167 @@
+/* 1C-like reports: OSV, OSV by account, account card. Scoped to .ua-report. */
+
+.ua-report .ua-filters {
+	background: #f7f7f2;
+	border: 1px solid #d6d6cc;
+	padding: 6px 10px;
+	margin-bottom: 10px;
+}
+
+.ua-report .ua-frow {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 4px 14px;
+}
+
+.ua-report .ua-f {
+	min-width: 110px;
+}
+
+.ua-report .ua-f-wide {
+	min-width: 280px;
+	flex: 1 1 280px;
+}
+
+.ua-report .ua-period {
+	display: flex;
+	align-items: flex-end;
+	gap: 6px;
+}
+
+.ua-report .ua-period .btn {
+	margin-bottom: 10px;
+}
+
+.ua-report .ua-frow .frappe-control {
+	margin-bottom: 4px;
+}
+
+.ua-report .ua-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 3px;
+	margin-bottom: 2px;
+}
+
+.ua-report .ua-chip {
+	background: #fff;
+	border: 1px solid #c4c4b8;
+	border-radius: 3px;
+	padding: 0 4px 0 6px;
+	font-size: 11px;
+	line-height: 18px;
+}
+
+.ua-report .ua-chip-x,
+.ua-report .ua-sub-x {
+	cursor: pointer;
+	margin-left: 4px;
+	color: #888;
+}
+
+.ua-report .ua-sub-row {
+	display: flex;
+	align-items: flex-end;
+	gap: 10px;
+	width: 100%;
+}
+
+.ua-report .ua-sub-list {
+	width: 100%;
+}
+
+.ua-report .ua-subconto {
+	margin-top: 2px;
+}
+
+.ua-report .ua-report-head {
+	margin: 6px 0 8px;
+}
+
+.ua-report .ua-report-title {
+	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 4px;
+}
+
+.ua-report .ua-lines div {
+	font-size: 12px;
+	color: #444;
+	line-height: 1.5;
+}
+
+.ua-report .ua-message {
+	background: #fff8dc;
+	border: 1px solid #e6d98c;
+	padding: 4px 8px;
+	margin-bottom: 6px;
+	font-size: 12px;
+}
+
+.ua-report .ua-table-wrap {
+	overflow: auto;
+	max-height: calc(100vh - 330px);
+	background: #fff;
+}
+
+.ua-report table.ua-rpt {
+	border-collapse: collapse;
+	font-size: 12px;
+	width: 100%;
+}
+
+.ua-report .ua-rpt th,
+.ua-report .ua-rpt td {
+	border: 1px solid #b9b9ad;
+	padding: 2px 6px;
+	vertical-align: top;
+}
+
+.ua-report .ua-rpt thead th {
+	background: #ececdf;
+	text-align: center;
+	font-weight: 600;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+
+.ua-report .ua-a-right {
+	text-align: right;
+	white-space: nowrap;
+}
+
+.ua-report .ua-a-center {
+	text-align: center;
+}
+
+.ua-report .ua-bold td {
+	font-weight: 700;
+}
+
+.ua-report .ua-row-total td,
+.ua-report .ua-row-open td,
+.ua-report .ua-row-close td {
+	background: #f3f3ea;
+}
+
+.ua-report .ua-rpt tbody tr:hover td {
+	background: #fffbe0;
+}
+
+.ua-report .ua-label {
+	white-space: nowrap;
+}
+
+.ua-report .ua-caret,
+.ua-report .ua-caret-gap {
+	display: inline-block;
+	width: 14px;
+	cursor: pointer;
+	color: #666;
+}
+
+.ua-report a.ua-drill {
+	cursor: pointer;
+}

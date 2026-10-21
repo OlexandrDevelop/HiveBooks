@@ -21,7 +21,10 @@ ua_accounting.ui.leaf_account_query = function () {
 };
 
 ua_accounting.ui.is_ua_route = function (route) {
-	return (route || []).some((part) => typeof part === "string" && part.startsWith("UA "));
+	// doctypes are named "UA ..."; report pages are named "ua-..."
+	return (route || []).some(
+		(part) => typeof part === "string" && (part.startsWith("UA ") || part.startsWith("ua-"))
+	);
 };
 
 ua_accounting.ui.mark_body = function () {
