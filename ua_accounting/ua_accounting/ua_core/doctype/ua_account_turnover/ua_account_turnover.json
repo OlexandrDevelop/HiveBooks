@@ -1,0 +1,137 @@
+{
+ "actions": [],
+ "autoname": "prompt",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "period",
+  "organization",
+  "account",
+  "subconto1",
+  "subconto2",
+  "subconto3",
+  "currency",
+  "debit",
+  "credit",
+  "quantity_dr",
+  "quantity_cr",
+  "currency_dr",
+  "currency_cr"
+ ],
+ "fields": [
+  {
+   "fieldname": "period",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Період (місяць)"
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Організація",
+   "options": "UA Organization"
+  },
+  {
+   "fieldname": "account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Рахунок",
+   "options": "UA Account"
+  },
+  {
+   "fieldname": "subconto1",
+   "fieldtype": "Data",
+   "label": "Субконто 1"
+  },
+  {
+   "fieldname": "subconto2",
+   "fieldtype": "Data",
+   "label": "Субконто 2"
+  },
+  {
+   "fieldname": "subconto3",
+   "fieldtype": "Data",
+   "label": "Субконто 3"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Валюта",
+   "options": "UA Currency"
+  },
+  {
+   "fieldname": "debit",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Обороти Дт"
+  },
+  {
+   "fieldname": "credit",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Обороти Кт"
+  },
+  {
+   "fieldname": "quantity_dr",
+   "fieldtype": "Float",
+   "label": "Кількість Дт"
+  },
+  {
+   "fieldname": "quantity_cr",
+   "fieldtype": "Float",
+   "label": "Кількість Кт"
+  },
+  {
+   "fieldname": "currency_dr",
+   "fieldtype": "Float",
+   "label": "Валютна сума Дт",
+   "precision": "2"
+  },
+  {
+   "fieldname": "currency_cr",
+   "fieldtype": "Float",
+   "label": "Валютна сума Кт",
+   "precision": "2"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Account Turnover",
+ "naming_rule": "Set by user",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager"
+  }
+ ],
+ "sort_field": "period",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

@@ -1,0 +1,183 @@
+{
+ "actions": [],
+ "autoname": "field:account_code",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "account_code",
+  "account_name",
+  "display_name",
+  "parent_ua_account",
+  "is_group",
+  "account_type",
+  "off_balance",
+  "cb1",
+  "currency_accounting",
+  "quantity_accounting",
+  "predefined",
+  "sb_sub",
+  "subconto",
+  "lft",
+  "rgt",
+  "old_parent"
+ ],
+ "fields": [
+  {
+   "fieldname": "account_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Код",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "account_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Назва",
+   "reqd": 1
+  },
+  {
+   "fieldname": "display_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Відображення",
+   "read_only": 1
+  },
+  {
+   "fieldname": "parent_ua_account",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Входить до рахунку",
+   "options": "UA Account"
+  },
+  {
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Група (не для проводок)"
+  },
+  {
+   "description": "А - активний, П - пасивний, АП - активно-пасивний",
+   "fieldname": "account_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Тип",
+   "options": "А\nП\nАП",
+   "reqd": 1
+  },
+  {
+   "fieldname": "off_balance",
+   "fieldtype": "Check",
+   "in_standard_filter": 1,
+   "label": "Забалансовий"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "currency_accounting",
+   "fieldtype": "Check",
+   "label": "Валютний облік"
+  },
+  {
+   "fieldname": "quantity_accounting",
+   "fieldtype": "Check",
+   "label": "Кількісний облік"
+  },
+  {
+   "fieldname": "predefined",
+   "fieldtype": "Check",
+   "label": "Предвизначений",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_sub",
+   "fieldtype": "Section Break",
+   "label": "Субконто (до 3)"
+  },
+  {
+   "fieldname": "subconto",
+   "fieldtype": "Table",
+   "label": "Субконто",
+   "options": "UA Account Subconto"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "lft",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "rgt",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "old_parent",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Account",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_ua_account",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "export": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "account_code,account_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "account_code",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "display_name",
+ "track_changes": 1
+}

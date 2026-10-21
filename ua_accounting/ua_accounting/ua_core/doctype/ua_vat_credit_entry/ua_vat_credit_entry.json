@@ -1,0 +1,170 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "period",
+  "registrar_type",
+  "registrar",
+  "line_no",
+  "organization",
+  "counterparty",
+  "contract",
+  "settlement_doc_type",
+  "settlement_doc",
+  "vat_rate",
+  "event",
+  "base_amount",
+  "vat_amount",
+  "tax_invoice_type",
+  "tax_invoice",
+  "content"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Дата",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period",
+   "fieldtype": "Date",
+   "label": "Період (місяць)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "registrar_type",
+   "fieldtype": "Link",
+   "label": "Тип реєстратора",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "registrar",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Реєстратор",
+   "options": "registrar_type"
+  },
+  {
+   "fieldname": "line_no",
+   "fieldtype": "Int",
+   "label": "№ рядка"
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Організація",
+   "options": "UA Organization"
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Контрагент",
+   "options": "UA Counterparty"
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "settlement_doc_type",
+   "fieldtype": "Link",
+   "label": "Тип документа розрахунків",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "settlement_doc",
+   "fieldtype": "Dynamic Link",
+   "label": "Документ розрахунків",
+   "options": "settlement_doc_type"
+  },
+  {
+   "fieldname": "vat_rate",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Ставка ПДВ",
+   "options": "UA VAT Rate"
+  },
+  {
+   "fieldname": "event",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Подія (перша подія)",
+   "options": "Відвантаження\nОплата\nІнше"
+  },
+  {
+   "fieldname": "base_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "База оподаткування"
+  },
+  {
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Сума ПДВ"
+  },
+  {
+   "fieldname": "tax_invoice_type",
+   "fieldtype": "Link",
+   "label": "Тип податкової накладної",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "tax_invoice",
+   "fieldtype": "Dynamic Link",
+   "label": "Податкова накладна",
+   "options": "tax_invoice_type"
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Data",
+   "label": "Зміст"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA VAT Credit Entry",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager"
+  }
+ ],
+ "sort_field": "posting_date",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

@@ -1,0 +1,171 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item_name",
+  "full_name",
+  "parent_ua_item",
+  "is_group",
+  "item_type",
+  "cb1",
+  "uom",
+  "vat_rate",
+  "article",
+  "uktzed_code",
+  "dkpp_code",
+  "lft",
+  "rgt",
+  "old_parent"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Найменування",
+   "reqd": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Повне найменування"
+  },
+  {
+   "fieldname": "parent_ua_item",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Входить до групи",
+   "options": "UA Item"
+  },
+  {
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Група (папка)"
+  },
+  {
+   "default": "Товар",
+   "fieldname": "item_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Вид номенклатури",
+   "options": "Товар\nПослуга\nМатеріал\nПродукція"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "Одиниця виміру",
+   "options": "UA UOM"
+  },
+  {
+   "default": "20",
+   "fieldname": "vat_rate",
+   "fieldtype": "Link",
+   "label": "Ставка ПДВ",
+   "options": "UA VAT Rate"
+  },
+  {
+   "fieldname": "article",
+   "fieldtype": "Data",
+   "label": "Артикул",
+   "search_index": 1
+  },
+  {
+   "fieldname": "uktzed_code",
+   "fieldtype": "Data",
+   "label": "Код УКТЗЕД"
+  },
+  {
+   "fieldname": "dkpp_code",
+   "fieldtype": "Data",
+   "label": "Код ДКПП"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "lft",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "rgt",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "old_parent",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Catalogs",
+ "name": "UA Item",
+ "naming_rule": "Random",
+ "nsm_parent_field": "parent_ua_item",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "item_name,article",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "item_name",
+ "track_changes": 1
+}

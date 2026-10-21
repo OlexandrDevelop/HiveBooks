@@ -1,0 +1,31 @@
+UA Subconto Type,Види субконто
+UA Account Subconto,Субконто рахунку
+UA Account,План рахунків
+UA VAT Rate,Ставки ПДВ
+UA Tax Type,Види податків
+UA Accounting Entry,Журнал проводок
+UA Account Turnover,Підсумки по рахунках
+UA VAT Liability Entry,ПДВ нараховане
+UA VAT Credit Entry,ПДВ кредит
+UA Person,Фізичні особи
+UA Organization,Організації
+UA Counterparty,Контрагенти
+UA Counterparty Contract,Договори контрагентів
+UA UOM,Одиниці виміру
+UA Item,Номенклатура
+UA Department,Підрозділи
+UA Warehouse,Склади
+UA Currency Rate,Курси валют
+UA Currency,Валюти
+UA Bank,Банки
+UA Bank Account,Банківські рахунки
+UA Cash Desk,Каси
+UA Cash Flow Item,Статті руху грошових коштів
+UA Expense Item,Статті витрат
+UA Fixed Asset,Основні засоби
+UA Intangible Asset,Нематеріальні активи
+UA Low Value Asset,Малоцінні активи (МНМА)
+UA Core,Облік (ядро)
+UA Catalogs,Довідники
+UA Accountant,Бухгалтер
+UA Accounting Manager,Головний бухгалтер

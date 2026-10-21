@@ -1,0 +1,191 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "org_name",
+  "full_name",
+  "edrpou",
+  "ipn",
+  "cb1",
+  "vat_payer",
+  "vat_certificate_no",
+  "tax_system",
+  "default_currency",
+  "sb_addr",
+  "legal_address",
+  "actual_address",
+  "cb2",
+  "phone",
+  "email",
+  "sb_people",
+  "director",
+  "cb3",
+  "chief_accountant"
+ ],
+ "fields": [
+  {
+   "fieldname": "org_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Найменування (коротке)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Повне найменування"
+  },
+  {
+   "fieldname": "edrpou",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ЄДРПОУ",
+   "length": 10
+  },
+  {
+   "fieldname": "ipn",
+   "fieldtype": "Data",
+   "label": "ІПН",
+   "length": 12
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "vat_payer",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Платник ПДВ"
+  },
+  {
+   "depends_on": "vat_payer",
+   "fieldname": "vat_certificate_no",
+   "fieldtype": "Data",
+   "label": "№ свідоцтва платника ПДВ"
+  },
+  {
+   "default": "Загальна система",
+   "fieldname": "tax_system",
+   "fieldtype": "Select",
+   "label": "Система оподаткування",
+   "options": "Загальна система\nЄдиний податок, 1 група\nЄдиний податок, 2 група\nЄдиний податок, 3 група\nЄдиний податок, 4 група"
+  },
+  {
+   "default": "UAH",
+   "fieldname": "default_currency",
+   "fieldtype": "Link",
+   "label": "Валюта обліку",
+   "options": "UA Currency"
+  },
+  {
+   "fieldname": "sb_addr",
+   "fieldtype": "Section Break",
+   "label": "Адреси та контакти"
+  },
+  {
+   "fieldname": "legal_address",
+   "fieldtype": "Small Text",
+   "label": "Юридична адреса"
+  },
+  {
+   "fieldname": "actual_address",
+   "fieldtype": "Small Text",
+   "label": "Фактична адреса"
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Телефон"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "sb_people",
+   "fieldtype": "Section Break",
+   "label": "Посадові особи"
+  },
+  {
+   "fieldname": "director",
+   "fieldtype": "Link",
+   "label": "Директор",
+   "options": "UA Person"
+  },
+  {
+   "fieldname": "cb3",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "chief_accountant",
+   "fieldtype": "Link",
+   "label": "Головний бухгалтер",
+   "options": "UA Person"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Catalogs",
+ "name": "UA Organization",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "org_name,edrpou",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "org_name",
+ "track_changes": 1
+}

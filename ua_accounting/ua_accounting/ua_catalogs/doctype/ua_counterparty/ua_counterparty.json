@@ -1,0 +1,228 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "counterparty_name",
+  "full_name",
+  "parent_ua_counterparty",
+  "is_group",
+  "kind",
+  "cb1",
+  "edrpou",
+  "ipn",
+  "vat_payer",
+  "is_customer",
+  "is_supplier",
+  "sb_addr",
+  "country",
+  "legal_address",
+  "cb2",
+  "phone",
+  "email",
+  "main_contract",
+  "lft",
+  "rgt",
+  "old_parent"
+ ],
+ "fields": [
+  {
+   "fieldname": "counterparty_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Найменування",
+   "reqd": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Повне найменування"
+  },
+  {
+   "fieldname": "parent_ua_counterparty",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Входить до групи",
+   "options": "UA Counterparty"
+  },
+  {
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Група (папка)"
+  },
+  {
+   "default": "Юридична особа",
+   "fieldname": "kind",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Вид",
+   "options": "Юридична особа\nФізична особа\nФОП"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "edrpou",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ЄДРПОУ",
+   "length": 10,
+   "search_index": 1
+  },
+  {
+   "fieldname": "ipn",
+   "fieldtype": "Data",
+   "label": "ІПН",
+   "length": 12,
+   "search_index": 1
+  },
+  {
+   "fieldname": "vat_payer",
+   "fieldtype": "Check",
+   "label": "Платник ПДВ"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_customer",
+   "fieldtype": "Check",
+   "label": "Покупець"
+  },
+  {
+   "fieldname": "is_supplier",
+   "fieldtype": "Check",
+   "label": "Постачальник"
+  },
+  {
+   "fieldname": "sb_addr",
+   "fieldtype": "Section Break",
+   "label": "Адреса та контакти"
+  },
+  {
+   "default": "Україна",
+   "fieldname": "country",
+   "fieldtype": "Data",
+   "label": "Країна"
+  },
+  {
+   "fieldname": "legal_address",
+   "fieldtype": "Small Text",
+   "label": "Юридична адреса"
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Телефон"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "main_contract",
+   "fieldtype": "Link",
+   "label": "Основний договір",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "lft",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "rgt",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "old_parent",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_tree": 1,
+ "links": [
+  {
+   "group": "Договори",
+   "link_doctype": "UA Counterparty Contract",
+   "link_fieldname": "counterparty"
+  },
+  {
+   "group": "Банківські рахунки",
+   "link_doctype": "UA Bank Account",
+   "link_fieldname": "counterparty"
+  }
+ ],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Catalogs",
+ "name": "UA Counterparty",
+ "naming_rule": "Random",
+ "nsm_parent_field": "parent_ua_counterparty",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "counterparty_name,edrpou,ipn",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "counterparty_name",
+ "track_changes": 1
+}

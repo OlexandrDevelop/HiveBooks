@@ -1,0 +1,110 @@
+[
+ [
+  "Counterparty",
+  "Контрагенти",
+  "UA Counterparty",
+  0
+ ],
+ [
+  "Contract",
+  "Договори",
+  "UA Counterparty Contract",
+  0
+ ],
+ [
+  "SettlementDoc",
+  "Документи розрахунків",
+  "",
+  1
+ ],
+ [
+  "Item",
+  "Номенклатура",
+  "UA Item",
+  0
+ ],
+ [
+  "Warehouse",
+  "Склади",
+  "UA Warehouse",
+  0
+ ],
+ [
+  "BankAccount",
+  "Банківські рахунки",
+  "UA Bank Account",
+  0
+ ],
+ [
+  "CashDesk",
+  "Каси",
+  "UA Cash Desk",
+  0
+ ],
+ [
+  "CashFlowItem",
+  "Статті руху грошових коштів",
+  "UA Cash Flow Item",
+  0
+ ],
+ [
+  "FixedAsset",
+  "Основні засоби",
+  "UA Fixed Asset",
+  0
+ ],
+ [
+  "IntangibleAsset",
+  "Нематеріальні активи",
+  "UA Intangible Asset",
+  0
+ ],
+ [
+  "LowValueAsset",
+  "Малоцінні активи (МНМА)",
+  "UA Low Value Asset",
+  0
+ ],
+ [
+  "Department",
+  "Підрозділи",
+  "UA Department",
+  0
+ ],
+ [
+  "ExpenseItem",
+  "Статті витрат",
+  "UA Expense Item",
+  0
+ ],
+ [
+  "Person",
+  "Фізичні особи",
+  "UA Person",
+  0
+ ],
+ [
+  "Organization",
+  "Організації",
+  "UA Organization",
+  0
+ ],
+ [
+  "VatRate",
+  "Ставки ПДВ",
+  "UA VAT Rate",
+  0
+ ],
+ [
+  "Currency",
+  "Валюти",
+  "UA Currency",
+  0
+ ],
+ [
+  "TaxType",
+  "Види податків",
+  "UA Tax Type",
+  0
+ ]
+]

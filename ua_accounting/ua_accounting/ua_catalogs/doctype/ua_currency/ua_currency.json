@@ -1,0 +1,120 @@
+{
+ "actions": [],
+ "autoname": "field:currency_code",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "currency_code",
+  "currency_name",
+  "numeric_code",
+  "cb1",
+  "is_base",
+  "multiplicity",
+  "sb_rates",
+  "rates"
+ ],
+ "fields": [
+  {
+   "fieldname": "currency_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Код (ISO)",
+   "length": 3,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "currency_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Назва",
+   "reqd": 1
+  },
+  {
+   "fieldname": "numeric_code",
+   "fieldtype": "Data",
+   "label": "Цифровий код",
+   "length": 3
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "is_base",
+   "fieldtype": "Check",
+   "label": "Базова валюта (облік у ній)"
+  },
+  {
+   "default": "1",
+   "fieldname": "multiplicity",
+   "fieldtype": "Int",
+   "label": "Кратність"
+  },
+  {
+   "fieldname": "sb_rates",
+   "fieldtype": "Section Break",
+   "label": "Курси валют"
+  },
+  {
+   "fieldname": "rates",
+   "fieldtype": "Table",
+   "label": "Курси валют",
+   "options": "UA Currency Rate"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Catalogs",
+ "name": "UA Currency",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "currency_name",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "currency_name",
+ "track_changes": 1
+}

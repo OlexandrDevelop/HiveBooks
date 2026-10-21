@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "asset_name",
+  "inventory_no",
+  "organization",
+  "asset_group",
+  "cb1",
+  "department",
+  "responsible",
+  "commissioning_date",
+  "useful_life_months",
+  "depreciation_method"
+ ],
+ "fields": [
+  {
+   "fieldname": "asset_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Найменування",
+   "reqd": 1
+  },
+  {
+   "fieldname": "inventory_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Інвентарний номер",
+   "search_index": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Організація",
+   "options": "UA Organization"
+  },
+  {
+   "fieldname": "asset_group",
+   "fieldtype": "Select",
+   "label": "Група ОЗ (ПКУ ст. 138.3.3)",
+   "options": "1. Земельні ділянки\n2. Капітальні витрати на поліпшення земель\n3. Будівлі, споруди, передавальні пристрої\n4. Машини та обладнання\n5. Транспортні засоби\n6. Інструменти, прилади, інвентар (меблі)\n7. Тварини\n8. Багаторічні насадження\n9. Інші основні засоби\n10. Бібліотечні фонди\n11. Малоцінні необоротні матеріальні активи\n12. Тимчасові (нетитульні) споруди\n13. Природні ресурси\n14. Інвентарна тара\n15. Предмети прокату\n16. Інші необоротні матеріальні активи"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Підрозділ",
+   "options": "UA Department"
+  },
+  {
+   "fieldname": "responsible",
+   "fieldtype": "Link",
+   "label": "Матеріально відповідальна особа",
+   "options": "UA Person"
+  },
+  {
+   "fieldname": "commissioning_date",
+   "fieldtype": "Date",
+   "label": "Дата введення в експлуатацію"
+  },
+  {
+   "fieldname": "useful_life_months",
+   "fieldtype": "Int",
+   "label": "Строк корисного використання, міс."
+  },
+  {
+   "default": "Прямолінійний",
+   "fieldname": "depreciation_method",
+   "fieldtype": "Select",
+   "label": "Метод амортизації",
+   "options": "Прямолінійний\nЗменшення залишкової вартості\nПрискореного зменшення залишкової вартості\nКумулятивний\nВиробничий"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Catalogs",
+ "name": "UA Fixed Asset",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "asset_name,inventory_no",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "asset_name",
+ "track_changes": 1
+}

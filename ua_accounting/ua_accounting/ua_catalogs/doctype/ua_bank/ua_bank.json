@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "autoname": "field:mfo",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "bank_name",
+  "mfo",
+  "edrpou",
+  "city",
+  "address"
+ ],
+ "fields": [
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Найменування",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mfo",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "МФО",
+   "length": 6,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "edrpou",
+   "fieldtype": "Data",
+   "label": "ЄДРПОУ",
+   "length": 10
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "Місто"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Адреса"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Catalogs",
+ "name": "UA Bank",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "bank_name,mfo",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "bank_name",
+ "track_changes": 1
+}

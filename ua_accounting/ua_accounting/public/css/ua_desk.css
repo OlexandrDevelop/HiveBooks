@@ -1,0 +1,79 @@
+/* 1C-like compact look. Applies only to routes of UA doctypes (body[data-ua-desk]). */
+
+body[data-ua-desk="1"] .form-control,
+body[data-ua-desk="1"] .input-with-feedback {
+	height: 26px;
+	padding: 2px 8px;
+	font-size: 12px;
+}
+
+body[data-ua-desk="1"] textarea.form-control {
+	height: auto;
+}
+
+body[data-ua-desk="1"] .frappe-control {
+	margin-bottom: 6px;
+}
+
+body[data-ua-desk="1"] .form-section .section-body {
+	margin-top: 4px;
+}
+
+body[data-ua-desk="1"] .form-section,
+body[data-ua-desk="1"] .form-dashboard-section {
+	padding: 6px 12px;
+}
+
+body[data-ua-desk="1"] .control-label {
+	font-size: 11px;
+	margin-bottom: 2px;
+}
+
+body[data-ua-desk="1"] .grid-row .data-row {
+	min-height: 28px;
+}
+
+body[data-ua-desk="1"] .list-row {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	font-size: 12px;
+}
+
+body[data-ua-desk="1"] .list-row-head {
+	font-size: 11px;
+}
+
+/* group tree in the list sidebar (1C folders on the left) */
+.ua-group-tree {
+	margin: 8px 0;
+	font-size: 12px;
+}
+
+.ua-group-tree .ua-tree-title {
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.ua-group-tree ul {
+	list-style: none;
+	padding-left: 12px;
+	margin: 0;
+}
+
+.ua-group-tree > ul {
+	padding-left: 0;
+}
+
+.ua-group-tree li > a {
+	display: block;
+	padding: 2px 4px;
+	border-radius: 4px;
+	cursor: pointer;
+	color: var(--text-color);
+}
+
+.ua-group-tree li > a:hover,
+.ua-group-tree li > a.active {
+	background: var(--control-bg);
+	font-weight: 600;
+}

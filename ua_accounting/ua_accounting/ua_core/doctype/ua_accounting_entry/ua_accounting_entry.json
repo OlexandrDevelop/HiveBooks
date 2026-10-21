@@ -1,0 +1,304 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2026-10-21 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "period",
+  "registrar_type",
+  "registrar",
+  "line_no",
+  "organization",
+  "account_dr",
+  "account_cr",
+  "amount",
+  "sb_qty",
+  "quantity_dr",
+  "quantity_cr",
+  "currency_dr",
+  "currency_cr",
+  "currency_amount_dr",
+  "currency_amount_cr",
+  "sb_sub_dr",
+  "subconto_dr1_type",
+  "subconto_dr1",
+  "cb_dr1",
+  "subconto_dr2_type",
+  "subconto_dr2",
+  "cb_dr2",
+  "subconto_dr3_type",
+  "subconto_dr3",
+  "sb_sub_cr",
+  "subconto_cr1_type",
+  "subconto_cr1",
+  "cb_cr1",
+  "subconto_cr2_type",
+  "subconto_cr2",
+  "cb_cr2",
+  "subconto_cr3_type",
+  "subconto_cr3",
+  "sb_content",
+  "content"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Дата",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period",
+   "fieldtype": "Date",
+   "label": "Період (місяць)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "registrar_type",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Тип реєстратора",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "registrar",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Реєстратор",
+   "options": "registrar_type"
+  },
+  {
+   "fieldname": "line_no",
+   "fieldtype": "Int",
+   "label": "№ рядка"
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_dr",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Рахунок Дт",
+   "options": "UA Account"
+  },
+  {
+   "fieldname": "account_cr",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Рахунок Кт",
+   "options": "UA Account"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Сума"
+  },
+  {
+   "fieldname": "sb_qty",
+   "fieldtype": "Section Break",
+   "label": "Кількість та валюта"
+  },
+  {
+   "fieldname": "quantity_dr",
+   "fieldtype": "Float",
+   "label": "Кількість Дт"
+  },
+  {
+   "fieldname": "quantity_cr",
+   "fieldtype": "Float",
+   "label": "Кількість Кт"
+  },
+  {
+   "fieldname": "currency_dr",
+   "fieldtype": "Link",
+   "label": "Валюта Дт",
+   "options": "UA Currency"
+  },
+  {
+   "fieldname": "currency_cr",
+   "fieldtype": "Link",
+   "label": "Валюта Кт",
+   "options": "UA Currency"
+  },
+  {
+   "fieldname": "currency_amount_dr",
+   "fieldtype": "Float",
+   "label": "Валютна сума Дт",
+   "precision": "2"
+  },
+  {
+   "fieldname": "currency_amount_cr",
+   "fieldtype": "Float",
+   "label": "Валютна сума Кт",
+   "precision": "2"
+  },
+  {
+   "fieldname": "sb_sub_dr",
+   "fieldtype": "Section Break",
+   "label": "Субконто Дт"
+  },
+  {
+   "fieldname": "subconto_dr1_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Дт1",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto_dr1",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто Дт1",
+   "options": "subconto_dr1_type",
+   "search_index": 1
+  },
+  {
+   "fieldname": "cb_dr1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "subconto_dr2_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Дт2",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto_dr2",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто Дт2",
+   "options": "subconto_dr2_type",
+   "search_index": 1
+  },
+  {
+   "fieldname": "cb_dr2",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "subconto_dr3_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Дт3",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto_dr3",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто Дт3",
+   "options": "subconto_dr3_type",
+   "search_index": 1
+  },
+  {
+   "fieldname": "sb_sub_cr",
+   "fieldtype": "Section Break",
+   "label": "Субконто Кт"
+  },
+  {
+   "fieldname": "subconto_cr1_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Кт1",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto_cr1",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто Кт1",
+   "options": "subconto_cr1_type",
+   "search_index": 1
+  },
+  {
+   "fieldname": "cb_cr1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "subconto_cr2_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Кт2",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto_cr2",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто Кт2",
+   "options": "subconto_cr2_type",
+   "search_index": 1
+  },
+  {
+   "fieldname": "cb_cr2",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "subconto_cr3_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Кт3",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto_cr3",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто Кт3",
+   "options": "subconto_cr3_type",
+   "search_index": 1
+  },
+  {
+   "fieldname": "sb_content",
+   "fieldtype": "Section Break",
+   "label": ""
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Зміст"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Accounting Entry",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager"
+  }
+ ],
+ "sort_field": "posting_date",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

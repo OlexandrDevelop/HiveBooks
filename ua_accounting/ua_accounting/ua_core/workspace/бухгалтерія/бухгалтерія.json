@@ -1,0 +1,315 @@
+{
+ "charts": [],
+ "content": "[{\"id\": \"sc_UA Account\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"План рахунків\", \"col\": 3}}, {\"id\": \"sc_UA Counterparty\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Контрагенти\", \"col\": 3}}, {\"id\": \"sc_UA Item\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Номенклатура\", \"col\": 3}}, {\"id\": \"sc_UA Accounting Entry\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Журнал проводок\", \"col\": 3}}, {\"id\": \"h_0\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Довідники</b></span>\", \"col\": 12}}, {\"id\": \"c_0\", \"type\": \"card\", \"data\": {\"card_name\": \"Довідники\", \"col\": 4}}, {\"id\": \"h_1\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Документи</b></span>\", \"col\": 12}}, {\"id\": \"c_1\", \"type\": \"card\", \"data\": {\"card_name\": \"Документи\", \"col\": 4}}, {\"id\": \"h_2\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Звіти</b></span>\", \"col\": 12}}, {\"id\": \"c_2\", \"type\": \"card\", \"data\": {\"card_name\": \"Звіти\", \"col\": 4}}, {\"id\": \"h_3\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Налаштування обліку</b></span>\", \"col\": 12}}, {\"id\": \"c_3\", \"type\": \"card\", \"data\": {\"card_name\": \"Налаштування обліку\", \"col\": 4}}]",
+ "creation": "2026-10-21 10:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "hide_custom": 0,
+ "icon": "accounting",
+ "idx": 0,
+ "indicator_color": "blue",
+ "is_hidden": 0,
+ "label": "Бухгалтерія",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Довідники",
+   "link_count": 19,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Організації",
+   "link_to": "UA Organization",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Контрагенти",
+   "link_to": "UA Counterparty",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Договори контрагентів",
+   "link_to": "UA Counterparty Contract",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Номенклатура",
+   "link_to": "UA Item",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Одиниці виміру",
+   "link_to": "UA UOM",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Склади",
+   "link_to": "UA Warehouse",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Валюти",
+   "link_to": "UA Currency",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Банки",
+   "link_to": "UA Bank",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Банківські рахунки",
+   "link_to": "UA Bank Account",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Каси",
+   "link_to": "UA Cash Desk",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Основні засоби",
+   "link_to": "UA Fixed Asset",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Нематеріальні активи",
+   "link_to": "UA Intangible Asset",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Малоцінні активи (МНМА)",
+   "link_to": "UA Low Value Asset",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Ставки ПДВ",
+   "link_to": "UA VAT Rate",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Статті руху грошових коштів",
+   "link_to": "UA Cash Flow Item",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Підрозділи",
+   "link_to": "UA Department",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Статті витрат",
+   "link_to": "UA Expense Item",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Фізичні особи",
+   "link_to": "UA Person",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Види податків",
+   "link_to": "UA Tax Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Документи",
+   "link_count": 3,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Журнал проводок",
+   "link_to": "UA Accounting Entry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "ПДВ нараховане",
+   "link_to": "UA VAT Liability Entry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "ПДВ кредит",
+   "link_to": "UA VAT Credit Entry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Звіти",
+   "link_count": 1,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Підсумки по рахунках",
+   "link_to": "UA Account Turnover",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Налаштування обліку",
+   "link_count": 2,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "План рахунків",
+   "link_to": "UA Account",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Види субконто",
+   "link_to": "UA Subconto Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-10-21 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "Бухгалтерія",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "label": "План рахунків",
+   "link_to": "UA Account",
+   "type": "DocType",
+   "doc_view": "Tree",
+   "color": "Grey"
+  },
+  {
+   "label": "Контрагенти",
+   "link_to": "UA Counterparty",
+   "type": "DocType",
+   "doc_view": "List",
+   "color": "Grey"
+  },
+  {
+   "label": "Номенклатура",
+   "link_to": "UA Item",
+   "type": "DocType",
+   "doc_view": "List",
+   "color": "Grey"
+  },
+  {
+   "label": "Журнал проводок",
+   "link_to": "UA Accounting Entry",
+   "type": "DocType",
+   "doc_view": "List",
+   "color": "Grey"
+  }
+ ],
+ "title": "Бухгалтерія"
+}
