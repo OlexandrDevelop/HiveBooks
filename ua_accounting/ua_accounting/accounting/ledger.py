@@ -91,7 +91,7 @@ def repost_entries(doc, entries):
     post_entries(doc, entries)
 
 
-@frappe.whitelist()
+@frappe.whitelist(methods=["POST"])
 def rebuild_totals(organization=None, from_period=None):
     """Recompute the totals table from entries. For repair and checks.
 

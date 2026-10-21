@@ -20,6 +20,7 @@ def get_rate(currency, date=None):
 
     Uses the last rate on or before the date. Base currency gives 1.
     """
+    frappe.has_permission("UA Currency", "read", throw=True)
     if not currency or frappe.db.get_value("UA Currency", currency, "is_base"):
         return 1.0
     rows = frappe.db.sql(
