@@ -25,6 +25,7 @@ app_include_js = [
     "/assets/ua_accounting/js/ua_desk.js",
     "/assets/ua_accounting/js/ua_tree_sidebar.js",
     "/assets/ua_accounting/js/ua_report.js",
+    "/assets/ua_accounting/js/ua_documents.js",
 ]
 
 before_install = "ua_accounting.install.before_install"

@@ -1,0 +1,190 @@
+{
+ "actions": [],
+ "creation": "2026-10-21 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "account_dr",
+  "account_cr",
+  "amount",
+  "content",
+  "subconto_dr1_type",
+  "subconto_dr1",
+  "subconto_dr2_type",
+  "subconto_dr2",
+  "subconto_dr3_type",
+  "subconto_dr3",
+  "subconto_cr1_type",
+  "subconto_cr1",
+  "subconto_cr2_type",
+  "subconto_cr2",
+  "subconto_cr3_type",
+  "subconto_cr3",
+  "quantity_dr",
+  "quantity_cr",
+  "currency_dr",
+  "currency_amount_dr",
+  "currency_cr",
+  "currency_amount_cr"
+ ],
+ "fields": [
+  {
+   "columns": 1,
+   "fieldname": "account_dr",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Дебет",
+   "options": "UA Account"
+  },
+  {
+   "columns": 1,
+   "fieldname": "account_cr",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Кредит",
+   "options": "UA Account"
+  },
+  {
+   "columns": 1,
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Сума"
+  },
+  {
+   "columns": 2,
+   "fieldname": "content",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Зміст"
+  },
+  {
+   "fieldname": "subconto_dr1_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Дт1",
+   "options": "DocType"
+  },
+  {
+   "columns": 1,
+   "fieldname": "subconto_dr1",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Субконто Дт1",
+   "options": "subconto_dr1_type"
+  },
+  {
+   "fieldname": "subconto_dr2_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Дт2",
+   "options": "DocType"
+  },
+  {
+   "columns": 1,
+   "fieldname": "subconto_dr2",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Субконто Дт2",
+   "options": "subconto_dr2_type"
+  },
+  {
+   "fieldname": "subconto_dr3_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Дт3",
+   "options": "DocType"
+  },
+  {
+   "columns": 1,
+   "fieldname": "subconto_dr3",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 0,
+   "label": "Субконто Дт3",
+   "options": "subconto_dr3_type"
+  },
+  {
+   "fieldname": "subconto_cr1_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Кт1",
+   "options": "DocType"
+  },
+  {
+   "columns": 1,
+   "fieldname": "subconto_cr1",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Субконто Кт1",
+   "options": "subconto_cr1_type"
+  },
+  {
+   "fieldname": "subconto_cr2_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Кт2",
+   "options": "DocType"
+  },
+  {
+   "columns": 1,
+   "fieldname": "subconto_cr2",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Субконто Кт2",
+   "options": "subconto_cr2_type"
+  },
+  {
+   "fieldname": "subconto_cr3_type",
+   "fieldtype": "Link",
+   "label": "Тип субконто Кт3",
+   "options": "DocType"
+  },
+  {
+   "columns": 1,
+   "fieldname": "subconto_cr3",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 0,
+   "label": "Субконто Кт3",
+   "options": "subconto_cr3_type"
+  },
+  {
+   "fieldname": "quantity_dr",
+   "fieldtype": "Float",
+   "label": "Кількість Дт"
+  },
+  {
+   "fieldname": "quantity_cr",
+   "fieldtype": "Float",
+   "label": "Кількість Кт"
+  },
+  {
+   "fieldname": "currency_dr",
+   "fieldtype": "Link",
+   "label": "Валюта Дт",
+   "options": "UA Currency"
+  },
+  {
+   "fieldname": "currency_amount_dr",
+   "fieldtype": "Float",
+   "label": "Вал. сума Дт",
+   "precision": "2"
+  },
+  {
+   "fieldname": "currency_cr",
+   "fieldtype": "Link",
+   "label": "Валюта Кт",
+   "options": "UA Currency"
+  },
+  {
+   "fieldname": "currency_amount_cr",
+   "fieldtype": "Float",
+   "label": "Вал. сума Кт",
+   "precision": "2"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-21 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Operation Entry",
+ "owner": "Administrator",
+ "states": []
+}

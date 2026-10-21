@@ -1,2 +1,3 @@
 UA Core
 UA Catalogs
+UA Documents

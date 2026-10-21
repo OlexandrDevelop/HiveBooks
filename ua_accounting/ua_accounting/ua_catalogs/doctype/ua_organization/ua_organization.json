@@ -9,6 +9,7 @@
   "full_name",
   "edrpou",
   "ipn",
+  "doc_prefix",
   "cb1",
   "vat_payer",
   "vat_certificate_no",
@@ -134,11 +135,18 @@
    "fieldtype": "Link",
    "label": "Головний бухгалтер",
    "options": "UA Person"
+  },
+  {
+   "description": "Номер документа: ПРЕФІКС-код-рік-номер. Наприклад AB-SI-26-00001",
+   "fieldname": "doc_prefix",
+   "fieldtype": "Data",
+   "label": "Префікс номерів документів",
+   "length": 8
   }
  ],
  "index_web_pages_for_search": 0,
  "links": [],
- "modified": "2026-10-21 10:00:00.000000",
+ "modified": "2026-10-21 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "UA Catalogs",
  "name": "UA Organization",

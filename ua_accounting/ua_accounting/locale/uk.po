@@ -99,3 +99,36 @@ msgstr "Бухгалтер"
 msgid "UA Accounting Manager"
 msgstr "Головний бухгалтер"
 
+
+msgid "UA Customer Order"
+msgstr "Замовлення покупця"
+
+msgid "UA Sales Invoice"
+msgstr "Реалізація товарів та послуг"
+
+msgid "UA Supplier Order"
+msgstr "Замовлення постачальнику"
+
+msgid "UA Purchase Receipt"
+msgstr "Надходження товарів та послуг"
+
+msgid "UA Cash Receipt"
+msgstr "Надходження коштів"
+
+msgid "UA Cash Payment"
+msgstr "Витрата коштів"
+
+msgid "UA Journal Operation"
+msgstr "Операція (бухгалтерська)"
+
+msgid "UA Operation Entry"
+msgstr "Проводка операції"
+
+msgid "UA Goods Line"
+msgstr "Товари"
+
+msgid "UA Service Line"
+msgstr "Послуги"
+
+msgid "UA Documents"
+msgstr "Документи"

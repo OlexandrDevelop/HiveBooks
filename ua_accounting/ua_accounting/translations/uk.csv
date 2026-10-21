@@ -29,3 +29,14 @@ UA Core,Облік (ядро)
 UA Catalogs,Довідники
 UA Accountant,Бухгалтер
 UA Accounting Manager,Головний бухгалтер
+UA Customer Order,Замовлення покупця
+UA Sales Invoice,Реалізація товарів та послуг
+UA Supplier Order,Замовлення постачальнику
+UA Purchase Receipt,Надходження товарів та послуг
+UA Cash Receipt,Надходження коштів
+UA Cash Payment,Витрата коштів
+UA Journal Operation,Операція (бухгалтерська)
+UA Operation Entry,Проводка операції
+UA Goods Line,Товари
+UA Service Line,Послуги
+UA Documents,Документи

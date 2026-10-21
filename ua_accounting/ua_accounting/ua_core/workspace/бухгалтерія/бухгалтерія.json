@@ -195,9 +195,72 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Документи",
-   "link_count": 3,
+   "link_count": 10,
    "onboard": 0,
    "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Замовлення покупців",
+   "link_to": "UA Customer Order",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Реалізація товарів та послуг",
+   "link_to": "UA Sales Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Замовлення постачальникам",
+   "link_to": "UA Supplier Order",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Надходження товарів та послуг",
+   "link_to": "UA Purchase Receipt",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Надходження коштів",
+   "link_to": "UA Cash Receipt",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Витрата коштів",
+   "link_to": "UA Cash Payment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Операції (бухгалтерські)",
+   "link_to": "UA Journal Operation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   },
   {
    "hidden": 0,
@@ -297,7 +360,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-10-21 10:00:00.000000",
+ "modified": "2026-10-21 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "UA Core",
  "name": "Бухгалтерія",
@@ -310,32 +373,32 @@
  "sequence_id": 1.0,
  "shortcuts": [
   {
+   "color": "Grey",
+   "doc_view": "Tree",
    "label": "План рахунків",
    "link_to": "UA Account",
-   "type": "DocType",
-   "doc_view": "Tree",
-   "color": "Grey"
+   "type": "DocType"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
    "label": "Контрагенти",
    "link_to": "UA Counterparty",
-   "type": "DocType",
-   "doc_view": "List",
-   "color": "Grey"
+   "type": "DocType"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
    "label": "Номенклатура",
    "link_to": "UA Item",
-   "type": "DocType",
-   "doc_view": "List",
-   "color": "Grey"
+   "type": "DocType"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
    "label": "Журнал проводок",
    "link_to": "UA Accounting Entry",
-   "type": "DocType",
-   "doc_view": "List",
-   "color": "Grey"
+   "type": "DocType"
   }
  ],
  "title": "Бухгалтерія"

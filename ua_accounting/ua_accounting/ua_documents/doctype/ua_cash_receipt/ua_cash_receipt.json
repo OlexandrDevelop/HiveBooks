@@ -1,0 +1,303 @@
+{
+ "actions": [],
+ "creation": "2026-10-21 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "operation_type",
+  "cb_cash",
+  "cash_type",
+  "bank_account",
+  "cash_desk",
+  "cash_flow_item",
+  "sb_amount",
+  "amount",
+  "currency",
+  "exchange_rate",
+  "sb_settle",
+  "counterparty",
+  "contract",
+  "settlement_type",
+  "cb_settle",
+  "sales_invoice",
+  "vat_rate",
+  "vat_amount",
+  "sb_other",
+  "other_account",
+  "person",
+  "cb_other",
+  "expense_item",
+  "department",
+  "sb_more",
+  "comment",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Дата",
+   "reqd": 1
+  },
+  {
+   "default": "Оплата від покупця",
+   "fieldname": "operation_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Вид операції",
+   "options": "Оплата від покупця\nІнше надходження",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_cash",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "default": "Банк",
+   "fieldname": "cash_type",
+   "fieldtype": "Select",
+   "label": "Вид рахунку",
+   "options": "Банк\nКаса",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.cash_type==='Банк'",
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Банківський рахунок",
+   "options": "UA Bank Account"
+  },
+  {
+   "depends_on": "eval:doc.cash_type==='Каса'",
+   "fieldname": "cash_desk",
+   "fieldtype": "Link",
+   "label": "Каса",
+   "options": "UA Cash Desk"
+  },
+  {
+   "fieldname": "cash_flow_item",
+   "fieldtype": "Link",
+   "label": "Стаття руху коштів",
+   "options": "UA Cash Flow Item"
+  },
+  {
+   "fieldname": "sb_amount",
+   "fieldtype": "Section Break",
+   "label": "Сума"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Сума",
+   "options": "currency",
+   "reqd": 1
+  },
+  {
+   "default": "UAH",
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Валюта",
+   "options": "UA Currency",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Курс",
+   "precision": "6"
+  },
+  {
+   "depends_on": "eval:doc.operation_type==='Оплата від покупця'",
+   "fieldname": "sb_settle",
+   "fieldtype": "Section Break",
+   "label": "Розрахунки з контрагентом"
+  },
+  {
+   "depends_on": "eval:doc.operation_type==='Оплата від покупця'",
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Покупець",
+   "options": "UA Counterparty"
+  },
+  {
+   "depends_on": "eval:doc.operation_type==='Оплата від покупця'",
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "default": "Оплата за реалізацію",
+   "depends_on": "eval:doc.operation_type==='Оплата від покупця'",
+   "fieldname": "settlement_type",
+   "fieldtype": "Select",
+   "label": "Вид розрахунку",
+   "options": "Оплата за реалізацію\nПередоплата (аванс)"
+  },
+  {
+   "fieldname": "cb_settle",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "depends_on": "eval:doc.operation_type==='Оплата від покупця'",
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Реалізація",
+   "no_copy": 1,
+   "options": "UA Sales Invoice"
+  },
+  {
+   "depends_on": "eval:doc.operation_type==='Оплата від покупця' && doc.settlement_type==='Передоплата (аванс)'",
+   "fieldname": "vat_rate",
+   "fieldtype": "Link",
+   "label": "Ставка ПДВ авансу",
+   "options": "UA VAT Rate"
+  },
+  {
+   "depends_on": "eval:doc.vat_rate",
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "label": "ПДВ авансу",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.operation_type!=='Оплата від покупця'",
+   "fieldname": "sb_other",
+   "fieldtype": "Section Break",
+   "label": "Кореспонденція"
+  },
+  {
+   "depends_on": "eval:doc.operation_type!=='Оплата від покупця'",
+   "fieldname": "other_account",
+   "fieldtype": "Link",
+   "label": "Рахунок",
+   "options": "UA Account"
+  },
+  {
+   "depends_on": "eval:doc.operation_type!=='Оплата від покупця'",
+   "fieldname": "person",
+   "fieldtype": "Link",
+   "label": "Фізична особа",
+   "options": "UA Person"
+  },
+  {
+   "fieldname": "cb_other",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "depends_on": "eval:doc.operation_type!=='Оплата від покупця'",
+   "fieldname": "expense_item",
+   "fieldtype": "Link",
+   "label": "Стаття витрат",
+   "options": "UA Expense Item"
+  },
+  {
+   "depends_on": "eval:doc.operation_type!=='Оплата від покупця'",
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Підрозділ",
+   "options": "UA Department"
+  },
+  {
+   "fieldname": "sb_more",
+   "fieldtype": "Section Break",
+   "label": "Додатково"
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Коментар"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Виправлення",
+   "no_copy": 1,
+   "options": "UA Cash Receipt",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-21 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Cash Receipt",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "counterparty",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

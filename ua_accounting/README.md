@@ -25,6 +25,22 @@ VAT rates, currencies, units, subconto types). The loader only inserts missing r
   currencies, banks, bank accounts, cash desks, fixed/intangible/low value assets and helpers.
 - Workspace `Бухгалтерія`.
 
+## Documents (module `UA Documents`)
+
+| Document | DocType | Entries |
+|---|---|---|
+| Замовлення покупця / постачальнику | `UA Customer Order`, `UA Supplier Order` | none, only status |
+| Реалізація товарів та послуг | `UA Sales Invoice` | Dt 361 Ct 70x, Dt 704 Ct 641, Dt 90x Ct 281/26 (average cost), Dt 681 Ct 361, Dt 641 Ct 643 |
+| Надходження товарів та послуг | `UA Purchase Receipt` | Dt 281/201/26/92 Ct 631, Dt 644 Ct 631, Dt 641 Ct 644, Dt 631 Ct 371 |
+| Надходження коштів | `UA Cash Receipt` | Dt 311/301 Ct 361 or 681, Dt 643 Ct 641 on an advance |
+| Витрата коштів | `UA Cash Payment` | Dt 631 or 371 Ct 311/301, Dt 641 Ct 644 on an advance |
+| Операція (бухгалтерська) | `UA Journal Operation` | typed by hand, also for opening balances |
+
+Documents post on submit and delete their entries on cancel (`ua_accounting/accounting/documents.py`).
+Numbers: `<prefix of the organization>-<code>-<yy>-<counter>`, for example `AB-SI-26-00001`.
+Foreign accounts (362, 632, 312, 302) are used when the document currency is not the base one.
+The VAT register gets a row once, at the first event (advance payment or shipment).
+
 ## Posting API
 
 ```python
