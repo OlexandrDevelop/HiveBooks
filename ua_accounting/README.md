@@ -17,6 +17,17 @@ bench --site mysite install-app ua_accounting
 Install and every `bench migrate` load the seed data (chart of accounts No. 291,
 VAT rates, currencies, units, subconto types). The loader only inserts missing records.
 
+## GitHub mirror
+
+The source of truth is the folder `apps/ua_accounting` in the ERP repo.
+The public repo `OlexandrDevelop/ua_accounting` is a mirror. To update it, run in the ERP repo root:
+
+```bash
+git subtree split --prefix apps/ua_accounting -b ua-accounting-mirror
+git push git@github.com:OlexandrDevelop/ua_accounting.git ua-accounting-mirror:main --force
+git branch -D ua-accounting-mirror
+```
+
 ## Content
 
 - Module `UA Core`: `UA Account` (chart, tree), `UA Subconto Type`, `UA Accounting Entry`,
