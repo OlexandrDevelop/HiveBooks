@@ -7,8 +7,8 @@ USER frappe
 RUN bench init --frappe-path "$BEEONE_REPOSITORY" --frappe-branch "$BEEONE_REF" \
     --no-procfile --no-backups --skip-redis-config-generation /home/frappe/frappe-bench
 WORKDIR /home/frappe/frappe-bench
-RUN git -C apps/frappe fetch --quiet origin "$BEEONE_REF" && \
-    git -C apps/frappe checkout --quiet --detach "$BEEONE_COMMIT"
+RUN git -C apps/frappe checkout --quiet --detach "$BEEONE_COMMIT" && \
+    test "$(git -C apps/frappe rev-parse HEAD)" = "$BEEONE_COMMIT"
 ARG APP_NAME
 COPY --chown=frappe:frappe . /tmp/configuration
 RUN test "$APP_NAME" = ua_accounting -o "$APP_NAME" = ua_trade && \
