@@ -89,6 +89,8 @@ services:
     restart: unless-stopped
     environment:
       SITE_NAME: ${SITE_NAME:?Set SITE_NAME to your domain}
+      # Force frontend recreation when the BeeOne/backend image changes.
+      DEPLOY_REV: ${BEEONE_COMMIT:-d43723333c9c36bea86c16a3c09664485acfcdf2}
       NGINX_ENVSUBST_FILTER: SITE_NAME
     volumes:
       - sites:/sites:ro
