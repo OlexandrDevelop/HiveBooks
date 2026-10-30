@@ -695,7 +695,7 @@ frappe.provide("ua_accounting.shell");
 		const sidebar = $(`
 		<aside id="ua-sidebar" class="ua-sidebar" aria-label="${esc(__("Меню"))}">
 			<div class="ua-sb-brand"><span class="ua-logo" aria-hidden="true"></span>
-				<a class="ua-sb-brand-name" href="/desk/ua-home">${esc(__("Бухгалтерія"))} <span>UA</span></a>
+				<a class="ua-sb-brand-name" href="/desk/ua-home">HiveBooks</a>
 				<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon ua-btn--sm ua-sb-collapse" data-act="collapse"
 					aria-label="${esc(__("Згорнути меню"))}" data-ua-tip="${esc(__("Згорнути меню"))}">${icon("panel")}</button>
 			</div>

@@ -1,9 +1,9 @@
-# BeeOne — ua_accounting
+# HiveBooks
 
 Автоматичне розгортання з демоданими в Easypanel: [інструкція](DEPLOY.md).
 Compose-файл: `docker-compose.yml`, Build Path: `/`.
 
-# ua_accounting
+# HiveBooks
 
 Accounting for Ukraine, like 1C "Бухгалтерія для України". A Frappe v16 app.
 It depends only on `frappe`. There is no ERPNext code.

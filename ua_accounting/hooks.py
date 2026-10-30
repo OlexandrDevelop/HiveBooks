@@ -1,5 +1,5 @@
 app_name = "ua_accounting"
-app_title = "Бухгалтерія UA"
+app_title = "HiveBooks"
 app_publisher = "UA Accounting"
 app_description = "Accounting system for Ukraine (chart of accounts No. 291, subconto, ledger)"
 app_email = "olexandr.develop@gmail.com"
@@ -12,7 +12,7 @@ add_to_apps_screen = [
     {
         "name": "ua_accounting",
         "logo": "/assets/ua_accounting/images/logo.svg",
-        "title": "Бухгалтерія",
+        "title": "HiveBooks",
         "route": "/app/ua-home",
     }
 ]
