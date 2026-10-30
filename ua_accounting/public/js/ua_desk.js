@@ -123,6 +123,9 @@ ua_accounting.ui.mark_body = function () {
 };
 
 $(document).on("startup", function () {
+	// The platform shell replaced ua_shell.js, but shared accounting components
+	// still use this class for their design tokens and dialog stacking context.
+	document.body.classList.add("ua-shell");
 	frappe.router.on("change", ua_accounting.ui.mark_body);
 	ua_accounting.ui.mark_body();
 });
