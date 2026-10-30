@@ -145,7 +145,7 @@ frappe.provide("ua_accounting.form");
 			if (ds === 1 && (movement_registers.length || F.posting(frm))) {
 				mid.push(btn("movements", __("Перегляд рухів"), "list", { tip: __("Рухи документа по регістрах") }));
 			}
-			if (beeone.basis.entries(frm).length) {
+			if (basis_entries(frm).length) {
 				mid.push(btn("basis", __("Створити на підставі"), "branch", { menu: true }));
 			}
 		}
@@ -246,8 +246,13 @@ frappe.provide("ua_accounting.form");
 		return ((frappe.boot && frappe.boot.beeone_movements) || {})[frm.doctype] || [];
 	}
 
+	function basis_entries(frm) {
+		const api = window.beeone && window.beeone.basis;
+		return api && typeof api.entries === "function" ? api.entries(frm) || [] : [];
+	}
+
 	F.basis_menu = function (frm, el) {
-		const list = beeone.basis.entries(frm);
+		const list = basis_entries(frm);
 		ua_accounting.ui.menu(
 			el,
 			`<div class="ua-menu-label">${esc(__("Створити на підставі"))}</div>` +
@@ -259,7 +264,7 @@ frappe.provide("ua_accounting.form");
 					ua_accounting.ui.toast({ type: "warning", title: __("Спочатку проведіть документ"), text: __("Документ на підставі створюється з проведеного.") });
 					return;
 				}
-				beeone.basis.create(frm, b);
+				if (window.beeone?.basis?.create) window.beeone.basis.create(frm, b);
 			}
 		);
 	};
@@ -565,7 +570,7 @@ frappe.provide("ua_accounting.form");
 							d.posting_date ? ` ${esc(__("від"))} ${esc(frappe.datetime.str_to_user(d.posting_date))}` : ""
 						} · ${esc(d.role === "basis" ? __("підстава") : __("на підставі"))}</small></div></a>`
 				);
-				beeone.basis.entries(frm).forEach(({ label }, i) => {
+				basis_entries(frm).forEach(({ label }, i) => {
 					if ((r.related || []).some((d) => d.role === "derived" && __(d.doctype) === __(label))) return;
 					rel.push(
 						`<div class="ua-rel"><span class="ua-fi">${icon("file-plus")}</span><div class="ua-grow">${esc(__(label))}<small>${esc(
@@ -599,13 +604,13 @@ frappe.provide("ua_accounting.form");
 			if (what === "history") F.toggle_history(frm, !$(frm.page.wrapper).hasClass("ua-show-history"));
 			if (what === "retry") F.render_side(frm);
 			if (what === "basis") {
-				const b = beeone.basis.entries(frm)[+$(this).attr("data-i")];
+				const b = basis_entries(frm)[+$(this).attr("data-i")];
 				if (!b) return;
 				if (frm.doc.docstatus !== 1) {
 					ua_accounting.ui.toast({ type: "warning", title: __("Спочатку проведіть документ"), text: __("Документ на підставі створюється з проведеного.") });
 					return;
 				}
-				beeone.basis.create(frm, b);
+				if (window.beeone?.basis?.create) window.beeone.basis.create(frm, b);
 			}
 		});
 	};
