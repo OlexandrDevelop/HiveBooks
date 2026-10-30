@@ -119,7 +119,7 @@ frappe.provide("ua_accounting.form");
 	F.render_toolbar = function (frm, $bar) {
 		const kind = F.kind(frm);
 		const perm = F.perm(frm);
-		const ds = frm.doc.docstatus;
+		const ds = cint(frm.doc.docstatus);
 		const left = [];
 		const mid = [];
 		if (kind === "catalog") {
@@ -142,7 +142,7 @@ frappe.provide("ua_accounting.form");
 		if (kind === "document") {
 			if (F.posting(frm)) mid.push(btn("dtkt", __("Дт/Кт"), "dtkt", { tip: __("Проводки документа") }));
 			const movement_registers = (frappe.boot.beeone_movements || {})[frm.doctype] || [];
-			if (frm.doc.docstatus === 1 && movement_registers.length && beeone?.registers?.show_movements) {
+			if (ds === 1 && (movement_registers.length || F.posting(frm))) {
 				mid.push(btn("movements", __("Перегляд рухів"), "list", { tip: __("Рухи документа по регістрах") }));
 			}
 			if (beeone.basis.entries(frm).length) {
@@ -194,7 +194,10 @@ frappe.provide("ua_accounting.form");
 			case "dtkt":
 				return F.dtkt(frm);
 			case "movements":
-				return beeone.registers.show_movements(frm);
+				if (movement_registers(frm).length && window.beeone?.registers?.show_movements) {
+					return window.beeone.registers.show_movements(frm);
+				}
+				return ua_accounting.docs.show_movements(frm);
 			case "print":
 				return frm.print_doc();
 			case "prev":
