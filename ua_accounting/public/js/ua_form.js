@@ -119,7 +119,7 @@ frappe.provide("ua_accounting.form");
 	F.render_toolbar = function (frm, $bar) {
 		const kind = F.kind(frm);
 		const perm = F.perm(frm);
-		const ds = cint(frm.doc.docstatus);
+		const ds = Number(frm.doc.docstatus || 0);
 		const left = [];
 		const mid = [];
 		if (kind === "catalog") {
