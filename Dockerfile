@@ -2,7 +2,7 @@
 FROM frappe/bench@sha256:c035a1de96da6766069a965617440fd2e0220b0702c5ee4fca611b55906c12ed AS build
 ARG BEEONE_REPOSITORY=https://github.com/OlexandrDevelop/beeone.git
 ARG BEEONE_REF=beeone-16
-ARG BEEONE_COMMIT=d43723333c9c36bea86c16a3c09664485acfcdf2
+ARG BEEONE_COMMIT=dcfa7b2
 USER frappe
 RUN bench init --frappe-path "$BEEONE_REPOSITORY" --frappe-branch "$BEEONE_REF" \
     --no-procfile --no-backups --skip-redis-config-generation /home/frappe/frappe-bench
