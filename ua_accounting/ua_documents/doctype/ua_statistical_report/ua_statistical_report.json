@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 22:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 22:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "naming_rule": "By script",
+ "name": "UA Statistical Report",
+ "title_field": "form",
+ "search_fields": "organization,form",
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "form",
+   "fieldtype": "Select",
+   "label": "Форма",
+   "options": "1-підприємництво (коротка)\n1-ПВ",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "period_from",
+   "fieldtype": "Date",
+   "label": "Період з",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "period_to",
+   "fieldtype": "Date",
+   "label": "Період по",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Статус",
+   "options": "Чернетка\nЗаповнено\nЕкспортовано",
+   "default": "Чернетка",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "sb_lines",
+   "fieldtype": "Section Break",
+   "label": "Рядки звіту"
+  },
+  {
+   "fieldname": "lines",
+   "fieldtype": "Table",
+   "label": "Рядки",
+   "options": "UA Statistical Report Line"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "email": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "email": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "share": 1,
+   "email": 1
+  }
+ ],
+ "track_changes": 1,
+ "field_order": [
+  "organization",
+  "form",
+  "period_from",
+  "period_to",
+  "cb_main",
+  "status",
+  "sb_lines",
+  "lines"
+ ]
+}

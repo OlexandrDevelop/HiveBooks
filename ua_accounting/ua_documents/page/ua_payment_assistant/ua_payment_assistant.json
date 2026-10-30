@@ -1,0 +1,29 @@
+{
+ "creation": "2026-10-22 18:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2026-10-22 18:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "ua-payment-assistant",
+ "owner": "Administrator",
+ "page_name": "ua-payment-assistant",
+ "roles": [
+  {
+   "role": "UA Accountant"
+  },
+  {
+   "role": "UA Accounting Manager"
+  },
+  {
+   "role": "UA Chief Accountant"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "standard": "Yes",
+ "system_page": 0,
+ "title": "Помічник оплати"
+}

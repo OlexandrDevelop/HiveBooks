@@ -9,7 +9,9 @@
   "mfo",
   "edrpou",
   "city",
-  "address"
+  "address",
+  "short_name",
+  "is_active"
  ],
  "fields": [
   {
@@ -43,6 +45,19 @@
    "fieldname": "address",
    "fieldtype": "Small Text",
    "label": "Адреса"
+  },
+  {
+   "fieldname": "short_name",
+   "fieldtype": "Data",
+   "label": "Скорочена назва",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Діючий",
+   "default": "1",
+   "in_list_view": 1
   }
  ],
  "index_web_pages_for_search": 0,
@@ -88,6 +103,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "search_fields": "bank_name,mfo",

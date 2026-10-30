@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section",
+  "tax_invoice",
+  "tax_invoice_type",
+  "number",
+  "date",
+  "counterparty_ipn",
+  "base_amount",
+  "vat_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "section",
+   "fieldtype": "Select",
+   "label": "Розділ",
+   "options": "I\nII",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "tax_invoice",
+   "fieldtype": "Dynamic Link",
+   "label": "Документ",
+   "options": "tax_invoice_type",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "tax_invoice_type",
+   "fieldtype": "Link",
+   "label": "Тип документа",
+   "options": "DocType",
+   "hidden": 1
+  },
+  {
+   "fieldname": "number",
+   "fieldtype": "Data",
+   "label": "Номер",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "counterparty_ipn",
+   "fieldtype": "Data",
+   "label": "ІПН контрагента",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "base_amount",
+   "fieldtype": "Currency",
+   "label": "База оподаткування",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "label": "Сума ПДВ",
+   "in_list_view": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA VAT Return D1 Row",
+ "owner": "Administrator",
+ "states": []
+}

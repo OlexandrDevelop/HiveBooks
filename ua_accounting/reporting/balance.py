@@ -4,8 +4,9 @@ Both reports are one builder with different settings:
     OSV            account hierarchy; subconto levels are slot numbers 1..N
     OSV by account one account (and its sub-accounts); levels are subconto types
 
-Balances are net per row: debit side if debit > credit, else credit side.
-A group row is the net of everything below it.
+Balances are net per leaf row: debit side if debit > credit, else credit side.
+A group row (and the totals row) is an expanded balance, like 1C: it adds the
+debit and the credit balances of the leaf rows below it separately, no netting.
 """
 
 from frappe import _
@@ -58,30 +59,45 @@ def _side(m, q, c):
     return "dr"
 
 
-def present(agg, show_cur):
-    """Cells of one row from its Agg."""
+# Exp = expanded balances: [open dr (m, q, c), open cr, close dr, close cr]
+EXP_SIZE = 12
+
+
+def _leaf_exp(agg):
+    """Expanded balances of one leaf (account, subconto values, currency)."""
     o_m, o_q, o_c, tdm, tcm, tdq, tcq, tdc, tcc = agg
+    exp = [0.0] * EXP_SIZE
+    for n, (m, q, c) in enumerate(
+        [(o_m, o_q, o_c), (o_m + tdm - tcm, o_q + tdq - tcq, o_c + tdc - tcc)]
+    ):
+        sign = 1 if _side(m, q, c) == "dr" else -1
+        base = n * 6 + (0 if sign == 1 else 3)
+        exp[base] = sign * m
+        exp[base + 1] = sign * q
+        exp[base + 2] = sign * c
+    return exp
+
+
+def present(agg, exp, show_cur):
+    """Cells of one row from its Agg and its expanded balances."""
+    _o_m, _o_q, _o_c, tdm, tcm, tdq, tcq, tdc, tcc = agg
     cells = {}
 
-    def balance(sec, m, q, c):
-        side = _side(m, q, c)
-        other = "cr" if side == "dr" else "dr"
-        sign = 1 if side == "dr" else -1
-        cells[f"{sec}_{side}"] = model.money(sign * m)
-        cells[f"{sec}_{side}_qty"] = model.qty(sign * q)
-        cells[f"{sec}_{side}_cur"] = model.money(sign * c) if show_cur else None
-        cells[f"{sec}_{other}"] = 0
-        cells[f"{sec}_{other}_qty"] = 0
-        cells[f"{sec}_{other}_cur"] = 0 if show_cur else None
+    def balance(sec, n):
+        for k, side in enumerate(("dr", "cr")):
+            m, q, c = exp[n * 6 + k * 3 : n * 6 + k * 3 + 3]
+            cells[f"{sec}_{side}"] = model.money(m)
+            cells[f"{sec}_{side}_qty"] = model.qty(q)
+            cells[f"{sec}_{side}_cur"] = model.money(c) if show_cur else None
 
-    balance("open", o_m, o_q, o_c)
+    balance("open", 0)
     cells["turn_dr"] = model.money(tdm)
     cells["turn_cr"] = model.money(tcm)
     cells["turn_dr_qty"] = model.qty(tdq)
     cells["turn_cr_qty"] = model.qty(tcq)
     cells["turn_dr_cur"] = model.money(tdc) if show_cur else None
     cells["turn_cr_cur"] = model.money(tcc) if show_cur else None
-    balance("close", o_m + tdm - tcm, o_q + tdq - tcq, o_c + tdc - tcc)
+    balance("close", 1)
     return cells
 
 
@@ -90,8 +106,12 @@ def _zero(agg):
 
 
 def _add(target, agg):
-    for i in range(AGG_SIZE):
+    for i in range(len(agg)):
         target[i] += agg[i]
+
+
+def _add_exp(expanded, node_key, exp):
+    _add(expanded.setdefault(node_key, [0.0] * EXP_SIZE), exp)
 
 
 class Settings:
@@ -119,9 +139,10 @@ def build_balance(report, flt_, chart, titles, st):
     turnover = aggregate(scope, flt_.date_from, flt_.end)
 
     nodes = {}  # (account, path) -> Agg
+    expanded = {}  # (account, path) -> Exp
     index = {}  # (account, path) -> set of next path values
 
-    def add_key(key, agg):
+    def add_key(key, agg, exp):
         account, values, currency = key
         cls = scope.by_account[account]
         path = [v for v, slot in zip(values, cls.level_slots) if slot is not None]
@@ -130,15 +151,20 @@ def build_balance(report, flt_, chart, titles, st):
         for k in range(len(path) + 1):
             node = nodes.setdefault((account, tuple(path[:k])), [0.0] * AGG_SIZE)
             _add(node, agg)
+            _add_exp(expanded, (account, tuple(path[:k])), exp)
             if k:
                 index.setdefault((account, tuple(path[: k - 1])), set()).add(path[k - 1])
         for anc in chart.ancestors(account):
             _add(nodes.setdefault((anc, ()), [0.0] * AGG_SIZE), agg)
+            _add_exp(expanded, (anc, ()), exp)
 
+    leaves = {}  # key -> Agg of the leaf (opening and turnover together)
     for key, v in opening.items():
-        add_key(key, [v[0] - v[1], v[2] - v[3], v[4] - v[5], 0, 0, 0, 0, 0, 0])
+        _add(leaves.setdefault(key, [0.0] * AGG_SIZE), [v[0] - v[1], v[2] - v[3], v[4] - v[5], 0, 0, 0, 0, 0, 0])
     for key, v in turnover.items():
-        add_key(key, [0, 0, 0, v[0], v[1], v[2], v[3], v[4], v[5]])
+        _add(leaves.setdefault(key, [0.0] * AGG_SIZE), [0, 0, 0, v[0], v[1], v[2], v[3], v[4], v[5]])
+    for key, agg in leaves.items():
+        add_key(key, agg, _leaf_exp(agg))
 
     def element(account, k):
         """What the k-th path element of the account is: ("sub", sub row) or ("cur", None)."""
@@ -186,12 +212,13 @@ def build_balance(report, flt_, chart, titles, st):
 
     def emit(account, path, parent, level, is_root=False):
         agg = nodes.get((account, path))
-        if agg is None or (_zero(agg) and not st.show_zero):
+        exp = expanded.get((account, path))
+        if agg is None or (_zero(agg) and _zero(exp) and not st.show_zero):
             return None
         acc = chart.get(account)
         row_id = f"{account}|{'|'.join(path)}"
         cur_valid = st.show_cur and (cur_always or (path and element(account, len(path) - 1)[0] == "cur"))
-        cells = present(agg, cur_valid)
+        cells = present(agg, exp, cur_valid)
 
         if not path:
             cells["label"] = chart.label(account)

@@ -1,0 +1,172 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "cb_head",
+  "asset_type",
+  "asset",
+  "sb_wo",
+  "reason",
+  "residual_value",
+  "sb_more",
+  "comment",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_head",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "asset_type",
+   "fieldtype": "Select",
+   "label": "Вид активу",
+   "options": "UA Fixed Asset\nUA Intangible Asset\nUA Low Value Asset",
+   "default": "UA Fixed Asset",
+   "reqd": 1
+  },
+  {
+   "fieldname": "asset",
+   "fieldtype": "Dynamic Link",
+   "label": "Актив",
+   "options": "asset_type",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "sb_wo",
+   "fieldtype": "Section Break",
+   "label": "Списання"
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Small Text",
+   "label": "Причина списання"
+  },
+  {
+   "fieldname": "residual_value",
+   "fieldtype": "Currency",
+   "label": "Залишкова вартість",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_more",
+   "fieldtype": "Section Break",
+   "label": "Додатково",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Коментар"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Виправлення",
+   "options": "UA Asset Writeoff",
+   "hidden": 1,
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Asset Writeoff",
+ "owner": "Administrator",
+ "states": [],
+ "is_submittable": 1,
+ "naming_rule": "By script",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "create": 1,
+   "submit": 1,
+   "write": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "write": 1,
+   "role": "UA Accounting Manager"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "write": 1,
+   "role": "System Manager"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "write": 1,
+   "role": "UA Chief Accountant"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "search_fields": "asset"
+}

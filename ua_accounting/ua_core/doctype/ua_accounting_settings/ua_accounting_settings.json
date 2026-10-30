@@ -1,0 +1,42 @@
+{
+ "doctype": "DocType",
+ "name": "UA Accounting Settings",
+ "module": "UA Core",
+ "field_order": [
+  "lock_allowed_roles"
+ ],
+ "fields": [
+  {
+   "fieldname": "lock_allowed_roles",
+   "label": "Ролі з правом редагування закритого періоду",
+   "fieldtype": "Table",
+   "options": "UA Lock Allowed Role"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "role": "UA Chief Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  }
+ ],
+ "track_changes": 0,
+ "index_web_pages_for_search": 0,
+ "issingle": 1
+}

@@ -1,0 +1,1 @@
+frappe.query_reports["UA Stock Statement"] = {filters: [{fieldname:'organization',label:'Організація',fieldtype:'Link',options:'UA Organization'},{fieldname:'warehouse',label:'Склад',fieldtype:'Link',options:'UA Warehouse'},{fieldname:'date_from',label:'Дата з',fieldtype:'Date'},{fieldname:'date_to',label:'Дата до',fieldtype:'Date'}]};

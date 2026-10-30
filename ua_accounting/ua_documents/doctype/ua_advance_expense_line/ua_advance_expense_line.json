@@ -1,0 +1,116 @@
+{
+ "doctype": "DocType",
+ "name": "UA Advance Expense Line",
+ "module": "UA Documents",
+ "field_order": [
+  "description",
+  "expense_account",
+  "item",
+  "quantity",
+  "warehouse",
+  "amount",
+  "vat_rate",
+  "vat_amount",
+  "tax_invoice",
+  "counterparty",
+  "document_no",
+  "expense_item",
+  "account",
+  "amount_gross",
+  "department"
+ ],
+ "fields": [
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Опис",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Рахунок витрат",
+   "options": "UA Account"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Номенклатура",
+   "options": "UA Item"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Кількість"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Склад",
+   "options": "UA Warehouse"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Сума",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "vat_rate",
+   "fieldtype": "Link",
+   "label": "Ставка ПДВ",
+   "options": "UA VAT Rate"
+  },
+  {
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "label": "Сума ПДВ"
+  },
+  {
+   "fieldname": "tax_invoice",
+   "fieldtype": "Check",
+   "label": "Податкова накладна"
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Контрагент",
+   "options": "UA Counterparty"
+  },
+  {
+   "fieldname": "document_no",
+   "fieldtype": "Data",
+   "label": "Номер документа"
+  },
+  {
+   "fieldname": "expense_item",
+   "fieldtype": "Link",
+   "label": "Стаття витрат",
+   "options": "UA Expense Item"
+  },
+  {
+   "fieldname": "account",
+   "fieldtype": "Link",
+   "label": "Рахунок",
+   "options": "UA Account"
+  },
+  {
+   "fieldname": "amount_gross",
+   "fieldtype": "Currency",
+   "label": "Сума з ПДВ"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Підрозділ",
+   "options": "UA Department"
+  }
+ ],
+ "istable": 1,
+ "is_submittable": 0,
+ "permissions": [],
+ "naming_rule": "Random",
+ "autoname": "hash",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

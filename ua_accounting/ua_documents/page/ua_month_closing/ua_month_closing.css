@@ -1,0 +1,60 @@
+/* Month-end closing page (T-441). Reads only tokens. */
+.ua-mc {
+	padding: var(--ua-s-6) var(--ua-s-8) var(--ua-s-10);
+	display: flex;
+	flex-direction: column;
+	gap: var(--ua-s-4);
+}
+.ua-mc-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--ua-s-4);
+	padding: var(--ua-s-4) var(--ua-s-5);
+}
+.ua-mc-pick,
+.ua-mc-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--ua-s-3);
+}
+.ua-mc-pick label {
+	display: flex;
+	align-items: center;
+	gap: var(--ua-s-2);
+	color: var(--ua-text-2);
+	font-size: var(--ua-fs-13);
+}
+.ua-mc-pick select {
+	height: var(--ua-h-control, 32px);
+	padding: 0 var(--ua-s-3);
+	border: 1px solid var(--ua-border);
+	border-radius: var(--ua-r-md);
+	background: var(--ua-surface);
+	color: var(--ua-text);
+}
+.ua-mc-org {
+	font-weight: var(--ua-fw-medium);
+	color: var(--ua-text);
+}
+.ua-mc-lock {
+	color: var(--ua-warning-text);
+	background: var(--ua-warning-soft);
+	border-radius: var(--ua-r-md);
+	padding: var(--ua-s-2) var(--ua-s-4);
+	font-size: var(--ua-fs-13);
+}
+.ua-mc-card {
+	padding: 0;
+	overflow: hidden;
+}
+.ua-mc-msg {
+	max-width: 420px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: var(--ua-text-2);
+}
+.ua-mc-row-actions {
+	text-align: right;
+	white-space: nowrap;
+}

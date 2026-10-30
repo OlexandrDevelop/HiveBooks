@@ -1,0 +1,209 @@
+/*
+ * Design tokens of the accounting desk (T-433, from design/mockups/assets/tokens.css).
+ * Palette "Ink & Cobalt": cool ink neutrals + one cobalt accent.
+ * Light = default, dark = html[data-theme="dark"] (set by Frappe). Scope: body.ua-shell.
+ * Every component reads only these variables. Tokens only: no component rules here.
+ * The font is Frappe's local InterVariable (no web fonts).
+ */
+
+
+body.ua-shell {
+	color-scheme: light;
+
+	/* neutrals */
+	--ua-bg: #f6f7f9;
+	--ua-surface: #ffffff;
+	--ua-surface-2: #f2f4f7;
+	--ua-surface-3: #e9ecf1;
+	--ua-surface-raised: #ffffff;
+	--ua-border: #e4e7ec;
+	--ua-border-strong: #d0d5dd;
+	--ua-text: #0e1525;
+	--ua-text-2: #475467;
+	--ua-text-3: #8a94a6;
+	--ua-text-on-accent: #ffffff;
+
+	/* accent: cobalt */
+	--ua-accent: #2f54eb;
+	--ua-accent-hover: #2343d6;
+	--ua-accent-press: #1d39b8;
+	--ua-accent-soft: #edf1fe;
+	--ua-accent-soft-2: #dde5fd;
+	--ua-accent-text: #2343d6;
+
+	/* second accent: violet (favourites, highlights only) */
+	--ua-violet: #7a5af8;
+	--ua-violet-soft: #f1edff;
+
+	/* status */
+	--ua-success: #0f9f8f;
+	--ua-success-soft: #e3f6f3;
+	--ua-success-text: #0b7a6e;
+	--ua-danger: #e5484d;
+	--ua-danger-soft: #fdecec;
+	--ua-danger-text: #c62a2f;
+	--ua-warning: #e8590c;
+	--ua-warning-soft: #fff0e6;
+	--ua-warning-text: #c2410c;
+	--ua-neutral-soft: #eef0f3;
+	--ua-neutral-text: #475467;
+
+	/* data surfaces */
+	--ua-row-hover: #f6f8fd;
+	--ua-row-selected: #eef2fe;
+	--ua-row-selected-border: #c7d3fb;
+	--ua-group-row: #fafbfc;
+	--ua-th-bg: #fbfbfc;
+
+	/* overlay */
+	--ua-backdrop: rgb(14 21 37 / 0.32);
+	--ua-backdrop-soft: rgb(14 21 37 / 0.1);
+	--ua-focus-ring: 0 0 0 3px rgb(47 84 235 / 0.22);
+
+	/* shadow */
+	--ua-shadow-xs: 0 1px 2px rgb(16 24 40 / 0.05);
+	--ua-shadow-sm: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.08);
+	--ua-shadow-md: 0 4px 8px -2px rgb(16 24 40 / 0.08), 0 2px 4px -2px rgb(16 24 40 / 0.05);
+	--ua-shadow-lg: 0 12px 24px -6px rgb(16 24 40 / 0.14), 0 4px 8px -4px rgb(16 24 40 / 0.06);
+	--ua-shadow-xl: 0 24px 48px -12px rgb(16 24 40 / 0.24);
+	--ua-shadow-sticky: 0 1px 0 var(--ua-border), 0 4px 8px -6px rgb(16 24 40 / 0.12);
+}
+
+html[data-theme="dark"] body.ua-shell {
+	color-scheme: dark;
+
+	--ua-bg: #0b0d12;
+	--ua-surface: #12151c;
+	--ua-surface-2: #181c25;
+	--ua-surface-3: #20252f;
+	--ua-surface-raised: #1a1e28;
+	--ua-border: #252a35;
+	--ua-border-strong: #343b48;
+	--ua-text: #e8ecf3;
+	--ua-text-2: #a6afbf;
+	--ua-text-3: #6e7889;
+	--ua-text-on-accent: #ffffff;
+
+	--ua-accent: #5b7bff;
+	--ua-accent-hover: #7590ff;
+	--ua-accent-press: #4a69f0;
+	--ua-accent-soft: rgb(91 123 255 / 0.14);
+	--ua-accent-soft-2: rgb(91 123 255 / 0.24);
+	--ua-accent-text: #8da3ff;
+
+	--ua-violet: #9b84ff;
+	--ua-violet-soft: rgb(155 132 255 / 0.14);
+
+	--ua-success: #2ec4a9;
+	--ua-success-soft: rgb(46 196 169 / 0.13);
+	--ua-success-text: #4fd8bf;
+	--ua-danger: #ff6b6f;
+	--ua-danger-soft: rgb(255 107 111 / 0.13);
+	--ua-danger-text: #ff8a8d;
+	--ua-warning: #ff8a3d;
+	--ua-warning-soft: rgb(255 138 61 / 0.13);
+	--ua-warning-text: #ffa266;
+	--ua-neutral-soft: rgb(166 175 191 / 0.12);
+	--ua-neutral-text: #b4bccb;
+
+	--ua-row-hover: #161a23;
+	--ua-row-selected: rgb(91 123 255 / 0.12);
+	--ua-row-selected-border: rgb(91 123 255 / 0.4);
+	--ua-group-row: #141820;
+	--ua-th-bg: #141820;
+
+	--ua-backdrop: rgb(0 0 0 / 0.55);
+	--ua-backdrop-soft: rgb(0 0 0 / 0.25);
+	--ua-focus-ring: 0 0 0 3px rgb(91 123 255 / 0.35);
+
+	--ua-shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+	--ua-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.3);
+	--ua-shadow-md: 0 4px 10px -2px rgb(0 0 0 / 0.5);
+	--ua-shadow-lg: 0 14px 28px -6px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.04);
+	--ua-shadow-xl: 0 28px 56px -12px rgb(0 0 0 / 0.7), 0 0 0 1px rgb(255 255 255 / 0.05);
+	--ua-shadow-sticky: 0 1px 0 var(--ua-border), 0 6px 10px -6px rgb(0 0 0 / 0.6);
+}
+
+body.ua-shell {
+	/* type */
+	--ua-font: "InterVariable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+	--ua-font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+	--ua-fs-11: 11px;
+	--ua-fs-12: 12px;
+	--ua-fs-13: 13px;
+	--ua-fs-14: 14px;
+	--ua-fs-16: 16px;
+	--ua-fs-20: 20px;
+	--ua-fs-24: 24px;
+	--ua-fs-30: 30px;
+	--ua-lh-tight: 1.25;
+	--ua-lh: 1.45;
+	--ua-fw-regular: 400;
+	--ua-fw-medium: 500;
+	--ua-fw-semibold: 600;
+	--ua-fw-bold: 700;
+
+	/* space (4px grid) */
+	--ua-s-1: 4px;
+	--ua-s-2: 8px;
+	--ua-s-3: 12px;
+	--ua-s-4: 16px;
+	--ua-s-5: 20px;
+	--ua-s-6: 24px;
+	--ua-s-8: 32px;
+	--ua-s-10: 40px;
+	--ua-s-12: 48px;
+
+	/* size */
+	--ua-h-control-sm: 28px;
+	--ua-h-control: 32px;
+	--ua-h-control-lg: 40px;
+	--ua-h-row: 36px;
+	--ua-h-row-dense: 32px;
+	--ua-h-topbar: 52px;
+	--ua-w-sidebar: 232px;
+	--ua-w-sidebar-collapsed: 60px;
+	--ua-w-fpanel: 980px;
+
+	/* radius */
+	--ua-r-xs: 4px;
+	--ua-r-sm: 6px;
+	--ua-r-md: 8px;
+	--ua-r-lg: 12px;
+	--ua-r-xl: 16px;
+	--ua-r-pill: 999px;
+
+	/* motion */
+	--ua-dur-instant: 80ms;
+	--ua-dur-fast: 120ms;
+	--ua-dur-base: 180ms;
+	--ua-dur-slow: 240ms;
+	--ua-dur-slower: 320ms;
+	--ua-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--ua-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+	--ua-ease-in: cubic-bezier(0.4, 0, 1, 1);
+	--ua-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+	--ua-stagger: 18ms;
+
+	/* layers */
+	--ua-z-sticky: 10;
+	--ua-z-sidebar: 30;
+	--ua-z-fpanel: 40;
+	--ua-z-dropdown: 50;
+	--ua-z-drawer: 60;
+	--ua-z-dialog: 70;
+	--ua-z-toast: 80;
+	--ua-z-tooltip: 90;
+}
+
+/* Reduced motion: the system setting turns every duration off. */
+@media (prefers-reduced-motion: reduce) {
+	body.ua-shell {
+		--ua-dur-instant: 0ms;
+		--ua-dur-fast: 0ms;
+		--ua-dur-base: 0ms;
+		--ua-dur-slow: 0ms;
+		--ua-dur-slower: 0ms;
+		--ua-stagger: 0ms;
+	}
+}

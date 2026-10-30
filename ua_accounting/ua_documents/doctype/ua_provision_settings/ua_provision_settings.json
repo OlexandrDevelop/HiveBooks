@@ -1,0 +1,165 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "expense_item",
+  "department",
+  "sb_doubtful",
+  "doubtful_method",
+  "doubtful_coefficient",
+  "classes",
+  "doubtful_debts",
+  "sb_vacation",
+  "planned_vacation_pay_year",
+  "planned_wage_fund_year",
+  "esv_rate",
+  "vacation_expense_account"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "expense_item",
+   "fieldtype": "Link",
+   "label": "Стаття витрат",
+   "options": "UA Expense Item"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Підрозділ",
+   "options": "UA Department"
+  },
+  {
+   "fieldname": "sb_doubtful",
+   "fieldtype": "Section Break",
+   "label": "Резерв сумнівних боргів"
+  },
+  {
+   "fieldname": "doubtful_method",
+   "fieldtype": "Select",
+   "label": "Метод резерву сумнівних боргів",
+   "options": "За класифікацією боргів\nЗа коефіцієнтом сумнівності\nЗа абсолютною сумою сумнівної заборгованості",
+   "default": "За класифікацією боргів",
+   "reqd": 1
+  },
+  {
+   "fieldname": "doubtful_coefficient",
+   "fieldtype": "Percent",
+   "label": "Коефіцієнт сумнівності"
+  },
+  {
+   "fieldname": "classes",
+   "fieldtype": "Table",
+   "label": "Класи боргів за строком прострочення",
+   "options": "UA Debt Reserve Class",
+   "depends_on": "eval:doc.doubtful_method=='За класифікацією боргів'"
+  },
+  {
+   "fieldname": "doubtful_debts",
+   "fieldtype": "Table",
+   "label": "Сумнівна заборгованість",
+   "options": "UA Doubtful Debt",
+   "depends_on": "eval:doc.doubtful_method=='За абсолютною сумою сумнівної заборгованості'"
+  },
+  {
+   "fieldname": "sb_vacation",
+   "fieldtype": "Section Break",
+   "label": "Резерв відпусток"
+  },
+  {
+   "fieldname": "planned_vacation_pay_year",
+   "fieldtype": "Currency",
+   "label": "Планова сума відпусткових на рік"
+  },
+  {
+   "fieldname": "planned_wage_fund_year",
+   "fieldtype": "Currency",
+   "label": "Плановий фонд оплати праці на рік"
+  },
+  {
+   "fieldname": "esv_rate",
+   "fieldtype": "Percent",
+   "label": "Ставка ЄСВ",
+   "default": "22"
+  },
+  {
+   "fieldname": "vacation_expense_account",
+   "fieldtype": "Link",
+   "label": "Рахунок витрат на відпустки",
+   "options": "UA Account",
+   "default": "92"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Provision Settings",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1,
+   "delete": 1
+  }
+ ],
+ "autoname": "field:organization",
+ "title_field": "organization"
+}

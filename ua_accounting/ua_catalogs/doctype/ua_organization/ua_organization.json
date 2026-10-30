@@ -10,10 +10,14 @@
   "edrpou",
   "ipn",
   "doc_prefix",
+  "logo",
   "cb1",
   "vat_payer",
   "vat_certificate_no",
+  "tax_office_code",
+  "tax_office_name",
   "tax_system",
+  "keep_tax_accounting",
   "default_currency",
   "sb_addr",
   "legal_address",
@@ -24,7 +28,8 @@
   "sb_people",
   "director",
   "cb3",
-  "chief_accountant"
+  "chief_accountant",
+  "edit_lock_date"
  ],
  "fields": [
   {
@@ -70,11 +75,28 @@
    "label": "№ свідоцтва платника ПДВ"
   },
   {
+   "fieldname": "tax_office_code",
+   "fieldtype": "Data",
+   "label": "Код контролюючого органу"
+  },
+  {
+   "fieldname": "tax_office_name",
+   "fieldtype": "Data",
+   "label": "Найменування контролюючого органу"
+  },
+  {
    "default": "Загальна система",
    "fieldname": "tax_system",
    "fieldtype": "Select",
    "label": "Система оподаткування",
    "options": "Загальна система\nЄдиний податок, 1 група\nЄдиний податок, 2 група\nЄдиний податок, 3 група\nЄдиний податок, 4 група"
+  },
+  {
+   "default": "0",
+   "description": "Паралельний регістр сум податкового обліку (ПО) і розрахунок податкових різниць",
+   "fieldname": "keep_tax_accounting",
+   "fieldtype": "Check",
+   "label": "Вести податковий облік"
   },
   {
    "default": "UAH",
@@ -111,7 +133,7 @@
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email",
+   "label": "Ел. пошта",
    "options": "Email"
   },
   {
@@ -137,11 +159,21 @@
    "options": "UA Person"
   },
   {
+   "fieldname": "edit_lock_date",
+   "fieldtype": "Date",
+   "label": "Дата заборони редагування"
+  },
+  {
    "description": "Номер документа: ПРЕФІКС-код-рік-номер. Наприклад AB-SI-26-00001",
    "fieldname": "doc_prefix",
    "fieldtype": "Data",
    "label": "Префікс номерів документів",
    "length": 8
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Логотип"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -187,6 +219,25 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
+  },
+  {
+   "role": "UA Administrator",
+   "read": 1
   }
  ],
  "search_fields": "org_name,edrpou",

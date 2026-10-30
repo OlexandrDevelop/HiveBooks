@@ -1,0 +1,176 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "distribution_base",
+  "sb_products",
+  "products",
+  "sb_totals",
+  "total_overhead",
+  "cb2",
+  "total_deviation",
+  "sb_more",
+  "comment",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Дата (кінець місяця)",
+   "reqd": 1
+  },
+  {
+   "default": "Планова собівартість випуску",
+   "fieldname": "distribution_base",
+   "fieldtype": "Select",
+   "label": "База розподілу витрат",
+   "options": "Планова собівартість випуску\nКількість",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_products",
+   "fieldtype": "Section Break",
+   "label": "Випуск за місяць"
+  },
+  {
+   "fieldname": "products",
+   "fieldtype": "Table",
+   "label": "Продукція",
+   "options": "UA Production Closing Line",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_totals",
+   "fieldtype": "Section Break",
+   "label": "Підсумок"
+  },
+  {
+   "fieldname": "total_overhead",
+   "fieldtype": "Currency",
+   "label": "Розподілено загальновиробничих витрат",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "total_deviation",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Відхилення фактичної собівартості",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sb_more",
+   "fieldtype": "Section Break",
+   "label": "Додатково"
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Коментар"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Виправлення",
+   "no_copy": 1,
+   "options": "UA Production Month Closing",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-23 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Production Month Closing",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

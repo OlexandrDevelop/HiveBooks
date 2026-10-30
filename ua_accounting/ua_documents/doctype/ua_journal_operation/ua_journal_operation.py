@@ -21,6 +21,26 @@ class UAJournalOperation(AccountingDocument):
                 frappe.throw(_("Рядок {0}: вкажіть рахунок").format(row.idx))
             for side in ("dr", "cr"):
                 self.set_subconto_types(row, side)
+            if flt(row.tax_amount) < 0:
+                frappe.throw(_("Рядок {0}: сума ПО не може бути від'ємною").format(row.idx))
+        self.follow_amount_in_tax()
+
+    def before_insert(self):
+        """Empty ПО means «equals БО»: the field is a number, so the default is written once, at insert."""
+        for row in self.entries:
+            if row.get("tax_amount") is None:
+                row.tax_amount = flt(row.amount)
+
+    def follow_amount_in_tax(self):
+        """A draft row whose ПО followed БО keeps following it when the amount is edited."""
+        before = self.get_doc_before_save()
+        if not before:
+            return
+        old = {r.name: r for r in before.entries}
+        for row in self.entries:
+            p = old.get(row.name)
+            if p and flt(p.tax_amount) == flt(p.amount) and flt(row.tax_amount) == flt(p.tax_amount):
+                row.tax_amount = flt(row.amount)
 
     def set_subconto_types(self, row, side):
         """The type of a subconto value comes from the account, not from the user."""
@@ -49,6 +69,7 @@ class UAJournalOperation(AccountingDocument):
                 "account_dr": row.account_dr or "",
                 "account_cr": row.account_cr or "",
                 "amount": flt(row.amount),
+                "tax_amount": flt(row.tax_amount) if row.get("tax_amount") is not None else None,
                 "quantity_dr": flt(row.quantity_dr),
                 "quantity_cr": flt(row.quantity_cr),
                 "currency_dr": row.currency_dr,

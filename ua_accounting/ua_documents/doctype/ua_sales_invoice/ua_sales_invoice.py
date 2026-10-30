@@ -2,6 +2,7 @@ import frappe
 from frappe import _
 from frappe.utils import flt
 
+from ua_accounting.accounting import packaging
 from ua_accounting.accounting.documents import (
     COST_ACCOUNT,
     COST_ACCOUNT_DEFAULT,
@@ -13,10 +14,12 @@ from ua_accounting.accounting.documents import (
     VAT_NONE,
     TradeDocument,
     allocate_advance,
+    fill_cash_side,
     new_from_basis,
     settlement_balance,
-    stock_balance,
 )
+from ua_accounting.accounting.retail import is_retail
+from ua_accounting.accounting.stock import take_cost
 
 ADVANCE_ACCOUNT = "681"
 VAT_ACCOUNT = "641"
@@ -31,7 +34,7 @@ class UASalesInvoice(TradeDocument):
     Dt 704 Ct 641   VAT liability of the shipment
     Dt 90x Ct 281   cost of goods, average cost of the warehouse
     Dt 681 Ct 361   offset of the advance
-    Dt 641 Ct 643   VAT already taken at the advance (first event rule)
+    Dt 704 Ct 643   VAT already taken at the advance (first event rule), instead of Ct 641
     """
 
     doc_code = "SI"
@@ -39,11 +42,14 @@ class UASalesInvoice(TradeDocument):
 
     def validate(self):
         super().validate()
+        packaging.prepare(self)
         if self.customer_order and self.customer_order_status() == 2:
             frappe.throw(_("Замовлення {0} скасоване").format(self.customer_order))
         for row in self.get(self.goods_table) or []:
             if not (row.warehouse or self.warehouse) and self.item_info(row.item).item_type != TYPE_SERVICE:
                 frappe.throw(_("Рядок {0}: вкажіть склад").format(row.idx))
+            if is_retail(row.warehouse or self.warehouse):
+                frappe.throw(_("Рядок {0}: з роздрібного складу продають звітом про роздрібні продажі").format(row.idx))
 
     def customer_order_status(self):
         return frappe.db.get_value("UA Customer Order", self.customer_order, "docstatus")
@@ -55,6 +61,7 @@ class UASalesInvoice(TradeDocument):
         entries, liabilities = [], []
         groups = {}
         used = {}  # stock already taken by this document: key -> [amount, quantity]
+        vat_lines = []  # (rate group, VAT amount, subconto) of the rows
 
         for row, kind in self.lines():
             info = self.item_info(row.item)
@@ -73,11 +80,11 @@ class UASalesInvoice(TradeDocument):
                 )
             )
             if vat_amount:
-                entries.append(
-                    self.entry(VAT_DEDUCTION_ACCOUNT, VAT_ACCOUNT, vat_amount, item_sub, {"TaxType": TAX_VAT})
-                )
+                vat_lines.append((row.vat_rate or "", vat_amount, item_sub))
             if kind == "goods" and info.item_type in STOCK_ACCOUNT:
                 entries.append(self.cost_entry(row, info, used))
+
+        entries.extend(packaging.sale_entries(self, settle, used))
 
         applied = 0.0
         alloc = {}
@@ -105,11 +112,19 @@ class UASalesInvoice(TradeDocument):
                 )
             )
             alloc = allocate_advance(groups, applied, self.vat_mode)
-            advance_vat = flt(sum(v for _g, v in alloc.values()), 2)
-            if advance_vat:
-                # the VAT liability of this part was recorded when the advance was paid
+
+        # the VAT liability of the advance part was recorded when the advance was paid:
+        # it is closed from 643, only the rest goes to 641
+        covered_left = {key: covered_vat for key, (_part, covered_vat) in alloc.items()}
+        tax_sub = {"TaxType": TAX_VAT}
+        for key, vat_amount, item_sub in vat_lines:
+            from_advance = min(covered_left.get(key, 0), vat_amount)
+            covered_left[key] = flt(covered_left.get(key, 0) - from_advance, 2)
+            if from_advance:
+                entries.append(self.entry(VAT_DEDUCTION_ACCOUNT, VAT_PREPAID_ACCOUNT, from_advance, item_sub, tax_sub))
+            if flt(vat_amount - from_advance, 2):
                 entries.append(
-                    self.entry(VAT_ACCOUNT, VAT_PREPAID_ACCOUNT, advance_vat, {"TaxType": TAX_VAT}, {"TaxType": TAX_VAT})
+                    self.entry(VAT_DEDUCTION_ACCOUNT, VAT_ACCOUNT, flt(vat_amount - from_advance, 2), item_sub, tax_sub)
                 )
 
         if self.vat_mode != VAT_NONE:
@@ -122,26 +137,11 @@ class UASalesInvoice(TradeDocument):
         return entries, liabilities, []
 
     def cost_entry(self, row, info, used):
-        """Dt 902 Ct 281 at the average cost of the item in the warehouse."""
+        """Dt 902 Ct 281 at the cost of the item in the warehouse (average or FIFO by the policy)."""
         stock = row.account or STOCK_ACCOUNT[info.item_type]
         warehouse = row.warehouse or self.warehouse
-        key = (stock, row.item, warehouse)
-        if key not in used:
-            used[key] = list(stock_balance(self.organization, stock, row.item, warehouse, self.posting_date, self._ctx))
-            used[key].extend([0.0, 0.0])
-        bal_amount, bal_qty, taken_amount, taken_qty = used[key]
-        left_qty = flt(bal_qty - taken_qty, 3)
-        left_amount = flt(bal_amount - taken_amount, 2)
         qty = flt(row.quantity, 3)
-        if qty > left_qty:
-            frappe.throw(
-                _("Рядок {0}: недостатньо {1} на складі {2}: залишок {3}, потрібно {4}").format(
-                    row.idx, row.item_name or row.item, warehouse, left_qty, qty
-                )
-            )
-        cost = left_amount if qty == left_qty else flt(left_amount * qty / left_qty, 2)
-        used[key][2] += cost
-        used[key][3] += qty
+        cost = take_cost(self, row, stock, row.item, warehouse, qty, used)
         return self.entry(
             COST_ACCOUNT.get(stock, COST_ACCOUNT_DEFAULT),
             stock,
@@ -165,15 +165,28 @@ class UASalesInvoice(TradeDocument):
     def set_order_status(self):
         if not self.customer_order:
             return
-        done = frappe.db.exists(
-            "UA Sales Invoice",
-            {"customer_order": self.customer_order, "docstatus": 1, "name": ("!=", self.name)},
+        order = frappe.get_doc("UA Customer Order", self.customer_order)
+        invoices = frappe.get_all(
+            "UA Sales Invoice", filters={"customer_order": self.customer_order, "docstatus": 1}, pluck="name"
         )
-        if self.docstatus == 1 or done:
+        shipped = {}
+        for line_type, table in (("UA Goods Line", "goods"), ("UA Service Line", "services")):
+            for row in frappe.get_all(
+                line_type,
+                filters={"parent": ("in", invoices or [""]), "parenttype": "UA Sales Invoice", "parentfield": table},
+                fields=["item", "quantity"],
+            ):
+                shipped[row.item] = flt(shipped.get(row.item, 0) + row.quantity, 3)
+        wanted = [*(order.get("goods") or []), *(order.get("services") or [])]
+        if not invoices:
+            status = "Відкрито"
+        elif all(shipped.get(row.item, 0) >= flt(row.quantity, 3) for row in wanted):
             status = "Виконано"
         else:
-            status = "Відкрито"
-        frappe.db.set_value("UA Customer Order", self.customer_order, "status", status, update_modified=False)
+            status = "Виконується"
+        from ua_accounting.administration import set_status
+
+        set_status("UA Customer Order", self.customer_order, status)
 
 
 @frappe.whitelist()
@@ -185,4 +198,5 @@ def make_cash_receipt(source_name, target_doc=None):
     doc.operation_type = "Оплата від покупця"
     doc.settlement_type = "Оплата за реалізацію"
     doc.amount = sale.total_amount
+    fill_cash_side(doc)
     return doc

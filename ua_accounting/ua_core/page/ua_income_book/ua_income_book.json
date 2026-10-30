@@ -1,0 +1,23 @@
+{
+ "doctype": "Page",
+ "name": "ua-income-book",
+ "page_name": "ua-income-book",
+ "title": "Книга обліку доходів",
+ "module": "UA Core",
+ "standard": "Yes",
+ "system_page": 0,
+ "roles": [
+  {
+   "role": "UA Accountant"
+  },
+  {
+   "role": "UA Accounting Manager"
+  },
+  {
+   "role": "UA Chief Accountant"
+  },
+  {
+   "role": "System Manager"
+  }
+ ]
+}

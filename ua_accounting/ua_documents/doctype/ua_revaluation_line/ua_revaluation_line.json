@@ -1,0 +1,65 @@
+{
+ "doctype": "DocType",
+ "name": "UA Revaluation Line",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "quantity",
+  "old_price",
+  "new_price",
+  "difference"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Номенклатура",
+   "fieldtype": "Link",
+   "options": "UA Item",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 3
+  },
+  {
+   "fieldname": "item_name",
+   "label": "Найменування",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Залишок",
+   "fieldtype": "Float",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "old_price",
+   "label": "Стара ціна",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "new_price",
+   "label": "Нова ціна",
+   "fieldtype": "Currency",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "difference",
+   "label": "Різниця",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1
+}

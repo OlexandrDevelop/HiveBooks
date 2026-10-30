@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "days_from",
+  "days_to",
+  "percent"
+ ],
+ "fields": [
+  {
+   "fieldname": "days_from",
+   "fieldtype": "Int",
+   "label": "Днів прострочення від",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "days_to",
+   "fieldtype": "Int",
+   "label": "Днів прострочення до",
+   "in_list_view": 1,
+   "description": "Порожньо — без обмеження"
+  },
+  {
+   "fieldname": "percent",
+   "fieldtype": "Percent",
+   "label": "Відсоток резерву",
+   "in_list_view": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Debt Reserve Class",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}

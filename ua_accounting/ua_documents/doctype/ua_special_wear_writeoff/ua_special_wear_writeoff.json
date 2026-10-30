@@ -1,0 +1,116 @@
+{
+ "doctype": "DocType",
+ "name": "UA Special Wear Writeoff",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "person",
+  "department",
+  "reason",
+  "items",
+  "allocations"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Дата",
+   "fieldtype": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "person",
+   "label": "Працівник",
+   "fieldtype": "Link",
+   "options": "UA Person",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "department",
+   "label": "Підрозділ",
+   "fieldtype": "Link",
+   "options": "UA Department"
+  },
+  {
+   "fieldname": "reason",
+   "label": "Причина списання",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "items",
+   "label": "Спецодяг і спецоснащення",
+   "fieldtype": "Table",
+   "options": "UA Special Wear Return Line",
+   "reqd": 1
+  },
+  {
+   "fieldname": "allocations",
+   "label": "Розподіл за передачами",
+   "fieldtype": "Table",
+   "options": "UA Special Wear Allocation",
+   "read_only": 1,
+   "hidden": 1
+  }
+ ],
+ "is_submittable": 1,
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "naming_rule": "By script",
+ "autoname": "",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 0
+}

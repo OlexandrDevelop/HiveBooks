@@ -1,0 +1,129 @@
+{
+ "doctype": "DocType",
+ "name": "UA Currency Exchange",
+ "module": "UA Documents",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "operation_type",
+  "uah_bank_account",
+  "currency_bank_account",
+  "currency",
+  "currency_amount",
+  "deal_rate",
+  "official_rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "operation_type",
+   "fieldtype": "Select",
+   "label": "Вид операції",
+   "options": "Купівля валюти\nПродаж валюти",
+   "reqd": 1
+  },
+  {
+   "fieldname": "uah_bank_account",
+   "fieldtype": "Link",
+   "label": "Гривневий рахунок",
+   "options": "UA Bank Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency_bank_account",
+   "fieldtype": "Link",
+   "label": "Валютний рахунок",
+   "options": "UA Bank Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Валюта",
+   "options": "UA Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency_amount",
+   "fieldtype": "Currency",
+   "label": "Сума валюти",
+   "reqd": 1
+  },
+  {
+   "fieldname": "deal_rate",
+   "fieldtype": "Float",
+   "label": "Курс банку",
+   "reqd": 1
+  },
+  {
+   "fieldname": "official_rate",
+   "fieldtype": "Float",
+   "label": "Курс НБУ"
+  }
+ ],
+ "istable": 0,
+ "is_submittable": 1,
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "naming_rule": "By script",
+ "autoname": "",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

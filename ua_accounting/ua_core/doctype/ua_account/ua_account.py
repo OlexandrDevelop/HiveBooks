@@ -45,13 +45,14 @@ class UAAccount(NestedSet):
         if (
             sub_sig(before) != sub_sig(self)
             or bool(before.is_group) != bool(self.is_group)
+            or bool(before.off_balance) != bool(self.off_balance)
             or bool(before.currency_accounting) != bool(self.currency_accounting)
             or bool(before.quantity_accounting) != bool(self.quantity_accounting)
         ):
             frappe.throw(
                 _(
                     "За рахунком {0} є проводки. Не можна змінювати субконто, "
-                    "ознаку групи, валютний та кількісний облік."
+                    "ознаку групи, позабалансовий, валютний та кількісний облік."
                 ).format(self.name)
             )
 

@@ -1,0 +1,142 @@
+{
+ "doctype": "DocType",
+ "name": "UA Bank Statement Line",
+ "module": "UA Documents",
+ "field_order": [
+  "direction",
+  "operation_type",
+  "counterparty",
+  "contract",
+  "settlement_type",
+  "amount",
+  "cash_flow_item",
+  "payment_order",
+  "person",
+  "other_account",
+  "purpose",
+  "posting_date",
+  "number",
+  "counterparty_name",
+  "counterparty_edrpou",
+  "counterparty_iban",
+  "status",
+  "document_type",
+  "document"
+ ],
+ "fields": [
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Напрям",
+   "options": "Надходження\nСписання",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "operation_type",
+   "fieldtype": "Data",
+   "label": "Вид операції"
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Контрагент",
+   "options": "UA Counterparty"
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "settlement_type",
+   "fieldtype": "Data",
+   "label": "Вид розрахунку"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Сума",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cash_flow_item",
+   "fieldtype": "Link",
+   "label": "Стаття руху коштів",
+   "options": "UA Cash Flow Item"
+  },
+  {
+   "fieldname": "payment_order",
+   "fieldtype": "Link",
+   "label": "Платіжне доручення",
+   "options": "UA Payment Order"
+  },
+  {
+   "fieldname": "person",
+   "fieldtype": "Link",
+   "label": "Особа",
+   "options": "UA Person"
+  },
+  {
+   "fieldname": "other_account",
+   "fieldtype": "Link",
+   "label": "Рахунок кореспонденції",
+   "options": "UA Account"
+  },
+  {
+   "fieldname": "purpose",
+   "fieldtype": "Small Text",
+   "label": "Призначення платежу"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата"
+  },
+  {
+   "fieldname": "number",
+   "fieldtype": "Data",
+   "label": "Номер"
+  },
+  {
+   "fieldname": "counterparty_name",
+   "fieldtype": "Data",
+   "label": "Назва контрагента"
+  },
+  {
+   "fieldname": "counterparty_edrpou",
+   "fieldtype": "Data",
+   "label": "ЄДРПОУ контрагента"
+  },
+  {
+   "fieldname": "counterparty_iban",
+   "fieldtype": "Data",
+   "label": "Рахунок контрагента"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Стан рядка",
+   "options": "\nНове\nРозпізнано\nПроведено"
+  },
+  {
+   "fieldname": "document_type",
+   "fieldtype": "Data",
+   "label": "Вид документа"
+  },
+  {
+   "fieldname": "document",
+   "fieldtype": "Data",
+   "label": "Документ"
+  }
+ ],
+ "istable": 1,
+ "is_submittable": 0,
+ "permissions": [],
+ "naming_rule": "Random",
+ "autoname": "hash",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

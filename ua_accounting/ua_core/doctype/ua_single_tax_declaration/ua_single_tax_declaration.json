@@ -1,0 +1,186 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 20:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "year",
+  "period",
+  "posting_date",
+  "tax_system",
+  "taxpayer_type",
+  "income_total",
+  "tax_rate",
+  "single_tax_accrued",
+  "single_tax_previous",
+  "single_tax_payable",
+  "vz_accrued",
+  "vz_payable",
+  "income_limit_exceeded",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Рік",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Період",
+   "options": "Q1\nH1\n9M\nY",
+   "reqd": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата кінця періоду",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tax_system",
+   "fieldtype": "Select",
+   "label": "Система оподаткування",
+   "options": "Загальна система\nЄдиний податок, 1 група\nЄдиний податок, 2 група\nЄдиний податок, 3 група\nЄдиний податок, 4 група",
+   "read_only": 1
+  },
+  {
+   "fieldname": "taxpayer_type",
+   "fieldtype": "Select",
+   "label": "Тип платника",
+   "options": "Юридична особа\nФОП",
+   "read_only": 1
+  },
+  {
+   "fieldname": "income_total",
+   "fieldtype": "Currency",
+   "label": "Дохід наростаючим підсумком (без ПДВ)",
+   "options": "UAH"
+  },
+  {
+   "fieldname": "tax_rate",
+   "fieldtype": "Percent",
+   "label": "Ставка єдиного податку, %"
+  },
+  {
+   "fieldname": "single_tax_accrued",
+   "fieldtype": "Currency",
+   "label": "Єдиний податок нараховано (наростаючим)",
+   "options": "UAH"
+  },
+  {
+   "fieldname": "single_tax_previous",
+   "fieldtype": "Currency",
+   "label": "Нараховано за попередній період",
+   "options": "UAH"
+  },
+  {
+   "fieldname": "single_tax_payable",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Єдиний податок до сплати",
+   "options": "UAH"
+  },
+  {
+   "fieldname": "vz_accrued",
+   "fieldtype": "Currency",
+   "label": "Військовий збір нараховано",
+   "options": "UAH"
+  },
+  {
+   "fieldname": "vz_payable",
+   "fieldtype": "Currency",
+   "label": "Військовий збір до сплати",
+   "options": "UAH"
+  },
+  {
+   "fieldname": "income_limit_exceeded",
+   "fieldtype": "Check",
+   "label": "Ліміт доходу перевищено"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Виправлення до",
+   "no_copy": 1,
+   "options": "UA Single Tax Declaration",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-22 20:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Single Tax Declaration",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "cancel": 1,
+   "create": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "organization",
+ "track_changes": 1
+}

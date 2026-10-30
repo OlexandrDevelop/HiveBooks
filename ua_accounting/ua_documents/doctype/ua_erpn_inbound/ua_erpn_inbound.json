@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 22:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 22:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "name": "UA ERPN Inbound",
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Контрагент",
+   "options": "UA Counterparty",
+   "reqd": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "reqd": 1
+  },
+  {
+   "fieldname": "number",
+   "fieldtype": "Data",
+   "label": "Номер"
+  },
+  {
+   "fieldname": "base_amount",
+   "fieldtype": "Currency",
+   "label": "База оподаткування"
+  },
+  {
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "label": "Сума ПДВ"
+  },
+  {
+   "fieldname": "imported_as",
+   "fieldtype": "Link",
+   "label": "Створена ПН",
+   "options": "UA Tax Invoice",
+   "read_only": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1
+  }
+ ],
+ "field_order": [
+  "organization",
+  "counterparty",
+  "posting_date",
+  "number",
+  "base_amount",
+  "vat_amount",
+  "imported_as"
+ ]
+}

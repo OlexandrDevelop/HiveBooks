@@ -1,0 +1,21 @@
+{
+ "doctype": "DocType",
+ "name": "UA Lock Allowed Role",
+ "module": "UA Core",
+ "field_order": [
+  "role"
+ ],
+ "fields": [
+  {
+   "fieldname": "role",
+   "label": "Роль",
+   "fieldtype": "Link",
+   "options": "Role",
+   "reqd": 1
+  }
+ ],
+ "permissions": [],
+ "track_changes": 0,
+ "index_web_pages_for_search": 0,
+ "istable": 1
+}

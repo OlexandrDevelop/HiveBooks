@@ -1,0 +1,14 @@
+{
+ "doctype": "Page",
+ "name": "ua-stock-balance",
+ "page_name": "ua-stock-balance",
+ "title": "Залишки товарів",
+ "module": "UA Core",
+ "standard": "Yes",
+ "system_page": 0,
+ "roles": [
+  {"role": "UA Accountant"},
+  {"role": "UA Accounting Manager"},
+  {"role": "System Manager"}
+ ]
+}

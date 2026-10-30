@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "lease",
+  "counterparty",
+  "days",
+  "amount_net",
+  "vat_amount",
+  "tax_invoice"
+ ],
+ "fields": [
+  {
+   "fieldname": "lease",
+   "fieldtype": "Link",
+   "label": "Договір оренди",
+   "options": "UA Lease Agreement",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Орендодавець",
+   "options": "UA Counterparty",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "days",
+   "fieldtype": "Int",
+   "label": "Днів оренди",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount_net",
+   "fieldtype": "Currency",
+   "label": "Сума без ПДВ",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "label": "ПДВ",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "tax_invoice",
+   "fieldtype": "Check",
+   "label": "Податкова накладна отримана",
+   "in_list_view": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-23 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Rent Accrual Line",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}

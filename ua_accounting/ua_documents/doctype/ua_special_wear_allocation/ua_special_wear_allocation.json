@@ -1,0 +1,89 @@
+{
+ "doctype": "DocType",
+ "name": "UA Special Wear Allocation",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "issue",
+  "issue_line",
+  "item",
+  "warehouse",
+  "quantity",
+  "cost",
+  "expensed",
+  "expense_account",
+  "expense_item",
+  "method"
+ ],
+ "fields": [
+  {
+   "fieldname": "issue",
+   "label": "Передача",
+   "fieldtype": "Link",
+   "options": "UA Special Wear Issue",
+   "read_only": 1
+  },
+  {
+   "fieldname": "issue_line",
+   "label": "Рядок передачі",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "item",
+   "label": "Номенклатура",
+   "fieldtype": "Link",
+   "options": "UA Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Склад",
+   "fieldtype": "Link",
+   "options": "UA Warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Кількість",
+   "fieldtype": "Float",
+   "read_only": 1,
+   "precision": "3"
+  },
+  {
+   "fieldname": "cost",
+   "label": "Вартість",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "expensed",
+   "label": "Вже списано",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "expense_account",
+   "label": "Рахунок витрат",
+   "fieldtype": "Link",
+   "options": "UA Account",
+   "read_only": 1
+  },
+  {
+   "fieldname": "expense_item",
+   "label": "Стаття витрат",
+   "fieldtype": "Link",
+   "options": "UA Expense Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "method",
+   "label": "Метод списання",
+   "fieldtype": "Data",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": []
+}

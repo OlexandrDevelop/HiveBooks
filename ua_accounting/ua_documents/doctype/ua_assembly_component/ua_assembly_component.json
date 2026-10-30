@@ -1,0 +1,38 @@
+{
+ "doctype": "DocType",
+ "name": "UA Assembly Component",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "quantity",
+  "cost_share"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Номенклатура",
+   "fieldtype": "Link",
+   "options": "UA Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Кількість",
+   "fieldtype": "Float",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cost_share",
+   "label": "Частка собівартості, %",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "description": "Лише для розкомплектації"
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": []
+}

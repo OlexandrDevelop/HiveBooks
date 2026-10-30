@@ -1,0 +1,205 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "kind",
+  "amount",
+  "debt_side",
+  "expense_item",
+  "sb_first",
+  "counterparty",
+  "contract",
+  "sb_second",
+  "counterparty2",
+  "contract2",
+  "sb_more",
+  "comment",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "default": "Today",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "kind",
+   "fieldtype": "Select",
+   "label": "Вид операції",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1,
+   "options": "Взаємозалік\nПереуступка\nСписання боргу",
+   "default": "Взаємозалік"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Сума, грн",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "debt_side",
+   "fieldtype": "Select",
+   "label": "Борг",
+   "options": "\nДебіторська\nКредиторська",
+   "depends_on": "eval:doc.kind=='Списання боргу'"
+  },
+  {
+   "fieldname": "expense_item",
+   "fieldtype": "Link",
+   "label": "Стаття витрат",
+   "options": "UA Expense Item",
+   "depends_on": "eval:doc.debt_side=='Дебіторська'"
+  },
+  {
+   "fieldname": "sb_first",
+   "fieldtype": "Section Break",
+   "label": "Дебіторська заборгованість (361)"
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Контрагент (покупець)",
+   "options": "UA Counterparty",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір з покупцем",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "sb_second",
+   "fieldtype": "Section Break",
+   "label": "Кредиторська заборгованість (631)",
+   "depends_on": "eval:doc.kind!='Списання боргу'"
+  },
+  {
+   "fieldname": "counterparty2",
+   "fieldtype": "Link",
+   "label": "Контрагент (постачальник)",
+   "options": "UA Counterparty"
+  },
+  {
+   "fieldname": "contract2",
+   "fieldtype": "Link",
+   "label": "Договір з постачальником",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "sb_more",
+   "fieldtype": "Section Break",
+   "label": "Додатково",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Коментар"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Виправлення",
+   "options": "UA Debt Adjustment",
+   "hidden": 1,
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Debt Adjustment",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "counterparty,counterparty2",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

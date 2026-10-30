@@ -1,0 +1,103 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "quantity",
+  "planned_cost",
+  "overhead_share",
+  "actual_cost",
+  "deviation",
+  "output_account",
+  "warehouse",
+  "department"
+ ],
+ "fields": [
+  {
+   "columns": 3,
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Продукція",
+   "options": "UA Item",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Кількість",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "planned_cost",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Планова собівартість",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "overhead_share",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Загальновиробничі витрати",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "actual_cost",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Фактична собівартість",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "deviation",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Відхилення",
+   "read_only": 1
+  },
+  {
+   "fieldname": "output_account",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Рахунок",
+   "read_only": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Склад",
+   "options": "UA Warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Підрозділ",
+   "options": "UA Department",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-23 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Production Closing Line",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

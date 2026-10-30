@@ -1,0 +1,143 @@
+{
+ "doctype": "DocType",
+ "name": "UA Accounting Policy",
+ "module": "UA Core",
+ "field_order": [
+  "organization",
+  "effective_from",
+  "effective_date",
+  "cost_method",
+  "vat_payer",
+  "taxpayer_type",
+  "tax_system",
+  "single_tax_rate",
+  "fixed_rate_pct",
+  "chart_variant",
+  "depreciation_method",
+  "fixed_asset_threshold",
+  "settings_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "effective_from",
+   "label": "Дійсна з",
+   "fieldtype": "Date",
+   "reqd": 1,
+   "in_list_view": 1,
+   "description": "Діє з цієї дати до початку наступної політики"
+  },
+  {
+   "fieldname": "effective_date",
+   "label": "Діє з (дата)",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "description": "Синонім поля «Діє з»"
+  },
+  {
+   "fieldname": "cost_method",
+   "label": "Метод оцінки запасів",
+   "fieldtype": "Select",
+   "options": "Середньозважена\nСередня ковзна\nФІФО",
+   "default": "Середньозважена"
+  },
+  {
+   "fieldname": "vat_payer",
+   "label": "Платник ПДВ",
+   "fieldtype": "Check",
+   "default": "1"
+  },
+  {
+   "fieldname": "taxpayer_type",
+   "label": "Тип платника",
+   "fieldtype": "Select",
+   "options": "Юридична особа\nФОП",
+   "default": "Юридична особа"
+  },
+  {
+   "fieldname": "tax_system",
+   "label": "Система оподаткування",
+   "fieldtype": "Select",
+   "options": "Загальна система\nЄдиний податок, 1 група\nЄдиний податок, 2 група\nЄдиний податок, 3 група\nЄдиний податок, 4 група",
+   "default": "Загальна система"
+  },
+  {
+   "fieldname": "single_tax_rate",
+   "label": "Ставка єдиного податку, %",
+   "fieldtype": "Percent",
+   "read_only": 1
+  },
+  {
+   "fieldname": "fixed_rate_pct",
+   "label": "Фіксована ставка єдиного податку, %",
+   "fieldtype": "Percent",
+   "description": "Групи 1, 2: відсоток від прожиткового мінімуму (до 10 %) або мінімальної зарплати (до 20 %)"
+  },
+  {
+   "fieldname": "chart_variant",
+   "label": "Варіант плану рахунків",
+   "fieldtype": "Select",
+   "options": "Загальний\nСпрощений (малі підприємства)",
+   "default": "Загальний"
+  },
+  {
+   "fieldname": "depreciation_method",
+   "label": "Метод амортизації",
+   "fieldtype": "Select",
+   "options": "Прямолінійний\nЗменшення залишкової вартості\nПрискореного зменшення залишкової вартості\nВиробничий",
+   "default": "Прямолінійний"
+  },
+  {
+   "fieldname": "fixed_asset_threshold",
+   "label": "Поріг основних засобів",
+   "fieldtype": "Currency",
+   "default": "20000"
+  },
+  {
+   "fieldname": "settings_note",
+   "label": "Налаштування обліку",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "role": "UA Chief Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  }
+ ],
+ "track_changes": 0,
+ "index_web_pages_for_search": 0,
+ "autoname": "hash"
+}

@@ -1,0 +1,264 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "counterparty",
+  "contract",
+  "cb_head",
+  "warehouse",
+  "sales_invoice",
+  "sb_cur",
+  "currency",
+  "exchange_rate",
+  "cb_vat",
+  "vat_mode",
+  "sb_goods",
+  "goods",
+  "sb_totals",
+  "total_net",
+  "vat_total",
+  "cb_total",
+  "total_amount",
+  "base_total",
+  "sb_more",
+  "comment",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "default": "Today",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Покупець",
+   "options": "UA Counterparty",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір з покупцем",
+   "options": "UA Counterparty Contract",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_head",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Склад",
+   "options": "UA Warehouse"
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Реалізація (підстава)",
+   "options": "UA Sales Invoice",
+   "in_standard_filter": 1,
+   "no_copy": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_cur",
+   "fieldtype": "Section Break",
+   "label": "Валюта та ПДВ"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Валюта",
+   "options": "UA Currency",
+   "default": "UAH",
+   "reqd": 1
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Курс",
+   "default": "1",
+   "precision": "6"
+  },
+  {
+   "fieldname": "cb_vat",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "vat_mode",
+   "fieldtype": "Select",
+   "label": "Режим ПДВ",
+   "default": "ПДВ зверху",
+   "options": "ПДВ зверху\nПДВ у сумі\nБез ПДВ",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_goods",
+   "fieldtype": "Section Break",
+   "label": "Товари"
+  },
+  {
+   "fieldname": "goods",
+   "fieldtype": "Table",
+   "label": "Товари",
+   "options": "UA Goods Line"
+  },
+  {
+   "fieldname": "sb_totals",
+   "fieldtype": "Section Break",
+   "label": "Підсумок"
+  },
+  {
+   "fieldname": "total_net",
+   "fieldtype": "Currency",
+   "label": "Сума без ПДВ",
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "vat_total",
+   "fieldtype": "Currency",
+   "label": "ПДВ",
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "cb_total",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Всього",
+   "bold": 1,
+   "in_list_view": 1,
+   "read_only": 1,
+   "options": "currency"
+  },
+  {
+   "fieldname": "base_total",
+   "fieldtype": "Currency",
+   "label": "Всього, грн",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_more",
+   "fieldtype": "Section Break",
+   "label": "Додатково",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Коментар"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Виправлення",
+   "options": "UA Sales Return",
+   "hidden": 1,
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Sales Return",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "counterparty,contract",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

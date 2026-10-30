@@ -10,7 +10,11 @@
   "uom",
   "cb1",
   "organization",
-  "responsible"
+  "responsible",
+  "department",
+  "commissioning_date",
+  "useful_life_months",
+  "depreciation_method"
  ],
  "fields": [
   {
@@ -50,6 +54,28 @@
    "fieldtype": "Link",
    "label": "Матеріально відповідальна особа",
    "options": "UA Person"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Підрозділ",
+   "options": "UA Department"
+  },
+  {
+   "fieldname": "commissioning_date",
+   "fieldtype": "Date",
+   "label": "Дата введення в експлуатацію"
+  },
+  {
+   "fieldname": "useful_life_months",
+   "fieldtype": "Int",
+   "label": "Строк корисного використання, міс."
+  },
+  {
+   "fieldname": "depreciation_method",
+   "fieldtype": "Select",
+   "label": "Метод амортизації",
+   "options": "\nПрямолінійний\nЗменшення залишкової вартості\nПрискореного зменшення залишкової вартості\nКумулятивний\nВиробничий\n50% + 50%\n100%"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -95,6 +121,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "search_fields": "asset_name,inventory_no",

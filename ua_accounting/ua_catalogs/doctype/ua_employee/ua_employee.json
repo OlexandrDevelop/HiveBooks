@@ -1,0 +1,190 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "person",
+  "employee_name",
+  "ipn",
+  "organization",
+  "tab_no",
+  "position",
+  "department",
+  "work_schedule",
+  "salary",
+  "hire_date",
+  "dismissal_date",
+  "status",
+  "contract_type",
+  "insured_years",
+  "psp_applies"
+ ],
+ "fields": [
+  {
+   "fieldname": "person",
+   "fieldtype": "Link",
+   "label": "Фізична особа",
+   "options": "UA Person",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "ПІБ",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1,
+   "fetch_from": "person.full_name"
+  },
+  {
+   "fieldname": "ipn",
+   "fieldtype": "Data",
+   "label": "ІПН",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1,
+   "fetch_from": "person.ipn"
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "tab_no",
+   "fieldtype": "Data",
+   "label": "Табельний номер",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "position",
+   "fieldtype": "Link",
+   "label": "Посада",
+   "options": "UA Position",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Підрозділ",
+   "options": "UA Department"
+  },
+  {
+   "fieldname": "work_schedule",
+   "fieldtype": "Link",
+   "label": "Графік роботи",
+   "options": "UA Work Schedule"
+  },
+  {
+   "fieldname": "salary",
+   "fieldtype": "Currency",
+   "label": "Оклад, грн"
+  },
+  {
+   "fieldname": "hire_date",
+   "fieldtype": "Date",
+   "label": "Дата прийняття"
+  },
+  {
+   "fieldname": "dismissal_date",
+   "fieldtype": "Date",
+   "label": "Дата звільнення"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Статус",
+   "options": "Працює\nЗвільнений",
+   "default": "Працює",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "contract_type",
+   "fieldtype": "Select",
+   "label": "Вид договору",
+   "options": "Трудовий договір\nЦивільно-правовий договір",
+   "default": "Трудовий договір"
+  },
+  {
+   "fieldname": "insured_years",
+   "fieldtype": "Float",
+   "label": "Страховий стаж, років"
+  },
+  {
+   "fieldname": "psp_applies",
+   "fieldtype": "Check",
+   "label": "Застосовувати ПСП"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Catalogs",
+ "name": "UA Employee",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "role": "UA Accountant",
+   "create": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "role": "UA Accounting Manager",
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "role": "UA Chief Accountant",
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "role": "System Manager",
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  }
+ ],
+ "autoname": "hash",
+ "naming_rule": "Random",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "employee_name",
+ "search_fields": "employee_name,ipn,tab_no",
+ "show_title_field_in_link": 1
+}

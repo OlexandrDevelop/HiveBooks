@@ -1,0 +1,1 @@
+frappe.query_reports["UA Depreciation Statement"] = {filters: [{fieldname:'organization',label:'Організація',fieldtype:'Link',options:'UA Organization'},{fieldname:'date_from',label:'Дата з',fieldtype:'Date'},{fieldname:'date_to',label:'Дата до',fieldtype:'Date'}]};

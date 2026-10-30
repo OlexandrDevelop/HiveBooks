@@ -1,0 +1,88 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-22 18:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "variant_name",
+  "source",
+  "report",
+  "cb1",
+  "is_shared",
+  "is_default",
+  "sb_settings",
+  "settings"
+ ],
+ "fields": [
+  {
+   "fieldname": "variant_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Назва варіанту",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Джерело",
+   "reqd": 1
+  },
+  {
+   "default": "universal",
+   "fieldname": "report",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Звіт",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_shared",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Загальний (для всіх)"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Основний"
+  },
+  {
+   "fieldname": "sb_settings",
+   "fieldtype": "Section Break",
+   "label": "Налаштування"
+  },
+  {
+   "fieldname": "settings",
+   "fieldtype": "Code",
+   "label": "Налаштування (JSON)",
+   "options": "JSON"
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-22 18:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Report Variant",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {"create": 1, "delete": 1, "read": 1, "role": "UA Accountant", "write": 1},
+  {"create": 1, "delete": 1, "read": 1, "role": "UA Accounting Manager", "write": 1},
+  {"create": 1, "delete": 1, "read": 1, "role": "UA Chief Accountant", "write": 1},
+  {"create": 1, "delete": 1, "read": 1, "role": "System Manager", "write": 1}
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "variant_name",
+ "track_changes": 0
+}

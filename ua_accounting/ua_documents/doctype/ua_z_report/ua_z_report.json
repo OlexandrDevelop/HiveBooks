@@ -1,0 +1,153 @@
+{
+ "doctype": "DocType",
+ "name": "UA Z Report",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "cash_register",
+  "organization",
+  "external_id",
+  "shift_number",
+  "posting_date",
+  "opened_at",
+  "closed_at",
+  "status",
+  "sell_cash",
+  "sell_card",
+  "return_cash",
+  "return_card",
+  "retail_report",
+  "retail_return"
+ ],
+ "fields": [
+  {
+   "fieldname": "cash_register",
+   "label": "ПРРО",
+   "fieldtype": "Link",
+   "options": "UA Cash Register",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "read_only": 1
+  },
+  {
+   "fieldname": "external_id",
+   "label": "Ідентифікатор у сервісі",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "shift_number",
+   "label": "Номер зміни",
+   "fieldtype": "Int",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Дата",
+   "fieldtype": "Date",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "opened_at",
+   "fieldtype": "Datetime",
+   "label": "Зміну відкрито",
+   "read_only": 1
+  },
+  {
+   "fieldname": "closed_at",
+   "fieldtype": "Datetime",
+   "label": "Зміну закрито",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Статус",
+   "fieldtype": "Select",
+   "options": "Прийнято\nРозбіжність",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sell_cash",
+   "label": "Продаж готівкою",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "sell_card",
+   "label": "Продаж карткою",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "return_cash",
+   "label": "Повернення готівкою",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "return_card",
+   "label": "Повернення карткою",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "retail_report",
+   "label": "Звіт про роздрібні продажі",
+   "fieldtype": "Link",
+   "options": "UA Retail Sales Report",
+   "read_only": 1
+  },
+  {
+   "fieldname": "retail_return",
+   "label": "Повернення від роздрібного покупця",
+   "fieldtype": "Link",
+   "options": "UA Retail Return",
+   "read_only": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "delete": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "naming_rule": "Random",
+ "autoname": "hash",
+ "track_changes": 0
+}

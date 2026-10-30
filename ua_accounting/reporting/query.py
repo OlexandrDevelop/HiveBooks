@@ -302,6 +302,31 @@ def sum_vectors(result):
 # ---------------------------------------------------------------- entry rows
 
 
+def side_condition(scope, sides=SIDES):
+    """SQL (sql, params) for entries that touch the scope on at least one of `sides`.
+
+    Accounts, currency and subconto filters of the scope apply to the same side of the entry.
+    The organization is not included. None when no account of the scope can match.
+    """
+    parts = []
+    params = []
+    for cls in scope.classes:
+        for side in sides:
+            sw = _Where()
+            cols = {
+                "account": f"account_{side}",
+                "org": "organization",
+                "currency": f"currency_{side}",
+                "slot": lambda n, side=side: f"subconto_{side}{n}",
+            }
+            _common_where(scope, cls, sw, cols, with_org=False)
+            parts.append(f"({sw.sql()})")
+            params.extend(sw.params)
+    if not parts:
+        return None
+    return f"({' OR '.join(parts)})", params
+
+
 def list_entries(scope, begin, end, limit):
     """Entries of the days [begin, end) that touch the scope on at least one side.
 
@@ -314,25 +339,11 @@ def list_entries(scope, begin, end, limit):
     if flt_.organizations:
         w.in_("organization", flt_.organizations)
 
-    sides = []
-    side_params = []
-    for cls in scope.classes:
-        for side in SIDES:
-            sw = _Where()
-            cols = {
-                "account": f"account_{side}",
-                "org": "organization",
-                "currency": f"currency_{side}",
-                "slot": lambda n, side=side: f"subconto_{side}{n}",
-            }
-            # the organization is already in the outer condition
-            _common_where(scope, cls, sw, cols, with_org=False)
-            sides.append(f"({sw.sql()})")
-            side_params.extend(sw.params)
-    if not sides:
+    cond = side_condition(scope)
+    if cond is None:
         return [], False
-    w.add(f"({' OR '.join(sides)})")
-    w.params.extend(side_params)
+    w.add(cond[0])
+    w.params.extend(cond[1])
 
     fields = ", ".join(f"`{f}`" for f in ENTRY_FIELDS)
     rows = frappe.db.sql(
@@ -343,3 +354,33 @@ def list_entries(scope, begin, end, limit):
     )
     truncated = len(rows) > limit
     return rows[:limit], truncated
+
+
+def corr_turnover(scope, begin, end):
+    """Turnover of the scope accounts split by the corresponding account.
+
+    Returns {(account, corr_account): [debit, credit]}. Read from entries (the totals
+    table has no corresponding account). begin=None: from the start.
+    """
+    out = {}
+    for cls in scope.classes:
+        for side, other in (("dr", "cr"), ("cr", "dr")):
+            w = _Where()
+            if begin is not None:
+                w.add("posting_date >= %s", begin)
+            w.add("posting_date < %s", end)
+            cols = {
+                "account": f"account_{side}",
+                "org": "organization",
+                "currency": f"currency_{side}",
+                "slot": lambda n, side=side: f"subconto_{side}{n}",
+            }
+            _common_where(scope, cls, w, cols)
+            sql = (
+                f"SELECT account_{side} AS account, account_{other} AS corr, SUM(amount) AS total "
+                f"FROM `{ENTRIES}` WHERE {w.sql()} GROUP BY account_{side}, account_{other}"
+            )
+            for r in frappe.db.sql(sql, w.params, as_dict=True):
+                vec = out.setdefault((r["account"], r["corr"] or ""), [0.0, 0.0])
+                vec[0 if side == "dr" else 1] += flt(r["total"])
+    return out

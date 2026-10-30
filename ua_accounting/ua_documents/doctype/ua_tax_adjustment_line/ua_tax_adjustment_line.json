@@ -1,0 +1,103 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "description",
+  "vat_rate",
+  "quantity_before",
+  "quantity_after",
+  "price_before",
+  "price_after",
+  "base_before",
+  "base_after",
+  "vat_before",
+  "vat_after",
+  "delta_base",
+  "delta_vat"
+ ],
+ "fields": [
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Номенклатура",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "vat_rate",
+   "fieldtype": "Link",
+   "label": "Ставка ПДВ",
+   "options": "UA VAT Rate"
+  },
+  {
+   "fieldname": "quantity_before",
+   "fieldtype": "Float",
+   "label": "Кількість було",
+   "precision": "3",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "quantity_after",
+   "fieldtype": "Float",
+   "label": "Кількість стало",
+   "precision": "3",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "price_before",
+   "fieldtype": "Currency",
+   "label": "Ціна була"
+  },
+  {
+   "fieldname": "price_after",
+   "fieldtype": "Currency",
+   "label": "Ціна стала"
+  },
+  {
+   "fieldname": "base_before",
+   "fieldtype": "Currency",
+   "label": "База була",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "base_after",
+   "fieldtype": "Currency",
+   "label": "База стала",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "vat_before",
+   "fieldtype": "Currency",
+   "label": "ПДВ було"
+  },
+  {
+   "fieldname": "vat_after",
+   "fieldtype": "Currency",
+   "label": "ПДВ стало"
+  },
+  {
+   "fieldname": "delta_base",
+   "fieldtype": "Currency",
+   "label": "Зміна бази",
+   "read_only": 1
+  },
+  {
+   "fieldname": "delta_vat",
+   "fieldtype": "Currency",
+   "label": "Зміна ПДВ",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Tax Adjustment Line",
+ "owner": "Administrator",
+ "states": []
+}

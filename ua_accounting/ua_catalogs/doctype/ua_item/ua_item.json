@@ -16,6 +16,9 @@
   "article",
   "uktzed_code",
   "dkpp_code",
+  "sb_warranty",
+  "warranty_percent",
+  "warranty_months",
   "lft",
   "rgt",
   "old_parent"
@@ -38,7 +41,8 @@
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
    "label": "Входить до групи",
-   "options": "UA Item"
+   "options": "UA Item",
+   "link_filters": "[[\"UA Item\", \"is_group\", \"=\", 1]]"
   },
   {
    "fieldname": "is_group",
@@ -89,6 +93,23 @@
    "fieldname": "dkpp_code",
    "fieldtype": "Data",
    "label": "Код ДКПП"
+  },
+  {
+   "fieldname": "sb_warranty",
+   "fieldtype": "Section Break",
+   "label": "Гарантія",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "warranty_percent",
+   "fieldtype": "Percent",
+   "label": "Гарантійні витрати, % від ціни продажу",
+   "description": "Очікувані витрати на гарантійний ремонт без ПДВ"
+  },
+  {
+   "fieldname": "warranty_months",
+   "fieldtype": "Int",
+   "label": "Гарантійний строк, місяців"
   },
   {
    "fieldname": "lft",
@@ -159,6 +180,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "search_fields": "item_name,article",

@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2026-10-22 20:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "period",
+  "registrar_type",
+  "registrar",
+  "line_no",
+  "organization",
+  "income_amount",
+  "vat_amount",
+  "document_description",
+  "content"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Дата",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period",
+   "fieldtype": "Date",
+   "label": "Період (місяць)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "registrar_type",
+   "fieldtype": "Data",
+   "label": "Тип документа",
+   "read_only": 1
+  },
+  {
+   "fieldname": "registrar",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Документ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "line_no",
+   "fieldtype": "Int",
+   "label": "Рядок",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "income_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Сума доходу",
+   "options": "UAH"
+  },
+  {
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "label": "ПДВ (не є доходом)",
+   "options": "UAH"
+  },
+  {
+   "fieldname": "document_description",
+   "fieldtype": "Data",
+   "label": "Відомості про документ"
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Data",
+   "label": "Зміст"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 20:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Income Book Entry",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager"
+  }
+ ],
+ "read_only": 1,
+ "sort_field": "posting_date",
+ "sort_order": "ASC",
+ "states": []
+}

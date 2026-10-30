@@ -30,7 +30,7 @@
    "fieldname": "reference_doctype",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Довідник (DocType)",
+   "label": "Довідник",
    "mandatory_depends_on": "eval:!doc.is_dynamic",
    "options": "DocType"
   },
@@ -83,6 +83,12 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "export": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant"
   }
  ],
  "search_fields": "subconto_name",

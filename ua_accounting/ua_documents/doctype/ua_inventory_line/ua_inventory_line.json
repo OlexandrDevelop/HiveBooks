@@ -1,0 +1,74 @@
+{
+ "doctype": "DocType",
+ "name": "UA Inventory Line",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "uom",
+  "book_quantity",
+  "actual_quantity",
+  "deviation",
+  "price",
+  "deviation_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Номенклатура",
+   "fieldtype": "Link",
+   "options": "UA Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "item_name",
+   "label": "Найменування",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "uom",
+   "label": "Од.",
+   "fieldtype": "Link",
+   "options": "UA UOM"
+  },
+  {
+   "fieldname": "book_quantity",
+   "label": "Облікова кількість",
+   "fieldtype": "Float",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "actual_quantity",
+   "label": "Фактична кількість",
+   "fieldtype": "Float",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "deviation",
+   "label": "Відхилення",
+   "fieldtype": "Float",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "price",
+   "label": "Ціна",
+   "fieldtype": "Currency",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "deviation_amount",
+   "label": "Сума відхилення",
+   "fieldtype": "Currency",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": []
+}

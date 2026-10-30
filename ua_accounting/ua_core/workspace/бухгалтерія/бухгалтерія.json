@@ -293,7 +293,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Звіти",
-   "link_count": 4,
+   "link_count": 14,
    "onboard": 0,
    "type": "Card Break"
   },
@@ -320,6 +320,96 @@
    "is_query_report": 0,
    "label": "Картка рахунку",
    "link_to": "ua-account-card",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Аналіз субконто",
+   "link_to": "ua-subconto-analysis",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "ОСВ по субконто",
+   "link_to": "ua-osv-subconto",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Обороти рахунку",
+   "link_to": "ua-account-turnover",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Аналіз рахунку",
+   "link_to": "ua-account-analysis",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Головна книга",
+   "link_to": "ua-general-ledger",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Журнал-ордер",
+   "link_to": "ua-journal-order",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Шахова відомість",
+   "link_to": "ua-chess-sheet",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Звіт по проводках",
+   "link_to": "ua-entries-report",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Картка субконто",
+   "link_to": "ua-subconto-card",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Експрес-перевірка ведення обліку",
+   "link_to": "ua-accounting-check",
    "link_type": "Page",
    "onboard": 0,
    "type": "Link"

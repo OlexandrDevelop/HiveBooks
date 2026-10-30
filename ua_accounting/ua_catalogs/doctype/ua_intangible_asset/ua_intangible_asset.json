@@ -11,7 +11,9 @@
   "asset_kind",
   "cb1",
   "useful_life_months",
-  "commissioning_date"
+  "commissioning_date",
+  "department",
+  "depreciation_method"
  ],
  "fields": [
   {
@@ -55,6 +57,18 @@
    "fieldname": "commissioning_date",
    "fieldtype": "Date",
    "label": "Дата введення в експлуатацію"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Підрозділ",
+   "options": "UA Department"
+  },
+  {
+   "fieldname": "depreciation_method",
+   "fieldtype": "Select",
+   "label": "Метод амортизації",
+   "options": "\nПрямолінійний\nЗменшення залишкової вартості\nПрискореного зменшення залишкової вартості\nКумулятивний\nВиробничий"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -100,6 +114,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "search_fields": "asset_name,inventory_no",

@@ -1,0 +1,140 @@
+{
+ "doctype": "DocType",
+ "name": "UA Fiscal Receipt",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "cash_register",
+  "organization",
+  "external_id",
+  "shift_number",
+  "fiscal_code",
+  "fiscal_datetime",
+  "receipt_type",
+  "total_amount",
+  "cash_amount",
+  "card_amount",
+  "z_report",
+  "goods"
+ ],
+ "fields": [
+  {
+   "fieldname": "cash_register",
+   "label": "ПРРО",
+   "fieldtype": "Link",
+   "options": "UA Cash Register",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "read_only": 1
+  },
+  {
+   "fieldname": "external_id",
+   "label": "Ідентифікатор у сервісі",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "shift_number",
+   "fieldtype": "Int",
+   "label": "Номер зміни"
+  },
+  {
+   "fieldname": "fiscal_code",
+   "label": "Фіскальний номер чека",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "fiscal_datetime",
+   "label": "Дата і час",
+   "fieldtype": "Datetime",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "receipt_type",
+   "label": "Тип чека",
+   "fieldtype": "Select",
+   "options": "Продаж\nПовернення",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "total_amount",
+   "label": "Сума чека",
+   "fieldtype": "Currency",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cash_amount",
+   "label": "Готівкою",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "card_amount",
+   "label": "Карткою",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "z_report",
+   "label": "Z-звіт",
+   "fieldtype": "Link",
+   "options": "UA Z Report",
+   "read_only": 1
+  },
+  {
+   "fieldname": "goods",
+   "label": "Товари",
+   "fieldtype": "Table",
+   "options": "UA Fiscal Receipt Line"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "delete": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "naming_rule": "Random",
+ "autoname": "hash",
+ "track_changes": 0
+}

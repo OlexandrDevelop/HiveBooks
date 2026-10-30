@@ -1,0 +1,86 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "nbu_rates_url",
+  "nbu_banks_url",
+  "default_cash_flow_item",
+  "auto_load_rates"
+ ],
+ "fields": [
+  {
+   "fieldname": "nbu_rates_url",
+   "fieldtype": "Data",
+   "label": "Адреса курсів НБУ",
+   "reqd": 1,
+   "default": "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json&date={date}",
+   "description": "{date} замінюється на дату у форматі РРРРММДД"
+  },
+  {
+   "fieldname": "nbu_banks_url",
+   "fieldtype": "Data",
+   "label": "Адреса переліку банків НБУ",
+   "reqd": 1,
+   "default": "https://bank.gov.ua/NBU_BankInfo/get_data_branch?typ=0&json"
+  },
+  {
+   "fieldname": "default_cash_flow_item",
+   "fieldtype": "Link",
+   "label": "Стаття руху коштів за замовчуванням",
+   "options": "UA Cash Flow Item",
+   "description": "Для документів, створених з банківської виписки"
+  },
+  {
+   "fieldname": "auto_load_rates",
+   "fieldtype": "Check",
+   "label": "Завантажувати курси НБУ щодня",
+   "default": "1"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Exchange Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "UA Chief Accountant",
+   "read": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "write": 1,
+   "create": 1
+  }
+ ],
+ "issingle": 1
+}

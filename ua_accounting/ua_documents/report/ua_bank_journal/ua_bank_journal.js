@@ -1,0 +1,1 @@
+frappe.query_reports["UA Bank Journal"] = {filters: [{fieldname:'organization',label:'Організація',fieldtype:'Link',options:'UA Organization'},{fieldname:'bank_account',label:'Банківський рахунок',fieldtype:'Link',options:'UA Bank Account'},{fieldname:'date_from',label:'Дата з',fieldtype:'Date'},{fieldname:'date_to',label:'Дата до',fieldtype:'Date'}]};

@@ -1,0 +1,183 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "month_start",
+  "lines",
+  "totals_section",
+  "total_accrued",
+  "total_pdfo",
+  "total_military_levy",
+  "total_esv",
+  "total_net",
+  "comment",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1,
+   "default": "Today"
+  },
+  {
+   "fieldname": "month_start",
+   "fieldtype": "Date",
+   "label": "Місяць (перший день)",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "lines",
+   "fieldtype": "Table",
+   "label": "Нарахування",
+   "options": "UA Payroll Line",
+   "reqd": 1
+  },
+  {
+   "fieldname": "totals_section",
+   "fieldtype": "Section Break",
+   "label": "Разом"
+  },
+  {
+   "fieldname": "total_accrued",
+   "fieldtype": "Currency",
+   "label": "Нараховано, грн",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "total_pdfo",
+   "fieldtype": "Currency",
+   "label": "ПДФО, грн",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "total_military_levy",
+   "fieldtype": "Currency",
+   "label": "Військовий збір, грн",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "total_esv",
+   "fieldtype": "Currency",
+   "label": "ЄСВ, грн",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "total_net",
+   "fieldtype": "Currency",
+   "label": "До виплати, грн",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Коментар"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Виправлення",
+   "options": "UA Payroll",
+   "hidden": 1,
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Payroll",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "amend": 1,
+   "cancel": 1,
+   "delete": 1,
+   "role": "UA Accounting Manager"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "amend": 1,
+   "cancel": 1,
+   "delete": 1,
+   "role": "System Manager"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "amend": 1,
+   "cancel": 1,
+   "delete": 1,
+   "role": "UA Chief Accountant"
+  }
+ ],
+ "is_submittable": 1,
+ "naming_rule": "By script",
+ "track_changes": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

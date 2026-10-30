@@ -1,0 +1,508 @@
+UA Subconto Type,Види субконто
+UA Account Subconto,Субконто рахунку
+UA Account,План рахунків
+UA VAT Rate,Ставки ПДВ
+UA Tax Type,Види податків
+UA Accounting Entry,Журнал проводок
+UA Account Turnover,Підсумки по рахунках
+UA VAT Liability Entry,ПДВ нараховане
+UA VAT Credit Entry,ПДВ кредит
+UA Person,Фізичні особи
+UA Organization,Організації
+UA Counterparty,Контрагенти
+UA Counterparty Contract,Договори контрагентів
+UA UOM,Одиниці виміру
+UA Item,Номенклатура
+UA Department,Підрозділи
+UA Warehouse,Склади
+UA Currency Rate,Курси валют
+UA Currency,Валюти
+UA Bank,Банки
+UA Bank Account,Банківські рахунки
+UA Cash Desk,Каси
+UA Cash Flow Item,Статті руху грошових коштів
+UA Expense Item,Статті витрат
+UA Fixed Asset,Основні засоби
+UA Intangible Asset,Нематеріальні активи
+UA Low Value Asset,Малоцінні активи (МНМА)
+UA Core,Облік (ядро)
+UA Catalogs,Довідники
+UA Accountant,Бухгалтер
+UA Accounting Manager,Головний бухгалтер
+UA Chief Accountant,Головний бухгалтер
+UA Cashier,Касир
+UA HR Officer,Кадровик
+UA Administrator,Адміністратор
+UA Accounting Policy,Облікова політика
+UA Accounting Settings,Налаштування обліку
+UA Lock Allowed Role,Дозволена роль
+UA Numbering Setting,Налаштування нумерації
+UA Change Log,Журнал реєстрації змін
+UA Change Log Row,Зміна поля
+UA Customer Order,Замовлення покупця
+UA Sales Invoice,Реалізація товарів та послуг
+UA Supplier Order,Замовлення постачальнику
+UA Purchase Receipt,Надходження товарів та послуг
+UA Cash Receipt,Надходження коштів
+UA Cash Payment,Витрата коштів
+UA Payment Order,Платіжне доручення
+UA Bank Statement,Банківська виписка
+UA Advance Report,Авансовий звіт
+UA Cash Disbursement,Видаткова відомість
+UA Currency Exchange,Купівля/продаж валюти
+UA Cash Book,Касова книга
+UA Bank Journal,Журнал банківських документів
+UA Journal Operation,Операція (бухгалтерська)
+UA Operation Entry,Проводка операції
+UA Goods Line,Товари
+UA Service Line,Послуги
+UA Documents,Документи
+{0} is required.,{0}: обов’язкове поле.
+Please fill the following mandatory fields before saving:,Заповніть обов’язкові поля перед записом:
+Missing Fields,Не заповнені поля
+"In {0}, {1} is required in every row.",У таблиці {0} поле {1} обов’язкове в кожному рядку.
+"In {0}, {1} is required in row {2}.",У таблиці {0} поле {1} обов’язкове в рядку {2}.
+"In {0}, {1} is required in rows {2}.",У таблиці {0} поле {1} обов’язкове в рядках {2}.
+"In {0}, {1} is required in {2} rows.",У таблиці {0} поле {1} обов’язкове в {2} рядках.
+Message,Повідомлення
+Is Group,Група (папка)
+Further sub-groups can only be created under records marked as 'Group',"Підлеглі групи можна створити лише в записах, які є групою"
+New Parent,Нова група
+Create your first {0} to get started.,"Створіть перший запис ({0}), щоб почати."
+No {0} created,Немає записів: {0}
+No {0} records yet,Записів ще немає: {0}
+No matching records,Немає відповідних записів
+Nothing has been added yet.,Нічого ще не додано.
+Records you add will appear here.,Тут з’являться додані записи.
+Try a different search.,Спробуйте інший пошук.
+Clear the filters to see all records.,"Скиньте відбір, щоб побачити всі записи."
+No filters selected,Відбір не задано
+Add a Filter,Додати відбір
+Apply Filters,Застосувати відбір
+Filters {0},Відбір {0}
+Show more,Показати більше
+Show all activity,Показати всю історію
+Load More Communications,Показати більше листів
+Result,Результат
+Done,Готово
+Configure,Налаштувати
+Configure Columns,Налаштувати колонки
+Add / Remove Columns,Додати / прибрати колонки
+Column Width,Ширина колонки
+Width in pixels,Ширина в пікселях
+Reset to default,Скинути до типових
+Default Layout,Типове компонування
+Your Layouts,Мої компонування
+Global Layouts,Спільні компонування
+Page Size,Розмір сторінки
+Saved Reports,Збережені звіти
+Related Reports,Пов’язані звіти
+Standard Report,Стандартний звіт
+Dashboard View,Панель
+Kanban View,Канбан
+Gantt View,Діаграма Ганта
+Map View,Карта
+Inbox View,Пошта
+Create Board,Створити дошку
+Create New Kanban Board,Створити нову дошку
+Select Kanban,Вибрати дошку
+Add Tags,Додати мітки
+Assign a user,Призначити користувача
+Assign To User Group,Призначити групі
+Assigning...,Призначення...
+Clear Assignment,Скасувати призначення
+Are you sure you want to clear the assignments?,Скасувати призначення?
+Bulk Edit,Групова зміна
+No editable fields available for bulk edit.,Немає полів для групової зміни.
+Update {0} rows,Змінити рядків: {0}
+Edit {0} rows,Змінити рядків: {0}
+Edit row,Змінити рядок
+Delete {0} rows,Видалити рядків: {0}
+Delete all {0} rows,Видалити всі рядки ({0})
+Are you sure you want to delete all {0} rows?,Видалити всі рядки ({0})?
+Duplicate row,Скопіювати рядок
+Duplicate {0} rows,Скопіювати рядків: {0}
+Duplicate current row,Скопіювати поточний рядок
+Add a row above the current row,Додати рядок вище
+Add a row below the current row,Додати рядок нижче
+Add a row at the top,Додати рядок на початку
+Add a row at the bottom,Додати рядок у кінці
+No rows selected,Рядки не вибрано
+At least one column is required to show in the grid.,У таблиці має бути хоча б одна колонка.
+Showing {0} of {1} columns.,Показано колонок: {0} з {1}.
+Showing {0} of {1} rows.,Показано рядків: {0} з {1}.
+Showing {0} of {1} rows and {2} of {3} columns.,"Показано рядків: {0} з {1}, колонок: {2} з {3}."
+1 row from {0},1 рядок з {0}
+1 row to {0},1 рядок до {0}
+{0} rows from {1},Рядків: {0} з {1}
+{0} rows to {1},Рядків: {0} до {1}
+row,рядок
+rows,рядків
+found,знайдено
+result,результат
+results,результатів
+and {0} more,і ще {0}
+Move to...,Перемістити в...
+Move {0},Перемістити: {0}
+Moving {0},Переміщення: {0}
+{0} moved under {1},{0} переміщено до {1}
+Rebuild Tree,Перебудувати дерево
+Reload Tree,Оновити дерево
+Loading full tree...,Завантаження дерева...
+Root records can't be deleted,Кореневі записи не можна видаляти
+Root records can't be renamed,Кореневі записи не можна перейменовувати
+Select a group {0} first.,Спочатку виберіть групу: {0}.
+Next Document,Наступний документ
+Previous Document,Попередній документ
+Previous Submission,Попереднє проведення
+All Submissions,Усі проведення
+Document has been submitted,Документ проведено
+Document has been cancelled,Документ скасовано
+Already amended as {0},Уже виправлено: {0}
+Cancel All,Скасувати все
+Print document,Друк документа
+Loading preview...,Завантаження...
+Preview not available for this file type.,Перегляд для цього типу файлів недоступний.
+This document has unsaved changes which might not appear in final PDF. <br> Consider saving the document before printing.,"Документ має незаписані зміни, яких може не бути в друкованій формі. <br> Запишіть документ перед друком."
+This form is not editable due to a Workflow.,Форму не можна змінювати через процес погодження.
+Discard {0},Скасувати {0}
+Permanently Discard {0}?,Остаточно скасувати {0}?
+Delete {0} item permanently?,Видалити {0} назавжди?
+Are you sure you want to {0}?,Виконати дію: {0}?
+Are you sure you want to log out?,Вийти із системи?
+Switch theme,Змінити тему
+Navigate to main content,Перейти до змісту
+Open file,Відкрити файл
+Open file in new tab,Відкрити файл в новій вкладці
+Copy file URL to clipboard,Копіювати адресу файлу
+Copied {0} {1} to clipboard,Скопійовано: {0} {1}
+Maximum attachment limit of {0} has been reached.,Досягнуто ліміту вкладень: {0}.
+Attachment Limit Reached,Досягнуто ліміту вкладень
+Only files up to {0} MB are supported for preview.,Для перегляду підтримуються файли до {0} МБ.
+Resizing preview...,Зміна розміру...
+Saving Changes...,Запис змін...
+Updating related fields...,Оновлення пов’язаних полів...
+You have not entered a value. The field will be set to empty.,Значення не введено. Поле буде порожнім.
+Updated {0} selected {1}. Save the form to keep changes.,"Змінено: {0} ({1}). Запишіть форму, щоб зберегти зміни."
+Your session has expired due to inactivity. Please log in again to continue.,Сеанс завершено через бездіяльність. Увійдіть знову.
+You've logged in as another user from another tab. Refresh this page to continue using system.,Ви увійшли як інший користувач в іншій вкладці. Оновіть сторінку.
+Login Failed please try again,Не вдалося увійти. Спробуйте ще раз
+The count shown is an estimated count. Click here to see the accurate count.,"Кількість приблизна. Натисніть, щоб побачити точну."
+Automatically applied a filter for recent data. You can disable this behavior from the list view settings.,Автоматично застосовано відбір за недавніми даними. Це можна вимкнути в налаштуваннях списку.
+List virtualization failed to load. Rendering full list.,Не вдалося завантажити список частинами. Показано весь список.
+Search for {0},Пошук: {0}
+Start with # to search by tag,"Почніть з #, щоб шукати за міткою"
+to open Awesome Bar,відкрити пошук
+All Results,Усі результати
+Created By You,Створено вами
+Created By {0},Створено: {0}
+Last Edited By You,Востаннє змінено вами
+Last Edited By {0},Востаннє змінено: {0}
+You Liked,Ви вподобали
+{0} Liked,Вподобано: {0}
+Tomorrow,Завтра
+Next Week,Наступний тиждень
+Next Month,Наступний місяць
+Next Quarter,Наступний квартал
+Next Year,Наступний рік
+Next 7 Days,Наступні 7 днів
+Next 14 Days,Наступні 14 днів
+Next 30 Days,Наступні 30 днів
+Next 6 Months,Наступні 6 місяців
+Last 7 Days,Останні 7 днів
+Last 14 Days,Останні 14 днів
+Last 30 Days,Останні 30 днів
+Last 90 Days,Останні 90 днів
+Last 6 Months,Останні 6 місяців
+Greater Than,Більше ніж
+Greater Than Or Equal To,Більше або дорівнює
+Less Than,Менше ніж
+Less Than Or Equal To,Менше або дорівнює
+On or After,Не раніше
+On or Before,Не пізніше
+After,Після
+Before,До
+Descendants Of (inclusive),Нащадки (включно)
+Password cannot be filtered,Пароль не можна відбирати
+You submitted this document,Ви провели цей документ
+You submitted this document {0},Ви провели цей документ {0}
+{0} submitted this document,{0} провів цей документ
+{0} submitted this document {1},{0} провів цей документ {1}
+You cancelled this document,Ви скасували цей документ
+You cancelled this document {1},Ви скасували цей документ {1}
+{0} cancelled this document,{0} скасував цей документ
+{0} cancelled this document {1},{0} скасував цей документ {1}
+{0} created this,{0} створив це
+{0} created this document {1},{0} створив цей документ {1}
+{0} last edited this,{0} змінив це востаннє
+You changed the value of {0},Ви змінили значення {0}
+You changed the value of {0} {1},Ви змінили значення {0} {1}
+You changed the values for {0},Ви змінили значення {0}
+You changed the values for {0} {1},Ви змінили значення {0} {1}
+You changed {0} to {1},Ви змінили {0} на {1}
+{0} changed the value of {1},{0} змінив значення {1}
+{0} changed the value of {1} {2},{0} змінив значення {1} {2}
+{0} changed the values for {1},{0} змінив значення {1}
+{0} changed the values for {1} {2},{0} змінив значення {1} {2}
+{0} changed {1} to {2},{0} змінив {1} на {2}
+{0} from {1} to {2},{0}: з {1} на {2}
+{0} from {1} to {2} in row #{3},{0}: з {1} на {2} у рядку №{3}
+You added 1 row to {0},Ви додали 1 рядок до {0}
+You added {0} rows to {1},Ви додали рядків: {0} до {1}
+{0} added 1 row to {1},{0} додав 1 рядок до {1}
+{0} added {1} rows to {2},{0} додав рядків: {1} до {2}
+You removed 1 row from {0},Ви видалили 1 рядок з {0}
+You removed {0} rows from {1},Ви видалили рядків: {0} з {1}
+{0} removed 1 row from {1},{0} видалив 1 рядок з {1}
+{0} removed {1} rows from {2},{0} видалив рядків: {1} з {2}
+You attached {0},Ви додали файл {0}
+{0} attached {1},{0} додав файл {1}
+You removed attachment {0},Ви видалили файл {0}
+{0} removed attachment {1},{0} видалив файл {1}
+You viewed this,Ви переглянули це
+{0} viewed this,{0} переглянув це
+Add to this activity by mailing to {0},"Додайте до історії, надіславши лист на {0}"
+[Action taken by {0}],[Дію виконав {0}]
+User Changed,Користувача змінено
+Impersonated by {0},Від імені користувача: {0}
+View Audit Trail,Історія змін
+Pin,Закріпити
+Pinned,Закріплено
+Sticky,Закріплено
+Publish,Опублікувати
+Unpublish,Зняти з публікації
+Undo last action,Скасувати останню дію
+Redo last action,Повторити останню дію
+Move cursor to above row,Курсор на рядок вище
+Move cursor to below row,Курсор на рядок нижче
+Move cursor to next column,Курсор на наступну колонку
+Move cursor to previous column,Курсор на попередню колонку
+Create a new document,Створити документ
+Workspace,Робочий стіл
+About,Про систему
+Documentation,Документація
+Deprecated,Застаріло
+Open {0} Workspace,Відкрити {0}
+1 = True & 0 = False,"1 = Так, 0 = Ні"
+Use ampersand to match multiple terms,"Використовуйте &, щоб шукати кілька слів"
+Show all (including disabled),Показати всі (разом із вимкненими)
+Configure search settings,Налаштування пошуку
+ua-home,Головне
+ua-osv,Оборотно-сальдова відомість
+ua-osv-account,ОСВ по рахунку
+ua-account-card,Картка рахунку
+Filtered by: {0}.,Відбір: {0}.
+is enabled,увімкнено
+is disabled,вимкнено
+{0} is enabled,{0}: так
+{0} is disabled,{0}: ні
+{0} equals {1},{0} дорівнює {1}
+{0} is not equal to {1},{0} не дорівнює {1}
+empty,порожньо
+Default display currency,Валюта показу за замовчуванням
+Disable Document Sharing,Вимкнути спільний доступ до документів
+Use Number Format from Currency,Формат чисел з валюти
+First Day of the Week,Перший день тижня
+Rounding Method,Метод округлення
+Show Absolute Datetime in Timeline,Показувати точний час в історії
+Show External Link Warning,Попереджати про зовнішні посилання
+Guest,Гість
+Website User,Користувач сайту
+System User,Користувач системи
+Is Custom,Власна
+System Settings,Налаштування системи
+Role,Роль
+Roles,Ролі
+User,Користувач
+Users,Користувачі
+"Get PDF","Отримати PDF"
+UA Payment Invoice,Рахунок на оплату покупцю
+UA Supplier Invoice,Рахунок постачальника
+UA Sales Return,Повернення товарів від покупця
+UA Purchase Return,Повернення товарів постачальнику
+UA Service Act,Акт виконаних робіт (надання послуг)
+UA Service Receipt,Отримання послуг сторонніх організацій
+UA Debt Adjustment,Коригування боргу
+UA Reconciliation Act,Акт звірки взаєморозрахунків
+UA Reconciliation Row,Рядок акта звірки
+UA Price Type,Типи цін
+UA Price Setting,Встановлення цін номенклатури
+UA Price Row,Ціна номенклатури
+UA Customs Import,Імпорт товарів з ВМД
+UA Tax Invoice,Податкова накладна
+UA Tax Invoice Line,Рядок податкової накладної
+UA Tax Adjustment,Розрахунок коригування
+UA Tax Adjustment Line,Рядок розрахунку коригування
+UA VAT Allocation,Розподіл ПДВ
+UA VAT Return,Декларація з ПДВ
+UA VAT Return Line,Рядок декларації з ПДВ
+UA VAT Return D1 Row,Рядок додатка Д1
+UA VAT Return D2 Row,Рядок додатка Д2
+UA VAT Return D5 Row,Рядок додатка Д5
+UA VAT Setting,Налаштування ПДВ
+UA Appendix 4DF,Додаток 4ДФ
+UA Dismissal,Звільнення
+UA Employee,Співробітники
+UA Hiring,Прийом на роботу
+UA Payroll,Нарахування зарплати
+UA Payroll Accruals Report,Звіт по нарахуваннях
+UA Payroll Line,Рядок нарахування зарплати
+UA Payslip,Розрахунковий листок
+UA Position,Посади
+UA Salary Payment,Виплата зарплати
+UA Salary Payment Line,Рядок виплати зарплати
+UA Staff Transfer,Кадрове переміщення
+UA Timesheet,Табель
+UA Timesheet Row,Рядок табеля
+UA Work Schedule,Графіки роботи
+UA Stock Transfer,Переміщення товарів
+UA Stock Writeoff,Списання товарів
+UA Stock Surplus,Оприбуткування товарів
+UA Stock Inventory,Інвентаризація товарів
+UA Inventory Line,Рядок інвентаризації
+UA Stock Assembly,Комплектація/розкомплектація
+UA Assembly Component,Склад комплекту
+UA Low Value Issue,Передача матеріалів в експлуатацію
+UA Special Wear Issue,Передача в експлуатацію спецодягу і спецоснащення
+UA Special Wear Line,Рядок передачі спецодягу
+UA Special Wear Allocation,Розподіл спецодягу за передачами
+UA Special Wear Monthly Line,Рядок списання за місяць
+UA Special Wear Monthly Writeoff,Списання вартості спецодягу за місяць
+UA Special Wear Return,Повернення спецодягу на склад
+UA Special Wear Return Line,Рядок спецодягу
+UA Special Wear Writeoff,Списання спецодягу з експлуатації
+UA Special Wear In Use Report,Відомість спецодягу в експлуатації по працівниках
+UA Requirement Invoice,Вимога-накладна
+UA Stock Balance,Залишки товарів
+UA Stock Statement,Відомість по товарах на складах
+UA Asset Acceptance,Прийняття до обліку ОЗ / НМА
+UA Asset Acceptance Line,Рядок прийняття до обліку
+UA Asset Depreciation,Нарахування амортизації
+UA Asset Depreciation Line,Рядок нарахування амортизації
+UA Asset Output Line,Обсяг продукції для амортизації
+UA Asset Modernization,Модернізація ОЗ
+UA Asset Transfer,Переміщення ОЗ
+UA Asset Writeoff,Списання ОЗ
+UA Asset Sale,Продаж ОЗ
+UA Asset Revaluation,Переоцінка ОЗ
+UA Fixed Asset Card,Інвентарна картка обліку основних засобів (ОЗ-6)
+UA Depreciation Statement,Відомість амортизації
+UA Tax Ledger Entry,Податковий регістр
+UA Tax Difference Item,Стаття податкової різниці
+UA Month Closing,Закриття місяця
+UA Month Closing Step,Операція закриття місяця
+UA Provision Settings,Налаштування резервів
+UA Provision Accrual,Нарахування резерву
+UA Provision Accrual Row,Рядок нарахування резерву
+UA Bad Debt Write-off,Списання безнадійної заборгованості
+UA Vacation Reserve Inventory,Інвентаризація резерву відпусток
+UA Vacation Reserve Inventory Row,Рядок інвентаризації резерву відпусток
+UA Debt Reserve Class,Клас боргу за прострочкою
+UA Doubtful Debt,Сумнівна заборгованість
+Розрахунок резерву сумнівних боргів,Розрахунок резерву сумнівних боргів
+UA Signed Document,Архів поданих документів
+UA Receipt Row,Квитанція
+UA Statistical Report,Статистична звітність
+UA Statistical Report Line,Рядок статистичного звіту
+UA E-Reporting Setting,Налаштування електронної звітності
+UA ERPN Inbound,Отримані ПН з ЄРПН
+UA Report Variant,Варіант звіту
+UA Power of Attorney,Довіреність
+UA Power of Attorney Row,Рядок довіреності
+UA Single Tax Declaration,Декларація платника єдиного податку
+UA Income Book Entry,Книга обліку доходів
+UA Regulatory Parameter,Нормативний параметр
+UA Exchange Log,Журнал обміну
+UA Exchange Settings,Налаштування обміну
+UA UKTZED,УКТЗЕД
+UA KVED,КВЕД
+UA DKPP,ДКПП
+UA Counterparty Bank Account,Банківський рахунок контрагента
+UA Tax Payment Account,Рахунок для сплати податку
+UA Accountant Task,Завдання бухгалтера
+UA Retail Sales Report,Звіт про роздрібні продажі
+UA Retail Return,Повернення від роздрібного покупця
+UA Retail Revaluation,Переоцінка товарів у роздрібі
+UA Retail Line,Товари роздрібного продажу
+UA Revaluation Line,Рядок переоцінки
+UA Cash Collection,Інкасація
+UA Acquiring Settlement,Зарахування за еквайрингом
+UA Cash Register,Реєстратори розрахункових операцій (ПРРО)
+UA Fiscal Receipt,Фіскальні чеки
+UA Fiscal Receipt Line,Рядок фіскального чека
+UA Z Report,Z-звіти
+UA Commission Receipt,Надходження товарів на комісію
+UA Commission Transfer,Передача на комісію
+UA Commission Agent Report,Звіт комісіонера
+UA Principal Report,Звіт комітенту
+UA Commission Return,Повернення комітенту
+UA Tolling Transfer,Передача сировини в переробку
+UA Tolling Receipt,Отримання з переробки
+UA Tolling Intake,"Сировина, прийнята в переробку"
+UA Tolling Output,Передача готової продукції замовнику
+UA Packaging Return,Повернення тари
+UA Packaging Line,Рядок тари
+UA Packaging Balance,Розрахунки за тару
+UA Dividend Accrual,Нарахування дивідендів
+UA Dividend Line,Рядок дивідендів
+UA Tax Payment,Сплата податків
+UA Tax Payment Line,Рядок сплати податків
+UA Loan,Кредити і позики
+UA Loan Drawdown,Отримання кредиту / позики
+UA Loan Interest Accrual,Нарахування відсотків за кредитами
+UA Loan Interest Line,Рядок нарахування відсотків
+UA Loan Repayment,Погашення кредиту / позики
+UA Currency Revaluation,Переоцінка валютних розрахунків
+UA Opening Balances,Введення початкових залишків
+UA Opening Balance Line,Рядок початкового залишку
+UA Accountable Persons Report,Розрахунки з підзвітними особами
+UA Founder Settlements Report,Розрахунки із засновниками
+UA Budget Settlements Report,Розрахунки з бюджетом за податками
+UA Loans Report,Кредити і позики
+UA Item Specification,Специфікації номенклатури
+UA Planned Price,Планові ціни
+UA Production Report,Звіт виробництва за зміну
+UA Production Month Closing,Закриття місяця (виробництво)
+UA Own Work Act,Акт про виконання робіт власного виробництва
+UA Specification Line,Рядок специфікації
+UA Production Product Line,Рядок випуску продукції
+UA Production Material Line,Рядок матеріалів виробництва
+UA Production Closing Line,Рядок закриття місяця (виробництво)
+UA Own Work Line,Рядок акта власного виробництва
+UA Production Cost Report,Звіт про собівартість випуску
+UA Report Form Version,Версія форми звітності
+UA Release Note,Примітка до випуску
+UA Lease Agreement,Договори оренди
+UA Lease Schedule Row,Рядок графіка лізингових платежів
+UA Leased Asset Receipt,Отримання майна в оренду
+UA Leased Asset Return,Повернення майна з оренди
+UA Rent Accrual,Нарахування орендної плати
+UA Rent Accrual Line,Рядок нарахування орендної плати
+UA Finance Lease Receipt,Отримання майна у фінансову оренду
+UA Lease Interest Accrual,Нарахування відсотків за фінансовою орендою
+UA Lease Payment,Лізинговий платіж
+UA Lease Obligations Report,Зобов'язання за орендою
+UA Cash Disbursement Line,Рядок видаткової відомості
+UA Advance Expense Line,Рядок витрат авансового звіту
+UA Bank Statement Line,Рядок банківської виписки
+UA Regulated Report,Регламентований звіт
+UA Regulated Report Line,Рядок регламентованого звіту
+catalogs_1c,Довідники з 1С
+balances_1c,Залишки з 1С
+catalogs_excel,Довідники з Excel
+balances_excel,Залишки з Excel
+bank_statement,Банківська виписка
+payment_orders,Платіжні доручення
+nbu_rates,Курси НБУ
+banks,Банки
+classifier,Класифікатор
+tax_invoices,Податкові накладні
+ibank2,iBank2
+privat24,Приват24
+oschad,Ощадбанк (MT940)
+UAH,грн
+Marked for deletion,Помічено на видалення
+Create on basis,Створити на підставі
+Submit the document first,Спочатку проведіть документ
+The basis document {0} is not submitted,Документ-підстава {0} не проведений
+Command {0} is not registered for {1},Команду {0} не зареєстровано для {1}

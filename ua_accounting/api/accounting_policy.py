@@ -1,0 +1,1 @@
+from ua_accounting.accounting_policy import get_policy

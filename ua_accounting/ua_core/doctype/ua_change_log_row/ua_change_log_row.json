@@ -1,0 +1,31 @@
+{
+ "doctype": "DocType",
+ "name": "UA Change Log Row",
+ "module": "UA Core",
+ "field_order": [
+  "field",
+  "old_value",
+  "new_value"
+ ],
+ "fields": [
+  {
+   "fieldname": "field",
+   "label": "Поле",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "old_value",
+   "label": "Було",
+   "fieldtype": "Long Text"
+  },
+  {
+   "fieldname": "new_value",
+   "label": "Стало",
+   "fieldtype": "Long Text"
+  }
+ ],
+ "permissions": [],
+ "track_changes": 0,
+ "index_web_pages_for_search": 0,
+ "istable": 1
+}

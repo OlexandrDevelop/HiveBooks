@@ -1,0 +1,120 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "asset_type",
+  "asset",
+  "asset_account",
+  "initial_cost",
+  "liquidation_value",
+  "useful_life_months",
+  "depreciation_method",
+  "expected_output",
+  "expense_account",
+  "tax_useful_life_months",
+  "department",
+  "responsible"
+ ],
+ "fields": [
+  {
+   "fieldname": "asset_type",
+   "fieldtype": "Select",
+   "label": "Вид активу",
+   "options": "UA Fixed Asset\nUA Intangible Asset\nUA Low Value Asset",
+   "default": "UA Fixed Asset",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "asset",
+   "fieldtype": "Dynamic Link",
+   "label": "Актив",
+   "options": "asset_type",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "asset_account",
+   "fieldtype": "Link",
+   "label": "Рахунок обліку",
+   "options": "UA Account",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "initial_cost",
+   "fieldtype": "Currency",
+   "label": "Первісна вартість",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "liquidation_value",
+   "fieldtype": "Currency",
+   "label": "Ліквідаційна вартість"
+  },
+  {
+   "fieldname": "useful_life_months",
+   "fieldtype": "Int",
+   "label": "Строк корисного використання, міс.",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "depreciation_method",
+   "fieldtype": "Select",
+   "label": "Метод амортизації",
+   "options": "Прямолінійний\nЗменшення залишкової вартості\nПрискореного зменшення залишкової вартості\nКумулятивний\nВиробничий\n50% + 50%\n100%",
+   "default": "Прямолінійний",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "expected_output",
+   "fieldtype": "Float",
+   "label": "Очікуваний обсяг продукції"
+  },
+  {
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Рахунок витрат",
+   "options": "UA Account",
+   "default": "92"
+  },
+  {
+   "fieldname": "tax_useful_life_months",
+   "fieldtype": "Int",
+   "label": "Податковий строк, міс."
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Підрозділ",
+   "options": "UA Department",
+   "read_only": 1
+  },
+  {
+   "fieldname": "responsible",
+   "fieldtype": "Link",
+   "label": "Матеріально відповідальна особа",
+   "options": "UA Person",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Asset Acceptance Line",
+ "owner": "Administrator",
+ "states": [],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": []
+}

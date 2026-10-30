@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 18:00:00.000000",
+ "modified": "2026-10-22 18:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1,
+ "name": "UA Counterparty Bank Account",
+ "module": "UA Catalogs",
+ "field_order": [
+  "iban",
+  "bank_name",
+  "is_default"
+ ],
+ "fields": [
+  {
+   "fieldname": "iban",
+   "fieldtype": "Data",
+   "label": "IBAN",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Банк",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Основний",
+   "in_list_view": 1
+  }
+ ]
+}

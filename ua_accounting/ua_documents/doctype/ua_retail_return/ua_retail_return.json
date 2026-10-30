@@ -1,0 +1,148 @@
+{
+ "doctype": "DocType",
+ "name": "UA Retail Return",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "warehouse",
+  "cash_desk",
+  "bank_account",
+  "refund_type",
+  "cash_amount",
+  "card_amount",
+  "total_amount",
+  "sb_goods",
+  "goods"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Дата",
+   "fieldtype": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Роздрібний склад",
+   "fieldtype": "Link",
+   "options": "UA Warehouse",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cash_desk",
+   "label": "Каса",
+   "fieldtype": "Link",
+   "options": "UA Cash Desk",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "label": "Рахунок еквайра",
+   "fieldtype": "Link",
+   "options": "UA Bank Account"
+  },
+  {
+   "fieldname": "refund_type",
+   "label": "Спосіб повернення",
+   "fieldtype": "Select",
+   "options": "Готівка\nКартка\nЗмішано",
+   "default": "Готівка",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cash_amount",
+   "label": "Повернуто готівкою",
+   "fieldtype": "Currency",
+   "depends_on": "eval:doc.refund_type=='Змішано'"
+  },
+  {
+   "fieldname": "card_amount",
+   "label": "Повернуто карткою",
+   "fieldtype": "Currency",
+   "depends_on": "eval:doc.refund_type=='Змішано'"
+  },
+  {
+   "fieldname": "total_amount",
+   "label": "Сума повернення",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_goods",
+   "label": "Товари",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "goods",
+   "label": "Товари",
+   "fieldtype": "Table",
+   "options": "UA Retail Line",
+   "reqd": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "is_submittable": 1,
+ "naming_rule": "By script",
+ "autoname": "",
+ "track_changes": 0
+}

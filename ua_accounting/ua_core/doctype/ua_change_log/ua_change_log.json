@@ -1,0 +1,81 @@
+{
+ "doctype": "DocType",
+ "name": "UA Change Log",
+ "module": "UA Core",
+ "field_order": [
+  "ref_doctype",
+  "user",
+  "action",
+  "ref_name",
+  "organization",
+  "timestamp",
+  "rows"
+ ],
+ "fields": [
+  {
+   "fieldname": "ref_doctype",
+   "label": "Тип документа",
+   "fieldtype": "Link",
+   "options": "DocType",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "ref_name",
+   "label": "Документ",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "action",
+   "label": "Дія",
+   "fieldtype": "Select",
+   "options": "Створення\nЗміна\nПроведення\nСкасування\nВидалення",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "user",
+   "label": "Користувач",
+   "fieldtype": "Link",
+   "options": "User",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "timestamp",
+   "label": "Час",
+   "fieldtype": "Datetime",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "rows",
+   "label": "Змінені поля",
+   "fieldtype": "Table",
+   "options": "UA Change Log Row"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accounting Manager",
+   "read": 1
+  },
+  {
+   "role": "UA Chief Accountant",
+   "read": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1
+  }
+ ],
+ "track_changes": 0,
+ "index_web_pages_for_search": 0,
+ "autoname": "hash"
+}

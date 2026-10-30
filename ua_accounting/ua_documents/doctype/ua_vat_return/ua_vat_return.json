@@ -1,0 +1,190 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "period_from",
+  "period_to",
+  "cb_main",
+  "form_version",
+  "status",
+  "sb_lines",
+  "lines",
+  "sb_totals",
+  "vat_to_pay",
+  "cb_totals",
+  "vat_negative",
+  "sb_d1",
+  "appendix_d1",
+  "sb_d2",
+  "appendix_d2",
+  "sb_d5",
+  "appendix_d5"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "period_from",
+   "fieldtype": "Date",
+   "label": "Період з",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "period_to",
+   "fieldtype": "Date",
+   "label": "Період по",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "form_version",
+   "fieldtype": "Data",
+   "label": "Версія форми",
+   "default": "J0200123 v.9",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Статус",
+   "options": "Чернетка\nПідписана\nПодана",
+   "default": "Чернетка",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "sb_lines",
+   "fieldtype": "Section Break",
+   "label": "Основна частина"
+  },
+  {
+   "fieldname": "lines",
+   "fieldtype": "Table",
+   "label": "Рядки декларації",
+   "options": "UA VAT Return Line"
+  },
+  {
+   "fieldname": "sb_totals",
+   "fieldtype": "Section Break",
+   "label": "Результат"
+  },
+  {
+   "fieldname": "vat_to_pay",
+   "fieldtype": "Currency",
+   "label": "ПДВ до сплати",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cb_totals",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "vat_negative",
+   "fieldtype": "Currency",
+   "label": "Від'ємне значення",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_d1",
+   "fieldtype": "Section Break",
+   "label": "Додаток 1 (Д1): реєстр податкових накладних"
+  },
+  {
+   "fieldname": "appendix_d1",
+   "fieldtype": "Table",
+   "label": "Додаток 1",
+   "options": "UA VAT Return D1 Row"
+  },
+  {
+   "fieldname": "sb_d2",
+   "fieldtype": "Section Break",
+   "label": "Додаток 2 (Д2): розрахунок бюджетного відшкодування"
+  },
+  {
+   "fieldname": "appendix_d2",
+   "fieldtype": "Table",
+   "label": "Додаток 2",
+   "options": "UA VAT Return D2 Row"
+  },
+  {
+   "fieldname": "sb_d5",
+   "fieldtype": "Section Break",
+   "label": "Додаток 5 (Д5): коригування податкового кредиту"
+  },
+  {
+   "fieldname": "appendix_d5",
+   "fieldtype": "Table",
+   "label": "Додаток 5",
+   "options": "UA VAT Return D5 Row"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA VAT Return",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "organization",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,119 @@
+{
+ "doctype": "DocType",
+ "name": "UA Cash Register",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "register_name",
+  "organization",
+  "fiscal_number",
+  "provider",
+  "warehouse",
+  "cash_desk",
+  "bank_account",
+  "api_key"
+ ],
+ "fields": [
+  {
+   "fieldname": "register_name",
+   "label": "Назва ПРРО",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "fiscal_number",
+   "label": "Фіскальний номер",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "provider",
+   "label": "Сервіс",
+   "fieldtype": "Select",
+   "options": "Checkbox\nВчасно.Каса",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Роздрібний склад",
+   "fieldtype": "Link",
+   "options": "UA Warehouse",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cash_desk",
+   "label": "Каса",
+   "fieldtype": "Link",
+   "options": "UA Cash Desk",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "label": "Рахунок еквайра",
+   "fieldtype": "Link",
+   "options": "UA Bank Account"
+  },
+  {
+   "fieldname": "api_key",
+   "label": "Ключ API",
+   "fieldtype": "Password"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "delete": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "naming_rule": "Random",
+ "autoname": "hash",
+ "track_changes": 0,
+ "title_field": "register_name",
+ "show_title_field_in_link": 1
+}

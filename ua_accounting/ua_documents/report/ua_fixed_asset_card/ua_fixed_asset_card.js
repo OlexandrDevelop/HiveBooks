@@ -1,0 +1,1 @@
+frappe.query_reports["UA Fixed Asset Card"] = {filters: [{fieldname:'organization',label:'Організація',fieldtype:'Link',options:'UA Organization'},{fieldname:'asset',label:'Основний засіб',fieldtype:'Link',options:'UA Fixed Asset'},{fieldname:'date_to',label:'На дату',fieldtype:'Date',default:frappe.datetime.get_today()}]};

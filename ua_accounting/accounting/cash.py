@@ -9,6 +9,7 @@ from ua_accounting.accounting.documents import (
     base_currency,
     vat_info,
 )
+from ua_accounting.accounting.utils import title_of
 
 BANK = "Банк"
 CASH = "Каса"
@@ -30,7 +31,8 @@ class CashDocument(AccountingDocument):
             self.currency = base_currency()
         if self.currency == base_currency():
             self.exchange_rate = 1
-        elif not flt(self.exchange_rate):
+        elif not flt(self.exchange_rate) or (self.is_new() and flt(self.exchange_rate) == 1):
+            # 1 is the field default: for a foreign currency it is not a real rate
             from ua_accounting.ua_catalogs.doctype.ua_currency.ua_currency import get_rate
 
             self.exchange_rate = get_rate(self.currency, self.posting_date)
@@ -66,8 +68,20 @@ class CashDocument(AccountingDocument):
             if self.contract:
                 cp = frappe.db.get_value("UA Counterparty Contract", self.contract, "counterparty")
                 if cp != self.counterparty:
-                    frappe.throw(_("Договір {0} не належить контрагенту {1}").format(self.contract, self.counterparty))
+                    frappe.throw(
+                        _("Договір {0} не належить контрагенту {1}").format(
+                            title_of("UA Counterparty Contract", self.contract),
+                            title_of("UA Counterparty", self.counterparty),
+                        )
+                    )
+        elif self.operation_type in ("Отримання від підзвітної особи", "Видача підзвітній особі"):
+            if not self.person:
+                frappe.throw(_("Вкажіть підзвітну особу"))
         else:
+            if self.operation_type in ("Повернення від постачальника", "Повернення покупцю"):
+                if not self.counterparty:
+                    frappe.throw(_("Вкажіть контрагента"))
+                return
             if not self.other_account:
                 frappe.throw(_("Вкажіть рахунок кореспонденції"))
             acc = frappe.db.get_value("UA Account", self.other_account, ["is_group", "off_balance"], as_dict=True)
@@ -120,6 +134,7 @@ class CashDocument(AccountingDocument):
             "Person": self.person,
             "ExpenseItem": self.expense_item,
             "Department": self.department,
+            "TaxType": self.get("tax_type"),
         }
 
     @property

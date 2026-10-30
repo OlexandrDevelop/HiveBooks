@@ -10,6 +10,7 @@
   "uom",
   "quantity",
   "price",
+  "discount_percent",
   "amount",
   "vat_rate",
   "vat_amount",
@@ -31,6 +32,7 @@
    "fieldname": "item_name",
    "fieldtype": "Data",
    "label": "Найменування",
+   "print_hide": 1,
    "read_only": 1
   },
   {
@@ -55,7 +57,16 @@
    "fieldname": "price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Ціна"
+   "label": "Ціна",
+   "options": "currency"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "discount_percent",
+   "fieldtype": "Percent",
+   "label": "Знижка, %",
+   "in_list_view": 1
   },
   {
    "columns": 1,
@@ -63,6 +74,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Сума",
+   "options": "currency",
    "read_only": 1
   },
   {
@@ -79,6 +91,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "ПДВ",
+   "options": "currency",
    "read_only": 1
   },
   {
@@ -87,19 +100,22 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Всього",
+   "options": "currency",
    "read_only": 1
   },
   {
    "fieldname": "warehouse",
    "fieldtype": "Link",
    "label": "Склад",
-   "options": "UA Warehouse"
+   "options": "UA Warehouse",
+   "print_hide": 1
   },
   {
    "fieldname": "account",
    "fieldtype": "Link",
    "label": "Рахунок обліку",
-   "options": "UA Account"
+   "options": "UA Account",
+   "print_hide": 1
   }
  ],
  "index_web_pages_for_search": 0,
@@ -110,5 +126,6 @@
  "module": "UA Documents",
  "name": "UA Goods Line",
  "owner": "Administrator",
- "states": []
+ "states": [],
+ "permissions": []
 }

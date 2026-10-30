@@ -1,0 +1,152 @@
+{
+ "doctype": "DocType",
+ "name": "UA Special Wear Issue",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "warehouse",
+  "recipient_type",
+  "person",
+  "department",
+  "writeoff_method",
+  "useful_life_months",
+  "expense_account",
+  "expense_item",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Дата",
+   "fieldtype": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Склад",
+   "fieldtype": "Link",
+   "options": "UA Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "recipient_type",
+   "label": "Кому передано",
+   "fieldtype": "Select",
+   "options": "Працівник\nПідрозділ",
+   "default": "Працівник",
+   "reqd": 1
+  },
+  {
+   "fieldname": "person",
+   "label": "Працівник",
+   "fieldtype": "Link",
+   "options": "UA Person",
+   "depends_on": "eval:doc.recipient_type=='Працівник'",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "department",
+   "label": "Підрозділ",
+   "fieldtype": "Link",
+   "options": "UA Department",
+   "depends_on": "eval:doc.recipient_type=='Підрозділ'"
+  },
+  {
+   "fieldname": "writeoff_method",
+   "label": "Метод списання вартості",
+   "fieldtype": "Select",
+   "options": "100% при передачі\n50% + 50%\nРівномірно за строк корисного використання",
+   "default": "100% при передачі",
+   "reqd": 1
+  },
+  {
+   "fieldname": "useful_life_months",
+   "label": "Строк корисного використання, місяців",
+   "fieldtype": "Int",
+   "depends_on": "eval:doc.writeoff_method=='Рівномірно за строк корисного використання'"
+  },
+  {
+   "fieldname": "expense_account",
+   "label": "Рахунок витрат",
+   "fieldtype": "Link",
+   "options": "UA Account",
+   "default": "92",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expense_item",
+   "label": "Стаття витрат",
+   "fieldtype": "Link",
+   "options": "UA Expense Item"
+  },
+  {
+   "fieldname": "items",
+   "label": "Спецодяг і спецоснащення",
+   "fieldtype": "Table",
+   "options": "UA Special Wear Line",
+   "reqd": 1
+  }
+ ],
+ "is_submittable": 1,
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "naming_rule": "By script",
+ "autoname": "",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 0
+}

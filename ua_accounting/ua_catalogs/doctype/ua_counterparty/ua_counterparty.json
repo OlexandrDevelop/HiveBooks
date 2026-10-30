@@ -23,6 +23,8 @@
   "phone",
   "email",
   "main_contract",
+  "sb_bank",
+  "bank_accounts",
   "lft",
   "rgt",
   "old_parent"
@@ -45,7 +47,8 @@
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
    "label": "Входить до групи",
-   "options": "UA Counterparty"
+   "options": "UA Counterparty",
+   "link_filters": "[[\"UA Counterparty\", \"is_group\", \"=\", 1]]"
   },
   {
    "fieldname": "is_group",
@@ -127,7 +130,7 @@
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email",
+   "label": "Ел. пошта",
    "options": "Email"
   },
   {
@@ -158,6 +161,17 @@
    "hidden": 1,
    "label": "old_parent",
    "read_only": 1
+  },
+  {
+   "fieldname": "sb_bank",
+   "fieldtype": "Section Break",
+   "label": "Банківські рахунки"
+  },
+  {
+   "fieldname": "bank_accounts",
+   "fieldtype": "Table",
+   "label": "Банківські рахунки",
+   "options": "UA Counterparty Bank Account"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -216,6 +230,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "search_fields": "counterparty_name,edrpou,ipn",

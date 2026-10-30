@@ -12,6 +12,7 @@
   "is_group",
   "account_type",
   "off_balance",
+  "in_simplified_chart",
   "cb1",
   "currency_accounting",
   "quantity_accounting",
@@ -74,6 +75,12 @@
    "fieldtype": "Check",
    "in_standard_filter": 1,
    "label": "Забалансовий"
+  },
+  {
+   "fieldname": "in_simplified_chart",
+   "fieldtype": "Check",
+   "label": "У спрощеному плані рахунків",
+   "description": "Малі підприємства"
   },
   {
    "fieldname": "cb1",
@@ -171,6 +178,12 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "export": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant"
   }
  ],
  "search_fields": "account_code,account_name",

@@ -1,0 +1,24 @@
+{
+ "doctype": "Report",
+ "name": "UA Payslip",
+ "report_name": "UA Payslip",
+ "ref_doctype": "UA Payroll",
+ "report_type": "Script Report",
+ "is_standard": "Yes",
+ "module": "UA Documents",
+ "disabled": 0,
+ "roles": [
+  {
+   "role": "UA Accountant"
+  },
+  {
+   "role": "UA Accounting Manager"
+  },
+  {
+   "role": "UA Chief Accountant"
+  },
+  {
+   "role": "System Manager"
+  }
+ ]
+}

@@ -1,0 +1,114 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2026-10-23 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "form_code",
+  "form_name",
+  "version_no",
+  "effective_from",
+  "schema_version",
+  "xsd_file",
+  "legal_basis",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "form_code",
+   "fieldtype": "Data",
+   "label": "Код форми",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "form_name",
+   "fieldtype": "Data",
+   "label": "Назва форми",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "version_no",
+   "fieldtype": "Data",
+   "label": "Номер версії",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "effective_from",
+   "fieldtype": "Date",
+   "label": "Діє з",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "schema_version",
+   "fieldtype": "Data",
+   "label": "Версія XSD",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "xsd_file",
+   "fieldtype": "Attach",
+   "label": "Файл XSD"
+  },
+  {
+   "fieldname": "legal_basis",
+   "fieldtype": "Small Text",
+   "label": "Правова підстава"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Статус",
+   "options": "Діє\nСкасовано",
+   "default": "Діє",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-23 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Report Form Version",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "read": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "effective_from",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "form_code",
+ "track_changes": 1
+}

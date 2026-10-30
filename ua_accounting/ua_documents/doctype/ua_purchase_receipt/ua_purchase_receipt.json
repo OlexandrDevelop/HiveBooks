@@ -8,6 +8,7 @@
   "posting_date",
   "counterparty",
   "contract",
+  "payment_due_date",
   "cb_head",
   "warehouse",
   "supplier_order",
@@ -22,6 +23,8 @@
   "goods",
   "sb_services",
   "services",
+  "sb_packaging",
+  "packaging",
   "sb_totals",
   "total_net",
   "vat_total",
@@ -164,13 +167,15 @@
    "fieldname": "total_net",
    "fieldtype": "Currency",
    "label": "Сума без ПДВ",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "vat_total",
    "fieldtype": "Currency",
    "label": "ПДВ",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "cb_total",
@@ -183,7 +188,8 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Всього",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "base_total",
@@ -211,6 +217,25 @@
    "options": "UA Purchase Receipt",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "payment_due_date",
+   "fieldtype": "Date",
+   "label": "Оплатити до",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "sb_packaging",
+   "label": "Поворотна тара",
+   "fieldtype": "Section Break",
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:doc.packaging && doc.packaging.length"
+  },
+  {
+   "fieldname": "packaging",
+   "label": "Поворотна тара",
+   "fieldtype": "Table",
+   "options": "UA Packaging Line"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -264,6 +289,21 @@
    "share": 1,
    "submit": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1,
+   "amend": 1,
+   "cancel": 1,
+   "delete": 1
   }
  ],
  "search_fields": "counterparty,contract",

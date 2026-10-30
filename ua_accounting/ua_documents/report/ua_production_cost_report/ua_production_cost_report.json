@@ -1,0 +1,21 @@
+{
+ "doctype": "Report",
+ "name": "UA Production Cost Report",
+ "report_name": "UA Production Cost Report",
+ "ref_doctype": "UA Production Report",
+ "report_type": "Script Report",
+ "is_standard": "Yes",
+ "module": "UA Documents",
+ "disabled": 0,
+ "roles": [
+  {
+   "role": "UA Accountant"
+  },
+  {
+   "role": "UA Accounting Manager"
+  },
+  {
+   "role": "System Manager"
+  }
+ ]
+}

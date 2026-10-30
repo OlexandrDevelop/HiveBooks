@@ -1,0 +1,1 @@
+from ua_accounting.accounting.bank_documents import UABankStatement

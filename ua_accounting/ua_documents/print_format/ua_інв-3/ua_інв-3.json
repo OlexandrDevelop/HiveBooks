@@ -1,0 +1,10 @@
+{
+ "doctype": "Print Format",
+ "name": "UA ІНВ-3",
+ "doc_type": "UA Stock Inventory",
+ "module": "UA Documents",
+ "standard": "Yes",
+ "custom_format": 1,
+ "print_format_type": "Jinja",
+ "html": "<div style='font-family:Arial;color:#172340'><p>Ф. № ІНВ-3 · {{ frappe.db.get_value('UA Organization', doc.organization, 'full_name') or doc.organization }}</p>\n<h2>Інвентаризаційний опис товарно-матеріальних цінностей</h2>\n<p>Склад: {{ frappe.db.get_value('UA Warehouse', doc.warehouse, 'warehouse_name') or doc.warehouse }} · Дата: {{ doc.posting_date }} · № {{ doc.name }}</p>\n<table style='width:100%;border-collapse:collapse' border='1'><tr><th>№</th><th>Найменування</th><th>Од.</th><th>Облікова кількість</th><th>Фактична кількість</th><th>Ціна</th><th>Результат</th><th>Сума відхилення</th></tr>\n{% for r in doc.lines %}<tr><td>{{ r.idx }}</td><td>{{ r.item_name }}</td><td>{{ r.uom or '' }}</td><td>{{ r.book_quantity }}</td><td>{{ r.actual_quantity }}</td><td>{{ r.price }}</td><td>{% if r.deviation < 0 %}Нестача {{ -r.deviation }}{% elif r.deviation > 0 %}Надлишок {{ r.deviation }}{% else %}—{% endif %}</td><td>{{ r.deviation_amount }}</td></tr>{% endfor %}</table>\n<p>Голова комісії ____________ Члени комісії ____________</p></div>"
+}

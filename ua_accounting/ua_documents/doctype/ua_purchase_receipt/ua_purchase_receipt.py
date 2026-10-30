@@ -1,17 +1,22 @@
 import frappe
 from frappe import _
-from frappe.utils import flt
+from frappe.utils import add_days, flt
 
+from ua_accounting.accounting.retail import is_retail, markup_entries, retail_price
+from ua_accounting.accounting import packaging
 from ua_accounting.accounting.documents import (
     EVENT_SHIPMENT,
     EXPENSE_ACCOUNT,
     STOCK_ACCOUNT,
     TAX_VAT,
+    TYPE_GOODS,
     VAT_NONE,
     TradeDocument,
     allocate_advance,
+    fill_cash_side,
     new_from_basis,
     settlement_balance,
+    vat_info,
 )
 
 ADVANCE_ACCOUNT = "371"
@@ -32,10 +37,38 @@ class UAPurchaseReceipt(TradeDocument):
     doc_code = "PR"
     doc_title = "Надходження товарів та послуг"
 
+    def calculate(self):
+        super().calculate()
+        if not self.accounting_policy or self.accounting_policy.vat_payer:
+            return
+        extra = 0.0
+        for row, _kind in self.lines():
+            percent, taxable = vat_info(row.vat_rate, {})
+            if taxable:
+                tax = flt(flt(row.quantity) * flt(row.price) * percent / 100, 2)
+                row.total = flt(row.total + tax, 2)
+                extra += tax
+        self.total_amount = flt(self.total_amount + extra, 2)
+        self.total_net = self.total_amount
+        self.base_total = self.uah(self.total_amount)
+
     def validate(self):
         super().validate()
+        self.set_payment_due_date()
+        packaging.prepare(self)
         if self.supplier_order and frappe.db.get_value("UA Supplier Order", self.supplier_order, "docstatus") == 2:
             frappe.throw(_("Замовлення {0} скасоване").format(self.supplier_order))
+        for row in self.goods or []:
+            warehouse = row.warehouse or self.warehouse
+            if is_retail(warehouse):
+                retail_price(row.item, warehouse, self.posting_date, row.idx)
+
+    def set_payment_due_date(self):
+        """Due date of the payment: the date of the document + the payment term of the contract."""
+        if self.payment_due_date:
+            return
+        days = (frappe.db.get_value("UA Counterparty Contract", self.contract, "payment_term_days") if self.contract else 0) or 0
+        self.payment_due_date = add_days(self.posting_date, days)
 
     def build(self):
         settle = "632" if self.is_foreign else "631"
@@ -46,25 +79,34 @@ class UAPurchaseReceipt(TradeDocument):
             info = self.item_info(row.item)
             net, vat_amount, gross = self.row_amounts(row)
             self.add_group(groups, row, net, vat_amount, gross)
+            retail = kind == "goods" and is_retail(row.warehouse or self.warehouse)
+            if retail:
+                if info.item_type != TYPE_GOODS:
+                    frappe.throw(_("Рядок {0}: на роздрібний склад приймають лише товари").format(row.idx))
             if kind == "goods":
-                account = row.account or STOCK_ACCOUNT.get(info.item_type, "281")
+                account = "282" if retail else row.account or STOCK_ACCOUNT.get(info.item_type, "281")
                 dr_sub = {"Item": row.item, "Warehouse": row.warehouse or self.warehouse}
                 extra = {"quantity_dr": flt(row.quantity, 3)}
             else:
                 account = row.account or EXPENSE_ACCOUNT
                 dr_sub = {"ExpenseItem": row.expense_item, "Department": row.department, "Item": row.item}
                 extra = {}
+            amount = gross if self.vat_mode == VAT_NONE else net
             entries.append(
                 self.entry(
                     account,
                     settle,
-                    net,
+                    amount,
                     dr_sub,
                     self.settle_sub,
-                    cur_amount=row.total - row.vat_amount,
+                    cur_amount=row.total if self.vat_mode == VAT_NONE else row.total - row.vat_amount,
                     **extra,
                 )
             )
+            if retail:
+                entries.extend(markup_entries(self, row, row.warehouse or self.warehouse, amount, row.quantity))
+
+        entries.extend(packaging.receipt_entries(self, settle))
 
         vat_total = flt(sum(g["vat"] for g in groups.values()), 2)
         gross_total = flt(sum(g["gross"] for g in groups.values()), 2)
@@ -137,7 +179,9 @@ class UAPurchaseReceipt(TradeDocument):
             {"supplier_order": self.supplier_order, "docstatus": 1, "name": ("!=", self.name)},
         )
         status = "Виконано" if (self.docstatus == 1 or done) else "Відкрито"
-        frappe.db.set_value("UA Supplier Order", self.supplier_order, "status", status, update_modified=False)
+        from ua_accounting.administration import set_status
+
+        set_status("UA Supplier Order", self.supplier_order, status)
 
 
 @frappe.whitelist()
@@ -149,4 +193,5 @@ def make_cash_payment(source_name, target_doc=None):
     doc.operation_type = "Оплата постачальнику"
     doc.settlement_type = "Оплата за надходження"
     doc.amount = receipt.total_amount
+    fill_cash_side(doc)
     return doc

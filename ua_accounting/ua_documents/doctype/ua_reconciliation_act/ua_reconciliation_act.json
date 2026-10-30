@@ -1,0 +1,203 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "counterparty",
+  "contract",
+  "cb_head",
+  "date_from",
+  "date_to",
+  "sb_rows",
+  "rows",
+  "sb_totals",
+  "opening_balance",
+  "turnover_debit",
+  "turnover_credit",
+  "cb_total",
+  "closing_balance",
+  "their_balance",
+  "discrepancy",
+  "sb_more",
+  "comment"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Контрагент",
+   "options": "UA Counterparty",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "cb_head",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "date_from",
+   "fieldtype": "Date",
+   "label": "Період з",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_to",
+   "fieldtype": "Date",
+   "label": "Період по",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_rows",
+   "fieldtype": "Section Break",
+   "label": "Документи за період"
+  },
+  {
+   "fieldname": "rows",
+   "fieldtype": "Table",
+   "label": "Документи",
+   "options": "UA Reconciliation Row",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_totals",
+   "fieldtype": "Section Break",
+   "label": "Підсумок"
+  },
+  {
+   "fieldname": "opening_balance",
+   "fieldtype": "Currency",
+   "label": "Сальдо на початок",
+   "read_only": 1
+  },
+  {
+   "fieldname": "turnover_debit",
+   "fieldtype": "Currency",
+   "label": "Обороти Дт",
+   "read_only": 1
+  },
+  {
+   "fieldname": "turnover_credit",
+   "fieldtype": "Currency",
+   "label": "Обороти Кт",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_total",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "closing_balance",
+   "fieldtype": "Currency",
+   "label": "Сальдо на кінець",
+   "bold": 1,
+   "in_list_view": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "their_balance",
+   "fieldtype": "Currency",
+   "label": "Сальдо за даними контрагента"
+  },
+  {
+   "fieldname": "discrepancy",
+   "fieldtype": "Currency",
+   "label": "Розбіжність",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_more",
+   "fieldtype": "Section Break",
+   "label": "Додатково",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Коментар"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Reconciliation Act",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "counterparty",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,171 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "employee_name",
+  "accrual_type",
+  "amount",
+  "period_from",
+  "period_to",
+  "insured_years",
+  "expense_account",
+  "worked_days",
+  "norm_days",
+  "avg_daily",
+  "psp",
+  "pdfo",
+  "military_levy",
+  "net",
+  "esv_base",
+  "esv",
+  "employer_part",
+  "fss_part"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Співробітник",
+   "options": "UA Employee",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "ПІБ",
+   "read_only": 1,
+   "no_copy": 1,
+   "fetch_from": "employee.employee_name"
+  },
+  {
+   "fieldname": "accrual_type",
+   "fieldtype": "Select",
+   "label": "Вид нарахування",
+   "options": "Оклад\nПремія\nЛікарняні\nВідпускні\nЦПХ",
+   "default": "Оклад",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Нараховано, грн",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "period_from",
+   "fieldtype": "Date",
+   "label": "Період з"
+  },
+  {
+   "fieldname": "period_to",
+   "fieldtype": "Date",
+   "label": "Період по"
+  },
+  {
+   "fieldname": "insured_years",
+   "fieldtype": "Float",
+   "label": "Страховий стаж, років"
+  },
+  {
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Рахунок витрат",
+   "options": "UA Account",
+   "default": "92"
+  },
+  {
+   "fieldname": "worked_days",
+   "fieldtype": "Float",
+   "label": "Відпрацьовано днів",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "norm_days",
+   "fieldtype": "Float",
+   "label": "Норма днів",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "avg_daily",
+   "fieldtype": "Currency",
+   "label": "Середньоденна, грн",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "psp",
+   "fieldtype": "Currency",
+   "label": "ПСП, грн",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "pdfo",
+   "fieldtype": "Currency",
+   "label": "ПДФО, грн",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "military_levy",
+   "fieldtype": "Currency",
+   "label": "Військовий збір, грн",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "net",
+   "fieldtype": "Currency",
+   "label": "До виплати, грн",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "esv_base",
+   "fieldtype": "Currency",
+   "label": "База ЄСВ, грн",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "esv",
+   "fieldtype": "Currency",
+   "label": "ЄСВ, грн",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "employer_part",
+   "fieldtype": "Currency",
+   "label": "За рахунок роботодавця, грн",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "fss_part",
+   "fieldtype": "Currency",
+   "label": "За рахунок ФСС, грн",
+   "read_only": 1,
+   "no_copy": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Payroll Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "istable": 1
+}

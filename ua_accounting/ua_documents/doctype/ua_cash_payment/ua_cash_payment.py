@@ -2,6 +2,7 @@ import frappe
 from frappe import _
 
 from ua_accounting.accounting.cash import CashDocument
+from ua_accounting.accounting.bank_cash import check_cash_balance
 from ua_accounting.accounting.documents import EVENT_PAYMENT, TAX_VAT
 
 OP_SUPPLIER = "Оплата постачальнику"
@@ -25,8 +26,15 @@ class UACashPayment(CashDocument):
     def is_advance(self):
         return self.settlement_type == ST_ADVANCE
 
+    def on_submit(self):
+        if self.cash_type == "Каса" and not self.is_foreign:
+            check_cash_balance(self.organization, self.cash_desk, self.posting_date, -self.amount_uah)
+        super().on_submit()
+
     def validate(self):
         super().validate()
+        if self.settlement_doc_type == "UA Purchase Receipt" and self.settlement_doc and not self.purchase_receipt:
+            self.purchase_receipt = self.settlement_doc
         if self.purchase_receipt and self.is_settlement() and not self.is_advance():
             row = frappe.db.get_value(
                 "UA Purchase Receipt", self.purchase_receipt, ["counterparty", "docstatus"], as_dict=True
@@ -38,9 +46,13 @@ class UACashPayment(CashDocument):
         amount = self.amount_uah
         entries, credits = [], []
         if not self.is_settlement():
+            account = {
+                "Повернення покупцю": "361",
+                "Видача підзвітній особі": "372",
+            }.get(self.operation_type, self.other_account)
             entries.append(
                 self.entry(
-                    self.other_account,
+                    account,
                     self.cash_account,
                     amount,
                     self.other_sub,

@@ -1,3 +1,8 @@
+# BeeOne — ua_accounting
+
+Автоматичне розгортання з демоданими в Easypanel: [інструкція](DEPLOY.md).
+Compose-файл: `docker-compose.yml`, Build Path: `/`.
+
 # ua_accounting
 
 Accounting for Ukraine, like 1C "Бухгалтерія для України". A Frappe v16 app.
@@ -23,10 +28,13 @@ The source of truth is the folder `apps/ua_accounting` in the ERP repo.
 The public repo `OlexandrDevelop/ua_accounting` is a mirror. To update it, run in the ERP repo root:
 
 ```bash
-git subtree split --prefix apps/ua_accounting -b ua-accounting-mirror
-git push git@github.com:OlexandrDevelop/ua_accounting.git ua-accounting-mirror:main --force
-git branch -D ua-accounting-mirror
+git fetch git@github.com:OlexandrDevelop/ua_accounting.git main
+tree=$(git rev-parse HEAD:apps/ua_accounting)
+commit=$(git commit-tree "$tree" -p FETCH_HEAD -m "sync from ERP repo")
+git push git@github.com:OlexandrDevelop/ua_accounting.git "$commit":refs/heads/main
 ```
+
+Each sync adds one snapshot commit. No force push is needed.
 
 ## Content
 

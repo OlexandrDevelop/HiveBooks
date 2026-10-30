@@ -1,0 +1,14 @@
+{
+ "doctype": "Page",
+ "name": "ua-stock-statement",
+ "page_name": "ua-stock-statement",
+ "title": "Відомість по товарах на складах",
+ "module": "UA Core",
+ "standard": "Yes",
+ "system_page": 0,
+ "roles": [
+  {"role": "UA Accountant"},
+  {"role": "UA Accounting Manager"},
+  {"role": "System Manager"}
+ ]
+}

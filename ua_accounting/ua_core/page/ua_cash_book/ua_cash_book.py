@@ -1,0 +1,1 @@
+"""Cash book desk route."""

@@ -10,13 +10,15 @@
   "uom",
   "quantity",
   "price",
+  "discount_percent",
   "amount",
   "vat_rate",
   "vat_amount",
   "total",
   "expense_item",
   "department",
-  "account"
+  "account",
+  "warranty_repair"
  ],
  "fields": [
   {
@@ -32,6 +34,7 @@
    "fieldname": "item_name",
    "fieldtype": "Data",
    "label": "Найменування",
+   "print_hide": 1,
    "read_only": 1
   },
   {
@@ -56,7 +59,16 @@
    "fieldname": "price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Ціна"
+   "label": "Ціна",
+   "options": "currency"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "discount_percent",
+   "fieldtype": "Percent",
+   "label": "Знижка, %",
+   "in_list_view": 1
   },
   {
    "columns": 1,
@@ -64,6 +76,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Сума",
+   "options": "currency",
    "read_only": 1
   },
   {
@@ -80,6 +93,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "ПДВ",
+   "options": "currency",
    "read_only": 1
   },
   {
@@ -88,25 +102,35 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Всього",
+   "options": "currency",
    "read_only": 1
   },
   {
    "fieldname": "expense_item",
    "fieldtype": "Link",
    "label": "Стаття витрат",
-   "options": "UA Expense Item"
+   "options": "UA Expense Item",
+   "print_hide": 1
   },
   {
    "fieldname": "department",
    "fieldtype": "Link",
    "label": "Підрозділ",
-   "options": "UA Department"
+   "options": "UA Department",
+   "print_hide": 1
   },
   {
    "fieldname": "account",
    "fieldtype": "Link",
    "label": "Рахунок обліку",
-   "options": "UA Account"
+   "options": "UA Account",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "warranty_repair",
+   "fieldtype": "Check",
+   "label": "Гарантійний ремонт",
+   "description": "Витрати покриваються із забезпечення гарантійних зобов'язань (473)"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -117,5 +141,6 @@
  "module": "UA Documents",
  "name": "UA Service Line",
  "owner": "Administrator",
- "states": []
+ "states": [],
+ "permissions": []
 }

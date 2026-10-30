@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "uom",
+  "quantity",
+  "price",
+  "amount",
+  "warehouse"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Тара",
+   "fieldtype": "Link",
+   "options": "UA Item",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 3
+  },
+  {
+   "fieldname": "item_name",
+   "label": "Найменування",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "print_hide": 1
+  },
+  {
+   "fieldname": "uom",
+   "label": "Од.",
+   "fieldtype": "Link",
+   "options": "UA UOM",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Кількість",
+   "fieldtype": "Float",
+   "default": "1",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "price",
+   "label": "Ціна застави",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "amount",
+   "label": "Сума",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Склад",
+   "fieldtype": "Link",
+   "options": "UA Warehouse",
+   "print_hide": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-23 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Packaging Line",
+ "owner": "Administrator",
+ "states": [],
+ "permissions": []
+}

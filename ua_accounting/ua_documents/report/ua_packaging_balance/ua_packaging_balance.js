@@ -1,0 +1,1 @@
+frappe.query_reports["UA Packaging Balance"] = {filters: [{fieldname:'organization',label:'Організація',fieldtype:'Link',options:'UA Organization',reqd:1},{fieldname:'counterparty',label:'Контрагент',fieldtype:'Link',options:'UA Counterparty'}]};

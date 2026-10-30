@@ -99,7 +99,7 @@
    "fieldtype": "Select",
    "in_standard_filter": 1,
    "label": "Подія (перша подія)",
-   "options": "Відвантаження\nОплата\nІнше"
+   "options": "Відвантаження\nОплата\nКоригування\nІнше"
   },
   {
    "fieldname": "base_amount",
@@ -161,6 +161,13 @@
    "read": 1,
    "report": 1,
    "role": "System Manager"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant"
   }
  ],
  "sort_field": "posting_date",

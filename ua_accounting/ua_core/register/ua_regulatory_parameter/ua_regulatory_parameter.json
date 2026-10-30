@@ -1,0 +1,40 @@
+{
+ "creation": "2026-10-27 00:00:00.000000",
+ "date_field": "effective_from",
+ "doctype": "Register",
+ "fields": [
+  {
+   "doctype": "Register Field",
+   "fieldname": "parameter_code",
+   "role": "Dimension"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "value",
+   "role": "Resource"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "unit",
+   "role": "Attribute"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "legal_basis",
+   "role": "Attribute"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "source_url",
+   "role": "Attribute"
+  }
+ ],
+ "modified": "2026-10-27 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Regulatory Parameter",
+ "owner": "Administrator",
+ "register_doctype": "UA Regulatory Parameter",
+ "register_kind": "Information: Periodic",
+ "totals": "None"
+}

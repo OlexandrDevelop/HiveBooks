@@ -152,13 +152,15 @@
    "fieldname": "total_net",
    "fieldtype": "Currency",
    "label": "Сума без ПДВ",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "vat_total",
    "fieldtype": "Currency",
    "label": "ПДВ",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "cb_total",
@@ -171,7 +173,8 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Всього",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "base_total",
@@ -252,6 +255,21 @@
    "share": 1,
    "submit": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1,
+   "amend": 1,
+   "cancel": 1,
+   "delete": 1
   }
  ],
  "search_fields": "counterparty,contract",

@@ -1,0 +1,177 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 22:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 22:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "format:SD-{#####}",
+ "name": "UA Signed Document",
+ "title_field": "source_name",
+ "search_fields": "source_name,signer",
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "source_doctype",
+   "fieldtype": "Link",
+   "label": "Вид документа",
+   "options": "DocType",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "source_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Документ",
+   "options": "source_doctype",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Статус",
+   "options": "Підписано\nНадіслано\nПрийнято\nВідхилено",
+   "default": "Підписано",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "signer",
+   "fieldtype": "Data",
+   "label": "Підписант",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "signed_at",
+   "fieldtype": "Datetime",
+   "label": "Підписано"
+  },
+  {
+   "fieldname": "provider",
+   "fieldtype": "Data",
+   "label": "Провайдер"
+  },
+  {
+   "fieldname": "sent_at",
+   "fieldtype": "Datetime",
+   "label": "Надіслано"
+  },
+  {
+   "fieldname": "dps_reg_number",
+   "fieldtype": "Data",
+   "label": "Реєстраційний номер ДПС"
+  },
+  {
+   "fieldname": "is_late",
+   "fieldtype": "Check",
+   "label": "Подано із запізненням"
+  },
+  {
+   "fieldname": "sb_file",
+   "fieldtype": "Section Break",
+   "label": "Файл і підпис"
+  },
+  {
+   "fieldname": "xml_filename",
+   "fieldtype": "Data",
+   "label": "Ім'я файлу"
+  },
+  {
+   "fieldname": "xml_hash",
+   "fieldtype": "Data",
+   "label": "SHA-256 файлу"
+  },
+  {
+   "fieldname": "source_fingerprint",
+   "fieldtype": "Data",
+   "label": "Відбиток документа",
+   "hidden": 1
+  },
+  {
+   "fieldname": "signature",
+   "fieldtype": "Long Text",
+   "label": "Підпис (base64)"
+  },
+  {
+   "fieldname": "xml_content",
+   "fieldtype": "Code",
+   "label": "Підписаний XML",
+   "options": "XML"
+  },
+  {
+   "fieldname": "sb_receipts",
+   "fieldtype": "Section Break",
+   "label": "Квитанції"
+  },
+  {
+   "fieldname": "receipts",
+   "fieldtype": "Table",
+   "label": "Квитанції",
+   "options": "UA Receipt Row",
+   "in_list_view": 0
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "export": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "export": 1,
+   "report": 1,
+   "print": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "export": 1,
+   "report": 1,
+   "print": 1
+  }
+ ],
+ "field_order": [
+  "organization",
+  "source_doctype",
+  "source_name",
+  "status",
+  "cb_main",
+  "signer",
+  "signed_at",
+  "provider",
+  "sent_at",
+  "dps_reg_number",
+  "is_late",
+  "sb_file",
+  "xml_filename",
+  "xml_hash",
+  "source_fingerprint",
+  "signature",
+  "xml_content",
+  "sb_receipts",
+  "receipts"
+ ]
+}

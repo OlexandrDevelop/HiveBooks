@@ -1,0 +1,66 @@
+{
+ "doctype": "DocType",
+ "name": "UA Retail Line",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_name",
+  "quantity",
+  "price",
+  "vat_rate",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Номенклатура",
+   "fieldtype": "Link",
+   "options": "UA Item",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 3
+  },
+  {
+   "fieldname": "item_name",
+   "label": "Найменування",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Кількість",
+   "fieldtype": "Float",
+   "reqd": 1,
+   "default": "1",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "price",
+   "label": "Ціна в роздрібі",
+   "fieldtype": "Currency",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "vat_rate",
+   "label": "Ставка ПДВ",
+   "fieldtype": "Link",
+   "options": "UA VAT Rate",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "amount",
+   "label": "Сума",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1
+}

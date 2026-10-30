@@ -1,0 +1,61 @@
+{
+ "doctype": "DocType",
+ "name": "UA Special Wear Monthly Line",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "issue",
+  "issue_line",
+  "item",
+  "quantity",
+  "months_done",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "issue",
+   "label": "Передача",
+   "fieldtype": "Link",
+   "options": "UA Special Wear Issue",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "issue_line",
+   "label": "Рядок передачі",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "item",
+   "label": "Номенклатура",
+   "fieldtype": "Link",
+   "options": "UA Item",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Кількість",
+   "fieldtype": "Float",
+   "read_only": 1,
+   "precision": "3"
+  },
+  {
+   "fieldname": "months_done",
+   "label": "Місяців списано",
+   "fieldtype": "Int",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount",
+   "label": "Сума",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "in_list_view": 1
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": []
+}

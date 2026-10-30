@@ -1,0 +1,228 @@
+{
+ "actions": [],
+ "creation": "2026-10-23 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "lease_kind",
+  "counterparty",
+  "contract",
+  "cb_1",
+  "asset",
+  "start_date",
+  "end_date",
+  "sb_operating",
+  "asset_value",
+  "monthly_rent",
+  "vat_rate",
+  "sb_finance",
+  "fair_value",
+  "discount_rate",
+  "cb_2",
+  "present_value",
+  "recognised_value",
+  "effective_rate",
+  "sb_schedule",
+  "schedule"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "lease_kind",
+   "fieldtype": "Select",
+   "label": "Вид оренди",
+   "options": "Операційна оренда\nФінансова оренда",
+   "default": "Операційна оренда",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Орендодавець",
+   "options": "UA Counterparty",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір контрагента",
+   "options": "UA Counterparty Contract",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "asset",
+   "fieldtype": "Link",
+   "label": "Орендований об'єкт",
+   "options": "UA Fixed Asset",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Початок оренди",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "Кінець оренди",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_operating",
+   "fieldtype": "Section Break",
+   "label": "Операційна оренда"
+  },
+  {
+   "fieldname": "asset_value",
+   "fieldtype": "Currency",
+   "label": "Вартість для позабалансового обліку",
+   "depends_on": "eval:doc.lease_kind=='Операційна оренда'"
+  },
+  {
+   "fieldname": "monthly_rent",
+   "fieldtype": "Currency",
+   "label": "Орендна плата за місяць (з ПДВ)",
+   "depends_on": "eval:doc.lease_kind=='Операційна оренда'",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "vat_rate",
+   "fieldtype": "Link",
+   "label": "Ставка ПДВ",
+   "options": "UA VAT Rate",
+   "depends_on": "eval:doc.lease_kind=='Операційна оренда'"
+  },
+  {
+   "fieldname": "sb_finance",
+   "fieldtype": "Section Break",
+   "label": "Фінансова оренда"
+  },
+  {
+   "fieldname": "fair_value",
+   "fieldtype": "Currency",
+   "label": "Справедлива вартість",
+   "depends_on": "eval:doc.lease_kind=='Фінансова оренда'"
+  },
+  {
+   "fieldname": "discount_rate",
+   "fieldtype": "Float",
+   "label": "Ставка дисконтування, % річних",
+   "depends_on": "eval:doc.lease_kind=='Фінансова оренда'"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "present_value",
+   "fieldtype": "Currency",
+   "label": "Теперішня вартість платежів",
+   "read_only": 1
+  },
+  {
+   "fieldname": "recognised_value",
+   "fieldtype": "Currency",
+   "label": "Вартість визнання (актив і зобов'язання)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "effective_rate",
+   "fieldtype": "Float",
+   "label": "Ефективна ставка, % річних",
+   "read_only": 1,
+   "precision": "6"
+  },
+  {
+   "fieldname": "sb_schedule",
+   "fieldtype": "Section Break",
+   "label": "Графік лізингових платежів",
+   "depends_on": "eval:doc.lease_kind=='Фінансова оренда'"
+  },
+  {
+   "fieldname": "schedule",
+   "fieldtype": "Table",
+   "label": "Платежі",
+   "options": "UA Lease Schedule Row"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-23 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Lease Agreement",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1,
+   "delete": 1
+  }
+ ],
+ "naming_rule": "Expression",
+ "autoname": "format:LS-{#####}"
+}

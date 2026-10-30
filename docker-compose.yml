@@ -1,0 +1,104 @@
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile
+    args:
+      APP_NAME: ua_accounting
+      BEEONE_REPOSITORY: ${BEEONE_REPOSITORY:-https://github.com/OlexandrDevelop/beeone.git}
+      BEEONE_REF: ${BEEONE_REF:-beeone-16}
+  image: ${COMPOSE_PROJECT_NAME:-ua_accounting}-app:local
+  restart: unless-stopped
+  volumes:
+    - sites:/home/frappe/frappe-bench/sites
+  environment: &environment
+    PYTHONPATH: /home/frappe/frappe-bench
+    CONFIGURATION_APP: ua_accounting
+    SITE_NAME: ${SITE_NAME:?Set SITE_NAME to your domain}
+  depends_on:
+    init:
+      condition: service_completed_successfully
+
+services:
+  db:
+    image: mariadb:11.8
+    restart: unless-stopped
+    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --skip-character-set-client-handshake, --innodb-snapshot-isolation=OFF]
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Set DB_ROOT_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+  redis-cache:
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+  redis-queue:
+    image: redis:7.4-alpine
+    command: [redis-server, --appendonly, 'yes']
+    restart: unless-stopped
+    volumes:
+      - redis-queue:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+  init:
+    <<: *app
+    restart: 'no'
+    command: [bash, /home/frappe/bootstrap.sh]
+    environment:
+      <<: *environment
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Set DB_ROOT_PASSWORD}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD}
+      LOAD_DEMO: ${LOAD_DEMO:-1}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis-cache:
+        condition: service_healthy
+      redis-queue:
+        condition: service_healthy
+  backend:
+    <<: *app
+    healthcheck:
+      test: [CMD-SHELL, 'curl -fsS -H "X-Frappe-Site-Name: $$SITE_NAME" http://localhost:8000/api/method/ping >/dev/null']
+      interval: 15s
+      timeout: 5s
+      retries: 20
+  websocket:
+    <<: *app
+    command: [node, apps/frappe/socketio.js]
+  worker:
+    <<: *app
+    command: [bench, worker, --queue, "short,default,long"]
+  scheduler:
+    <<: *app
+    command: [bench, schedule]
+  frontend:
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    environment:
+      SITE_NAME: ${SITE_NAME:?Set SITE_NAME to your domain}
+      NGINX_ENVSUBST_FILTER: SITE_NAME
+    volumes:
+      - sites:/sites:ro
+      - ./deploy/nginx.conf:/etc/nginx/templates/default.conf.template:ro
+    expose: ['8080']
+    depends_on:
+      backend:
+        condition: service_healthy
+      websocket:
+        condition: service_started
+volumes:
+  sites:
+  db-data:
+  redis-queue:

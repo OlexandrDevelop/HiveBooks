@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 18:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "code",
+  "label",
+  "value",
+  "computed_value",
+  "manual"
+ ],
+ "fields": [
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "Код рядка",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "label": "Показник",
+   "in_list_view": 1,
+   "columns": 4
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Currency",
+   "label": "Значення",
+   "precision": "2",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "computed_value",
+   "fieldtype": "Currency",
+   "label": "Значення з обліку",
+   "precision": "2",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "manual",
+   "fieldtype": "Check",
+   "label": "Змінено вручну",
+   "in_list_view": 1,
+   "columns": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-22 18:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Regulated Report Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

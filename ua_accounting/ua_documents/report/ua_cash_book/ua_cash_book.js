@@ -1,0 +1,1 @@
+frappe.query_reports["UA Cash Book"] = {filters: [{fieldname:'organization',label:'Організація',fieldtype:'Link',options:'UA Organization'},{fieldname:'cash_desk',label:'Каса',fieldtype:'Link',options:'UA Cash Desk'},{fieldname:'date_from',label:'Дата з',fieldtype:'Date'},{fieldname:'date_to',label:'Дата до',fieldtype:'Date'}]};

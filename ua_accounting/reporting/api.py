@@ -20,6 +20,9 @@ REPORTS = {
     "osv": "ua_accounting.reporting.osv.build",
     "osv_account": "ua_accounting.reporting.osv_account.build",
     "account_card": "ua_accounting.reporting.account_card.build",
+    "tax_invoice_register": "ua_accounting.reporting.tax_register.build",
+    "tax_differences": "ua_accounting.reporting.tax_differences.build",
+    "regulated_reports": "ua_accounting.reporting.regulated_reports.build",
 }
 READ_DOCTYPES = ("UA Accounting Entry", "UA Account Turnover")
 

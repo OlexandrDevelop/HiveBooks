@@ -1,0 +1,62 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "document_type",
+  "document",
+  "debit",
+  "credit"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "in_list_view": 1,
+   "columns": 1
+  },
+  {
+   "fieldname": "document_type",
+   "fieldtype": "Data",
+   "label": "Тип документа",
+   "read_only": 1
+  },
+  {
+   "fieldname": "document",
+   "fieldtype": "Dynamic Link",
+   "label": "Документ",
+   "options": "document_type",
+   "in_list_view": 1,
+   "columns": 4,
+   "read_only": 1
+  },
+  {
+   "fieldname": "debit",
+   "fieldtype": "Currency",
+   "label": "Дебет",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "credit",
+   "fieldtype": "Currency",
+   "label": "Кредит",
+   "in_list_view": 1,
+   "columns": 2
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Reconciliation Row",
+ "owner": "Administrator",
+ "permissions": [],
+ "states": []
+}

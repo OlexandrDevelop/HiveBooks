@@ -1,0 +1,239 @@
+{
+ "doctype": "DocType",
+ "name": "UA Payment Order",
+ "module": "UA Documents",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "number",
+  "direction",
+  "payment_kind",
+  "bank_account",
+  "counterparty",
+  "contract",
+  "recipient_name",
+  "recipient_iban",
+  "recipient_edrpou",
+  "amount",
+  "currency",
+  "vat_amount",
+  "purpose",
+  "basis_type",
+  "basis",
+  "tax_type",
+  "budget_code",
+  "cash_flow_item",
+  "status",
+  "number",
+  "payment_kind",
+  "recipient_name",
+  "recipient_iban",
+  "recipient_edrpou"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Напрям",
+   "options": "Вихідне\nВхідне",
+   "default": "Вихідне"
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Банківський рахунок",
+   "options": "UA Bank Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Контрагент",
+   "options": "UA Counterparty"
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Сума",
+   "options": "currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Валюта",
+   "options": "UA Currency",
+   "default": "UAH"
+  },
+  {
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "label": "ПДВ",
+   "options": "currency"
+  },
+  {
+   "fieldname": "purpose",
+   "fieldtype": "Small Text",
+   "label": "Призначення платежу",
+   "description": "Не більше 160 символів (Інструкція НБУ № 22)"
+  },
+  {
+   "fieldname": "cash_flow_item",
+   "fieldtype": "Link",
+   "label": "Стаття руху коштів",
+   "options": "UA Cash Flow Item"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Стан",
+   "options": "Створено\nЕкспортовано\nСплачено\nОплачено",
+   "default": "Створено",
+   "read_only": 1
+  },
+  {
+   "fieldname": "number",
+   "fieldtype": "Data",
+   "label": "Номер",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "payment_kind",
+   "fieldtype": "Select",
+   "label": "Вид платежу",
+   "options": "Постачальнику\nПодаток\nІнше",
+   "default": "Постачальнику",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "recipient_name",
+   "fieldtype": "Data",
+   "label": "Отримувач"
+  },
+  {
+   "fieldname": "recipient_iban",
+   "fieldtype": "Data",
+   "label": "IBAN отримувача"
+  },
+  {
+   "fieldname": "recipient_edrpou",
+   "fieldtype": "Data",
+   "label": "ЄДРПОУ отримувача"
+  },
+  {
+   "fieldname": "basis_type",
+   "fieldtype": "Link",
+   "label": "Тип документа-підстави",
+   "options": "DocType",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "basis",
+   "fieldtype": "Dynamic Link",
+   "label": "Підстава",
+   "options": "basis_type",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "tax_type",
+   "fieldtype": "Link",
+   "label": "Вид податку",
+   "options": "UA Tax Type"
+  },
+  {
+   "fieldname": "budget_code",
+   "fieldtype": "Data",
+   "label": "КБК"
+  }
+ ],
+ "istable": 0,
+ "is_submittable": 1,
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "naming_rule": "By script",
+ "autoname": "",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

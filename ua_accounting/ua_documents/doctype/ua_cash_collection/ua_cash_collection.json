@@ -1,0 +1,101 @@
+{
+ "doctype": "DocType",
+ "name": "UA Cash Collection",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "cash_desk",
+  "bank_account",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Дата",
+   "fieldtype": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cash_desk",
+   "label": "Каса",
+   "fieldtype": "Link",
+   "options": "UA Cash Desk",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "label": "Банківський рахунок",
+   "fieldtype": "Link",
+   "options": "UA Bank Account"
+  },
+  {
+   "fieldname": "amount",
+   "label": "Сума інкасації",
+   "fieldtype": "Currency",
+   "reqd": 1,
+   "in_list_view": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "is_submittable": 1,
+ "naming_rule": "By script",
+ "autoname": "",
+ "track_changes": 0
+}

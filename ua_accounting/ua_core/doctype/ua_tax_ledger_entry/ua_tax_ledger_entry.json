@@ -1,0 +1,139 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2026-10-22 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "period",
+  "organization",
+  "registrar_type",
+  "registrar",
+  "line_no",
+  "account_dr",
+  "account_cr",
+  "amount_book",
+  "amount_tax",
+  "difference",
+  "content"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "period",
+   "fieldtype": "Date",
+   "label": "Період (місяць)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "registrar_type",
+   "fieldtype": "Link",
+   "label": "Тип документа",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "registrar",
+   "fieldtype": "Dynamic Link",
+   "label": "Документ",
+   "options": "registrar_type",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "line_no",
+   "fieldtype": "Int",
+   "label": "№ проводки"
+  },
+  {
+   "fieldname": "account_dr",
+   "fieldtype": "Link",
+   "label": "Дебет",
+   "options": "UA Account",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "account_cr",
+   "fieldtype": "Link",
+   "label": "Кредит",
+   "options": "UA Account",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount_book",
+   "fieldtype": "Currency",
+   "label": "Сума БО",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount_tax",
+   "fieldtype": "Currency",
+   "label": "Сума ПО",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "difference",
+   "fieldtype": "Currency",
+   "label": "Різниця",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Data",
+   "label": "Зміст"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Tax Ledger Entry",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager"
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant"
+  }
+ ],
+ "sort_field": "posting_date",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,1 @@
+from ua_accounting.administration import get_user_scope

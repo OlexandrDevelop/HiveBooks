@@ -1,0 +1,113 @@
+{
+ "doctype": "DocType",
+ "name": "UA Opening Balance Line",
+ "module": "UA Documents",
+ "field_order": [
+  "section",
+  "account",
+  "balance_side",
+  "subconto1_type",
+  "subconto1",
+  "subconto2_type",
+  "subconto2",
+  "subconto3_type",
+  "subconto3",
+  "quantity",
+  "amount",
+  "currency",
+  "currency_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "section",
+   "fieldtype": "Select",
+   "label": "Розділ",
+   "options": "Основні засоби\nНематеріальні активи\nЗапаси\nКаса\nБанківські рахунки\nРозрахунки з покупцями\nРозрахунки з постачальниками\nПідзвітні особи\nРозрахунки з працівниками\nРозрахунки з бюджетом\nРозрахунки з засновниками\nКапітал\nКредити і позики",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "account",
+   "fieldtype": "Link",
+   "label": "Рахунок",
+   "options": "UA Account",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "balance_side",
+   "fieldtype": "Select",
+   "label": "Сторона залишку",
+   "options": "\nДебет\nКредит"
+  },
+  {
+   "fieldname": "subconto1_type",
+   "fieldtype": "Link",
+   "label": "Субконто 1: вид",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto1",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто 1",
+   "options": "subconto1_type",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "subconto2_type",
+   "fieldtype": "Link",
+   "label": "Субконто 2: вид",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto2",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто 2",
+   "options": "subconto2_type",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "subconto3_type",
+   "fieldtype": "Link",
+   "label": "Субконто 3: вид",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "subconto3",
+   "fieldtype": "Dynamic Link",
+   "label": "Субконто 3",
+   "options": "subconto3_type",
+   "in_list_view": 0
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Кількість"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Сума, грн",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Валюта",
+   "options": "UA Currency"
+  },
+  {
+   "fieldname": "currency_amount",
+   "fieldtype": "Float",
+   "label": "Сума у валюті"
+  }
+ ],
+ "istable": 1,
+ "is_submittable": 0,
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "naming_rule": "Random",
+ "autoname": "hash"
+}

@@ -1,0 +1,136 @@
+{
+ "doctype": "DocType",
+ "name": "UA Loan",
+ "module": "UA Catalogs",
+ "field_order": [
+  "loan_title",
+  "lender",
+  "contract",
+  "organization",
+  "loan_kind",
+  "term_kind",
+  "principal",
+  "annual_rate",
+  "start_date",
+  "end_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "loan_title",
+   "fieldtype": "Data",
+   "label": "Назва",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "lender",
+   "fieldtype": "Link",
+   "label": "Кредитор",
+   "options": "UA Counterparty",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір",
+   "options": "UA Counterparty Contract",
+   "reqd": 1
+  },
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "read_only": 1
+  },
+  {
+   "fieldname": "loan_kind",
+   "fieldtype": "Select",
+   "label": "Вид",
+   "options": "Кредит банку\nПозика\nПоворотна фінансова допомога",
+   "default": "Кредит банку",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "term_kind",
+   "fieldtype": "Select",
+   "label": "Строк",
+   "options": "Короткостроковий\nДовгостроковий",
+   "default": "Короткостроковий",
+   "reqd": 1
+  },
+  {
+   "fieldname": "principal",
+   "fieldtype": "Currency",
+   "label": "Сума",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "annual_rate",
+   "fieldtype": "Float",
+   "label": "Річна ставка, %",
+   "default": "0"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Дата початку",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "Дата погашення"
+  }
+ ],
+ "istable": 0,
+ "is_submittable": 0,
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "create": 1,
+   "write": 1,
+   "role": "UA Accountant"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1,
+   "role": "UA Accounting Manager"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "share": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1,
+   "role": "System Manager"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "naming_rule": "Random",
+ "autoname": "hash",
+ "title_field": "loan_title",
+ "show_title_field_in_link": 1,
+ "track_changes": 1,
+ "search_fields": "loan_title,lender"
+}

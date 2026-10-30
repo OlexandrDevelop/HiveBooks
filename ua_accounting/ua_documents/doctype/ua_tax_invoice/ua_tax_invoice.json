@@ -1,0 +1,303 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "direction",
+  "invoice_kind",
+  "number",
+  "cb_main",
+  "counterparty",
+  "contract",
+  "currency",
+  "exchange_rate",
+  "sb_basis",
+  "basis_type",
+  "basis",
+  "cb_basis",
+  "period_from",
+  "period_to",
+  "sb_lines",
+  "lines",
+  "sb_totals",
+  "total_base",
+  "total_vat",
+  "cb_totals",
+  "total_amount",
+  "sb_erpn",
+  "erpn_status",
+  "erpn_reg_number",
+  "cb_erpn",
+  "erpn_reg_date",
+  "registration_deadline",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата податкової події",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Напрям",
+   "options": "Видана\nОтримана",
+   "default": "Видана",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "invoice_kind",
+   "fieldtype": "Select",
+   "label": "Вид",
+   "options": "Звичайна\nЗведена: постачання без ПН\nЗведена: власні потреби",
+   "default": "Звичайна",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "number",
+   "fieldtype": "Data",
+   "label": "Номер",
+   "in_list_view": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "counterparty",
+   "fieldtype": "Link",
+   "label": "Контрагент",
+   "options": "UA Counterparty",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Договір",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Валюта",
+   "options": "UA Currency"
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "label": "Курс",
+   "precision": "4",
+   "default": "1"
+  },
+  {
+   "fieldname": "sb_basis",
+   "fieldtype": "Section Break",
+   "label": "Підстава"
+  },
+  {
+   "fieldname": "basis_type",
+   "fieldtype": "Link",
+   "label": "Тип документа-підстави",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "basis",
+   "fieldtype": "Dynamic Link",
+   "label": "Документ-підстава",
+   "options": "basis_type"
+  },
+  {
+   "fieldname": "cb_basis",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "period_from",
+   "fieldtype": "Date",
+   "label": "Період з",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "period_to",
+   "fieldtype": "Date",
+   "label": "Період по",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "sb_lines",
+   "fieldtype": "Section Break",
+   "label": "Рядки"
+  },
+  {
+   "fieldname": "lines",
+   "fieldtype": "Table",
+   "label": "Рядки",
+   "options": "UA Tax Invoice Line"
+  },
+  {
+   "fieldname": "sb_totals",
+   "fieldtype": "Section Break",
+   "label": "Підсумки (у гривнях)"
+  },
+  {
+   "fieldname": "total_base",
+   "fieldtype": "Currency",
+   "label": "База оподаткування",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_vat",
+   "fieldtype": "Currency",
+   "label": "Сума ПДВ",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cb_totals",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Усього з ПДВ",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "sb_erpn",
+   "fieldtype": "Section Break",
+   "label": "Реєстрація в ЄРПН"
+  },
+  {
+   "fieldname": "erpn_status",
+   "fieldtype": "Select",
+   "label": "Статус ЄРПН",
+   "options": "Не зареєстровано\nНадіслано\nЗареєстровано\nВідхилено",
+   "default": "Не зареєстровано",
+   "read_only": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "erpn_reg_number",
+   "fieldtype": "Data",
+   "label": "Номер реєстрації",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "cb_erpn",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "erpn_reg_date",
+   "fieldtype": "Date",
+   "label": "Дата реєстрації",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "registration_deadline",
+   "fieldtype": "Date",
+   "label": "Зареєструвати до",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Виправлення до",
+   "options": "UA Tax Invoice",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Tax Invoice",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "counterparty,number",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "number",
+ "track_changes": 1
+}

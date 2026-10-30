@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 18:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "report_kind",
+  "period_from",
+  "period_to",
+  "cb_main",
+  "status",
+  "xsd_version",
+  "sb_lines",
+  "lines"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "report_kind",
+   "fieldtype": "Select",
+   "label": "Звіт",
+   "options": "Баланс (ф.1)\nБаланс (ф.1-м)\nБаланс (ф.1-мс)\nЗвіт про фінансові результати (ф.2)\nЗвіт про фінансові результати (ф.2-м)\nЗвіт про фінансові результати (ф.2-мс)\nЗвіт про рух грошових коштів (ф.3)\nДекларація з податку на прибуток\nДекларація платника єдиного податку (3 група)\nЗвіт ЄСВ (Додаток 4)",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "period_from",
+   "fieldtype": "Date",
+   "label": "Період з",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "period_to",
+   "fieldtype": "Date",
+   "label": "Період по",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "default": "Чернетка",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Статус",
+   "options": "Чернетка\nЗаповнено\nЕкспортовано",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "xsd_version",
+   "fieldtype": "Data",
+   "label": "Версія схеми XSD",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_lines",
+   "fieldtype": "Section Break",
+   "label": "Рядки звіту"
+  },
+  {
+   "fieldname": "lines",
+   "fieldtype": "Table",
+   "label": "Рядки",
+   "options": "UA Regulated Report Line"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 18:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Regulated Report",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "organization,report_kind",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "report_kind",
+ "track_changes": 1
+}

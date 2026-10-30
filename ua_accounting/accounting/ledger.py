@@ -15,8 +15,8 @@ import frappe
 from frappe import _
 from frappe.utils import flt, getdate
 
-from ua_accounting.accounting import vat
-from ua_accounting.accounting.utils import first_of_month, pick, std_columns
+from ua_accounting.accounting import simplified_tax, tax_ledger, vat
+from ua_accounting.accounting.utils import first_of_month, next_names, pick, std_columns
 
 ENTRY = "UA Accounting Entry"
 TURNOVER = "UA Account Turnover"
@@ -61,9 +61,11 @@ def post_entries(doc, entries):
 
     values = []
     std = std_columns()
-    for row in rows:
-        values.append([row[f] for f in ENTRY_FIELDS] + [std[k] for k in std])
-    frappe.db.bulk_insert(ENTRY, ENTRY_FIELDS + list(std), values)
+    names = next_names(ENTRY, len(rows))
+    for name, row in zip(names, rows, strict=True):
+        values.append([name] + [row[f] for f in ENTRY_FIELDS] + [std[k] for k in std])
+    frappe.db.bulk_insert(ENTRY, ["name"] + ENTRY_FIELDS + list(std), values)
+    tax_ledger.post_rows(doc, rows, entries)
 
     deltas = {}
     for row in rows:
@@ -83,6 +85,7 @@ def cancel_entries(doc):
         _apply_deltas(deltas)
         frappe.db.delete(ENTRY, filters)
         _delete_empty_totals(list(deltas))
+    tax_ledger.cancel_rows(doc)
     vat.cancel_vat_entries(doc)
 
 
@@ -217,6 +220,7 @@ def _build_row(doc, e, idx, ctx):
             if acc.is_group:
                 frappe.throw(_("Проводка {0}: рахунок {1} є групою").format(idx, account))
             accs[side] = acc
+            simplified_tax.check_posting_account(organization, posting_date, account, ctx)
             slots = _map_subconto(account, acc, e.get(f"subconto_{side}"))
             if acc.quantity_accounting:
                 row[f"quantity_{side}"] = flt(e.get(f"quantity_{side}"))
@@ -312,3 +316,25 @@ def _delete_empty_totals(names):
             f"DELETE FROM `tab{TURNOVER}` WHERE name IN ({', '.join(['%s'] * len(chunk))}) AND {zero}",
             chunk,
         )
+
+
+def get_lock_date(doc):
+    """Get the lock date from UA Organization for the document's organization.
+
+    Called by the beeone core through the hook beeone_lock_date.
+    Returns the lock date, or None if there's no lock.
+    """
+    organization = doc.get("organization")
+    if not organization:
+        return None
+    return frappe.db.get_value("UA Organization", organization, "edit_lock_date")
+
+
+def check_period(doc):
+    """Check if the document's date is locked via the beeone period lock mechanism.
+
+    Wrapper that calls the core's check_period_lock to invoke the hook system.
+    Raises an error if the document is in a locked period and the user is not exempted.
+    """
+    from frappe.beeone.registers.posting import check_period_lock
+    check_period_lock(doc)

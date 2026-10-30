@@ -1,0 +1,33 @@
+{
+ "doctype": "DocType",
+ "name": "UA Tax Payment Line",
+ "module": "UA Documents",
+ "field_order": [
+  "tax_type",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "tax_type",
+   "fieldtype": "Link",
+   "label": "Податок",
+   "options": "UA Tax Type",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Сума",
+   "reqd": 1,
+   "in_list_view": 1
+  }
+ ],
+ "istable": 1,
+ "is_submittable": 0,
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "naming_rule": "Random",
+ "autoname": "hash"
+}

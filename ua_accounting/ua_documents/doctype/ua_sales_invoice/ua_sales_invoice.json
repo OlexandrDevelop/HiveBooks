@@ -11,6 +11,7 @@
   "cb_head",
   "warehouse",
   "customer_order",
+  "price_type",
   "sb_cur",
   "currency",
   "exchange_rate",
@@ -21,12 +22,17 @@
   "goods",
   "sb_services",
   "services",
+  "sb_packaging",
+  "packaging",
   "sb_totals",
   "total_net",
   "vat_total",
   "cb_total",
   "total_amount",
   "base_total",
+  "sb_transport",
+  "vehicle_no",
+  "driver_name",
   "sb_more",
   "comment",
   "amended_from"
@@ -84,6 +90,12 @@
    "label": "Замовлення покупця",
    "no_copy": 1,
    "options": "UA Customer Order"
+  },
+  {
+   "fieldname": "price_type",
+   "fieldtype": "Link",
+   "label": "Тип цін",
+   "options": "UA Price Type"
   },
   {
    "fieldname": "sb_cur",
@@ -157,13 +169,15 @@
    "fieldname": "total_net",
    "fieldtype": "Currency",
    "label": "Сума без ПДВ",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "vat_total",
    "fieldtype": "Currency",
    "label": "ПДВ",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "cb_total",
@@ -176,7 +190,8 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Всього",
-   "read_only": 1
+   "read_only": 1,
+   "options": "currency"
   },
   {
    "fieldname": "base_total",
@@ -204,6 +219,35 @@
    "options": "UA Sales Invoice",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "sb_transport",
+   "fieldtype": "Section Break",
+   "label": "Перевезення (ТТН)",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "vehicle_no",
+   "fieldtype": "Data",
+   "label": "Номер автомобіля"
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Водій"
+  },
+  {
+   "fieldname": "sb_packaging",
+   "label": "Поворотна тара",
+   "fieldtype": "Section Break",
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:doc.packaging && doc.packaging.length"
+  },
+  {
+   "fieldname": "packaging",
+   "label": "Поворотна тара",
+   "fieldtype": "Table",
+   "options": "UA Packaging Line"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -257,6 +301,21 @@
    "share": 1,
    "submit": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1,
+   "amend": 1,
+   "cancel": 1,
+   "delete": 1
   }
  ],
  "search_fields": "counterparty,contract",

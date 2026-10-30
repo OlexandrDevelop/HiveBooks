@@ -1,0 +1,33 @@
+{
+ "doctype": "DocType",
+ "name": "UA Loan Interest Line",
+ "module": "UA Documents",
+ "field_order": [
+  "loan",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "loan",
+   "fieldtype": "Link",
+   "label": "Кредит / позика",
+   "options": "UA Loan",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Відсотки",
+   "read_only": 1,
+   "in_list_view": 1
+  }
+ ],
+ "istable": 1,
+ "is_submittable": 0,
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "naming_rule": "Random",
+ "autoname": "hash"
+}

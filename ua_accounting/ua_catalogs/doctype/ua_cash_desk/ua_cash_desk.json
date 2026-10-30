@@ -8,7 +8,8 @@
   "cash_desk_name",
   "organization",
   "currency",
-  "cashier"
+  "cashier",
+  "cash_limit"
  ],
  "fields": [
   {
@@ -38,6 +39,11 @@
    "fieldtype": "Link",
    "label": "Касир",
    "options": "UA Person"
+  },
+  {
+   "fieldname": "cash_limit",
+   "fieldtype": "Currency",
+   "label": "Ліміт залишку каси"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -83,6 +89,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "show_title_field_in_link": 1,
@@ -90,5 +111,6 @@
  "sort_order": "DESC",
  "states": [],
  "title_field": "cash_desk_name",
- "track_changes": 1
+ "track_changes": 1,
+ "search_fields": "cash_desk_name"
 }

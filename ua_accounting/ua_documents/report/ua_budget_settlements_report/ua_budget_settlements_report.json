@@ -1,0 +1,24 @@
+{
+ "doctype": "Report",
+ "name": "UA Budget Settlements Report",
+ "report_name": "UA Budget Settlements Report",
+ "ref_doctype": "UA Tax Payment",
+ "report_type": "Script Report",
+ "is_standard": "Yes",
+ "module": "UA Documents",
+ "disabled": 0,
+ "roles": [
+  {
+   "role": "UA Accountant"
+  },
+  {
+   "role": "UA Accounting Manager"
+  },
+  {
+   "role": "UA Chief Accountant"
+  },
+  {
+   "role": "System Manager"
+  }
+ ]
+}

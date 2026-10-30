@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 22:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 22:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "name": "UA Statistical Report Line",
+ "istable": 1,
+ "editable_grid": 1,
+ "fields": [
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "Код рядка",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "label": "Показник",
+   "in_list_view": 1,
+   "columns": 4
+  },
+  {
+   "fieldname": "value",
+   "fieldtype": "Currency",
+   "label": "Значення",
+   "precision": "2",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "computed_value",
+   "fieldtype": "Currency",
+   "label": "Значення з обліку",
+   "precision": "2",
+   "read_only": 1,
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "manual",
+   "fieldtype": "Check",
+   "label": "Змінено вручну",
+   "in_list_view": 1,
+   "columns": 1
+  }
+ ],
+ "permissions": [],
+ "field_order": [
+  "code",
+  "label",
+  "value",
+  "computed_value",
+  "manual"
+ ]
+}

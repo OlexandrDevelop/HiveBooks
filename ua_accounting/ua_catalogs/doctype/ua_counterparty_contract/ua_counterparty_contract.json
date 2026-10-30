@@ -16,7 +16,9 @@
   "sb_cur",
   "currency",
   "cb2",
-  "settlements_in_currency"
+  "settlements_in_currency",
+  "payment_days",
+  "payment_term_days"
  ],
  "fields": [
   {
@@ -94,6 +96,19 @@
    "fieldname": "settlements_in_currency",
    "fieldtype": "Check",
    "label": "Розрахунки в валюті"
+  },
+  {
+   "fieldname": "payment_days",
+   "fieldtype": "Int",
+   "label": "Строк оплати, днів",
+   "description": "Борг стає простроченим через стільки днів після дати документа розрахунків"
+  },
+  {
+   "fieldname": "payment_term_days",
+   "fieldtype": "Int",
+   "label": "Строк оплати постачальнику, днів",
+   "default": "0",
+   "description": "Дата оплати надходження = дата документа + цей строк"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -139,6 +154,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "search_fields": "contract_no,contract_title",

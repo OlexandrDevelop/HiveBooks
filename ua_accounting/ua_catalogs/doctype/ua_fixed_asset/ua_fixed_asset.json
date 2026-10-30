@@ -14,7 +14,10 @@
   "responsible",
   "commissioning_date",
   "useful_life_months",
-  "depreciation_method"
+  "depreciation_method",
+  "residual_value",
+  "expense_account",
+  "expense_item"
  ],
  "fields": [
   {
@@ -72,11 +75,28 @@
    "label": "Строк корисного використання, міс."
   },
   {
-   "default": "Прямолінійний",
    "fieldname": "depreciation_method",
    "fieldtype": "Select",
    "label": "Метод амортизації",
-   "options": "Прямолінійний\nЗменшення залишкової вартості\nПрискореного зменшення залишкової вартості\nКумулятивний\nВиробничий"
+   "options": "\nПрямолінійний\nЗменшення залишкової вартості\nПрискореного зменшення залишкової вартості\nКумулятивний\nВиробничий"
+  },
+  {
+   "fieldname": "residual_value",
+   "fieldtype": "Currency",
+   "label": "Ліквідаційна вартість"
+  },
+  {
+   "default": "92",
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Рахунок витрат на амортизацію",
+   "options": "UA Account"
+  },
+  {
+   "fieldname": "expense_item",
+   "fieldtype": "Link",
+   "label": "Стаття витрат на амортизацію",
+   "options": "UA Expense Item"
   }
  ],
  "index_web_pages_for_search": 0,
@@ -122,6 +142,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "search_fields": "asset_name,inventory_no",

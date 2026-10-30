@@ -1,0 +1,51 @@
+{
+ "doctype": "DocType",
+ "name": "UA Special Wear Line",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "quantity",
+  "cost",
+  "expensed"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "label": "Номенклатура",
+   "fieldtype": "Link",
+   "options": "UA Item",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 4
+  },
+  {
+   "fieldname": "quantity",
+   "label": "Кількість",
+   "fieldtype": "Float",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2,
+   "precision": "3"
+  },
+  {
+   "fieldname": "cost",
+   "label": "Вартість",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "columns": 2,
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "expensed",
+   "label": "Списано при передачі",
+   "fieldtype": "Currency",
+   "read_only": 1,
+   "no_copy": 1
+  }
+ ],
+ "istable": 1,
+ "editable_grid": 1,
+ "permissions": []
+}

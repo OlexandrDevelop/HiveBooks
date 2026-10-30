@@ -22,11 +22,14 @@
   "settlement_type",
   "cb_settle",
   "purchase_receipt",
+  "settlement_doc_type",
+  "settlement_doc",
   "vat_rate",
   "vat_amount",
   "tax_invoice_received",
   "sb_other",
   "other_account",
+  "tax_type",
   "person",
   "cb_other",
   "expense_item",
@@ -61,7 +64,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Вид операції",
-   "options": "Оплата постачальнику\nІнша витрата",
+   "options": "Оплата постачальнику\nПовернення покупцю\nВидача підзвітній особі\nПерерахування податків\nІнша витрата",
    "reqd": 1
   },
   {
@@ -153,7 +156,7 @@
    "fieldname": "settlement_type",
    "fieldtype": "Select",
    "label": "Вид розрахунку",
-   "options": "Оплата за надходження\nПередоплата (аванс)"
+   "options": "Оплата за надходження\nОплата за реалізацію\nПередоплата (аванс)"
   },
   {
    "fieldname": "cb_settle",
@@ -211,6 +214,12 @@
    "options": "UA Person"
   },
   {
+   "fieldname": "tax_type",
+   "fieldtype": "Link",
+   "label": "Вид податку",
+   "options": "UA Tax Type"
+  },
+  {
    "fieldname": "cb_other",
    "fieldtype": "Column Break",
    "label": ""
@@ -248,6 +257,22 @@
    "options": "UA Cash Payment",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "settlement_doc_type",
+   "fieldtype": "Link",
+   "label": "Тип документа розрахунків",
+   "options": "DocType",
+   "hidden": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "settlement_doc",
+   "fieldtype": "Dynamic Link",
+   "label": "Документ розрахунків",
+   "options": "settlement_doc_type",
+   "hidden": 1,
+   "no_copy": 1
   }
  ],
  "index_web_pages_for_search": 0,
@@ -298,6 +323,33 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1,
+   "amend": 1,
+   "cancel": 1,
+   "delete": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Cashier",
    "share": 1,
    "submit": 1,
    "write": 1

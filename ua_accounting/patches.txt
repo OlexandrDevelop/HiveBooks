@@ -1,0 +1,12 @@
+[pre_model_sync]
+
+[post_model_sync]
+ua_accounting.patches.complete_chart_of_accounts
+ua_accounting.patches.seed_regulatory_parameters
+ua_accounting.patches.seed_regulatory_forms
+ua_accounting.patches.fix_regulatory_seed_values
+ua_accounting.patches.correct_vat_form_versions
+ua_accounting.patches.set_simplified_chart
+ua_accounting.patches.off_balance_quantity
+ua_accounting.patches.seed_regulated_report_forms
+ua_accounting.patches.register_currency_rates

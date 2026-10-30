@@ -1,0 +1,160 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-10-22 16:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "period",
+  "period_end",
+  "cb1",
+  "status",
+  "lock_after_closing",
+  "previous_lock_date",
+  "lock_applied",
+  "closing_key",
+  "sb_steps",
+  "steps"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Місяць (перший день)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period_end",
+   "fieldtype": "Date",
+   "label": "Останній день місяця",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "default": "Не виконано",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Стан",
+   "options": "Не виконано\nЧастково\nВиконано",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "lock_after_closing",
+   "fieldtype": "Check",
+   "label": "Встановити дату заборони редагування після закриття"
+  },
+  {
+   "fieldname": "previous_lock_date",
+   "fieldtype": "Date",
+   "label": "Попередня дата заборони редагування",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "lock_applied",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Дату заборони встановлено закриттям",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_steps",
+   "fieldtype": "Section Break",
+   "label": "Регламентні операції"
+  },
+  {
+   "fieldname": "steps",
+   "fieldtype": "Table",
+   "label": "Операції",
+   "options": "UA Month Closing Step"
+  },
+  {
+   "fieldname": "closing_key",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "read_only": 1,
+   "unique": 1,
+   "label": "Ключ закриття"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 16:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Month Closing",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "period",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "period",
+ "track_changes": 0
+}

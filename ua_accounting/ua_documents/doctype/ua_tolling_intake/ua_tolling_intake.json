@@ -1,0 +1,140 @@
+{
+ "doctype": "DocType",
+ "name": "UA Tolling Intake",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "counterparty",
+  "contract",
+  "warehouse",
+  "sb_goods",
+  "goods",
+  "sb_more",
+  "comment",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Дата",
+   "fieldtype": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "counterparty",
+   "label": "Замовник",
+   "fieldtype": "Link",
+   "options": "UA Counterparty",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "contract",
+   "label": "Договір",
+   "fieldtype": "Link",
+   "options": "UA Counterparty Contract"
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Склад",
+   "fieldtype": "Link",
+   "options": "UA Warehouse",
+   "reqd": 0
+  },
+  {
+   "fieldname": "sb_goods",
+   "label": "Сировина",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "goods",
+   "label": "Сировина",
+   "fieldtype": "Table",
+   "options": "UA Goods Line",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_more",
+   "label": "Додатково",
+   "fieldtype": "Section Break",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "comment",
+   "label": "Коментар",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "amended_from",
+   "label": "Виправлення",
+   "fieldtype": "Link",
+   "options": "UA Tolling Intake",
+   "hidden": 1,
+   "read_only": 1,
+   "no_copy": 1,
+   "print_hide": 1
+  }
+ ],
+ "is_submittable": 1,
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "naming_rule": "By script",
+ "autoname": "",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 0
+}

@@ -1,0 +1,218 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 22:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-24 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:organization",
+ "naming_rule": "By fieldname",
+ "name": "UA E-Reporting Setting",
+ "title_field": "organization",
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "provider",
+   "fieldtype": "Select",
+   "label": "Провайдер КЕП і подання",
+   "options": "Тестовий провайдер\nІІТ\nДія.Підпис\nІнший API",
+   "default": "ІІТ",
+   "reqd": 1,
+   "in_list_view": 1,
+   "description": "«Тестовий провайдер» — емулятор для демонстрації (лише тестовий сайт). «ІІТ» — справжній підпис КЕП бібліотекою ІІТ EUSignCP і подання до ДПС."
+  },
+  {
+   "fieldname": "test_mode",
+   "fieldtype": "Select",
+   "label": "Режим тестового провайдера",
+   "options": "Приймати\nВідхиляти\nБез відповіді",
+   "default": "Приймати",
+   "depends_on": "eval:doc.provider=='Тестовий провайдер' || doc.dps_environment=='Пісочниця (імітація ДПС)'"
+  },
+  {
+   "fieldname": "cb_cert",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "certificate_holder",
+   "fieldtype": "Data",
+   "label": "Підписант (власник сертифіката)"
+  },
+  {
+   "fieldname": "certificate_edrpou",
+   "fieldtype": "Data",
+   "label": "ЄДРПОУ у сертифікаті"
+  },
+  {
+   "fieldname": "certificate_valid_from",
+   "fieldtype": "Date",
+   "label": "Сертифікат дійсний з"
+  },
+  {
+   "fieldname": "certificate_valid_to",
+   "fieldtype": "Date",
+   "label": "Сертифікат дійсний по"
+  },
+  {
+   "fieldname": "api_url",
+   "fieldtype": "Data",
+   "label": "Адреса API ДПС",
+   "description": "Для тестового середовища ДПС вкажіть адресу шлюзу. Для робочого середовища залиште порожнім.",
+   "depends_on": "eval:doc.provider=='ІІТ'"
+  },
+  {
+   "fieldname": "key_password",
+   "fieldtype": "Password",
+   "label": "Пароль до ключа",
+   "permlevel": 1,
+   "depends_on": "eval:doc.provider=='ІІТ'"
+  },
+  {
+   "fieldname": "sb_key",
+   "fieldtype": "Section Break",
+   "label": "Особистий ключ КЕП (ІІТ EUSign)",
+   "depends_on": "eval:doc.provider=='ІІТ'"
+  },
+  {
+   "fieldname": "key_file_name",
+   "fieldtype": "Data",
+   "label": "Файл ключа",
+   "read_only": 1
+  },
+  {
+   "fieldname": "key_data",
+   "fieldtype": "Password",
+   "label": "Ключ (зашифрований вміст файла)",
+   "hidden": 1,
+   "permlevel": 1
+  },
+  {
+   "fieldname": "certificate_issuer",
+   "fieldtype": "Data",
+   "label": "ЦСК, що видав сертифікат",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_key",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sign_level",
+   "fieldtype": "Select",
+   "label": "Рівень підпису",
+   "options": "CAdES-BES\nCAdES-T",
+   "default": "CAdES-T",
+   "description": "CAdES-T додає позначку часу від ЦСК. Потрібен доступ до серверів ЦСК."
+  },
+  {
+   "fieldname": "ca_mode",
+   "fieldtype": "Select",
+   "label": "Режим перевірки сертифіката",
+   "options": "Онлайн (OCSP і TSP ЦСК)\nОфлайн (лише тестовий ЦСК)",
+   "default": "Онлайн (OCSP і TSP ЦСК)",
+   "description": "Офлайн дозволено лише на тестовому сайті."
+  },
+  {
+   "fieldname": "sb_dps",
+   "fieldtype": "Section Break",
+   "label": "Подання до ДПС",
+   "depends_on": "eval:doc.provider=='ІІТ'"
+  },
+  {
+   "fieldname": "dps_environment",
+   "fieldtype": "Select",
+   "label": "Середовище ДПС",
+   "options": "Робоче\nТестове\nПісочниця (імітація ДПС)",
+   "default": "Робоче",
+   "description": "Пісочниця працює лише на тестовому сайті."
+  },
+  {
+   "fieldname": "dps_encrypt",
+   "fieldtype": "Check",
+   "label": "Шифрувати документ для ДПС"
+  },
+  {
+   "fieldname": "dps_certificate",
+   "fieldtype": "Long Text",
+   "label": "Сертифікат ДПС для шифрування",
+   "depends_on": "eval:doc.dps_encrypt"
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "Ключ API (якщо його видали)",
+   "permlevel": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "permlevel": 1,
+   "write": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "permlevel": 1,
+   "write": 1
+  }
+ ],
+ "field_order": [
+  "organization",
+  "provider",
+  "test_mode",
+  "cb_cert",
+  "certificate_holder",
+  "certificate_edrpou",
+  "certificate_valid_from",
+  "certificate_valid_to",
+  "sb_key",
+  "key_file_name",
+  "key_password",
+  "key_data",
+  "certificate_issuer",
+  "cb_key",
+  "sign_level",
+  "ca_mode",
+  "sb_dps",
+  "dps_environment",
+  "api_url",
+  "dps_encrypt",
+  "dps_certificate",
+  "api_key"
+ ]
+}

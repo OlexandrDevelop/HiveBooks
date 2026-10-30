@@ -1,0 +1,52 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "person",
+  "unused_days",
+  "average_daily_pay",
+  "required_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "person",
+   "fieldtype": "Link",
+   "label": "Працівник",
+   "options": "UA Person",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "unused_days",
+   "fieldtype": "Float",
+   "label": "Невикористані дні",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "average_daily_pay",
+   "fieldtype": "Currency",
+   "label": "Середньоденна оплата",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "required_amount",
+   "fieldtype": "Currency",
+   "label": "Потрібний резерв",
+   "in_list_view": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Vacation Reserve Inventory Row",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}

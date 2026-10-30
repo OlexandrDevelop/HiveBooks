@@ -1,0 +1,71 @@
+{
+ "doctype": "DocType",
+ "name": "UA Numbering Setting",
+ "module": "UA Core",
+ "field_order": [
+  "organization",
+  "ref_doctype",
+  "prefix",
+  "digits",
+  "reset_yearly"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ref_doctype",
+   "label": "Тип документа",
+   "fieldtype": "Link",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "fieldname": "prefix",
+   "label": "Префікс",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "digits",
+   "label": "Кількість цифр",
+   "fieldtype": "Int",
+   "default": "6"
+  },
+  {
+   "fieldname": "reset_yearly",
+   "label": "Нумерація за роками",
+   "fieldtype": "Check"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Administrator",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "delete": 1
+  }
+ ],
+ "track_changes": 0,
+ "index_web_pages_for_search": 0,
+ "autoname": "hash"
+}

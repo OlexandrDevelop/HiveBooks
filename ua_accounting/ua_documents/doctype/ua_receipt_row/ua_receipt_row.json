@@ -1,0 +1,96 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 22:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-24 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "name": "UA Receipt Row",
+ "istable": 1,
+ "editable_grid": 1,
+ "fields": [
+  {
+   "fieldname": "kind",
+   "fieldtype": "Select",
+   "label": "Квитанція",
+   "options": "Квитанція №1\nКвитанція №2",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "received_at",
+   "fieldtype": "Datetime",
+   "label": "Отримано",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "result",
+   "fieldtype": "Select",
+   "label": "Результат",
+   "options": "Прийнято\nВідхилено",
+   "in_list_view": 1,
+   "columns": 2
+  },
+  {
+   "fieldname": "text",
+   "fieldtype": "Small Text",
+   "label": "Текст",
+   "in_list_view": 1,
+   "columns": 4
+  },
+  {
+   "fieldname": "erpn_reg_number",
+   "fieldtype": "Data",
+   "label": "Номер реєстрації в ЄРПН"
+  },
+  {
+   "fieldname": "erpn_reg_date",
+   "fieldtype": "Date",
+   "label": "Дата реєстрації в ЄРПН"
+  },
+  {
+   "fieldname": "xml",
+   "fieldtype": "Code",
+   "label": "XML квитанції"
+  },
+  {
+   "fieldname": "signed_by",
+   "fieldtype": "Data",
+   "label": "Хто підписав квитанцію",
+   "read_only": 1
+  },
+  {
+   "fieldname": "chain_ok",
+   "fieldtype": "Check",
+   "label": "Підпис і ланцюг сертифікатів перевірено",
+   "read_only": 1
+  },
+  {
+   "fieldname": "signature",
+   "fieldtype": "Long Text",
+   "label": "Підпис ДПС (CAdES, base64)",
+   "read_only": 1
+  }
+ ],
+ "permissions": [],
+ "field_order": [
+  "kind",
+  "received_at",
+  "result",
+  "text",
+  "erpn_reg_number",
+  "erpn_reg_date",
+  "xml",
+  "signed_by",
+  "chain_ok",
+  "signature"
+ ]
+}

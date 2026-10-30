@@ -1,0 +1,21 @@
+{
+ "doctype": "Report",
+ "name": "UA Packaging Balance",
+ "report_name": "UA Packaging Balance",
+ "ref_doctype": "UA Packaging Return",
+ "report_type": "Script Report",
+ "is_standard": "Yes",
+ "module": "UA Documents",
+ "disabled": 0,
+ "roles": [
+  {
+   "role": "UA Accountant"
+  },
+  {
+   "role": "UA Accounting Manager"
+  },
+  {
+   "role": "System Manager"
+  }
+ ]
+}

@@ -1,0 +1,158 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "period_from",
+  "period_to",
+  "cb_main",
+  "taxable_turnover",
+  "exempt_turnover",
+  "credit_total",
+  "taxable_share",
+  "allowed_credit",
+  "disallowed_credit",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата (кінець місяця)",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "period_from",
+   "fieldtype": "Date",
+   "label": "Період з",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period_to",
+   "fieldtype": "Date",
+   "label": "Період по",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_main",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "taxable_turnover",
+   "fieldtype": "Currency",
+   "label": "Обсяг оподатковуваних операцій"
+  },
+  {
+   "fieldname": "exempt_turnover",
+   "fieldtype": "Currency",
+   "label": "Обсяг неоподатковуваних операцій"
+  },
+  {
+   "fieldname": "credit_total",
+   "fieldtype": "Currency",
+   "label": "Податковий кредит за період",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "taxable_share",
+   "fieldtype": "Percent",
+   "label": "Частка оподатковуваних операцій, %",
+   "precision": "2",
+   "description": "Обчислюється з обсягів операцій, якщо їх задано",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "allowed_credit",
+   "fieldtype": "Currency",
+   "label": "Кредит, що залишається"
+  },
+  {
+   "fieldname": "disallowed_credit",
+   "fieldtype": "Currency",
+   "label": "Кредит, що не дозволений",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Виправлення до",
+   "options": "UA VAT Allocation",
+   "no_copy": 1,
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-10-22 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA VAT Allocation",
+ "naming_rule": "By script",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accountant",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Accounting Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

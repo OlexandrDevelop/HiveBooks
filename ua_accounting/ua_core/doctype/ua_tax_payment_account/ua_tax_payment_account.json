@@ -1,0 +1,119 @@
+{
+ "actions": [],
+ "creation": "2026-10-22 18:00:00.000000",
+ "modified": "2026-10-22 18:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "hash",
+ "naming_rule": "Random",
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "UA Chief Accountant",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "delete": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "delete": 1
+  }
+ ],
+ "title_field": "recipient_name",
+ "name": "UA Tax Payment Account",
+ "module": "UA Core",
+ "field_order": [
+  "organization",
+  "tax_type",
+  "budget_code",
+  "iban",
+  "recipient_name",
+  "recipient_edrpou"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "label": "Організація",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "tax_type",
+   "fieldtype": "Link",
+   "label": "Вид податку",
+   "options": "UA Tax Type",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "budget_code",
+   "fieldtype": "Data",
+   "label": "КБК",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "iban",
+   "fieldtype": "Data",
+   "label": "IBAN",
+   "reqd": 1
+  },
+  {
+   "fieldname": "recipient_name",
+   "fieldtype": "Data",
+   "label": "Отримувач",
+   "reqd": 1
+  },
+  {
+   "fieldname": "recipient_edrpou",
+   "fieldtype": "Data",
+   "label": "ЄДРПОУ отримувача"
+  }
+ ]
+}

@@ -8,6 +8,7 @@
   "account_dr",
   "account_cr",
   "amount",
+  "tax_amount",
   "content",
   "subconto_dr1_type",
   "subconto_dr1",
@@ -30,7 +31,7 @@
  ],
  "fields": [
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "account_dr",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -38,7 +39,7 @@
    "options": "UA Account"
   },
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "account_cr",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -53,7 +54,15 @@
    "label": "Сума"
   },
   {
-   "columns": 2,
+   "columns": 1,
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Сума ПО",
+   "description": "Порожньо — дорівнює сумі БО"
+  },
+  {
+   "columns": 1,
    "fieldname": "content",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -186,5 +195,6 @@
  "module": "UA Documents",
  "name": "UA Operation Entry",
  "owner": "Administrator",
- "states": []
+ "states": [],
+ "permissions": []
 }

@@ -1,0 +1,14 @@
+{
+ "doctype": "Page",
+ "name": "ua-cash-book",
+ "page_name": "ua-cash-book",
+ "title": "Касова книга",
+ "module": "UA Core",
+ "standard": "Yes",
+ "system_page": 0,
+ "roles": [
+  {"role": "UA Accountant"},
+  {"role": "UA Accounting Manager"},
+  {"role": "System Manager"}
+ ]
+}

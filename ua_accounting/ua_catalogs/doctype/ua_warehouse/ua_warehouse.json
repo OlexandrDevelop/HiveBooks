@@ -9,6 +9,7 @@
   "organization",
   "department",
   "kind",
+  "retail_price_type",
   "responsible"
  ],
  "fields": [
@@ -38,6 +39,14 @@
    "fieldtype": "Select",
    "label": "Вид складу",
    "options": "Оптовий\nРоздрібний"
+  },
+  {
+   "fieldname": "retail_price_type",
+   "fieldtype": "Link",
+   "label": "Тип роздрібних цін",
+   "options": "UA Price Type",
+   "depends_on": "eval:doc.kind=='Роздрібний'",
+   "description": "Роздрібні ціни включають ПДВ"
   },
   {
    "fieldname": "responsible",
@@ -89,6 +98,21 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "UA Chief Accountant",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "role": "UA Cashier",
+   "read": 1
   }
  ],
  "search_fields": "warehouse_name",

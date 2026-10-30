@@ -1,0 +1,178 @@
+{
+ "doctype": "DocType",
+ "name": "UA Retail Sales Report",
+ "module": "UA Documents",
+ "engine": "InnoDB",
+ "field_order": [
+  "organization",
+  "posting_date",
+  "warehouse",
+  "outlet_type",
+  "cash_desk",
+  "bank_account",
+  "sb_payment",
+  "revenue_amount",
+  "cash_amount",
+  "card_amount",
+  "cb_vat",
+  "vat_rate",
+  "vat_amount",
+  "cost_amount",
+  "sb_goods",
+  "goods"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "label": "Організація",
+   "fieldtype": "Link",
+   "options": "UA Organization",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "label": "Дата",
+   "fieldtype": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "label": "Роздрібний склад",
+   "fieldtype": "Link",
+   "options": "UA Warehouse",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "outlet_type",
+   "label": "Тип торгової точки",
+   "fieldtype": "Select",
+   "options": "Автоматизована\nНеавтоматизована",
+   "default": "Автоматизована",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cash_desk",
+   "label": "Каса",
+   "fieldtype": "Link",
+   "options": "UA Cash Desk",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "label": "Рахунок еквайра",
+   "fieldtype": "Link",
+   "options": "UA Bank Account"
+  },
+  {
+   "fieldname": "sb_payment",
+   "label": "Оплата",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "revenue_amount",
+   "label": "Виручка (з ПДВ)",
+   "fieldtype": "Currency",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cash_amount",
+   "label": "Готівкою",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "card_amount",
+   "label": "Карткою",
+   "fieldtype": "Currency"
+  },
+  {
+   "fieldname": "cb_vat",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vat_rate",
+   "label": "Ставка ПДВ",
+   "fieldtype": "Link",
+   "options": "UA VAT Rate",
+   "depends_on": "eval:doc.outlet_type=='Неавтоматизована'"
+  },
+  {
+   "fieldname": "vat_amount",
+   "label": "ПДВ",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_amount",
+   "label": "Собівартість",
+   "fieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_goods",
+   "label": "Товари",
+   "fieldtype": "Section Break",
+   "depends_on": "eval:doc.outlet_type=='Автоматизована'"
+  },
+  {
+   "fieldname": "goods",
+   "label": "Товари",
+   "fieldtype": "Table",
+   "options": "UA Retail Line"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "UA Accountant",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1
+  },
+  {
+   "role": "UA Accounting Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "create": 1,
+   "write": 1,
+   "print": 1,
+   "email": 1,
+   "export": 1,
+   "report": 1,
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "delete": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "is_submittable": 1,
+ "naming_rule": "By script",
+ "autoname": "",
+ "track_changes": 0
+}

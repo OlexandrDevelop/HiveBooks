@@ -8,7 +8,7 @@ import frappe
 from frappe import _
 from frappe.utils import flt, getdate
 
-from ua_accounting.accounting.utils import first_of_month, pick, std_columns
+from ua_accounting.accounting.utils import first_of_month, next_names, pick, std_columns
 
 LIABILITY = "UA VAT Liability Entry"
 CREDIT = "UA VAT Credit Entry"
@@ -75,4 +75,6 @@ def _insert(doctype, doc, entries):
             "content": (e.get("content") or "")[:140],
         }
         values.append([row[f] for f in FIELDS] + [std[k] for k in std])
-    frappe.db.bulk_insert(doctype, FIELDS + list(std), values)
+    names = next_names(doctype, len(values))
+    values = [[name] + value for name, value in zip(names, values, strict=True)]
+    frappe.db.bulk_insert(doctype, ["name"] + FIELDS + list(std), values)

@@ -1,0 +1,1 @@
+frappe.query_reports["UA Production Cost Report"] = {filters: [{fieldname:'organization',label:'Організація',fieldtype:'Link',options:'UA Organization',reqd:1},{fieldname:'date_from',label:'З дати',fieldtype:'Date',reqd:1,default:frappe.datetime.month_start()},{fieldname:'date_to',label:'По дату',fieldtype:'Date',reqd:1,default:frappe.datetime.month_end()}]};
