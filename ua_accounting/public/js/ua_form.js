@@ -141,6 +141,10 @@ frappe.provide("ua_accounting.form");
 		}
 		if (kind === "document") {
 			if (F.posting(frm)) mid.push(btn("dtkt", __("Дт/Кт"), "dtkt", { tip: __("Проводки документа") }));
+			const movement_registers = (frappe.boot.beeone_movements || {})[frm.doctype] || [];
+			if (frm.doc.docstatus === 1 && movement_registers.length && beeone?.registers?.show_movements) {
+				mid.push(btn("movements", __("Перегляд рухів"), "list", { tip: __("Рухи документа по регістрах") }));
+			}
 			if (beeone.basis.entries(frm).length) {
 				mid.push(btn("basis", __("Створити на підставі"), "branch", { menu: true }));
 			}
@@ -189,6 +193,8 @@ frappe.provide("ua_accounting.form");
 				return frm.amend_doc();
 			case "dtkt":
 				return F.dtkt(frm);
+			case "movements":
+				return beeone.registers.show_movements(frm);
 			case "print":
 				return frm.print_doc();
 			case "prev":
@@ -232,6 +238,10 @@ frappe.provide("ua_accounting.form");
 				frm.save("Submit").then(() => frm.doc.docstatus === 1 && ua_accounting.docs.show_entries(frm));
 			});
 	};
+
+	function movement_registers(frm) {
+		return ((frappe.boot && frappe.boot.beeone_movements) || {})[frm.doctype] || [];
+	}
 
 	F.basis_menu = function (frm, el) {
 		const list = beeone.basis.entries(frm);

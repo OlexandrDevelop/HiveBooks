@@ -140,6 +140,16 @@ ua_accounting.docs.show_entries = function (frm) {
 	});
 };
 
+// Fallback movement viewer for accounting documents whose registers are owned by the app
+// rather than declared as BeeOne Document Movements metadata.
+ua_accounting.docs.show_movements = function (frm) {
+	frappe.call({
+		method: "ua_accounting.accounting.documents.get_posting_result",
+		args: { doctype: frm.doctype, name: frm.doc.name },
+		callback: (r) => ua_accounting.docs.entries_dialog(frm, r.message || {}),
+	});
+};
+
 ua_accounting.docs.entries_dialog = function (frm, result) {
 	const esc = frappe.utils.escape_html;
 	const ui = ua_accounting.ui;
