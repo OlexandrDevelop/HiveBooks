@@ -1303,6 +1303,55 @@ body.ua-shell .ua-form .frappe-control[data-fieldtype="Column Break"] {
 body.ua-shell .ua-form .frappe-control .form-group {
 	margin: 0;
 }
+
+/* Dense desktop forms: three balanced columns keep the important header data visible
+ * without wasting the wide BeeOne workspace. Long text keeps the complete row. */
+@media (min-width: 1440px) {
+	body.ua-shell .ua-form .ua-main-card .section-body,
+	body.ua-shell .ua-form .ua-sec-card .section-body {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 10px 14px;
+	}
+	body.ua-shell .ua-form .ua-main-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]),
+	body.ua-shell .ua-form .ua-sec-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]) {
+		grid-column: span 3;
+	}
+	body.ua-shell .ua-form .ua-main-body {
+		padding: 14px;
+		gap: 10px;
+	}
+	body.ua-shell .ua-form .ua-sec-card .section-body {
+		padding: 14px;
+	}
+	body.ua-shell .ua-form .frappe-control .control-label {
+		margin-bottom: 4px;
+		font-size: var(--ua-fs-11);
+	}
+	body.ua-shell .ua-form .frappe-control .form-control,
+	body.ua-shell .ua-form .frappe-control .input-with-feedback,
+	body.ua-shell .ua-form .frappe-control .like-disabled-input {
+		height: 30px;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+	body.ua-shell .ua-form .frappe-control textarea.form-control {
+		height: auto;
+		min-height: 52px;
+		padding: 6px 8px;
+	}
+	body.ua-shell .ua-tp .grid-heading-row .grid-row,
+	body.ua-shell .ua-tp .grid-heading-row .data-row {
+		height: 32px;
+		min-height: 32px;
+	}
+	body.ua-shell .ua-tp .grid-body .data-row {
+		min-height: 36px;
+	}
+	body.ua-shell .ua-tp .data-row > .grid-static-col[data-fieldtype] {
+		padding-left: 6px !important;
+		padding-right: 6px !important;
+	}
+}
 /* Frappe limits number and date inputs (.input-max-width); the grid cell sets the width here */
 body.ua-shell .ua-form .ua-main-card .frappe-control,
 body.ua-shell .ua-form .ua-main-card .frappe-control .control-input,
