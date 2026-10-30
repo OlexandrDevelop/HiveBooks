@@ -2,12 +2,13 @@
 FROM frappe/bench@sha256:c035a1de96da6766069a965617440fd2e0220b0702c5ee4fca611b55906c12ed AS build
 ARG BEEONE_REPOSITORY=https://github.com/OlexandrDevelop/beeone.git
 ARG BEEONE_REF=beeone-16
-ARG BEEONE_COMMIT=72e90d8
+ARG BEEONE_COMMIT=72e90d8f82fe81bf08d756091a41e3a7f629e734
 USER frappe
 RUN bench init --frappe-path "$BEEONE_REPOSITORY" --frappe-branch "$BEEONE_REF" \
     --no-procfile --no-backups --skip-redis-config-generation /home/frappe/frappe-bench
 WORKDIR /home/frappe/frappe-bench
-RUN git -C apps/frappe checkout --quiet --detach "$BEEONE_COMMIT" && \
+RUN git -C apps/frappe fetch --quiet --depth=1 "$BEEONE_REPOSITORY" "$BEEONE_REF" && \
+    git -C apps/frappe checkout --quiet --detach "$BEEONE_COMMIT" && \
     test "$(git -C apps/frappe rev-parse HEAD)" = "$BEEONE_COMMIT"
 ARG APP_NAME
 COPY --chown=frappe:frappe . /tmp/configuration
