@@ -41,8 +41,15 @@ def ensure_nbu_job():
         sync_job(frappe.db.get_single_value("UA Exchange Settings", "auto_load_rates") in (None, 1, "1"))
 
 
+def ensure_ukrainian_language():
+    """Make Ukrainian selectable in User Settings on every existing site."""
+    if frappe.db.exists("Language", "uk"):
+        frappe.db.set_value("Language", "uk", "enabled", 1, update_modified=False)
+
+
 def after_install():
     seed.run()
+    ensure_ukrainian_language()
     ensure_reminder_job()
     ensure_nbu_job()
 
@@ -55,5 +62,6 @@ def before_migrate():
 
 def after_migrate():
     seed.run()
+    ensure_ukrainian_language()
     ensure_reminder_job()
     ensure_nbu_job()

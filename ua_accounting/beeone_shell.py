@@ -17,7 +17,7 @@ def sections(user=None):
         fields=["name", "module"],
         order_by="name asc",
     ):
-        item = {"type": "doctype", "target": row.name, "label": row.name}
+        item = {"type": "doctype", "target": row.name, "label": frappe._(row.name)}
         if "Catalog" in (row.module or ""):
             refs.append(item)
         else:
