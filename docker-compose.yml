@@ -6,6 +6,7 @@ x-app: &app
       APP_NAME: ua_accounting
       BEEONE_REPOSITORY: ${BEEONE_REPOSITORY:-https://github.com/OlexandrDevelop/beeone.git}
       BEEONE_REF: ${BEEONE_REF:-beeone-16}
+      BEEONE_COMMIT: ${BEEONE_COMMIT:-d43723333c9c36bea86c16a3c09664485acfcdf2}
   image: ${COMPOSE_PROJECT_NAME:-ua_accounting}-app:local
   restart: unless-stopped
   volumes:
