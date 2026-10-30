@@ -39,14 +39,13 @@ _v = _asset_version()
 
 app_include_css = [
     f"/assets/ua_accounting/css/{name}.css?v={_v}"
-    for name in ("ua_theme", "ua_components", "ua_shell", "ua_desk", "ua_report")
+    for name in ("ua_theme", "ua_components", "ua_desk", "ua_report")
 ]
 app_include_js = [
     f"/assets/ua_accounting/js/{name}.js?v={_v}"
     for name in (
         "ua_desk",
         "ua_ui",
-        "ua_shell",
         "ua_tree_sidebar",
         "ua_list",
         "ua_form_toolbar",
@@ -56,6 +55,10 @@ app_include_js = [
         "ua_documents",
     )
 ]
+
+# BeeOne owns the desktop shell. The former ua_shell.js rendered a second,
+# competing sidebar on startup and hid the platform's multi-window desktop.
+beeone_sections = ["ua_accounting.beeone_shell.sections"]
 
 jinja = {
     "methods": [
