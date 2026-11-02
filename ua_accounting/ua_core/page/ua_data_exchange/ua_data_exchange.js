@@ -388,7 +388,7 @@ frappe.pages["ua-data-exchange"].on_page_load = function (wrapper) {
 					)
 					.join("");
 				$log.html(`<h5>${__("Журнал обміну")}</h5>
-					<table class="table table-bordered ua-num"><thead><tr>
+					<table class="table table-bordered bo-num"><thead><tr>
 					<th>${__("Час")}</th><th>${__("Напрям")}</th><th>${__("Вид обміну")}</th><th>${__("Файл")}</th><th>${__("Стан")}</th>
 					<th class="text-right">${__("Створено")}</th><th class="text-right">${__("Оновлено")}</th>
 					<th class="text-right">${__("Помилок")}</th><th>${__("Користувач")}</th></tr></thead>

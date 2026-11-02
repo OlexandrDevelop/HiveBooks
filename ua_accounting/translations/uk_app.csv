@@ -316,7 +316,9 @@ Roles,Ролі
 User,Користувач
 Users,Користувачі
 "Get PDF","Отримати PDF"
-UA Payment Invoice,Рахунок на оплату покупцю
+UA Payment Invoice,Інвойс (рахунок на оплату)
+UA Invoice Adjustment,Коригування інвойсу
+UA Payment Allocation,Розподіл оплати за інвойсом
 UA Supplier Invoice,Рахунок постачальника
 UA Sales Return,Повернення товарів від покупця
 UA Purchase Return,Повернення товарів постачальнику
@@ -506,3 +508,11 @@ Create on basis,Створити на підставі
 Submit the document first,Спочатку проведіть документ
 The basis document {0} is not submitted,Документ-підстава {0} не проведений
 Command {0} is not registered for {1},Команду {0} не зареєстровано для {1}
+Account {0} is a group and cannot be posted,Рахунок {0} є групою: проведення неможливе
+Account {0} does not define subaccount {1},Рахунок {0} не має субконто {1}
+Subaccount {0} requires a DocType and a value,"Субконто {0}: потрібна пара (DocType, назва)"
+A missing account side is allowed only for off-balance accounts,Порожній рахунок дозволений лише для позабалансових
+Balance-sheet and off-balance accounts cannot be combined,Не можна поєднувати балансовий і позабалансовий рахунок
+Amount and quantity cannot both be zero,Сума та кількість дорівнюють нулю
+An accounting entry needs at least one account,Проводка: не вказано рахунки
+UA Exchange Rate,Курси валют

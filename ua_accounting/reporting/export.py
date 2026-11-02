@@ -61,8 +61,11 @@ def to_xlsx(table):
                 value = "\n".join(str(v) for v in value)
             c = ws.cell(r, i, value if value not in (None, "") else None)
             c.border = BORDER
-            c.font = Font(bold=bool(row.get("bold")))
-            if row["kind"] in ("total", "open", "close"):
+            style = (row.get("format") or {}).get(col["key"]) or {}
+            c.font = Font(bold=bool(row.get("bold") or style.get("bold")), color=style["color"].lstrip("#") if style.get("color") else None)
+            if style.get("background"):
+                c.fill = PatternFill("solid", fgColor=style["background"].lstrip("#"))
+            elif row["kind"] in ("total", "open", "close"):
                 c.fill = SUM_FILL
             if kind == "money":
                 c.number_format = MONEY
@@ -79,7 +82,7 @@ def to_xlsx(table):
             link = row.get("links", {}).get(col["key"])
             if link:
                 c.hyperlink = get_url_to_form(link["doctype"], link["name"])
-                c.font = Font(bold=bool(row.get("bold")), color="0563C1", underline="single")
+                c.font = Font(bold=bool(row.get("bold") or style.get("bold")), color="0563C1", underline="single")
         r += 1
 
     if table.get("message"):

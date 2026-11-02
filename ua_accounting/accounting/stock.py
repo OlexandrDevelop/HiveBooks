@@ -2,7 +2,7 @@
 
 Cost of the stock that leaves a warehouse comes from `take_cost`: moving average
 or FIFO, as the accounting policy says. Back-dated documents re-post later
-documents that took stock of the same items (`recalc_later`).
+documents that took stock of the same items (sequence `UA Stock Cost`, `restore_sequence_stock_cost`).
 """
 
 import frappe
@@ -49,7 +49,7 @@ def fifo_cost(doc, account, item, warehouse, quantity, already_taken):
         sum(quantity_dr) as qty, sum(amount) as amount
         from `tabUA Accounting Entry` where organization = %s and account_dr = %s
         and subconto_dr{item_slot} = %s and subconto_dr{warehouse_slot} = %s and posting_date <= %s
-        group by registrar_type, registrar, if(registrar_type = 'UA Stock Assembly', 0, line_no)
+        group by registrar_type, registrar, case when registrar_type = 'UA Stock Assembly' then 0 else line_no end
         having sum(quantity_dr) > 0 order by min(posting_date), min(creation), min(line_no)""",
         (doc.organization, account, item, warehouse, doc.posting_date),
         as_dict=True,
@@ -470,31 +470,44 @@ def make_inventory_documents(inventory):
 # ---------------------------------------------------------------- back-dated recalculation
 
 
-def recalc_later(doc, method=None):
-    """Re-post later documents that took stock of the items a submitted/cancelled document changed."""
-    if getattr(frappe.flags, "ua_recalc_off", False):
-        return
-    if doc.meta.module != "UA Documents" or not getattr(doc, "posts", False):
-        return
-    items = entry_items(doc.doctype, doc.name)
-    if doc.docstatus == 2:
-        # entries are gone already: take the items from the document rows
-        for table in doc.meta.get_table_fields():
-            for row in doc.get(table.fieldname) or []:
-                if row.get("item"):
-                    items.add(row.item)
-        if doc.get("product"):
-            items.add(doc.product)
-    if not items:
-        return
-    start = (getdate(doc.posting_date), get_datetime(doc.creation))
-    done = {(doc.doctype, doc.name)}
+SEQUENCE = "UA Stock Cost"
+
+
+def restore_sequence_stock_cost(sequence_name, key, after, until, trigger):
+    """Restore method of the sequence `UA Stock Cost`: re-post the later documents that took stock of the items.
+
+    `trigger` is the document that was posted or cancelled: the items are the ones it changed. Without a trigger
+    (a manual restore) every stock item is meant. The cost rules (average, FIFO) stay in `take_cost`.
+    """
+    organization = key[0]
+    if trigger is not None:
+        items = entry_items(trigger.doctype, trigger.name)
+        if trigger.docstatus == 2:
+            # entries are gone already: take the items from the document rows
+            for table in trigger.meta.get_table_fields():
+                for row in trigger.get(table.fieldname) or []:
+                    if row.get("item"):
+                        items.add(row.item)
+            if trigger.get("product"):
+                items.add(trigger.product)
+        if not items:
+            return
+        start = (getdate(trigger.posting_date), get_datetime(trigger.creation))
+        done = {(trigger.doctype, trigger.name)}
+    else:
+        items = None
+        start = (after.date, after.creation) if after else (getdate("1900-01-01"), get_datetime("1900-01-01"))
+        done = set()
     while True:
+        item_filter = "and subconto_cr1 in %s" if items is not None else ""
+        values = [organization, start[0], COST_DOCTYPES, STOCK_ACCOUNTS]
+        if items is not None:
+            values.append(tuple(items))
         rows = frappe.db.sql(
-            """select distinct registrar_type, registrar from `tabUA Accounting Entry`
+            f"""select distinct registrar_type, registrar from `tabUA Accounting Entry`
             where organization = %s and posting_date >= %s and registrar_type in %s
-            and account_cr in %s and subconto_cr1 in %s""",
-            (doc.organization, start[0], COST_DOCTYPES, STOCK_ACCOUNTS, tuple(items)),
+            and account_cr in %s {item_filter}""",
+            values,
             as_dict=True,
         )
         later = []
@@ -509,13 +522,10 @@ def recalc_later(doc, method=None):
             return
         _date, _created, doctype, name = min(later)
         done.add((doctype, name))
-        other = frappe.get_doc(doctype, name)
-        links = _vat_links(doctype, name)
-        ledger.cancel_entries(other)
-        other.post_document()
-        _restore_vat_links(doctype, name, links)
-        # what the re-posted document produced (assembly output, transfer target) changes later withdrawals too
-        items |= entry_items(doctype, name)
+        frappe.get_doc(doctype, name).repost_in_sequence(sequence_name)
+        if items is not None:
+            # what the re-posted document produced (assembly output, transfer target) changes later withdrawals too
+            items |= entry_items(doctype, name)
 
 
 def _vat_links(doctype, name):

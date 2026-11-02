@@ -1,18 +1,18 @@
 /* Accounting reports: OSV, OSV by account, account card (design/mockups/report-osv.html).
- * The pages draw their own head (.ua-ph); the table is .ua-table with the OSV parts on top. */
+ * The pages draw their own head (.bo-ph); the table is .bo-table with the OSV parts on top. */
 
 /* our pages draw their head themselves */
-body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) .page-head {
+body.bo-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) .page-head {
 	display: none;
 }
-body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is(.layout-main-section-wrapper, .layout-main-section) {
+body.bo-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is(.layout-main-section-wrapper, .layout-main-section) {
 	padding: 0;
 	margin: 0;
 	border: 0;
 	background: transparent;
 	box-shadow: none;
 }
-body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is(.page-body, .container) {
+body.bo-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is(.page-body, .container) {
 	max-width: none;
 	padding: 0;
 }
@@ -21,22 +21,22 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
-	padding: var(--ua-s-5) var(--ua-s-8) var(--ua-s-6);
+	padding: var(--bo-s-5) var(--bo-s-8) var(--bo-s-6);
 }
-.ua-report .ua-ph {
+.ua-report .bo-ph {
 	align-items: center;
 	margin-bottom: 0;
 }
-.ua-report .ua-ph-title {
+.ua-report .bo-ph-title {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
-.ua-report .ua-ph-title .ua-tag {
-	font-size: var(--ua-fs-11);
+.ua-report .bo-ph-title .bo-tag {
+	font-size: var(--bo-fs-11);
 }
 .ua-report [data-act="settings"] .ua-i-chev {
-	transition: transform var(--ua-dur-base) var(--ua-ease-out);
+	transition: transform var(--bo-dur-base) var(--bo-ease-out);
 }
 .ua-report [data-act="settings"][aria-expanded="false"] .ua-i-chev {
 	transform: rotate(-90deg);
@@ -47,11 +47,11 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	display: grid;
 	grid-template-rows: 1fr;
 	transition:
-		grid-template-rows var(--ua-dur-slow) var(--ua-ease-out),
-		opacity var(--ua-dur-base) var(--ua-ease-out),
-		margin var(--ua-dur-slow) var(--ua-ease-out);
+		grid-template-rows var(--bo-dur-slow) var(--bo-ease-out),
+		opacity var(--bo-dur-base) var(--bo-ease-out),
+		margin var(--bo-dur-slow) var(--bo-ease-out);
 }
-.ua-settings > .ua-card {
+.ua-settings > .bo-card {
 	min-height: 0;
 	overflow: hidden;
 }
@@ -60,7 +60,7 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	opacity: 0;
 	margin-bottom: -12px;
 }
-.ua-settings.is-collapsed > .ua-card {
+.ua-settings.is-collapsed > .bo-card {
 	border-width: 0;
 }
 .ua-set-row {
@@ -71,7 +71,7 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	padding: 12px 16px;
 }
 .ua-set-row + .ua-set-row {
-	border-top: 1px solid var(--ua-border);
+	border-top: 1px solid var(--bo-border);
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
@@ -80,15 +80,15 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 }
 .ua-set-label {
 	margin-right: 2px;
-	color: var(--ua-text-3);
-	font-size: var(--ua-fs-12);
-	font-weight: var(--ua-fw-medium);
+	color: var(--bo-text-3);
+	font-size: var(--bo-fs-12);
+	font-weight: var(--bo-fw-medium);
 }
 .ua-set-sep {
 	width: 1px;
 	height: 20px;
 	margin: 0 4px;
-	background: var(--ua-border);
+	background: var(--bo-border);
 }
 .ua-set-right {
 	display: flex;
@@ -96,13 +96,13 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	gap: 8px;
 	margin-left: auto;
 }
-.ua-set-row .ua-toggle {
-	color: var(--ua-text-2);
+.ua-set-row .bo-toggle {
+	color: var(--bo-text-2);
 }
-.ua-set-row .ua-toggle:has(input:checked) {
-	color: var(--ua-text);
+.ua-set-row .bo-toggle:has(input:checked) {
+	color: var(--bo-text);
 }
-.ua-set-row .ua-chip b {
+.ua-set-row .bo-chip b {
 	max-width: 170px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -117,17 +117,17 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	display: inline-flex;
 	align-items: center;
 }
-.ua-period .ua-btn {
+.ua-period .bo-btn {
 	border-radius: 0;
 	box-shadow: none;
 }
-.ua-period .ua-btn:first-child {
-	border-radius: var(--ua-r-md) 0 0 var(--ua-r-md);
+.ua-period .bo-btn:first-child {
+	border-radius: var(--bo-r-md) 0 0 var(--bo-r-md);
 }
-.ua-period .ua-btn:last-child {
-	border-radius: 0 var(--ua-r-md) var(--ua-r-md) 0;
+.ua-period .bo-btn:last-child {
+	border-radius: 0 var(--bo-r-md) var(--bo-r-md) 0;
 }
-.ua-period .ua-btn + .ua-btn {
+.ua-period .bo-btn + .bo-btn {
 	margin-left: -1px;
 }
 .ua-period-field {
@@ -135,9 +135,9 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	justify-content: flex-start;
 	font-variant-numeric: tabular-nums;
 }
-.ua-period-field .ua-i:last-child {
+.ua-period-field .bo-i:last-child {
 	margin-left: auto;
-	color: var(--ua-text-3);
+	color: var(--bo-text-3);
 }
 
 /* the one account of "ОСВ по рахунку": a Frappe Link without its label */
@@ -146,32 +146,32 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 }
 .ua-report .ua-f .frappe-control,
 .ua-report .ua-f .form-group,
-.ua-pop .ua-f .frappe-control,
-.ua-pop .ua-f .form-group {
+.bo-pop .ua-f .frappe-control,
+.bo-pop .ua-f .form-group {
 	margin: 0;
 }
 .ua-report .ua-f .form-control,
-.ua-pop .ua-f .form-control {
-	height: var(--ua-h-control);
+.bo-pop .ua-f .form-control {
+	height: var(--bo-h-control);
 	padding: 0 10px;
-	border: 1px solid var(--ua-border);
-	border-radius: var(--ua-r-md);
-	background: var(--ua-surface);
-	color: var(--ua-text);
-	font-size: var(--ua-fs-13);
-	box-shadow: var(--ua-shadow-xs);
+	border: 1px solid var(--bo-border);
+	border-radius: var(--bo-r-md);
+	background: var(--bo-surface);
+	color: var(--bo-text);
+	font-size: var(--bo-fs-13);
+	box-shadow: var(--bo-shadow-xs);
 }
 .ua-report .ua-f .form-control:focus,
-.ua-pop .ua-f .form-control:focus {
-	border-color: var(--ua-accent);
-	box-shadow: var(--ua-focus-ring);
+.bo-pop .ua-f .form-control:focus {
+	border-color: var(--bo-accent);
+	box-shadow: var(--bo-focus-ring);
 	outline: none;
 }
-.ua-pop .ua-f .control-label {
+.bo-pop .ua-f .control-label {
 	margin-bottom: 4px;
-	color: var(--ua-text-2);
-	font-size: var(--ua-fs-12);
-	font-weight: var(--ua-fw-medium);
+	color: var(--bo-text-2);
+	font-size: var(--bo-fs-12);
+	font-weight: var(--bo-fw-medium);
 }
 .ua-set-account .control-label,
 .ua-sub-row .control-label,
@@ -223,12 +223,12 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 }
 
 /* popovers with live controls */
-.ua-pop.ua-chip-pop {
+.bo-pop.ua-chip-pop {
 	width: 340px;
 	padding: 6px 0 0;
 }
-.ua-chip-pop .ua-menu-label,
-.ua-period-pop .ua-menu-label {
+.ua-chip-pop .bo-menu-label,
+.ua-period-pop .bo-menu-label {
 	padding-left: 12px;
 }
 .ua-chip-pop .ua-pop-slot {
@@ -239,11 +239,11 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	justify-content: flex-end;
 	gap: 8px;
 	padding: 8px 12px;
-	border-top: 1px solid var(--ua-border);
-	background: var(--ua-surface-2);
-	border-radius: 0 0 var(--ua-r-lg) var(--ua-r-lg);
+	border-top: 1px solid var(--bo-border);
+	background: var(--bo-surface-2);
+	border-radius: 0 0 var(--bo-r-lg) var(--bo-r-lg);
 }
-.ua-pop.ua-period-pop {
+.bo-pop.ua-period-pop {
 	padding: 0;
 }
 .ua-pp {
@@ -252,9 +252,9 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 }
 .ua-pp-quick {
 	padding: 6px;
-	border-right: 1px solid var(--ua-border);
+	border-right: 1px solid var(--bo-border);
 }
-.ua-pp-quick .ua-menu-label {
+.ua-pp-quick .bo-menu-label {
 	padding-left: 6px;
 }
 .ua-pp-custom {
@@ -283,7 +283,7 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	gap: 12px;
 	min-height: 44px;
 	padding: 8px 16px;
-	border-bottom: 1px solid var(--ua-border);
+	border-bottom: 1px solid var(--bo-border);
 }
 .ua-rpt-meta {
 	display: flex;
@@ -291,16 +291,16 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	gap: 8px;
 	min-width: 0;
 	overflow: hidden;
-	color: var(--ua-text-2);
-	font-size: var(--ua-fs-12);
+	color: var(--bo-text-2);
+	font-size: var(--bo-fs-12);
 	white-space: nowrap;
 }
 .ua-rpt-meta b {
-	color: var(--ua-text);
-	font-weight: var(--ua-fw-semibold);
+	color: var(--bo-text);
+	font-weight: var(--bo-fw-semibold);
 }
 .ua-dotsep {
-	color: var(--ua-text-3);
+	color: var(--bo-text-3);
 }
 .ua-hint {
 	display: inline-flex;
@@ -309,11 +309,11 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	height: 24px;
 	margin-left: auto;
 	padding: 0 8px;
-	border-radius: var(--ua-r-pill);
-	background: var(--ua-accent-soft);
-	color: var(--ua-accent-text);
-	font-size: var(--ua-fs-12);
-	font-weight: var(--ua-fw-medium);
+	border-radius: var(--bo-r-pill);
+	background: var(--bo-accent-soft);
+	color: var(--bo-accent-text);
+	font-size: var(--bo-fs-12);
+	font-weight: var(--bo-fw-medium);
 	white-space: nowrap;
 }
 .ua-hint[hidden],
@@ -321,16 +321,16 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 .ua-rpt-msg[hidden] {
 	display: none;
 }
-.ua-hint .ua-i {
+.ua-hint .bo-i {
 	width: 14px;
 	height: 14px;
 }
 .ua-rpt-msg {
 	padding: 8px 16px;
-	border-bottom: 1px solid var(--ua-border);
-	background: var(--ua-warning-soft);
-	color: var(--ua-warning-text);
-	font-size: var(--ua-fs-12);
+	border-bottom: 1px solid var(--bo-border);
+	background: var(--bo-warning-soft);
+	color: var(--bo-warning-text);
+	font-size: var(--bo-fs-12);
 }
 .ua-state-box {
 	display: grid;
@@ -357,49 +357,49 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 }
 .ua-rpt thead th {
 	text-align: center;
-	color: var(--ua-text-2);
+	color: var(--bo-text-2);
 }
 .ua-rpt--two thead tr:first-child th {
 	height: 34px;
 }
 .ua-rpt thead th.ua-h-group {
-	border-bottom: 1px solid var(--ua-border);
+	border-bottom: 1px solid var(--bo-border);
 }
 .ua-rpt thead th.ua-h-two {
 	vertical-align: middle;
 	text-align: left;
 }
-.ua-rpt thead th.ua-h-two.ua-c {
+.ua-rpt thead th.ua-h-two.bo-c {
 	text-align: center;
 }
 .ua-rpt thead th.ua-acc-h {
 	text-align: left;
-	z-index: calc(var(--ua-z-sticky) + 1);
+	z-index: calc(var(--bo-z-sticky) + 1);
 }
-.ua-rpt thead th.ua-r {
+.ua-rpt thead th.bo-r {
 	text-align: right;
 }
-/* the second head row sticks under the first one (--ua-h1: its measured height) */
+/* the second head row sticks under the first one (--bo-h1: its measured height) */
 .ua-rpt thead tr:nth-child(2) th {
-	top: var(--ua-h1, 34px);
+	top: var(--bo-h1, 34px);
 	height: 30px;
-	color: var(--ua-text-3);
-	font-size: var(--ua-fs-11);
-	font-weight: var(--ua-fw-semibold);
+	color: var(--bo-text-3);
+	font-size: var(--bo-fs-11);
+	font-weight: var(--bo-fw-semibold);
 	letter-spacing: 0.03em;
 	text-transform: uppercase;
 }
 .ua-rpt .ua-gs {
-	border-left: 1px solid var(--ua-border);
+	border-left: 1px solid var(--bo-border);
 }
 .ua-rpt td {
 	height: 34px;
 	padding: 0 12px;
 }
-.ua-rpt td.ua-r {
+.ua-rpt td.bo-r {
 	text-align: right;
 }
-.ua-rpt td.ua-c {
+.ua-rpt td.bo-c {
 	text-align: center;
 }
 .ua-rpt td.ua-acc-cell,
@@ -411,7 +411,7 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	line-height: 1.3;
 	white-space: normal;
 }
-.ua-rpt td.ua-lines .ua-cell-sub {
+.ua-rpt td.ua-lines .bo-cell-sub {
 	display: block;
 }
 .ua-acc-in {
@@ -429,28 +429,28 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	margin: -1px 0 -1px -4px;
 	padding: 0;
 	border: 0;
-	border-radius: var(--ua-r-xs);
+	border-radius: var(--bo-r-xs);
 	background: transparent;
-	color: var(--ua-text-3);
+	color: var(--bo-text-3);
 	cursor: pointer;
 	transition:
-		background var(--ua-dur-fast),
-		color var(--ua-dur-fast);
+		background var(--bo-dur-fast),
+		color var(--bo-dur-fast);
 }
 .ua-acc-tog:hover {
-	background: var(--ua-surface-3);
-	color: var(--ua-text);
+	background: var(--bo-surface-3);
+	color: var(--bo-text);
 }
 .ua-acc-tog:focus-visible {
 	outline: none;
-	box-shadow: var(--ua-focus-ring);
+	box-shadow: var(--bo-focus-ring);
 }
-.ua-acc-tog .ua-i {
+.ua-acc-tog .bo-i {
 	width: 14px;
 	height: 14px;
-	transition: transform var(--ua-dur-base) var(--ua-ease-out);
+	transition: transform var(--bo-dur-base) var(--bo-ease-out);
 }
-.ua-acc-tog[aria-expanded="true"] .ua-i {
+.ua-acc-tog[aria-expanded="true"] .bo-i {
 	transform: rotate(90deg);
 }
 .ua-acc-sp {
@@ -461,61 +461,61 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 .ua-rpt .ua-code {
 	flex: none;
 	min-width: 34px;
-	color: var(--ua-text-2);
-	font-weight: var(--ua-fw-medium);
+	color: var(--bo-text-2);
+	font-weight: var(--bo-fw-medium);
 }
 .ua-acc-name {
 	min-width: 0;
-	color: var(--ua-text);
+	color: var(--bo-text);
 }
 .ua-rpt tr.ua-bold td {
-	font-weight: var(--ua-fw-semibold);
+	font-weight: var(--bo-fw-semibold);
 }
 .ua-rpt tbody tr.ua-lvl0.ua-is-acc td,
 .ua-rpt tbody tr:is(.ua-k-open, .ua-k-close, .ua-k-total) td {
-	background: var(--ua-group-row);
-	font-weight: var(--ua-fw-semibold);
+	background: var(--bo-group-row);
+	font-weight: var(--bo-fw-semibold);
 }
 .ua-rpt tr.ua-lvl0 .ua-code {
-	color: var(--ua-text);
-	font-weight: var(--ua-fw-semibold);
+	color: var(--bo-text);
+	font-weight: var(--bo-fw-semibold);
 }
 .ua-rpt tbody tr.ua-lvl0:hover td {
-	background: var(--ua-row-hover);
+	background: var(--bo-row-hover);
 }
 .ua-rpt tr.ua-lvl1.ua-k-group td {
-	font-weight: var(--ua-fw-regular);
+	font-weight: var(--bo-fw-regular);
 }
 .ua-rpt tr.ua-rsub td,
 .ua-rpt tr.ua-rsub .ua-acc-name {
-	color: var(--ua-text-2);
-	font-weight: var(--ua-fw-regular);
+	color: var(--bo-text-2);
+	font-weight: var(--bo-fw-regular);
 }
 
 /* amounts open the drill-down menu */
 .ua-amt {
 	margin: -2px -4px;
 	padding: 2px 4px;
-	border-radius: var(--ua-r-xs);
+	border-radius: var(--bo-r-xs);
 	cursor: pointer;
 	text-decoration: underline dotted transparent;
 	text-underline-offset: 3px;
 	transition:
-		text-decoration-color var(--ua-dur-fast),
-		background var(--ua-dur-fast),
-		color var(--ua-dur-fast);
+		text-decoration-color var(--bo-dur-fast),
+		background var(--bo-dur-fast),
+		color var(--bo-dur-fast);
 }
 .ua-amt:hover,
 .ua-amt:focus-visible,
 .ua-amt.is-active {
-	color: var(--ua-accent-text);
-	text-decoration-color: var(--ua-accent);
+	color: var(--bo-accent-text);
+	text-decoration-color: var(--bo-accent);
 	outline: none;
 }
 .ua-amt.is-active {
-	background: var(--ua-accent-soft);
+	background: var(--bo-accent-soft);
 }
-.ua-pop.ua-drill-pop {
+.bo-pop.ua-drill-pop {
 	min-width: 250px;
 }
 
@@ -523,13 +523,13 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 .ua-rpt tfoot td {
 	position: sticky;
 	bottom: 0;
-	z-index: var(--ua-z-sticky);
+	z-index: var(--bo-z-sticky);
 	height: 38px;
-	border-top: 2px solid var(--ua-border-strong);
+	border-top: 2px solid var(--bo-border-strong);
 	border-bottom: 0;
-	background: var(--ua-th-bg);
-	color: var(--ua-text);
-	font-weight: var(--ua-fw-bold);
+	background: var(--bo-th-bg);
+	color: var(--bo-text);
+	font-weight: var(--bo-fw-bold);
 }
 .ua-rpt tfoot .ua-acc-in {
 	align-items: center;
@@ -539,11 +539,11 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 	align-items: center;
 	gap: 4px;
 	margin-left: 10px;
-	color: var(--ua-success-text);
-	font-size: var(--ua-fs-11);
-	font-weight: var(--ua-fw-medium);
+	color: var(--bo-success-text);
+	font-size: var(--bo-fs-11);
+	font-weight: var(--bo-fw-medium);
 }
-.ua-balanced .ua-i {
+.ua-balanced .bo-i {
 	width: 12px;
 	height: 12px;
 	stroke-width: 2.4;
@@ -551,8 +551,8 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 
 /* rows that open slide in */
 .ua-rpt tr.ua-row-in td {
-	animation: ua-rpt-row-in var(--ua-dur-slow) var(--ua-ease-out) both;
-	animation-delay: calc(var(--k, 0) * var(--ua-stagger));
+	animation: ua-rpt-row-in var(--bo-dur-slow) var(--bo-ease-out) both;
+	animation-delay: calc(var(--k, 0) * var(--bo-stagger));
 }
 @keyframes ua-rpt-row-in {
 	from {
@@ -569,15 +569,15 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 .ua-rpt-skel td:first-child {
 	width: 34%;
 }
-.ua-rpt-skel .ua-skel {
+.ua-rpt-skel .bo-skel {
 	display: block;
 }
-.ua-report .ua-chip[hidden] {
+.ua-report .bo-chip[hidden] {
 	display: none;
 }
 /* Frappe shows the field name to admins; our controls have no field names to show */
 .ua-report .frappe-control .tooltip-content,
-.ua-pop .frappe-control .tooltip-content {
+.bo-pop .frappe-control .tooltip-content {
 	display: none;
 }
 
@@ -587,16 +587,16 @@ body.ua-shell :is(#page-ua-osv, #page-ua-osv-account, #page-ua-account-card) :is
 }
 .ua-report .ua-f--lbl .control-label {
 	margin-bottom: 4px;
-	color: var(--ua-text-3);
-	font-size: var(--ua-fs-12);
-	font-weight: var(--ua-fw-medium);
+	color: var(--bo-text-3);
+	font-size: var(--bo-fs-12);
+	font-weight: var(--bo-fw-medium);
 }
 .ua-rpt--more tr.ua-drillable {
 	cursor: pointer;
 }
 .ua-rpt--more tr.ua-drillable:hover td {
-	background: var(--ua-accent-soft);
+	background: var(--bo-accent-soft);
 }
 .ua-rpt--more tr.ua-k-subtotal td {
-	background: var(--ua-surface-2, var(--ua-surface));
+	background: var(--bo-surface-2, var(--bo-surface));
 }

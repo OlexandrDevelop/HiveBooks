@@ -150,7 +150,7 @@ frappe.provide("ua_accounting.form");
 		if (!frm || !frm.page || !ua_accounting.ui.kind(frm.doctype) || frm.page.current_view_name === "print") return;
 		if (!$(frm.page.wrapper).is(":visible")) return;
 		// the UA toolbar has the real command; Frappe's own primary button is hidden
-		const $btn = $(frm.page.wrapper).find(".ua-form-toolbar [data-ua-cmd].ua-btn--primary, [data-ua-cmd].ua-btn--primary").filter(":visible").first();
+		const $btn = $(frm.page.wrapper).find(".ua-form-toolbar [data-ua-cmd].bo-btn--primary, [data-ua-cmd].bo-btn--primary").filter(":visible").first();
 		if (!$btn.length || $btn.prop("disabled")) return;
 		e.preventDefault();
 		// leave the field first, so its value reaches the document

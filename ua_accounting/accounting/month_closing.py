@@ -5,7 +5,6 @@ through the ledger. A step without data is done and has no document. Re-run and 
 reverse order of the steps. Completing all steps sets the period lock of the organization.
 """
 
-import contextlib
 import importlib.util
 import math
 from collections import defaultdict
@@ -13,9 +12,11 @@ from decimal import ROUND_HALF_UP, Decimal
 
 import frappe
 from frappe import _
+from frappe.beeone import accounting_query
 from frappe.utils import add_days, add_months, get_last_day, getdate
 
 from ua_accounting.accounting import ledger
+from frappe.beeone import period_closure
 from ua_accounting.accounting.assets import leaf_account, month_gap
 from ua_accounting.accounting.utils import first_of_month, uk_date, uk_money
 
@@ -60,15 +61,9 @@ def money(value):
     return float(Decimal(str(value or 0)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP))
 
 
-@contextlib.contextmanager
 def closing_context():
-    """The posting documents of the closing are not blocked by the period lock."""
-    old = frappe.flags.get("ua_month_closing")
-    frappe.flags.ua_month_closing = True
-    try:
-        yield
-    finally:
-        frappe.flags.ua_month_closing = old
+    """The posting documents of the closing are not blocked by the period lock (core and ua_month_closing)."""
+    return period_closure.closure_context("ua_month_closing")
 
 
 # ---------------------------------------------------------------- ledger reading
@@ -87,34 +82,17 @@ def balances(organization, upto, accounts):
 
     Returns dicts: account, subs [(type, value) x 3], currency, amount (Дт − Кт), cur_amount (Дт − Кт).
     """
-    if not accounts:
-        return []
-    sides = []
-    for side, sign_d, sign_c in (("dr", "amount", "0"), ("cr", "0", "amount")):
-        cur = f"currency_amount_{side}"
-        sides.append(
-            f"""select account_{side} as account,
-            subconto_{side}1_type as t1, subconto_{side}1 as s1, subconto_{side}2_type as t2, subconto_{side}2 as s2,
-            subconto_{side}3_type as t3, subconto_{side}3 as s3, currency_{side} as cur,
-            {sign_d} as d, {sign_c} as c,
-            {cur if side == "dr" else "0"} as cd, {cur if side == "cr" else "0"} as cc
-            from `tabUA Accounting Entry`
-            where organization = %(org)s and posting_date <= %(upto)s and account_{side} in %(accounts)s"""
-        )
-    rows = frappe.db.sql(
-        f"""select account, t1, s1, t2, s2, t3, s3, cur, sum(d) - sum(c) as amount, sum(cd) - sum(cc) as cur_amount
-        from ({" union all ".join(sides)}) x group by account, t1, s1, t2, s2, t3, s3, cur
-        order by account, s1, s2, s3""",
-        {"org": organization, "upto": getdate(upto), "accounts": tuple(accounts)},
-        as_dict=True,
+    types = {side: [f"subconto_{side}{i}_type" for i in (1, 2, 3)] for side in ("dr", "cr")}
+    rows = accounting_query.acc_entry_balances(
+        "UA Accounting Entry", organization, upto, accounts, {"debit": types["dr"], "credit": types["cr"]}
     )
     return [
         {
-            "account": r.account,
-            "subs": [(r.t1 or "", r.s1 or ""), (r.t2 or "", r.s2 or ""), (r.t3 or "", r.s3 or "")],
-            "currency": r.cur or "",
-            "amount": money(r.amount),
-            "cur_amount": float(r.cur_amount or 0),
+            "account": r["account"],
+            "subs": list(zip(r["types"], r["subs"])),
+            "currency": r["currency"],
+            "amount": money(r["amount"]),
+            "cur_amount": float(r["currency_amount"] or 0),
         }
         for r in rows
     ]
@@ -426,7 +404,7 @@ def accounting_profit(organization, first_day, end, exclude):
 def transfer_documents(organization):
     return frappe.db.sql_list(
         """select s.document from `tabUA Month Closing Step` s join `tabUA Month Closing` c on c.name = s.parent
-        where c.organization = %s and s.step in %s and ifnull(s.document, '') != ''""",
+        where c.organization = %s and s.step in %s and coalesce(s.document, '') != ''""",
         (organization, TRANSFER_STEPS),
     )
 
@@ -542,9 +520,7 @@ def run_provision(closing, code):
 def execute(closing, row):
     """Run one step: post its document and fill the row. An error rolls back the step and marks it."""
     code = row.step
-    savepoint = f"closing_{code}"
-    frappe.db.savepoint(savepoint)
-    try:
+    with period_closure.step_savepoint(f"closing_{code}") as step:
         document_type = document = None
         if code in PROVISION_KINDS:
             document, message = run_provision(closing, code)
@@ -561,16 +537,15 @@ def execute(closing, row):
                 message = note or _("Немає даних для проведення")
         row.status, row.document_type, row.document, row.message = DONE, document_type, document, message
         save(closing)  # later steps read the documents of the earlier ones from the step table
+    if step.ok:
         return True
-    except Exception as e:
-        frappe.db.rollback(save_point=savepoint)
-        frappe.clear_messages()
-        row.status, row.document_type, row.document = ERROR, None, None
-        row.message = (str(e) or e.__class__.__name__)[:500]
-        if not isinstance(e, frappe.ValidationError | frappe.PermissionError):
-            frappe.log_error(f"Month closing {closing.name} {code}")
-        save(closing)
-        return False
+    e = step.error
+    row.status, row.document_type, row.document = ERROR, None, None
+    row.message = (str(e) or e.__class__.__name__)[:500]
+    if not isinstance(e, frappe.ValidationError | frappe.PermissionError):
+        frappe.log_error(f"Month closing {closing.name} {code}")
+    save(closing)
+    return False
 
 
 def save(closing):
@@ -597,11 +572,11 @@ def set_lock(closing):
     if closing.status == DONE and closing.lock_after_closing and not closing.lock_applied:
         closing.previous_lock_date = current
         closing.lock_applied = 1
-        frappe.db.set_value("UA Organization", org, "edit_lock_date", max(end, getdate(current)) if current else end)
+        period_closure.set_lock_date("UA Organization", org, "edit_lock_date", period_closure.locked_date(current, end))
     elif closing.status != DONE and closing.lock_applied:
-        applied = max(end, getdate(closing.previous_lock_date)) if closing.previous_lock_date else end
-        if current and getdate(current) == applied:
-            frappe.db.set_value("UA Organization", org, "edit_lock_date", closing.previous_lock_date)
+        restored = period_closure.restored_date(current, closing.previous_lock_date, end)
+        if restored != current:
+            period_closure.set_lock_date("UA Organization", org, "edit_lock_date", restored)
         closing.lock_applied = 0
 
 
@@ -631,7 +606,7 @@ def load(name):
     frappe.only_for(("UA Accountant", "UA Accounting Manager", "UA Chief Accountant", "System Manager"))
     if not frappe.db.exists(CLOSING, name):
         frappe.throw(_("Закриття місяця {0} не знайдено").format(name), frappe.DoesNotExistError)
-    frappe.db.sql("select name from `tabUA Month Closing` where name = %s for update", name)
+    period_closure.lock_closing(CLOSING, name)
     closing = frappe.get_doc(CLOSING, name)
     closing.check_permission("write")
     return closing
@@ -653,11 +628,13 @@ def open_closing(organization, period):
     if not name:
         doc = frappe.new_doc(CLOSING)
         doc.organization, doc.period = organization, first
+        frappe.db.savepoint("open_closing")
         try:
             doc.insert()
             name = doc.name
         except frappe.DuplicateEntryError:
-            # another request created the closing first
+            # another request created the closing first; PostgreSQL needs the transaction back to work
+            frappe.db.rollback(save_point="open_closing")
             name = frappe.db.get_value(CLOSING, {"closing_key": f"{organization}|{first}"})
             if not name:
                 raise

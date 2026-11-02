@@ -63,7 +63,7 @@ frappe.pages["ua-doubtful-debts-reserve"].on_page_load = function (wrapper) {
 			)
 			.join("");
 		const debt = res.rows.reduce((a, r) => a + r.debt, 0);
-		$body.html(`<table class="table table-bordered ua-num">
+		$body.html(`<table class="table table-bordered bo-num">
 			<thead><tr>
 				<th>${__("Контрагент")}</th><th>${__("Договір")}</th><th>${__("Документ розрахунків")}</th>
 				<th class="text-right">${__("Заборгованість")}</th><th class="text-right">${__("Днів прострочення")}</th>

@@ -57,11 +57,11 @@ frappe.pages["ua-report-builder"].on_page_show = function (wrapper) {
 
 	const render_result = () => {
 		const r = st.result;
-		if (!r) return `<div class="ua-card ua-rb-card">${ui.skeleton_rows(6)}</div>`;
+		if (!r) return `<div class="bo-card ua-rb-card">${ui.skeleton_rows(6)}</div>`;
 		if (!r.rows.length) return ui.empty_html({ title: __("Немає даних"), text: __("За обраними умовами записів не знайдено.") });
 		const cols = r.columns;
-		let html = `<div class="ua-card ua-rb-card"><div class="ua-table-wrap"><table class="ua-table"><thead><tr>${cols
-			.map((c) => `<th${NUMERIC.includes(c.fieldtype) ? ' class="ua-r"' : ""}>${esc(c.label)}</th>`)
+		let html = `<div class="bo-card ua-rb-card"><div class="bo-table-wrap"><table class="bo-table"><thead><tr>${cols
+			.map((c) => `<th${NUMERIC.includes(c.fieldtype) ? ' class="bo-r"' : ""}>${esc(c.label)}</th>`)
 			.join("")}</tr></thead><tbody>`;
 		r.rows.forEach((row) => {
 			const level = row._level;
@@ -70,7 +70,7 @@ frappe.pages["ua-report-builder"].on_page_show = function (wrapper) {
 				const num = NUMERIC.includes(c.fieldtype) && c.fieldtype !== "Int";
 				const pad = level && i === level - 1 ? ` style="padding-left:${level * 12}px"` : "";
 				const fmt = style_of((row._format || {})[c.fieldname]);
-				html += `<td class="${num ? "ua-r ua-num" : ""}"${fmt || pad}>${esc(cell(c, row[c.fieldname]))}</td>`;
+				html += `<td class="${num ? "bo-r bo-num" : ""}"${fmt || pad}>${esc(cell(c, row[c.fieldname]))}</td>`;
 			});
 			html += "</tr>";
 		});
@@ -81,7 +81,7 @@ frappe.pages["ua-report-builder"].on_page_show = function (wrapper) {
 			if (v === undefined) {
 				html += `<td>${first ? esc(__("Разом")) : ""}</td>`;
 				first = false;
-			} else html += `<td class="ua-r ua-num">${esc(cell(c, v))}</td>`;
+			} else html += `<td class="bo-r bo-num">${esc(cell(c, v))}</td>`;
 		});
 		return html + `</tr></tfoot></table></div></div><div class="ua-rb-count">${esc(__("Записів"))}: ${r.count}</div>`;
 	};
@@ -89,7 +89,7 @@ frappe.pages["ua-report-builder"].on_page_show = function (wrapper) {
 	const summary = () =>
 		BLOCKS.map((b) => {
 			const n = (st.settings[b] || []).length;
-			return n ? `<span class="ua-chip">${esc(block_title(b))}: ${n}</span>` : "";
+			return n ? `<span class="bo-chip">${esc(block_title(b))}: ${n}</span>` : "";
 		}).join("");
 
 	const block_title = (b) => ({ columns: "Колонки", group_by: "Групування", filters: "Відбір", sort: "Сортування", format: "Умовне оформлення" }[b]);
@@ -97,26 +97,26 @@ frappe.pages["ua-report-builder"].on_page_show = function (wrapper) {
 	const render = () => {
 		const f = st.filters;
 		$root.html(
-			`<div class="ua-card ua-rb-head">
+			`<div class="bo-card ua-rb-head">
 				<div class="ua-rb-pick">
 					<label>${esc(__("Джерело"))}<select class="ua-rb-source">${st.sources
 						.map((s) => `<option value="${esc(s.value)}"${s.value === st.source ? " selected" : ""}>${esc(s.label)}</option>`)
 						.join("")}</select></label>
 					<label>${esc(__("З"))}<input type="date" class="ua-rb-from" value="${esc(f.date_from || "")}"></label>
 					<label>${esc(__("По"))}<input type="date" class="ua-rb-to" value="${esc(f.date_to || "")}"></label>
-					${st.variant ? `<span class="ua-badge ua-badge--posted">${esc(st.variant)}</span>` : ""}
+					${st.variant ? `<span class="bo-badge bo-badge--posted">${esc(st.variant)}</span>` : ""}
 				</div>
 				<div class="ua-rb-actions">
-					<button type="button" class="ua-btn ua-btn--primary" data-act="run">${esc(__("Сформувати"))}</button>
-					<button type="button" class="ua-btn ua-btn--ghost" data-act="excel">${esc(__("Excel"))}</button>
-					<button type="button" class="ua-btn ua-btn--ghost" data-act="pdf">${esc(__("PDF"))}</button>
+					<button type="button" class="bo-btn bo-btn--primary" data-act="run">${esc(__("Сформувати"))}</button>
+					<button type="button" class="bo-btn bo-btn--ghost" data-act="excel">${esc(__("Excel"))}</button>
+					<button type="button" class="bo-btn bo-btn--ghost" data-act="pdf">${esc(__("PDF"))}</button>
 				</div>
 			</div>
-			<div class="ua-card ua-rb-bar">
-				${BLOCKS.map((b) => `<button type="button" class="ua-btn ua-btn--secondary ua-btn--sm" data-block="${b}">${esc(__(block_title(b)))}</button>`).join("")}
+			<div class="bo-card ua-rb-bar">
+				${BLOCKS.map((b) => `<button type="button" class="bo-btn bo-btn--secondary bo-btn--sm" data-block="${b}">${esc(__(block_title(b)))}</button>`).join("")}
 				<span class="ua-rb-sep"></span>
-				<button type="button" class="ua-btn ua-btn--secondary ua-btn--sm" data-act="save">${esc(__("Зберегти варіант"))}</button>
-				<button type="button" class="ua-btn ua-btn--secondary ua-btn--sm" data-act="variants">${esc(__("Варіанти"))}</button>
+				<button type="button" class="bo-btn bo-btn--secondary bo-btn--sm" data-act="save">${esc(__("Зберегти варіант"))}</button>
+				<button type="button" class="bo-btn bo-btn--secondary bo-btn--sm" data-act="variants">${esc(__("Варіанти"))}</button>
 				<span class="ua-rb-summary">${summary()}</span>
 			</div>
 			<div class="ua-rb-result">${render_result()}</div>`
@@ -199,17 +199,17 @@ frappe.pages["ua-report-builder"].on_page_show = function (wrapper) {
 		const def = DEF[block];
 		const title = __(block_title(block));
 		const items = (st.settings[block] || []).map(def.from);
-		const row_html = (x) => `<div class="ua-rb-row">${def.html(x)}<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon" data-del aria-label="${esc(__("Видалити"))}">×</button></div>`;
+		const row_html = (x) => `<div class="ua-rb-row">${def.html(x)}<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon" data-del aria-label="${esc(__("Видалити"))}">×</button></div>`;
 		const d = ui.dialog({
 			title,
 			wide: true,
 			html:
-				`<div class="ua-dialog-head"><div><div class="ua-dialog-title">${esc(title)}</div></div>` +
-				`<button class="ua-btn ua-btn--ghost ua-btn--icon" data-close aria-label="${esc(__("Закрити"))}">×</button></div>` +
-				`<div class="ua-dialog-body"><div class="ua-rb-rows">${items.map(row_html).join("")}</div>` +
-				`<button type="button" class="ua-btn ua-btn--ghost ua-btn--sm" data-add>${esc(__("Додати рядок"))}</button></div>` +
-				`<div class="ua-dialog-foot"><span></span><div class="ua-right"><button class="ua-btn" data-close>${esc(__("Скасувати"))}</button>` +
-				`<button class="ua-btn ua-btn--primary" data-apply>${esc(__("Застосувати"))}</button></div></div>`,
+				`<div class="bo-dialog-head"><div><div class="bo-dialog-title">${esc(title)}</div></div>` +
+				`<button class="bo-btn bo-btn--ghost bo-btn--icon" data-close aria-label="${esc(__("Закрити"))}">×</button></div>` +
+				`<div class="bo-dialog-body"><div class="ua-rb-rows">${items.map(row_html).join("")}</div>` +
+				`<button type="button" class="bo-btn bo-btn--ghost bo-btn--sm" data-add>${esc(__("Додати рядок"))}</button></div>` +
+				`<div class="bo-dialog-foot"><span></span><div class="bo-right"><button class="bo-btn" data-close>${esc(__("Скасувати"))}</button>` +
+				`<button class="bo-btn bo-btn--primary" data-apply>${esc(__("Застосувати"))}</button></div></div>`,
 		});
 		const $d = $(d.el);
 		$d.on("click", "[data-add]", () => $d.find(".ua-rb-rows").append(row_html(def.blank())));
@@ -249,14 +249,14 @@ frappe.pages["ua-report-builder"].on_page_show = function (wrapper) {
 		const d = ui.dialog({
 			title: __("Зберегти варіант"),
 			html:
-				`<div class="ua-dialog-head"><div><div class="ua-dialog-title">${esc(__("Зберегти варіант"))}</div></div>` +
-				`<button class="ua-btn ua-btn--ghost ua-btn--icon" data-close aria-label="${esc(__("Закрити"))}">×</button></div>` +
-				`<div class="ua-dialog-body"><div class="ua-field"><label class="ua-field-label" for="ua-rb-name">${esc(__("Назва варіанту"))}</label>` +
-				`<div class="ua-input"><input id="ua-rb-name" value="${esc(st.variant)}" autofocus></div></div>` +
+				`<div class="bo-dialog-head"><div><div class="bo-dialog-title">${esc(__("Зберегти варіант"))}</div></div>` +
+				`<button class="bo-btn bo-btn--ghost bo-btn--icon" data-close aria-label="${esc(__("Закрити"))}">×</button></div>` +
+				`<div class="bo-dialog-body"><div class="bo-field"><label class="bo-field-label" for="ua-rb-name">${esc(__("Назва варіанту"))}</label>` +
+				`<div class="bo-input"><input id="ua-rb-name" value="${esc(st.variant)}" autofocus></div></div>` +
 				`<label class="ua-rb-check"><input type="checkbox" id="ua-rb-shared"> ${esc(__("Загальний (для всіх)"))}</label>` +
 				`<label class="ua-rb-check"><input type="checkbox" id="ua-rb-default"> ${esc(__("Основний"))}</label></div>` +
-				`<div class="ua-dialog-foot"><span></span><div class="ua-right"><button class="ua-btn" data-close>${esc(__("Скасувати"))}</button>` +
-				`<button class="ua-btn ua-btn--primary" data-save>${esc(__("Зберегти"))}</button></div></div>`,
+				`<div class="bo-dialog-foot"><span></span><div class="bo-right"><button class="bo-btn" data-close>${esc(__("Скасувати"))}</button>` +
+				`<button class="bo-btn bo-btn--primary" data-save>${esc(__("Зберегти"))}</button></div></div>`,
 		});
 		$(d.el).on("click", "[data-save]", () => {
 			const name = $(d.el).find("#ua-rb-name").val().trim();
@@ -279,8 +279,8 @@ frappe.pages["ua-report-builder"].on_page_show = function (wrapper) {
 	const variants_menu = (trigger) =>
 		call("list_variants", { source: st.source }).then((list) => {
 			const item = (v) =>
-				`<div class="ua-rb-variant"><button type="button" class="ua-menu-item" data-pick="${esc(v.name)}" data-vname="${esc(v.variant_name)}">${esc(v.variant_name)}${v.is_shared ? ` · ${esc(__("загальний"))}` : ""}${v.is_default ? " ★" : ""}</button>` +
-				(v.is_mine ? `<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon ua-btn--sm" data-del-variant="${esc(v.name)}" aria-label="${esc(__("Видалити"))}">×</button>` : "") +
+				`<div class="ua-rb-variant"><button type="button" class="bo-menu-item" data-pick="${esc(v.name)}" data-vname="${esc(v.variant_name)}">${esc(v.variant_name)}${v.is_shared ? ` · ${esc(__("загальний"))}` : ""}${v.is_default ? " ★" : ""}</button>` +
+				(v.is_mine ? `<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon bo-btn--sm" data-del-variant="${esc(v.name)}" aria-label="${esc(__("Видалити"))}">×</button>` : "") +
 				"</div>";
 			const html = list.length ? list.map(item).join("") : `<div class="ua-rb-none">${esc(__("Збережених варіантів немає"))}</div>`;
 			ui.menu(

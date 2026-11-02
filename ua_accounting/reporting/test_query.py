@@ -39,3 +39,28 @@ class TestFilterParsing(unittest.TestCase):
     def test_subconto_keeps_explicit_empty_value(self):
         parsed = parse_subconto([{"type": "Item", "values": [""]}, {"type": "X", "values": []}])
         self.assertEqual(parsed, [{"type": "Item", "values": [""]}])
+
+
+class TestCoreGroups(unittest.TestCase):
+    """The scope is given to the core as groups: same accounts, slots, filters and slow flag."""
+
+    def test_scope_becomes_core_groups(self):
+        from types import SimpleNamespace
+
+        from ua_accounting.reporting import query
+
+        cls = SimpleNamespace(accounts=["361", "362"], level_slots=(0, None), filter_slots=(1,), slow=True)
+        flt_ = SimpleNamespace(subconto=[{"type": "Contract", "values": ["C1", "C2"]}], currency="USD", organizations=["O1"])
+        scope = SimpleNamespace(classes=[cls], flt=flt_, levels=[("slot", 1), ("slot", 3)], by_currency=False)
+        (group,) = query._groups(scope)
+        self.assertEqual(group.accounts, ["361", "362"])
+        self.assertEqual(group.level_slots, (0, None))
+        self.assertEqual(group.filters, [(1, ["C1", "C2"])])
+        self.assertTrue(group.slow)
+
+    def test_period_split_is_the_core_one(self):
+        from frappe.beeone import accounting_query
+
+        from ua_accounting.reporting import query
+
+        self.assertIs(query.split_range, accounting_query.split_range)

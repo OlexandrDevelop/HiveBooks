@@ -1,0 +1,5 @@
+# Local installs only: publishes the web server. Easypanel routes the domain itself and does not use this file.
+services:
+  frontend:
+    ports:
+      - '${HTTP_PORT:-8080}:8080'

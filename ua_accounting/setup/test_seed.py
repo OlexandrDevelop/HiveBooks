@@ -20,6 +20,22 @@ class TestSeed(IntegrationTestCase):
             [r.subconto_type for r in acc.subconto], ["Counterparty", "Contract", "SettlementDoc"]
         )
 
+    def test_chart_of_accounts_registers_generic_metadata(self):
+        chart = frappe.get_doc("Chart of Accounts", "UA Account")
+        self.assertEqual(chart.account_doctype, "UA Account")
+        self.assertEqual(chart.code_field, "account_code")
+        self.assertEqual(chart.subconto_type_doctype, "UA Subconto Type")
+        self.assertEqual(chart.subconto_turnover_only_field, "turnover_only")
+
+    def test_subconto_types_are_characteristics(self):
+        from frappe.beeone import characteristic_chart as chart
+
+        self.assertTrue(frappe.db.exists("Characteristic Chart", "UA Subconto Type"))
+        ref = frappe.db.get_value("UA Subconto Type", "Counterparty", "reference_doctype")
+        self.assertEqual(chart.get_allowed_doctypes("UA Subconto Type", "Counterparty"), [ref])
+        self.assertTrue(chart.is_predefined("UA Subconto Type", "Counterparty"))
+        self.assertRaises(frappe.ValidationError, frappe.delete_doc, "UA Subconto Type", "Counterparty")
+
     def test_classes_and_off_balance(self):
         for cls in "0123456789":
             self.assertTrue(frappe.db.exists("UA Account", cls))

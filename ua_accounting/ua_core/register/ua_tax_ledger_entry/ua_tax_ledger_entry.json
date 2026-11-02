@@ -1,0 +1,58 @@
+{
+ "creation": "2026-11-01 00:00:00.000000",
+ "date_field": "posting_date",
+ "doctype": "Register",
+ "fields": [
+  {
+   "doctype": "Register Field",
+   "fieldname": "organization",
+   "role": "Dimension"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "account_dr",
+   "role": "Dimension"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "account_cr",
+   "role": "Dimension"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "period",
+   "role": "Attribute"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "content",
+   "role": "Attribute"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "amount_book",
+   "role": "Resource"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "amount_tax",
+   "role": "Resource"
+  },
+  {
+   "doctype": "Register Field",
+   "fieldname": "difference",
+   "role": "Resource"
+  }
+ ],
+ "line_no_field": "line_no",
+ "modified": "2026-11-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Core",
+ "name": "UA Tax Ledger Entry",
+ "owner": "Administrator",
+ "register_doctype": "UA Tax Ledger Entry",
+ "register_kind": "Accumulation: Turnover",
+ "registrar_field": "registrar",
+ "registrar_type_field": "registrar_type",
+ "totals": "None"
+}

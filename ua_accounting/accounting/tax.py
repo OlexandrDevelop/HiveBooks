@@ -16,12 +16,13 @@ ISSUED = "Видана"
 RECEIVED = "Отримана"
 
 SALE = "UA Sales Invoice"
+SERVICE = "UA Service Act"
 PURCHASE = "UA Purchase Receipt"
 CASH_IN = "UA Cash Receipt"
 CASH_OUT = "UA Cash Payment"
 
 # basis document -> direction of its tax invoice
-BASIS_DIRECTION = {SALE: ISSUED, CASH_IN: ISSUED, PURCHASE: RECEIVED, CASH_OUT: RECEIVED}
+BASIS_DIRECTION = {SALE: ISSUED, SERVICE: ISSUED, CASH_IN: ISSUED, PURCHASE: RECEIVED, CASH_OUT: RECEIVED}
 
 KIND_ORDINARY = "Звичайна"
 KIND_NO_PN = "Зведена: постачання без ПН"
@@ -140,7 +141,7 @@ def invoice_from_basis(basis):
     reg = _group(rows)
 
     lines = []
-    if basis.doctype in (SALE, PURCHASE):
+    if basis.doctype in (SALE, SERVICE, PURCHASE):
         k = flt(basis.exchange_rate) or 1
         by_rate = {}
         for table in ("goods", "services"):

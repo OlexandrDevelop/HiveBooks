@@ -1,5 +1,6 @@
 from frappe.utils import flt
 
+from ua_accounting.accounting.invoice import InvoiceEvent, add_event_key_index
 from ua_accounting.accounting.documents import (
     EVENT_SHIPMENT,
     REVENUE_ACCOUNT,
@@ -16,7 +17,7 @@ VAT_PREPAID_ACCOUNT = "643"
 VAT_DEDUCTION_ACCOUNT = "704"
 
 
-class UAServiceAct(TradeDocument):
+class UAServiceAct(InvoiceEvent, TradeDocument):
     """Надання послуг (акт виконаних робіт).
 
     Dt 361 Ct 703   revenue (with VAT)
@@ -51,19 +52,23 @@ class UAServiceAct(TradeDocument):
         applied = 0.0
         alloc = {}
         gross_total = sum(g["gross"] for g in groups.values())
-        if self.offset_advance and gross_total:
+        if self.invoice and gross_total:
+            applied, advance_entries = self.invoice_advance(gross_total, settle)
+            entries.extend(advance_entries)
+        elif self.offset_advance and gross_total:
             balance = settlement_balance(
                 self.organization, ADVANCE_ACCOUNT, self.counterparty, self.contract, "cr", self.posting_date,
                 self._ctx,
             )
             applied = min(max(balance, 0), gross_total)
         if applied > 0:
-            entries.append(
-                self.entry(
-                    ADVANCE_ACCOUNT, settle, applied, self.settle_sub, self.settle_sub,
-                    cur_amount=flt(applied / self.exchange_rate, 2),
+            if not self.invoice:
+                entries.append(
+                    self.entry(
+                        ADVANCE_ACCOUNT, settle, applied, self.settle_sub, self.settle_sub,
+                        cur_amount=flt(applied / self.exchange_rate, 2),
+                    )
                 )
-            )
             alloc = allocate_advance(groups, applied, self.vat_mode)
 
         # the VAT of the advance part was recorded when the advance was paid: it is closed from 643
@@ -86,3 +91,7 @@ class UAServiceAct(TradeDocument):
                 if g["taxable"] and (vat_left > 0 or base_left > 0):
                     liabilities.append(self.vat_row(key, base_left, vat_left, EVENT_SHIPMENT))
         return entries, liabilities, []
+
+
+def on_doctype_update():
+    add_event_key_index("UA Service Act")

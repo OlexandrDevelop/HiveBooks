@@ -65,7 +65,7 @@ def permission_query(user=None, doctype=None):
                 clauses.append(
                     f"not exists (select 1 from `tab{table.options}` child where child.parent = `tab{doctype}`.name "
                     f"and child.parenttype = {frappe.db.escape(doctype)} and child.parentfield = {frappe.db.escape(table.fieldname)} "
-                    f"and ifnull(child.warehouse, '') != '' and child.warehouse not in ({values}))"
+                    f"and coalesce(child.warehouse, '') != '' and child.warehouse not in ({values}))"
                 )
     return " and ".join(clauses)
 

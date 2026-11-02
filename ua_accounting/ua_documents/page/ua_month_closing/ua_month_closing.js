@@ -33,7 +33,7 @@ frappe.pages["ua-month-closing"].on_page_show = function (wrapper) {
 	const uk_date = (iso) => (iso ? iso.slice(8, 10) + "." + iso.slice(5, 7) + "." + iso.slice(0, 4) : "");
 	const badge = (status) => {
 		const cls = status === DONE ? "posted" : status === ERROR ? "cancelled" : status === TODO ? "unposted" : "warning";
-		return `<span class="ua-badge ua-badge--${cls}">${esc(__(status))}</span>`;
+		return `<span class="bo-badge ua-badge--${cls}">${esc(__(status))}</span>`;
 	};
 	const doc_link = (s) =>
 		s.document
@@ -57,7 +57,7 @@ frappe.pages["ua-month-closing"].on_page_show = function (wrapper) {
 		const years = [];
 		for (let y = view.year - 3; y <= view.year + 1; y++) years.push(y);
 		const busy = view.busy ? " disabled" : "";
-		let html = `<div class="ua-mc-head ua-card">
+		let html = `<div class="ua-mc-head bo-card">
 			<div class="ua-mc-pick">
 				<label>${esc(__("Місяць"))}
 					<select class="ua-mc-month">${MONTHS.map((m, i) => `<option value="${i + 1}"${i + 1 === view.month ? " selected" : ""}>${esc(__(m))}</option>`).join("")}</select>
@@ -69,29 +69,29 @@ frappe.pages["ua-month-closing"].on_page_show = function (wrapper) {
 			</div>
 			<div class="ua-mc-actions">
 				${d ? badge(d.status) : ""}
-				<button type="button" class="ua-btn ua-btn--primary" data-act="run-all"${busy}>${esc(__("Виконати все"))}</button>
-				<button type="button" class="ua-btn ua-btn--danger-ghost" data-act="cancel-all"${busy}>${esc(__("Скасувати все"))}</button>
+				<button type="button" class="bo-btn bo-btn--primary" data-act="run-all"${busy}>${esc(__("Виконати все"))}</button>
+				<button type="button" class="bo-btn bo-btn--danger-ghost" data-act="cancel-all"${busy}>${esc(__("Скасувати все"))}</button>
 			</div>
 		</div>`;
 		if (d && d.edit_lock_date) {
 			html += `<div class="ua-mc-lock">${esc(__("Дата заборони редагування"))}: ${esc(uk_date(d.edit_lock_date))}</div>`;
 		}
 		if (!d) {
-			html += `<div class="ua-card ua-mc-card">${ui.skeleton_rows(6)}</div>`;
+			html += `<div class="bo-card ua-mc-card">${ui.skeleton_rows(6)}</div>`;
 		} else {
 			const last = last_done(d.steps);
-			html += `<div class="ua-card ua-mc-card"><div class="ua-table-wrap"><table class="ua-table ua-mc-table"><thead><tr>
-				<th class="ua-c">№</th><th>${esc(__("Операція"))}</th><th>${esc(__("Стан"))}</th><th>${esc(__("Документ"))}</th>
+			html += `<div class="bo-card ua-mc-card"><div class="bo-table-wrap"><table class="bo-table ua-mc-table"><thead><tr>
+				<th class="bo-c">№</th><th>${esc(__("Операція"))}</th><th>${esc(__("Стан"))}</th><th>${esc(__("Документ"))}</th>
 				<th>${esc(__("Результат"))}</th><th></th></tr></thead><tbody>`;
 			d.steps.forEach((s, i) => {
 				const can_cancel = s.status === DONE && i === last;
 				const run_label = s.status === DONE ? __("Повторити") : __("Виконати");
-				html += `<tr data-step="${esc(s.step)}"><td class="ua-c">${i + 1}</td><td>${esc(__(s.step_name))}</td>
+				html += `<tr data-step="${esc(s.step)}"><td class="bo-c">${i + 1}</td><td>${esc(__(s.step_name))}</td>
 					<td>${badge(s.status)}</td><td>${doc_link(s)}</td>
 					<td class="ua-mc-msg" title="${esc(s.message)}">${esc(s.message)}</td>
 					<td class="ua-mc-row-actions">
-						<button type="button" class="ua-btn ua-btn--ghost ua-btn--sm" data-act="run" data-step="${esc(s.step)}"${busy}>${esc(run_label)}</button>
-						${can_cancel ? `<button type="button" class="ua-btn ua-btn--danger-ghost ua-btn--sm" data-act="cancel" data-step="${esc(s.step)}"${busy}>${esc(__("Скасувати"))}</button>` : ""}
+						<button type="button" class="bo-btn bo-btn--ghost bo-btn--sm" data-act="run" data-step="${esc(s.step)}"${busy}>${esc(run_label)}</button>
+						${can_cancel ? `<button type="button" class="bo-btn bo-btn--danger-ghost bo-btn--sm" data-act="cancel" data-step="${esc(s.step)}"${busy}>${esc(__("Скасувати"))}</button>` : ""}
 					</td></tr>`;
 			});
 			html += "</tbody></table></div></div>";

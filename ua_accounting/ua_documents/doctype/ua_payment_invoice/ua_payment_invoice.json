@@ -10,6 +10,10 @@
   "contract",
   "cb_head",
   "price_type",
+  "warehouse",
+  "customer_order",
+  "due_date",
+  "payment_terms",
   "sb_cur",
   "currency",
   "exchange_rate",
@@ -25,6 +29,19 @@
   "cb_total",
   "total_amount",
   "base_total",
+  "sb_state",
+  "commercial_status",
+  "fulfilment_status",
+  "payment_status",
+  "cb_state",
+  "effective_total",
+  "fulfilled_amount",
+  "paid_amount",
+  "debt_amount",
+  "sb_overview",
+  "overview",
+  "sb_adj",
+  "adjustments",
   "sb_more",
   "comment",
   "amended_from"
@@ -189,6 +206,134 @@
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Склад",
+   "options": "UA Warehouse"
+  },
+  {
+   "fieldname": "customer_order",
+   "fieldtype": "Link",
+   "label": "Замовлення покупця",
+   "options": "UA Customer Order"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Оплатити до"
+  },
+  {
+   "fieldname": "payment_terms",
+   "fieldtype": "Small Text",
+   "label": "Умови розрахунків"
+  },
+  {
+   "fieldname": "sb_state",
+   "fieldtype": "Section Break",
+   "label": "Стан",
+   "depends_on": "eval:doc.docstatus>0"
+  },
+  {
+   "fieldname": "commercial_status",
+   "fieldtype": "Select",
+   "label": "Комерційний стан",
+   "options": "\nЧернетка\nПідтверджено\nСкасовано",
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "fulfilment_status",
+   "fieldtype": "Select",
+   "label": "Виконання",
+   "options": "\nНе виконано\nЧастково виконано\nВиконано",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Оплата",
+   "options": "\nНе оплачено\nЧастково оплачено\nОплачено",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "cb_state",
+   "fieldtype": "Column Break",
+   "label": ""
+  },
+  {
+   "fieldname": "effective_total",
+   "fieldtype": "Currency",
+   "label": "Сума з коригуваннями",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "fulfilled_amount",
+   "fieldtype": "Currency",
+   "label": "Виконано на суму",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Оплачено",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "debt_amount",
+   "fieldtype": "Currency",
+   "label": "Залишок боргу",
+   "options": "currency",
+   "read_only": 1,
+   "allow_on_submit": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "sb_overview",
+   "fieldtype": "Section Break",
+   "label": "Картка інвойсу",
+   "depends_on": "eval:doc.docstatus>0"
+  },
+  {
+   "fieldname": "overview",
+   "fieldtype": "HTML",
+   "label": "Картка"
+  },
+  {
+   "fieldname": "sb_adj",
+   "fieldtype": "Section Break",
+   "label": "Коригування кількості",
+   "collapsible": 1,
+   "depends_on": "eval:doc.docstatus>0"
+  },
+  {
+   "fieldname": "adjustments",
+   "fieldtype": "Table",
+   "label": "Коригування",
+   "options": "UA Invoice Adjustment",
+   "allow_on_submit": 1,
+   "read_only": 1,
+   "no_copy": 1
   }
  ],
  "index_web_pages_for_search": 0,

@@ -7,7 +7,7 @@ frappe.pages["ua-payment-assistant"].on_page_load = function (wrapper) {
 	frappe.route_options = null;
 	const shell_org = ua_accounting.shell.current_org ? ua_accounting.shell.current_org() : null;
 	const esc = frappe.utils.escape_html;
-	const money = (v) => ua_accounting.ui.money(v || 0);
+	const money = (v) => beeone.ui.money(v || 0);
 	const field = (opts) => page.add_field(Object.assign({ change: () => run() }, opts));
 
 	const organization = field({
@@ -55,13 +55,13 @@ frappe.pages["ua-payment-assistant"].on_page_load = function (wrapper) {
 			.map(
 				(r, i) => `<tr>
 				<td><input type="checkbox" class="ua-pa-pick" data-kind="supplier" data-i="${i}" checked></td>
-				<td>${esc(r.counterparty_title || r.counterparty)}${r.no_iban ? ` <span class="ua-badge ua-badge--cancelled">${__("Немає IBAN")}</span>` : ""}</td>
+				<td>${esc(r.counterparty_title || r.counterparty)}${r.no_iban ? ` <span class="bo-badge bo-badge--cancelled">${__("Немає IBAN")}</span>` : ""}</td>
 				<td>${esc(r.doc)}</td>
 				<td>${esc(frappe.datetime.str_to_user(r.doc_date))}</td>
 				<td>${esc(frappe.datetime.str_to_user(r.due_date))}</td>
-				<td class="text-right">${r.overdue_days ? `<span class="ua-badge ua-badge--cancelled">${__("Прострочено")}: ${r.overdue_days}</span>` : ""}</td>
+				<td class="text-right">${r.overdue_days ? `<span class="bo-badge bo-badge--cancelled">${__("Прострочено")}: ${r.overdue_days}</span>` : ""}</td>
 				<td class="text-right"><input type="number" step="0.01" min="0" class="ua-pa-amount" data-kind="supplier" data-i="${i}" value="${r.amount_due}"></td>
-				<td class="text-right ua-num">${money(r.vat_amount)}</td></tr>`
+				<td class="text-right bo-num">${money(r.vat_amount)}</td></tr>`
 			)
 			.join("");
 	}
@@ -71,10 +71,10 @@ frappe.pages["ua-payment-assistant"].on_page_load = function (wrapper) {
 			.map(
 				(r, i) => `<tr>
 				<td><input type="checkbox" class="ua-pa-pick" data-kind="tax" data-i="${i}" checked></td>
-				<td>${esc(r.title)}${r.no_account ? ` <span class="ua-badge ua-badge--cancelled">${__("Немає рахунку для сплати")}</span>` : ""}</td>
+				<td>${esc(r.title)}${r.no_account ? ` <span class="bo-badge bo-badge--cancelled">${__("Немає рахунку для сплати")}</span>` : ""}</td>
 				<td>${esc(r.budget_code)}</td>
 				<td>${esc(frappe.datetime.str_to_user(r.due_date))}</td>
-				<td class="text-right">${r.overdue_days ? `<span class="ua-badge ua-badge--cancelled">${__("Прострочено")}: ${r.overdue_days}</span>` : ""}</td>
+				<td class="text-right">${r.overdue_days ? `<span class="bo-badge bo-badge--cancelled">${__("Прострочено")}: ${r.overdue_days}</span>` : ""}</td>
 				<td class="text-right"><input type="number" step="0.01" min="0" class="ua-pa-amount" data-kind="tax" data-i="${i}" value="${r.amount}"></td></tr>`
 			)
 			.join("");
@@ -83,17 +83,17 @@ frappe.pages["ua-payment-assistant"].on_page_load = function (wrapper) {
 	function render() {
 		const empty = (cols) => `<tr><td colspan="${cols}" class="text-muted">${__("Немає даних")}</td></tr>`;
 		$body.html(`
-			<div class="ua-card"><h3>${__("Постачальники")}</h3>
-			<table class="table table-bordered ua-table"><thead><tr><th></th><th>${__("Постачальник")}</th><th>${__("Документ")}</th>
+			<div class="bo-card"><h3>${__("Постачальники")}</h3>
+			<table class="table table-bordered bo-table"><thead><tr><th></th><th>${__("Постачальник")}</th><th>${__("Документ")}</th>
 				<th>${__("Дата документа")}</th><th>${__("Оплатити до")}</th><th class="text-right">${__("Прострочення")}</th>
 				<th class="text-right">${__("Сума до сплати")}</th><th class="text-right">${__("У т.ч. ПДВ")}</th></tr></thead>
 			<tbody>${supplier_rows() || empty(8)}</tbody></table></div>
-			<div class="ua-card"><h3>${__("Податки")}</h3>
-			<table class="table table-bordered ua-table"><thead><tr><th></th><th>${__("Податок")}</th><th>${__("КБК")}</th>
+			<div class="bo-card"><h3>${__("Податки")}</h3>
+			<table class="table table-bordered bo-table"><thead><tr><th></th><th>${__("Податок")}</th><th>${__("КБК")}</th>
 				<th>${__("Строк сплати")}</th><th class="text-right">${__("Прострочення")}</th>
 				<th class="text-right">${__("Сума до сплати")}</th></tr></thead>
 			<tbody>${tax_rows() || empty(6)}</tbody></table></div>
-			<p class="ua-pa-total"><b>${__("Разом до сплати")}: <span class="ua-num">${money(data.total)}</span></b></p>`);
+			<p class="ua-pa-total"><b>${__("Разом до сплати")}: <span class="bo-num">${money(data.total)}</span></b></p>`);
 	}
 
 	function chosen() {

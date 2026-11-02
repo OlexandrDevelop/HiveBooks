@@ -170,39 +170,39 @@ ua_accounting.docs.entries_dialog = function (frm, result) {
 	const acc = (value, kt) => {
 		const text = String(value || "");
 		const code = text.split(" ")[0];
-		return `<span class="ua-acc${kt ? " ua-acc--kt" : ""}" title="${esc(text)}" data-ua-tip="${esc(text)}">${esc(code)}</span>`;
+		return `<span class="ua-acc${kt ? " ua-acc--kt" : ""}" title="${esc(text)}" data-bo-tip="${esc(text)}">${esc(code)}</span>`;
 	};
 	const tabs = [];
 	if (entries.length) tabs.push(["bu", __("Бухгалтерський облік"), entries.length]);
 	if (vat_rows.length) tabs.push(["pu", __("Податковий облік"), vat_rows.length]);
 
 	const bu =
-		`<div class="ua-table-wrap ua-dtkt-wrap"><table class="ua-table ua-dtkt-table"><thead><tr>` +
-		`<th class="ua-r" style="width:36px">№</th><th style="width:64px">${esc(__("Дт"))}</th><th>${esc(__("Субконто Дт"))}</th>` +
-		`<th style="width:64px">${esc(__("Кт"))}</th><th>${esc(__("Субконто Кт"))}</th><th class="ua-r">${esc(__("Кількість"))}</th>` +
-		`<th class="ua-r">${esc(__("Сума, ₴"))}</th><th>${esc(__("Зміст"))}</th></tr></thead><tbody>` +
+		`<div class="bo-table-wrap ua-dtkt-wrap"><table class="bo-table ua-dtkt-table"><thead><tr>` +
+		`<th class="bo-r" style="width:36px">№</th><th style="width:64px">${esc(__("Дт"))}</th><th>${esc(__("Субконто Дт"))}</th>` +
+		`<th style="width:64px">${esc(__("Кт"))}</th><th>${esc(__("Субконто Кт"))}</th><th class="bo-r">${esc(__("Кількість"))}</th>` +
+		`<th class="bo-r">${esc(__("Сума, ₴"))}</th><th>${esc(__("Зміст"))}</th></tr></thead><tbody>` +
 		entries
 			.map(
 				(e) =>
-					`<tr><td class="ua-r ua-subtle">${esc(e.line_no)}</td><td>${acc(e.account_dr)}</td>` +
+					`<tr><td class="bo-r bo-subtle">${esc(e.line_no)}</td><td>${acc(e.account_dr)}</td>` +
 					`<td>${lines(e.subconto_dr)}</td><td>${acc(e.account_cr, true)}</td>` +
-					`<td>${lines(e.subconto_cr)}</td><td class="ua-r ua-num">${esc(qty(e))}</td>` +
-					`<td class="ua-r ua-num ua-cell-main">${esc(ui.money(e.amount))}</td><td>${esc(e.content || "")}</td></tr>`
+					`<td>${lines(e.subconto_cr)}</td><td class="bo-r bo-num">${esc(qty(e))}</td>` +
+					`<td class="bo-r bo-num bo-cell-main">${esc(ui.money(e.amount))}</td><td>${esc(e.content || "")}</td></tr>`
 			)
 			.join("") +
-		`</tbody></table></div><div class="ua-dtkt-sum"><span>${esc(__("Проводок"))}: <b class="ua-num">${entries.length}</b></span>` +
-		`<span>${esc(__("Разом"))}: <b class="ua-num">${esc(ui.money(total, { cur: true }))}</b></span></div>`;
+		`</tbody></table></div><div class="ua-dtkt-sum"><span>${esc(__("Проводок"))}: <b class="bo-num">${entries.length}</b></span>` +
+		`<span>${esc(__("Разом"))}: <b class="bo-num">${esc(ui.money(total, { cur: true }))}</b></span></div>`;
 
 	const pu =
-		`<div class="ua-table-wrap ua-dtkt-wrap"><table class="ua-table ua-dtkt-table"><thead><tr>` +
+		`<div class="bo-table-wrap ua-dtkt-wrap"><table class="bo-table ua-dtkt-table"><thead><tr>` +
 		`<th>${esc(__("Запис"))}</th><th>${esc(__("Контрагент"))}</th><th>${esc(__("Ставка"))}</th><th>${esc(__("Подія"))}</th>` +
-		`<th class="ua-r">${esc(__("База, ₴"))}</th><th class="ua-r">${esc(__("ПДВ, ₴"))}</th></tr></thead><tbody>` +
+		`<th class="bo-r">${esc(__("База, ₴"))}</th><th class="bo-r">${esc(__("ПДВ, ₴"))}</th></tr></thead><tbody>` +
 		vat_rows
 			.map(
 				(v) =>
 					`<tr><td>${esc(v.kind)}</td><td>${esc(v.counterparty || "")}</td><td>${esc(v.vat_rate || "")}</td><td>${esc(
 						v.event || ""
-					)}</td><td class="ua-r ua-num">${esc(ui.money(v.base_amount))}</td><td class="ua-r ua-num ua-cell-main">${esc(
+					)}</td><td class="bo-r bo-num">${esc(ui.money(v.base_amount))}</td><td class="bo-r bo-num bo-cell-main">${esc(
 						ui.money(v.vat_amount)
 					)}</td></tr>`
 			)
@@ -213,10 +213,10 @@ ua_accounting.docs.entries_dialog = function (frm, result) {
 	const cp_title = doc.counterparty ? frappe.utils.get_link_title("UA Counterparty", doc.counterparty) || "" : "";
 	const sub = `${__(frm.doctype)} ${doc.name}${date}${cp_title ? " · " + cp_title : ""}`;
 	const body = tabs.length
-		? `<div class="ua-tabs ua-dtkt-tabs" role="tablist">${tabs
+		? `<div class="bo-tabs ua-dtkt-tabs" role="tablist">${tabs
 				.map(
 					([key, label, n], i) =>
-						`<button class="ua-tab${i ? "" : " is-on"}" role="tab" aria-selected="${!i}" data-tab="${key}">${esc(label)} <span class="ua-count">${n}</span></button>`
+						`<button class="bo-tab${i ? "" : " is-on"}" role="tab" aria-selected="${!i}" data-tab="${key}">${esc(label)} <span class="bo-count">${n}</span></button>`
 				)
 				.join("")}</div>` +
 		  (entries.length ? `<div data-panel="bu">${bu}</div>` : "") +
@@ -228,20 +228,20 @@ ua_accounting.docs.entries_dialog = function (frm, result) {
 		wide: true,
 		width: 1120,
 		html:
-			`<div class="ua-dialog-head"><span class="ua-fp-icon">${icon("dtkt")}</span><div>` +
-			`<div class="ua-dialog-title">${esc(__("Рух документа: Дт/Кт"))}</div><div class="ua-dialog-sub">${esc(sub)}</div></div>` +
-			`<button class="ua-btn ua-btn--ghost ua-btn--icon" data-close aria-label="${esc(__("Закрити"))}">${icon("x")}</button></div>` +
-			`<div class="ua-dialog-body">${body}</div>` +
-			`<div class="ua-dialog-foot"><span></span><div class="ua-right"><button class="ua-btn" data-act="print">${icon(
+			`<div class="bo-dialog-head"><span class="bo-fp-icon">${icon("dtkt")}</span><div>` +
+			`<div class="bo-dialog-title">${esc(__("Рух документа: Дт/Кт"))}</div><div class="bo-dialog-sub">${esc(sub)}</div></div>` +
+			`<button class="bo-btn bo-btn--ghost bo-btn--icon" data-close aria-label="${esc(__("Закрити"))}">${icon("x")}</button></div>` +
+			`<div class="bo-dialog-body">${body}</div>` +
+			`<div class="bo-dialog-foot"><span></span><div class="bo-right"><button class="bo-btn" data-act="print">${icon(
 				"printer"
-			)}${esc(__("Друк"))}</button><button class="ua-btn ua-btn--primary" data-close autofocus>${esc(__("Закрити"))}</button></div></div>`,
+			)}${esc(__("Друк"))}</button><button class="bo-btn bo-btn--primary" data-close autofocus>${esc(__("Закрити"))}</button></div></div>`,
 	});
 	const $box = $(d.box);
 	const tabs_el = $box.find(".ua-dtkt-tabs")[0];
 	if (tabs_el) setTimeout(() => ui.place_ink(tabs_el), 0);
-	$box.on("click", ".ua-tab", function () {
+	$box.on("click", ".bo-tab", function () {
 		const key = $(this).attr("data-tab");
-		$box.find(".ua-tab").each(function () {
+		$box.find(".bo-tab").each(function () {
 			const on = $(this).attr("data-tab") === key;
 			$(this).toggleClass("is-on", on).attr("aria-selected", on);
 		});
@@ -257,7 +257,7 @@ ua_accounting.docs.entries_dialog = function (frm, result) {
 			`<html><head><title>${esc(__("Рух документа: Дт/Кт"))}</title><style>${ua_accounting.reports.PRINT_CSS}
 			.ua-sub{display:block;color:#555}.ua-acc{font-weight:bold}</style></head><body>` +
 				`<h1>${esc(__("Рух документа: Дт/Кт"))}</h1><div>${esc(sub)}</div>` +
-				$box.find("[data-panel]:not([hidden]) table").prop("outerHTML").replace(/class="ua-table[^"]*"/, 'class="ua-rpt"') +
+				$box.find("[data-panel]:not([hidden]) table").prop("outerHTML").replace(/class="bo-table[^"]*"/, 'class="ua-rpt"') +
 				"</body></html>"
 		);
 		w.document.close();
@@ -878,3 +878,115 @@ frappe.ui.form.on("UA Opening Balance Line", {
 		});
 	},
 });
+
+// ---------------------------------------------------------------- Invoice (T-533)
+
+frappe.ui.form.on("UA Payment Invoice", {
+	setup(frm) {
+		ua_accounting.docs.contract_query(frm);
+	},
+	onload(frm) {
+		ua_accounting.docs.default_organization(frm);
+	},
+	counterparty(frm) {
+		frm.set_value("contract", "");
+	},
+	refresh(frm) {
+		if (frm.doc.docstatus !== 1) return;
+		ua_accounting.invoice.render(frm);
+		const call = (method, args, done) =>
+			frappe.call({ method: `ua_accounting.api.invoice.${method}`, args, freeze: true }).then((r) => {
+				frappe.show_alert({ message: __("Готово: {0}", [r.message || ""]), indicator: "green" });
+				frm.reload_doc();
+				if (done) done(r.message);
+			});
+		const group = __("Дії");
+		frm.add_custom_button(__("Відвантажити"), () => ua_accounting.invoice.dialog(frm, "goods", __("Відвантаження товарів"), true,
+			(v, lines, key) => call("ship", { name: frm.doc.name, posting_date: v.posting_date, warehouse: v.warehouse, lines, event_key: key })), group);
+		frm.add_custom_button(__("Надати послуги"), () => ua_accounting.invoice.dialog(frm, "services", __("Надання послуг"), false,
+			(v, lines, key) => call("provide_services", { name: frm.doc.name, posting_date: v.posting_date, lines, event_key: key })), group);
+		frm.add_custom_button(__("Коригування"), () => ua_accounting.invoice.adjust_dialog(frm, call), group);
+		// the payment is made in the finance module: «Створити на підставі» → «Надходження коштів» (basis_map)
+	},
+});
+
+ua_accounting.invoice = {
+	e: (v) => frappe.utils.escape_html(v == null ? "" : String(v)),
+	money: (v, cur) => format_currency(v || 0, cur),
+	render(frm) {
+		frappe.call({ method: "ua_accounting.api.invoice.get_overview", args: { name: frm.doc.name } }).then((r) => {
+			const o = r.message, e = ua_accounting.invoice.e, cur = o.currency;
+			const link = (dt, name) => `<a href="/app/${frappe.router.slug(dt)}/${encodeURIComponent(name)}">${e(name)}</a>`;
+			const table = (head, rows) => rows.length
+				? `<table class="table table-bordered"><thead><tr>${head.map((h) => `<th>${e(h)}</th>`).join("")}</tr></thead><tbody>${rows.map((x) => `<tr>${x.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`
+				: `<p class="text-muted">${__("Немає")}</p>`;
+			const events = [];
+			Object.entries(o.events).forEach(([dt, list]) => list.forEach((x) => events.push(
+				[link(dt, x.name), e(__(dt)), e(x.posting_date), x.docstatus === 1 ? __("Проведено") : (x.docstatus === 2 ? __("Скасовано") : __("Чернетка")), ua_accounting.invoice.money(x.total_amount, cur)])));
+			const html = `
+			<div class="ua-invoice-card">
+			<p>${["commercial_status", "fulfilment_status", "payment_status"].map((k) => `<span class="indicator-pill blue" data-state="${k}">${e(o.states[k])}</span>`).join(" ")}</p>
+			<p>${__("Сума")}: <b>${ua_accounting.invoice.money(o.amounts.effective_total, cur)}</b> &nbsp; ${__("Оплачено")}: <b>${ua_accounting.invoice.money(o.amounts.paid_amount, cur)}</b> &nbsp; ${__("Залишок")}: <b>${ua_accounting.invoice.money(o.amounts.debt_amount, cur)}</b></p>
+			<h6>${__("Товари і послуги")}</h6>
+			${table([__("Номенклатура"), __("Кількість"), __("Коригування"), __("Виконано"), __("Повернуто"), __("Залишок")],
+				o.lines.map((l) => [e(l.item_name || l.item), l.quantity, l.adjustment, l.shipped, l.returned, l.left]))}
+			<h6>${__("Відвантаження, послуги, повернення")}</h6>
+			${table([__("Документ"), __("Вид"), __("Дата"), __("Стан"), __("Сума")], events)}
+			<h6>${__("Податкові події")}</h6>
+			${table([__("Документ"), __("Подія"), __("Дата"), __("ПДВ"), __("Податкова накладна"), __("ЄРПН")],
+				o.tax_events.map((t) => [link(t.basis_doctype, t.basis), e(t.event), e(t.date), ua_accounting.invoice.money(t.vat_amount, cur),
+					t.tax_invoice ? `${link("UA Tax Invoice", t.tax_invoice)} (${e(t.formation)})` : `${e(t.formation)} <button class="btn btn-xs btn-default" data-pn="${e(t.basis_doctype)}|${e(t.basis)}">${__("Сформувати ПН")}</button>`,
+					e(t.erpn_status || "") + (t.erpn_reg_number ? ` ${e(t.erpn_reg_number)}` : "")]))}
+			<h6>${__("Оплати (ведуться у фінансових документах)")}</h6>
+			${table([__("Документ"), __("Дата"), __("Сума")], o.payments.map((p) => [link(p.registrar_type, p.registrar), e(p.date), ua_accounting.invoice.money(p.amount, cur)]))}
+			<h6>${__("Друковані форми")}</h6>
+			<p>${o.prints.map((p) => `<a class="btn btn-xs btn-default" target="_blank" href="/printview?doctype=${encodeURIComponent(p.doctype)}&name=${encodeURIComponent(p.name)}&format=${encodeURIComponent(p.format)}&trigger_print=0">${e(p.label)} ${e(p.name)}</a>`).join(" ")}</p>
+			<h6>${__("Історія")}</h6>
+			${table([__("Документ"), __("Дія"), __("Користувач")], o.history.map((h) => [link(h.doctype, h.docname), e(h.action), e(h.user || h.owner || "")]))}
+			</div>`;
+			const $w = frm.fields_dict.overview.$wrapper;
+			$w.html(html);
+			$w.find("[data-pn]").on("click", function () {
+				const [dt, name] = $(this).data("pn").split("|");
+				frappe.call({ method: "ua_accounting.api.invoice.create_tax_invoice", args: { name: frm.doc.name, basis_doctype: dt, basis_name: name } })
+					.then((res) => frappe.set_route("Form", "UA Tax Invoice", res.message));
+			});
+		});
+	},
+	dialog(frm, table, title, with_warehouse, action) {
+		frappe.call({ method: "ua_accounting.api.invoice.get_overview", args: { name: frm.doc.name } }).then((r) => {
+			const rows = r.message.lines.filter((l) => l.table === table && l.left > 0);
+			if (!rows.length) return frappe.msgprint(__("Усе за інвойсом вже виконано"));
+			const key = frappe.utils.get_random(16); // one key per dialog: a repeated click makes no second document
+			const fields = [{ fieldname: "posting_date", fieldtype: "Date", label: __("Дата"), default: frappe.datetime.get_today(), reqd: 1 }];
+			if (with_warehouse) fields.push({ fieldname: "warehouse", fieldtype: "Link", options: "UA Warehouse", label: __("Склад"), default: frm.doc.warehouse });
+			rows.forEach((l, i) => fields.push({ fieldname: `q${i}`, fieldtype: "Float", label: `${l.item_name || l.item} (${__("залишок")} ${l.left})`, default: l.left }));
+			const d = new frappe.ui.Dialog({
+				title, fields,
+				primary_action_label: __("Виконати"),
+				primary_action(v) {
+					d.hide();
+					action(v, rows.map((l, i) => ({ row: l.row, quantity: v[`q${i}`] })).filter((x) => x.quantity > 0), key);
+				},
+			});
+			d.show();
+		});
+	},
+	adjust_dialog(frm, call) {
+		const goods = (frm.doc.goods || []).concat(frm.doc.services || []);
+		const d = new frappe.ui.Dialog({
+			title: __("Коригування кількості"),
+			fields: [
+				{ fieldname: "row", fieldtype: "Select", label: __("Рядок"), reqd: 1, options: goods.map((g) => ({ value: g.name, label: g.item_name || g.item })) },
+				{ fieldname: "delta", fieldtype: "Float", label: __("Зміна кількості (+/−)"), reqd: 1 },
+				{ fieldname: "reason", fieldtype: "Small Text", label: __("Причина"), reqd: 1 },
+			],
+			primary_action_label: __("Застосувати"),
+			primary_action(v) {
+				d.hide();
+				call("adjust", { name: frm.doc.name, rows: [{ row: v.row, quantity_delta: v.delta }], reason: v.reason });
+			},
+		});
+		d.show();
+	},
+};

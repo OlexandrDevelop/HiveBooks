@@ -24,6 +24,8 @@
   "sales_invoice",
   "vat_rate",
   "vat_amount",
+  "sb_alloc",
+  "allocations",
   "sb_other",
   "other_account",
   "person",
@@ -240,6 +242,18 @@
    "options": "UA Cash Receipt",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "sb_alloc",
+   "fieldtype": "Section Break",
+   "label": "Розподіл за інвойсами",
+   "depends_on": "eval:doc.operation_type=='Оплата від покупця'"
+  },
+  {
+   "fieldname": "allocations",
+   "fieldtype": "Table",
+   "label": "Інвойси",
+   "options": "UA Payment Allocation"
   }
  ],
  "index_web_pages_for_search": 0,

@@ -6,7 +6,7 @@ from ua_accounting.accounting.documents import AccountingDocument
 from ua_accounting.accounting.utils import title_of
 
 # settlement accounts with the counterparty: 36 buyers, 37 other debtors, 63 suppliers, 68 other creditors
-SETTLEMENT_ACCOUNTS = "^(36|37|63|68)"
+SETTLEMENT_ACCOUNTS = ("36", "37", "63", "68")
 
 
 class UAReconciliationAct(AccountingDocument):
@@ -45,7 +45,8 @@ class UAReconciliationAct(AccountingDocument):
         """SQL condition: the counterparty (and the contract) in a subconto of a settlement account."""
         slots = (1, 2, 3)
         one = " or ".join(f"(subconto_{side}{i}_type = 'UA Counterparty' and subconto_{side}{i} = %(cp)s)" for i in slots)
-        cond = f"account_{side} regexp %(accounts)s and ({one})"
+        accounts = " or ".join(f"account_{side} like '{prefix}%%'" for prefix in SETTLEMENT_ACCOUNTS)
+        cond = f"({accounts}) and ({one})"
         if self.contract:
             two = " or ".join(f"(subconto_{side}{i}_type = 'UA Counterparty Contract' and subconto_{side}{i} = %(ct)s)" for i in slots)
             cond += f" and ({two})"
@@ -72,7 +73,7 @@ class UAReconciliationAct(AccountingDocument):
     def fill(self):
         params = {
             "org": self.organization, "cp": self.counterparty, "ct": self.contract or "",
-            "accounts": SETTLEMENT_ACCOUNTS, "start": self.date_from, "end": self.date_to,
+            "start": self.date_from, "end": self.date_to,
         }
         before = self.movements("posting_date < %(start)s", params, "").get((), (0.0, 0.0))
         period = self.movements(

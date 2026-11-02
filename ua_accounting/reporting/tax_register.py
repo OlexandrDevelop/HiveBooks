@@ -1,9 +1,13 @@
 """Реєстр податкових накладних: issued and received ПН and РК with the ЄРПН status.
 
-Options (besides the common filters): direction, erpn_status, counterparty.
+Options (besides the common filters): direction, erpn_status, counterparty, group_by.
+group_by is empty (a flat list), counterparty, erpn_status or month: the rows are grouped by the core
+report composition engine, every group has a subtotal and a drill into its documents. The totals row
+is made by the engine in every mode.
 """
 
 from frappe import _
+from frappe.beeone.report_engine import compose, drill_rows
 
 from ua_accounting.accounting import tax
 from ua_accounting.reporting import model
@@ -17,7 +21,6 @@ def build(raw):
     opts = flt_.opts
     orgs = flt_.organizations or [None]
     rows = []
-    totals = {"base": 0.0, "vat": 0.0, "total": 0.0}
     for org in orgs:
         data = tax.register_data(
             org,
@@ -28,9 +31,21 @@ def build(raw):
             opts.get("counterparty") or None,
         )
         rows.extend(data["rows"])
-        for k in totals:
-            totals[k] += data["totals"][k]
     rows.sort(key=lambda r: (r["date"], r["name"]))
+    group_by = opts.get("group_by") or ""
+    if group_by not in GROUPINGS:
+        group_by = ""
+    for r in rows:
+        r["month"] = _to_date(r["date"]).strftime("%Y-%m")
+    composed = compose(
+        rows,
+        [{"field": group_by, "label": lambda v: v or _("<не задано>")}] if group_by else [],
+        [{"field": k, "precision": 2} for k in ("base", "vat", "total")],
+        detail=False,
+        label_field="name",
+        total_label=_("Разом"),
+    )
+    totals = composed[-1]["values"]
     titles.preload(("UA Counterparty", r["counterparty"]) for r in rows)
 
     columns = [
@@ -55,32 +70,47 @@ def build(raw):
             model.header_cell(_("Номер реєстрації")),
         ]
     ]
-    out = []
-    for r in rows:
+    def item_row(r, parent=None):
         label = r["number"] or r["name"]
         if r["doctype"] == tax.RK:
             label = f"{_('РК')} {label}"
-        out.append(
-            model.make_row(
-                r["name"],
-                {
-                    "number": label,
-                    "date": model.fmt_date(_to_date(r["date"])),
-                    "counterparty": titles.get("UA Counterparty", r["counterparty"]),
-                    "base": r["base"],
-                    "vat": r["vat"],
-                    "total": r["total"],
-                    "erpn_status": r["erpn_status"],
-                    "erpn_reg_number": r["erpn_reg_number"] or "",
-                },
-                links={"number": {"doctype": r["doctype"], "name": r["name"]}},
-            )
+        return model.make_row(
+            r["name"],
+            {
+                "number": label,
+                "date": model.fmt_date(_to_date(r["date"])),
+                "counterparty": titles.get("UA Counterparty", r["counterparty"]),
+                "base": r["base"],
+                "vat": r["vat"],
+                "total": r["total"],
+                "erpn_status": r["erpn_status"],
+                "erpn_reg_number": r["erpn_reg_number"] or "",
+            },
+            level=1 if parent else 0,
+            parent=parent,
+            links={"number": {"doctype": r["doctype"], "name": r["name"]}},
         )
+
+    out = []
+    if group_by:
+        for node in composed[:-1]:
+            out.append(
+                model.make_row(
+                    node["id"],
+                    {"number": node["label"], **{k: model.money(v) for k, v in node["values"].items()}},
+                    kind="group",
+                    bold=True,
+                    drill={"group_by": group_by, "filters": node["drill"]["filters"]},
+                )
+            )
+            out.extend(item_row(r, node["id"]) for r in drill_rows(rows, node["drill"]["filters"]))
+    else:
+        out.extend(item_row(r) for r in rows)
     if out:
         out.append(
             model.make_row(
                 "total",
-                {"number": _("Разом"), **{k: model.money(v) for k, v in totals.items()}},
+                {"number": composed[-1]["label"], **{k: model.money(v) for k, v in totals.items()}},
                 kind="total",
                 bold=True,
             )
@@ -100,6 +130,9 @@ def build(raw):
         "truncated": False,
         "message": "" if out else _("За вибраними умовами податкових накладних немає"),
     }
+
+
+GROUPINGS = ("counterparty", "erpn_status", "month")
 
 
 def _to_date(value):

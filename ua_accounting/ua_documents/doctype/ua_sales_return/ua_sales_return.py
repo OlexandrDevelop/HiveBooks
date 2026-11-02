@@ -14,13 +14,14 @@ from ua_accounting.accounting.documents import (
     new_from_basis,
     slot_of,
 )
+from ua_accounting.accounting.invoice import InvoiceEvent, add_event_key_index
 from ua_accounting.accounting.utils import title_of
 
 VAT_ACCOUNT = "641"
 VAT_DEDUCTION_ACCOUNT = "704"
 
 
-class UASalesReturn(TradeDocument):
+class UASalesReturn(InvoiceEvent, TradeDocument):
     """Повернення товарів від покупця: the reverse of the sale.
 
     Dt 702 Ct 361   revenue with VAT
@@ -180,7 +181,12 @@ def make_sales_return(source_name, target_doc=None):
     sale = frappe.get_doc("UA Sales Invoice", source_name)
     sale.check_permission("read")
     doc = new_from_basis(sale, "UA Sales Return", "sales_invoice", copy_lines=False)
+    doc.invoice = sale.invoice
     for row in sale.goods:
         doc.append("goods", {k: row.get(k) for k in ("item", "uom", "quantity", "price", "vat_rate", "warehouse",
-                                                    "discount_percent")})
+                                                    "discount_percent", "invoice_row")})
     return doc
+
+
+def on_doctype_update():
+    add_event_key_index("UA Sales Return")

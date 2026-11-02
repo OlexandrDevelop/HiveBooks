@@ -16,7 +16,8 @@
   "vat_amount",
   "total",
   "warehouse",
-  "account"
+  "account",
+  "invoice_row"
  ],
  "fields": [
   {
@@ -115,6 +116,14 @@
    "fieldtype": "Link",
    "label": "Рахунок обліку",
    "options": "UA Account",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "invoice_row",
+   "fieldtype": "Data",
+   "label": "Рядок інвойсу",
+   "hidden": 1,
+   "read_only": 1,
    "print_hide": 1
   }
  ],

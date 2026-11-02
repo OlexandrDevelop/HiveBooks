@@ -9,7 +9,7 @@ frappe.provide("ua_accounting.list");
 
 (function () {
 	const esc = (v) => frappe.utils.escape_html(v == null ? "" : String(v));
-	const icon = (n, c) => ua_accounting.ui.icon(n, c);
+	const icon = (n, c) => beeone.ui.icon(n, c);
 	const L = ua_accounting.list;
 
 	// ---------------------------------------------------------------- columns
@@ -144,21 +144,21 @@ frappe.provide("ua_accounting.list");
 	};
 
 	L.BADGE = {
-		0: ["ua-badge--unposted", "Не проведено"],
-		1: ["ua-badge--posted", "Проведено"],
-		2: ["ua-badge--cancelled", "Скасовано"],
+		0: ["bo-badge--unposted", "Не проведено"],
+		1: ["bo-badge--posted", "Проведено"],
+		2: ["bo-badge--cancelled", "Скасовано"],
 	};
 
 	L.badge = function (docstatus) {
 		const b = L.BADGE[docstatus] || L.BADGE[0];
-		return `<span class="ua-badge ${b[0]}">${esc(__(b[1]))}</span>`;
+		return `<span class="bo-badge ${b[0]}">${esc(__(b[1]))}</span>`;
 	};
 
 	L.cell = function (lv, col, doc) {
 		const v = col.field ? doc[col.field] : doc[col.key];
 		switch (col.kind) {
 			case "date":
-				return `<span class="ua-num">${esc(v ? frappe.datetime.str_to_user(v) : "")}</span>`;
+				return `<span class="bo-num">${esc(v ? frappe.datetime.str_to_user(v) : "")}</span>`;
 			case "docno":
 				return `<a class="ua-docno" href="${esc(lv.get_form_link(doc))}" data-name="${esc(doc.name)}">${esc(doc.name)}</a>`;
 			case "title": {
@@ -166,18 +166,18 @@ frappe.provide("ua_accounting.list");
 				const sub = col.sub && doc[col.sub] ? `${__(col.sub_label || "")} ${doc[col.sub]}`.trim() : "";
 				return (
 					`<a class="ua-docno ua-title-cell${doc.is_group ? " is-group" : ""}" href="${esc(lv.get_form_link(doc))}">` +
-					`${doc.is_group ? icon("folder", "ua-i-sm") : ""}<span>${esc(doc[tf] || doc.name)}</span></a>` +
-					(sub ? `<span class="ua-cell-sub">${esc(sub)}</span>` : "")
+					`${doc.is_group ? icon("folder", "bo-i-sm") : ""}<span>${esc(doc[tf] || doc.name)}</span></a>` +
+					(sub ? `<span class="bo-cell-sub">${esc(sub)}</span>` : "")
 				);
 			}
 			case "check":
-				return v ? `<span class="ua-badge ua-badge--plain">${esc(__("Так"))}</span>` : "";
+				return v ? `<span class="bo-badge bo-badge--plain">${esc(__("Так"))}</span>` : "";
 			case "number":
-				return `<span class="ua-num">${v ? esc(format_number(v, null, 2)) : ""}</span>`;
+				return `<span class="bo-num">${v ? esc(format_number(v, null, 2)) : ""}</span>`;
 			case "link2": {
 				const main = L.title_of(lv, doc, col.field);
 				const sub = col.sub ? L.title_of(lv, doc, col.sub) : "";
-				return `<span class="ua-cell-main">${esc(main)}</span>${sub ? `<span class="ua-cell-sub">${esc(sub)}</span>` : ""}`;
+				return `<span class="bo-cell-main">${esc(main)}</span>${sub ? `<span class="bo-cell-sub">${esc(sub)}</span>` : ""}`;
 			}
 			case "link": {
 				const t = L.title_of(lv, doc, col.field) || (col.alt ? L.title_of(lv, doc, col.alt) : "");
@@ -186,12 +186,12 @@ frappe.provide("ua_accounting.list");
 				return esc(df && df.options === "DocType" ? __(t) : t);
 			}
 			case "money":
-				return `<span class="ua-num ua-cell-main">${v ? esc(format_number(v, null, 2)) : ""}</span>`;
+				return `<span class="bo-num bo-cell-main">${v ? esc(format_number(v, null, 2)) : ""}</span>`;
 			case "owner": {
 				// frappe.user.full_name says "Ви" for the current user: the list shows the real name
 				const info = frappe.user_info(doc.owner) || {};
 				const name = info.fullname || doc.owner;
-				return `<span class="ua-who"><span class="ua-avatar ua-avatar--sm">${esc(
+				return `<span class="ua-who"><span class="bo-avatar bo-avatar--sm">${esc(
 					ua_accounting.shell.initials(name)
 				)}</span><span class="ua-who-name" title="${esc(name)}">${esc(name)}</span></span>`;
 			}
@@ -217,13 +217,13 @@ frappe.provide("ua_accounting.list");
 				const label = c.kind === "money" ? `${__(c.label)}, ₴` : __(c.label);
 				const arrow = sorted ? icon(order === "asc" ? "arrow-up" : "arrow-down") : "";
 				return (
-					`<div class="ua-th${c.align === "r" ? " ua-r" : ""}${c.sort ? " is-sortable" : ""}" style="${L.col_style(c)}"` +
+					`<div class="ua-th${c.align === "r" ? " bo-r" : ""}${c.sort ? " is-sortable" : ""}" style="${L.col_style(c)}"` +
 					(c.sort
 						? ` data-ua-sort="${c.sort}" role="button" tabindex="0" aria-sort="${
 								sorted ? (order === "asc" ? "ascending" : "descending") : "none"
 						  }"`
 						: "") +
-					`><span class="ua-th-in">${esc(label)}${arrow}</span></div>`
+					`><span class="bo-th-in">${esc(label)}${arrow}</span></div>`
 				);
 			})
 			.join("");
@@ -232,9 +232,9 @@ frappe.provide("ua_accounting.list");
 		<div class="list-row-container ua-lhead">
 			<header class="level list-row-head">
 				<div class="level-left list-header-subject">
-					<label class="ua-check ua-w-check"><input class="list-header-checkbox list-check-all" type="checkbox" aria-label="${esc(
+					<label class="bo-check bo-w-check"><input class="list-header-checkbox list-check-all" type="checkbox" aria-label="${esc(
 						__("Обрати всі")
-					)}"><span class="ua-check-box"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></label>
+					)}"><span class="bo-check-box"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></label>
 					${cells}
 				</div>
 				<div class="level-left checkbox-actions"><input class="list-header-checkbox list-check-all" type="checkbox" tabindex="-1" aria-hidden="true"></div>
@@ -250,7 +250,7 @@ frappe.provide("ua_accounting.list");
 		const cells = cols
 			.map(
 				(c) =>
-					`<div class="ua-td${c.align === "r" ? " ua-r" : ""} ua-td-${c.kind}" style="${L.col_style(c)}">${L.cell(
+					`<div class="ua-td${c.align === "r" ? " bo-r" : ""} ua-td-${c.kind}" style="${L.col_style(c)}">${L.cell(
 						lv,
 						c,
 						doc
@@ -258,13 +258,13 @@ frappe.provide("ua_accounting.list");
 			)
 			.join("");
 		const actions =
-			`<div class="ua-td-act"><div class="ua-row-actions">` +
+			`<div class="ua-td-act"><div class="bo-row-actions">` +
 			(posted
-				? `<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon ua-btn--sm" data-ua-row="dtkt" aria-label="${esc(
+				? `<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon bo-btn--sm" data-ua-row="dtkt" aria-label="${esc(
 						__("Дт/Кт")
-				  )}" data-ua-tip="${esc(__("Дт/Кт"))}">${icon("dtkt")}</button>`
+				  )}" data-bo-tip="${esc(__("Дт/Кт"))}">${icon("dtkt")}</button>`
 				: "") +
-			`<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon ua-btn--sm" data-ua-row="menu" aria-haspopup="menu" aria-label="${esc(
+			`<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon bo-btn--sm" data-ua-row="menu" aria-haspopup="menu" aria-label="${esc(
 				__("Ще дії")
 			)}">${icon("more")}</button></div></div>`;
 		const virtual_attr = opts && opts.virtual ? ' data-virtual-row="1"' : "";
@@ -272,11 +272,11 @@ frappe.provide("ua_accounting.list");
 		<div class="list-row-container ua-lrow${doc.docstatus === 2 ? " is-cancelled" : ""}${doc.marked_for_deletion ? " is-marked" : ""}" tabindex="1"${virtual_attr}>
 			<div class="level list-row">
 				<div class="level-left">
-					<label class="ua-check ua-w-check"><input class="list-row-checkbox" type="checkbox" data-doctype="${esc(
+					<label class="bo-check bo-w-check"><input class="list-row-checkbox" type="checkbox" data-doctype="${esc(
 						lv.doctype
 					)}" data-name="${esc(encodeURIComponent(doc.name))}" aria-label="${esc(
 			__("Обрати {0}", [doc.name])
-		)}"><span class="ua-check-box"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></label>
+		)}"><span class="bo-check-box"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></label>
 					<span class="list-subject ua-hidden-link"><a href="${esc(lv.get_form_link(doc))}" tabindex="-1" aria-hidden="true"></a></span>
 					${cells}${actions}
 				</div>
@@ -369,7 +369,7 @@ frappe.provide("ua_accounting.list");
 			if (ua_accounting.ui.is_ua_doctype(this.doctype) && this.can_create && !frappe.boot.read_only) {
 				this.page.set_primary_action(__("Створити"), () => this.make_new_doc(), "plus");
 				const $btn = this.page.btn_primary;
-				if ($btn && !$btn.find(".ua-kbd").length) $btn.append('<span class="ua-kbd">Ins</span>');
+				if ($btn && !$btn.find(".bo-kbd").length) $btn.append('<span class="bo-kbd">Ins</span>');
 			}
 			return result;
 		};
@@ -387,8 +387,8 @@ frappe.provide("ua_accounting.list");
 		const $title = $page.find(".page-head .page-title");
 		$title.find(".ua-ph-block").remove();
 		$title.prepend(
-			`<div class="ua-ph-block"><h1 class="ua-ph-title">${esc(__(lv.doctype))} <span class="ua-tag ua-num ua-total"></span></h1>` +
-				(L.TEXT[lv.doctype] ? `<p class="ua-ph-sub">${esc(__(L.TEXT[lv.doctype]))}</p>` : "") +
+			`<div class="ua-ph-block"><h1 class="bo-ph-title">${esc(__(lv.doctype))} <span class="bo-tag bo-num ua-total"></span></h1>` +
+				(L.TEXT[lv.doctype] ? `<p class="bo-ph-sub">${esc(__(L.TEXT[lv.doctype]))}</p>` : "") +
 				"</div>"
 		);
 
@@ -396,24 +396,24 @@ frappe.provide("ua_accounting.list");
 		const $top = $(`
 		<div class="ua-list-top${is_doc ? "" : " ua-list-top--catalog"}">
 			<div class="ua-views-row"${is_doc ? "" : " hidden"}>
-				<div class="ua-tabs ua-views" role="tablist">
-					<button class="ua-tab" role="tab" data-view="all">${esc(__("Усі"))} <span class="ua-count"></span></button>
-					<button class="ua-tab" role="tab" data-view="unposted">${esc(__("Не проведені"))} <span class="ua-count"></span></button>
-					<button class="ua-tab" role="tab" data-view="mine">${esc(__("Мої"))} <span class="ua-count"></span></button>
+				<div class="bo-tabs ua-views" role="tablist">
+					<button class="bo-tab" role="tab" data-view="all">${esc(__("Усі"))} <span class="bo-count"></span></button>
+					<button class="bo-tab" role="tab" data-view="unposted">${esc(__("Не проведені"))} <span class="bo-count"></span></button>
+					<button class="bo-tab" role="tab" data-view="mine">${esc(__("Мої"))} <span class="bo-count"></span></button>
 				</div>
 			</div>
 			<div class="ua-filters">
-				<label class="ua-input ua-search">${icon("search")}<input class="ua-q" placeholder="${esc(
+				<label class="bo-input ua-search">${icon("search")}<input class="ua-q" placeholder="${esc(
 					is_doc ? __("Номер документа") : __("Назва або код")
-				)}" aria-label="${esc(__("Пошук"))}"><span class="ua-kbd">/</span></label>
+				)}" aria-label="${esc(__("Пошук"))}"><span class="bo-kbd">/</span></label>
 				${
 					ua_accounting.ui.TREE_DOCTYPES[lv.doctype]
-						? `<div class="ua-seg" role="tablist" aria-label="${esc(__("Вигляд"))}"><button role="tab" data-mode="tree">${icon(
+						? `<div class="bo-seg" role="tablist" aria-label="${esc(__("Вигляд"))}"><button role="tab" data-mode="tree">${icon(
 								"tree",
-								"ua-i-sm"
-						  )} ${esc(__("Ієрархічно"))}</button><button role="tab" data-mode="flat">${icon("list", "ua-i-sm")} ${esc(
+								"bo-i-sm"
+						  )} ${esc(__("Ієрархічно"))}</button><button role="tab" data-mode="flat">${icon("list", "bo-i-sm")} ${esc(
 								__("Списком")
-						  )}</button></div><span class="ua-toolbar-sep"></span>`
+						  )}</button></div><span class="bo-toolbar-sep"></span>`
 						: ""
 				}
 				<div class="ua-chips"></div>
@@ -422,46 +422,46 @@ frappe.provide("ua_accounting.list");
 		$main.prepend($top);
 		if (!is_doc) {
 			const tf = frappe.get_meta(lv.doctype).title_field;
-			$title.find(".ua-ph-sub").remove();
-			$title.find(".ua-ph-block").append('<p class="ua-ph-sub ua-cat-sub"></p>');
+			$title.find(".bo-ph-sub").remove();
+			$title.find(".ua-ph-block").append('<p class="bo-ph-sub ua-cat-sub"></p>');
 			$title.find(".ua-total").remove();
 			L.title_field_search = tf;
 			if (ua_accounting.ui.TREE_DOCTYPES[lv.doctype] && lv.can_create) {
 				const $actions = $page.find(".page-head .standard-actions");
 				$actions.find(".ua-new-group").remove();
 				$(
-					`<button type="button" class="ua-btn ua-btn--secondary ua-new-group">${icon("folder-plus")}${esc(__("Створити групу"))}</button>`
+					`<button type="button" class="bo-btn bo-btn--secondary ua-new-group">${icon("folder-plus")}${esc(__("Створити групу"))}</button>`
 				)
 					.insertBefore($actions.find(".primary-action"))
 					.on("click", () => L.new_group(lv, ua_accounting.ui.TREE_DOCTYPES[lv.doctype]));
 			}
-			$top.on("click", ".ua-seg [data-mode]", function () {
+			$top.on("click", ".bo-seg [data-mode]", function () {
 				L.set_mode(lv, $(this).attr("data-mode"));
 			});
 		}
 
 		// the card around the table; the footer carries the paging and the bulk bar
-		const $list = $page.find(".frappe-list").first().addClass("ua-card ua-list-card");
+		const $list = $page.find(".frappe-list").first().addClass("bo-card ua-list-card");
 		const $paging = $list.find(".list-paging-area").addClass("ua-foot");
 		$paging.prepend(
 			`<span class="ua-foot-info"></span>` +
 				`<div class="ua-bulk" role="toolbar" aria-label="${esc(__("Дії з обраними"))}">` +
 				`<span class="ua-bulk-count"></span>` +
-				`<button class="ua-btn ua-btn--sm" data-bulk="submit">${icon("checks")}${esc(__("Провести"))}</button>` +
-				`<button class="ua-btn ua-btn--sm" data-bulk="cancel">${icon("undo")}${esc(__("Скасувати проведення"))}</button>` +
-				`<button class="ua-btn ua-btn--sm" data-bulk="print">${icon("printer")}${esc(__("Друк"))}</button>` +
-				`<button class="ua-btn ua-btn--sm" data-bulk="delete">${icon("trash")}${esc(__("Позначити на вилучення"))}</button>` +
+				`<button class="bo-btn bo-btn--sm" data-bulk="submit">${icon("checks")}${esc(__("Провести"))}</button>` +
+				`<button class="bo-btn bo-btn--sm" data-bulk="cancel">${icon("undo")}${esc(__("Скасувати проведення"))}</button>` +
+				`<button class="bo-btn bo-btn--sm" data-bulk="print">${icon("printer")}${esc(__("Друк"))}</button>` +
+				`<button class="bo-btn bo-btn--sm" data-bulk="delete">${icon("trash")}${esc(__("Позначити на вилучення"))}</button>` +
 				`<span class="ua-sep"></span>` +
-				`<button class="ua-btn ua-btn--sm ua-btn--icon" data-bulk="clear" aria-label="${esc(__("Зняти виділення"))}">${icon(
+				`<button class="bo-btn bo-btn--sm bo-btn--icon" data-bulk="clear" aria-label="${esc(__("Зняти виділення"))}">${icon(
 					"x"
 				)}</button></div>`
 		);
 		$list.append('<div class="ua-state" hidden></div>');
 		// a click on the checkbox label must not open the form (Frappe opens it on a row click)
-		lv.$result.on("click", ".ua-check, .ua-row-actions", (e) => e.stopPropagation());
+		lv.$result.on("click", ".bo-check, .bo-row-actions", (e) => e.stopPropagation());
 
 		// events
-		$top.on("click", ".ua-tab", function () {
+		$top.on("click", ".bo-tab", function () {
 			L.set_view(lv, $(this).attr("data-view"));
 		});
 		let timer = null;
@@ -473,10 +473,10 @@ frappe.provide("ua_accounting.list");
 			timer = setTimeout(() => L.set_filter(lv, field, q ? [lv.doctype, field, "like", `%${q}%`] : null), 350);
 		});
 		$top.on("click", "[data-chip]", function (e) {
-			if (e.target.closest(".ua-chip-x")) return;
+			if (e.target.closest(".bo-chip-x")) return;
 			L.chip_menu(lv, this, $(this).attr("data-chip"));
 		});
-		$top.on("click", ".ua-chip-x", function (e) {
+		$top.on("click", ".bo-chip-x", function (e) {
 			e.stopPropagation();
 			const field = $(this).closest("[data-field]").attr("data-field");
 			L.set_filter(lv, field, null);
@@ -524,7 +524,7 @@ frappe.provide("ua_accounting.list");
 				const cur = frappe.get_route();
 				if (!cur || cur[0] !== "List" || !cur[1]) return;
 				const in_input = $(document.activeElement).is("input, textarea, select, [contenteditable=true]");
-				if (in_input || $(".modal.show").length || document.querySelector(".ua-dialog-backdrop")) return;
+				if (in_input || $(".modal.show").length || document.querySelector(".bo-dialog-backdrop")) return;
 				const view = frappe.views.list_view[cur[1]];
 				if (!view || !view.ua || !view.$page.is(":visible")) return;
 				if (e.key === "/") {
@@ -605,19 +605,19 @@ frappe.provide("ua_accounting.list");
 		const meta_has = (f) => frappe.meta.has_field(lv.doctype, f);
 		const chips = [];
 		const on = (field, label, value, menu) =>
-			`<span class="ua-chip is-on" data-field="${field}" data-chip="${menu}" role="button" tabindex="0">${esc(label)}: <b>${esc(
+			`<span class="bo-chip is-on" data-field="${field}" data-chip="${menu}" role="button" tabindex="0">${esc(label)}: <b>${esc(
 				value
-			)}</b><button class="ua-chip-x" aria-label="${esc(__("Прибрати фільтр"))}">${icon("x")}</button></span>`;
+			)}</b><button class="bo-chip-x" aria-label="${esc(__("Прибрати фільтр"))}">${icon("x")}</button></span>`;
 		const off = (menu, label, ic) =>
-			`<button class="ua-chip ua-chip--dashed" data-chip="${menu}" aria-haspopup="menu">${icon(ic || "plus")}${esc(label)}</button>`;
+			`<button class="bo-chip bo-chip--dashed" data-chip="${menu}" aria-haspopup="menu">${icon(ic || "plus")}${esc(label)}</button>`;
 
 		const pd = get("posting_date");
 		if (meta_has("posting_date")) {
 			if (pd && L.is_between(pd) && Array.isArray(pd[3])) {
 				chips.push(
-					`<span class="ua-chip is-on" data-field="posting_date" data-chip="period" role="button" tabindex="0">${icon(
+					`<span class="bo-chip is-on" data-field="posting_date" data-chip="period" role="button" tabindex="0">${icon(
 						"calendar"
-					)}${esc(__("Період"))}: <b>${esc(L.period_label(pd[3][0], pd[3][1]))}</b><button class="ua-chip-x" aria-label="${esc(
+					)}${esc(__("Період"))}: <b>${esc(L.period_label(pd[3][0], pd[3][1]))}</b><button class="bo-chip-x" aria-label="${esc(
 						__("Прибрати фільтр")
 					)}">${icon("x")}</button></span>`
 				);
@@ -650,15 +650,15 @@ frappe.provide("ua_accounting.list");
 			if (f && f[2] === "=") chips.push(on(df.fieldname, __(df.label), __(f[3]), "select:" + df.fieldname));
 			else chips.push(off("select:" + df.fieldname, __(df.label)));
 		});
-		chips.push(`<button class="ua-chip ua-chip--dashed" data-act="more-filter">${icon("filter")}${esc(__("Ще фільтр"))}</button>`);
+		chips.push(`<button class="bo-chip bo-chip--dashed" data-act="more-filter">${icon("filter")}${esc(__("Ще фільтр"))}</button>`);
 		const tf = frappe.get_meta(lv.doctype).title_field || "name";
 		const parent_field = ua_accounting.ui.TREE_DOCTYPES[lv.doctype];
 		const known = ["posting_date", "organization", "counterparty", "docstatus", "owner", "name", tf, parent_field].concat(
 			L.select_fields(lv).map((df) => df.fieldname)
 		);
 		const other = fs.filter((f) => !known.includes(f[1]));
-		if (other.length) chips.push(`<span class="ua-chip is-on ua-chip--count">${esc(__("Інші відбори: {0}", [other.length]))}</span>`);
-		if (fs.length) chips.push(`<button class="ua-btn ua-btn--ghost ua-btn--sm" data-act="reset">${esc(__("Скинути"))}</button>`);
+		if (other.length) chips.push(`<span class="bo-chip is-on ua-chip--count">${esc(__("Інші відбори: {0}", [other.length]))}</span>`);
+		if (fs.length) chips.push(`<button class="bo-btn bo-btn--ghost bo-btn--sm" data-act="reset">${esc(__("Скинути"))}</button>`);
 		$chips.html(chips.join(""));
 		const q = get(is_doc ? "name" : tf);
 		const $q = lv.$page.find(".ua-q");
@@ -702,10 +702,10 @@ frappe.provide("ua_accounting.list");
 			const opts = String((df && df.options) || "")
 				.split("\n")
 				.filter(Boolean);
-			ua_accounting.ui.menu(
+			beeone.ui.menu(
 				trigger,
-				`<div class="ua-menu-label">${esc(__(df.label))}</div>` +
-					opts.map((o) => `<button class="ua-menu-item" data-v="${esc(o)}">${esc(__(o))}</button>`).join(""),
+				`<div class="bo-menu-label">${esc(__(df.label))}</div>` +
+					opts.map((o) => `<button class="bo-menu-item" data-v="${esc(o)}">${esc(__(o))}</button>`).join(""),
 				(item) => {
 					const v = item.getAttribute("data-v");
 					if (v !== null) L.set_filter(lv, field, [lv.doctype, field, "=", v]);
@@ -715,9 +715,9 @@ frappe.provide("ua_accounting.list");
 		}
 		if (kind === "docstatus") {
 			const items = [1, 0, 2]
-				.map((s) => `<button class="ua-menu-item" data-v="${s}">${L.badge(s)}</button>`)
+				.map((s) => `<button class="bo-menu-item" data-v="${s}">${L.badge(s)}</button>`)
 				.join("");
-			ua_accounting.ui.menu(trigger, `<div class="ua-menu-label">${esc(__("Статус"))}</div>${items}`, (item) => {
+			beeone.ui.menu(trigger, `<div class="bo-menu-label">${esc(__("Статус"))}</div>${items}`, (item) => {
 				const v = item.getAttribute("data-v");
 				if (v !== null) L.set_filter(lv, "docstatus", [lv.doctype, "docstatus", "=", +v]);
 			});
@@ -726,11 +726,11 @@ frappe.provide("ua_accounting.list");
 		// link value: search as you type
 		const df = frappe.meta.get_docfield(lv.doctype, kind);
 		if (!df) return;
-		const pop = ua_accounting.ui.menu(
+		const pop = beeone.ui.menu(
 			trigger,
-			`<div class="ua-pop-search"><label class="ua-input ua-input--sm">${icon("search", "ua-i-sm")}<input placeholder="${esc(
+			`<div class="ua-pop-search"><label class="bo-input bo-input--sm">${icon("search", "bo-i-sm")}<input placeholder="${esc(
 				__("Знайти: {0}", [__(df.label)])
-			)}"></label></div><div class="ua-pop-list">${ua_accounting.ui.skeleton_rows(3, [70])}</div>`,
+			)}"></label></div><div class="ua-pop-list">${beeone.ui.skeleton_rows(3, [70])}</div>`,
 			(item) => {
 				const v = item.getAttribute("data-v");
 				if (!v) return true;
@@ -752,15 +752,15 @@ frappe.provide("ua_accounting.list");
 									.map((r) => {
 										const t = r.label || r.value;
 										const d = r.description && r.description !== t ? r.description : "";
-										return `<button class="ua-menu-item" data-v="${esc(r.value)}" data-t="${esc(t)}"><span class="ua-two">${esc(
+										return `<button class="bo-menu-item" data-v="${esc(r.value)}" data-t="${esc(t)}"><span class="bo-two">${esc(
 											t
 										)}${d ? `<small>${esc(frappe.utils.html2text(d))}</small>` : ""}</span></button>`;
 									})
 									.join("")
-							: `<div class="ua-menu-empty">${esc(__("Нічого не знайдено"))}</div>`
+							: `<div class="bo-menu-empty">${esc(__("Нічого не знайдено"))}</div>`
 					);
 				})
-				.catch(() => $list.html(`<div class="ua-menu-empty">${esc(__("Не вдалося завантажити"))}</div>`));
+				.catch(() => $list.html(`<div class="bo-menu-empty">${esc(__("Не вдалося завантажити"))}</div>`));
 		let t = null;
 		$(pop)
 			.find("input")
@@ -785,24 +785,24 @@ frappe.provide("ua_accounting.list");
 		];
 		const cur = L.filters_of(lv, "posting_date")[0];
 		const cur_v = cur && L.is_between(cur) ? cur[3] : null;
-		const pop = ua_accounting.ui.menu(
+		const pop = beeone.ui.menu(
 			trigger,
-			`<div class="ua-period-pop"><div class="ua-menu-label">${esc(__("Швидкий вибір"))}</div><div class="ua-grid">` +
+			`<div class="ua-period-pop"><div class="bo-menu-label">${esc(__("Швидкий вибір"))}</div><div class="ua-grid">` +
 				picks
 					.map(
 						([label, v], i) =>
-							`<button class="ua-chip${cur_v && cur_v[0] === v[0] && cur_v[1] === v[1] ? " is-on" : ""}" data-pick="${i}">${esc(
+							`<button class="bo-chip${cur_v && cur_v[0] === v[0] && cur_v[1] === v[1] ? " is-on" : ""}" data-pick="${i}">${esc(
 								label
 							)}</button>`
 					)
 					.join("") +
-				`</div><div class="ua-range"><label class="ua-input ua-input--sm"><input data-d="from" aria-label="${esc(__("З"))}" placeholder="${esc(
+				`</div><div class="ua-range"><label class="bo-input bo-input--sm"><input data-d="from" aria-label="${esc(__("З"))}" placeholder="${esc(
 					__("дд.мм.рррр")
-				)}" value="${esc(cur_v ? frappe.datetime.str_to_user(cur_v[0]) : "")}"></label><span class="ua-subtle">–</span>` +
-				`<label class="ua-input ua-input--sm"><input data-d="to" aria-label="${esc(__("По"))}" placeholder="${esc(
+				)}" value="${esc(cur_v ? frappe.datetime.str_to_user(cur_v[0]) : "")}"></label><span class="bo-subtle">–</span>` +
+				`<label class="bo-input bo-input--sm"><input data-d="to" aria-label="${esc(__("По"))}" placeholder="${esc(
 					__("дд.мм.рррр")
 				)}" value="${esc(cur_v ? frappe.datetime.str_to_user(cur_v[1]) : "")}"></label></div>` +
-				`<div class="ua-period-foot"><button class="ua-btn ua-btn--sm ua-btn--primary" data-act="apply">${esc(
+				`<div class="ua-period-foot"><button class="bo-btn bo-btn--sm bo-btn--primary" data-act="apply">${esc(
 					__("Застосувати")
 				)}</button></div></div>`,
 			(item) => {
@@ -816,7 +816,7 @@ frappe.provide("ua_accounting.list");
 					const from = frappe.datetime.user_to_str($(pop).find("[data-d=from]").val(), false, true);
 					const to = frappe.datetime.user_to_str($(pop).find("[data-d=to]").val(), false, true);
 					if (!from || !to || from === "Invalid date" || to === "Invalid date") {
-						ua_accounting.ui.toast({ type: "error", title: __("Вкажіть дати періоду"), text: __("Формат: дд.мм.рррр") });
+						beeone.ui.toast({ type: "error", title: __("Вкажіть дати періоду"), text: __("Формат: дд.мм.рррр") });
 						return true;
 					}
 					L.set_filter(lv, "posting_date", [lv.doctype, "posting_date", "between", [from, to]]);
@@ -846,7 +846,7 @@ frappe.provide("ua_accounting.list");
 			}
 			$info.html(
 				shown
-					? `<span>${esc(__("Показано"))} <b class="ua-num">1–${esc(format_number(shown, null, 0))}</b> ${esc(__("з"))} <b class="ua-num">${esc(
+					? `<span>${esc(__("Показано"))} <b class="bo-num">1–${esc(format_number(shown, null, 0))}</b> ${esc(__("з"))} <b class="bo-num">${esc(
 							format_number(n, null, 0)
 					  )}</b></span>`
 					: ""
@@ -874,22 +874,22 @@ frappe.provide("ua_accounting.list");
 			L.count(lv.doctype, [[lv.doctype, "owner", "=", frappe.session.user]]),
 		]).then(([all, unposted, mine]) => {
 			const fmt = (v) => (v === null ? "" : format_number(v, null, 0));
-			$tabs.find("[data-view=all] .ua-count").text(fmt(all));
-			$tabs.find("[data-view=unposted] .ua-count").text(fmt(unposted));
-			$tabs.find("[data-view=mine] .ua-count").text(fmt(mine));
+			$tabs.find("[data-view=all] .bo-count").text(fmt(all));
+			$tabs.find("[data-view=unposted] .bo-count").text(fmt(unposted));
+			$tabs.find("[data-view=mine] .bo-count").text(fmt(mine));
 			lv.$page.find(".page-head .ua-total").text(fmt(all));
-			ua_accounting.ui.place_ink($tabs[0]);
+			beeone.ui.place_ink($tabs[0]);
 		});
 	};
 
 	L.after_refresh = function (lv) {
 		const view = L.view_of(lv);
 		const $tabs = lv.$page.find(".ua-views");
-		$tabs.find(".ua-tab").each(function () {
+		$tabs.find(".bo-tab").each(function () {
 			const on = $(this).attr("data-view") === view;
 			$(this).toggleClass("is-on", on).attr("aria-selected", on);
 		});
-		if ($tabs[0]) ua_accounting.ui.place_ink($tabs[0]);
+		if ($tabs[0]) beeone.ui.place_ink($tabs[0]);
 		L.render_chips(lv);
 		L.update_bulk(lv);
 		// a group filter restored from the saved settings selects its folder in the tree
@@ -919,7 +919,7 @@ frappe.provide("ua_accounting.list");
 		$list.find(".no-result").hide();
 		if (state === "loading") {
 			$wrap.hide();
-			$state.prop("hidden", false).html(ua_accounting.ui.skeleton_rows(10, [10, 12, 30, 14, 12, 6, 14, 10]));
+			$state.prop("hidden", false).html(beeone.ui.skeleton_rows(10, [10, 12, 30, 14, 12, 6, 14, 10]));
 			return;
 		}
 		$wrap.hide();
@@ -928,7 +928,7 @@ frappe.provide("ua_accounting.list");
 		const pd = fs.find((f) => f[1] === "posting_date" && L.is_between(f));
 		let html;
 		if (state === "error") {
-			html = ua_accounting.ui.empty_html({
+			html = beeone.ui.empty_html({
 				error: true,
 				title: __("Не вдалося завантажити список"),
 				text: __("Перевірте з’єднання з сервером і спробуйте ще раз."),
@@ -945,7 +945,7 @@ frappe.provide("ua_accounting.list");
 				actions.push({ label: __("Створити елемент"), act: "create", icon: "plus", primary: true });
 				if (parent_field) actions.push({ label: __("Створити групу"), act: "group", icon: "folder-plus" });
 			}
-			html = ua_accounting.ui.empty_html({
+			html = beeone.ui.empty_html({
 				art: searching ? "search" : "folder-open",
 				title: searching ? __("Нічого не знайдено") : group ? __("У групі «{0}» немає елементів", [group]) : __("Елементів ще немає"),
 				text: searching ? __("Спробуйте іншу назву або код.") : __("Створіть перший елемент довідника «{0}».", [__(lv.doctype)]),
@@ -956,7 +956,7 @@ frappe.provide("ua_accounting.list");
 			if (pd) actions.push({ label: __("Змінити період"), act: "period", icon: "calendar" });
 			else actions.push({ label: __("Скинути відбори"), act: "reset", icon: "x" });
 			if (lv.can_create) actions.push({ label: __("Створити"), act: "create", icon: "plus", primary: true });
-			html = ua_accounting.ui.empty_html({
+			html = beeone.ui.empty_html({
 				title: pd
 					? __("За {0} документів немає", [L.period_label(pd[3][0], pd[3][1])])
 					: __("Нічого не знайдено"),
@@ -964,8 +964,8 @@ frappe.provide("ua_accounting.list");
 				actions,
 			});
 		} else {
-			html = ua_accounting.ui.empty_html({
-				title: __("Документів ще немає"),
+			html = beeone.ui.empty_html({
+				title: __("Немає документів"),
 				text: __("Створіть перший документ «{0}».", [__(lv.doctype)]),
 				actions: lv.can_create ? [{ label: __("Створити"), act: "create", icon: "plus", primary: true }] : [],
 			});
@@ -989,7 +989,7 @@ frappe.provide("ua_accounting.list");
 		$foot
 			.find(".ua-bulk-count")
 			.html(
-				`${esc(__("Обрано"))} ${n}${sum ? ` <span>· ${esc(ua_accounting.ui.money(sum, { cur: true }))}</span>` : ""}`
+				`${esc(__("Обрано"))} ${n}${sum ? ` <span>· ${esc(beeone.ui.money(sum, { cur: true }))}</span>` : ""}`
 			);
 		const has = (s) => L.is_document(lv.doctype) && rows.some((r) => r.docstatus === s);
 		$foot.find("[data-bulk=submit]").prop("hidden", !has(0));
@@ -1012,7 +1012,7 @@ frappe.provide("ua_accounting.list");
 		const done = (title) => {
 			lv.clear_checked_items();
 			lv.refresh();
-			ua_accounting.ui.toast({ title, text: __("Документів: {0}", [names.length]) });
+			beeone.ui.toast({ title, text: __("Документів: {0}", [names.length]) });
 		};
 		if (act === "print") {
 			L.print_dialog(lv, names);
@@ -1098,7 +1098,7 @@ frappe.provide("ua_accounting.list");
 	L.bulk_result = function (lv, act, total, res) {
 		lv.clear_checked_items();
 		lv.refresh();
-		const toast = ua_accounting.ui.toast;
+		const toast = beeone.ui.toast;
 		const failed = Array.isArray(res) ? res : [];
 		const verb = act === "submit" ? __("Проведено") : __("Проведення скасовано");
 		// the sync path always returns a list (empty when all passed); no list means a queued job
@@ -1127,15 +1127,15 @@ frappe.provide("ua_accounting.list");
 		// real delete: managers only, never a posted document
 		const can_delete =
 			doc && doc.docstatus !== 1 && frappe.model.can_delete(lv.doctype) && frappe.user.has_role("UA Accounting Manager");
-		ua_accounting.ui.menu(
+		beeone.ui.menu(
 			trigger,
-			`<button class="ua-menu-item" data-a="open">${icon("external")}${esc(__("Відкрити"))}<span class="ua-kbd">Enter</span></button>` +
-				(posted ? `<button class="ua-menu-item" data-a="dtkt">${icon("dtkt")}${esc(__("Дт/Кт"))}</button>` : "") +
-				(lv.can_create ? `<button class="ua-menu-item" data-a="copy">${icon("copy")}${esc(__("Скопіювати"))}</button>` : "") +
+			`<button class="bo-menu-item" data-a="open">${icon("external")}${esc(__("Відкрити"))}<span class="bo-kbd">Enter</span></button>` +
+				(posted ? `<button class="bo-menu-item" data-a="dtkt">${icon("dtkt")}${esc(__("Дт/Кт"))}</button>` : "") +
+				(lv.can_create ? `<button class="bo-menu-item" data-a="copy">${icon("copy")}${esc(__("Скопіювати"))}</button>` : "") +
 				(doc && doc.marked_for_deletion
-					? `<button class="ua-menu-item" data-a="unmark">${icon("undo")}${esc(__("Зняти позначку вилучення"))}</button>`
+					? `<button class="bo-menu-item" data-a="unmark">${icon("undo")}${esc(__("Зняти позначку вилучення"))}</button>`
 					: "") +
-				(can_delete ? `<button class="ua-menu-item" data-a="delete">${icon("trash")}${esc(__("Видалити"))}</button>` : ""),
+				(can_delete ? `<button class="bo-menu-item" data-a="delete">${icon("trash")}${esc(__("Видалити"))}</button>` : ""),
 			(item) => {
 				const a = item.getAttribute("data-a");
 				if (a === "unmark") L.set_mark(lv, [name], 0).then(() => lv.refresh());
@@ -1144,7 +1144,7 @@ frappe.provide("ua_accounting.list");
 						frappe
 							.xcall("frappe.client.delete", { doctype: lv.doctype, name })
 							.then(() => {
-								ua_accounting.ui.toast({ title: __("Видалено"), text: name });
+								beeone.ui.toast({ title: __("Видалено"), text: name });
 								lv.refresh();
 							})
 					);
@@ -1172,7 +1172,7 @@ frappe.provide("ua_accounting.list");
 		const parent_field = ua_accounting.ui.TREE_DOCTYPES[lv.doctype];
 		if (!parent_field) return;
 		lv.ua_mode = mode;
-		lv.$page.find(".ua-seg [data-mode]").each(function () {
+		lv.$page.find(".bo-seg [data-mode]").each(function () {
 			const on = $(this).attr("data-mode") === mode;
 			$(this).toggleClass("is-on", on).attr("aria-selected", on);
 		});
@@ -1203,7 +1203,7 @@ frappe.provide("ua_accounting.list");
 		const parent_field = ua_accounting.ui.TREE_DOCTYPES[doctype];
 		ua_accounting.ui.current_group = "";
 		const kind = ua_accounting.ui.kind(doctype);
-		if (document.body.classList.contains("ua-shell") && (L.is_document(doctype) || kind === "catalog")) {
+		if (document.body.classList.contains("bo-shell") && (L.is_document(doctype) || kind === "catalog")) {
 			listview.ua = true;
 			L.build(listview);
 			if (!listview.ua_sorted && (listview.sort_by === "modified" || listview.sort_by === "creation")) {
@@ -1248,9 +1248,9 @@ frappe.provide("ua_accounting.list");
 
 	L.register = function () {
 		const doctypes = new Set(Object.keys(ua_accounting.ui.TREE_DOCTYPES));
-		ua_accounting.shell.SECTIONS.forEach((s) =>
-			(s.groups || []).forEach((g) =>
-				g.items.forEach((c) => c.doctype && ua_accounting.ui.is_ua_doctype(c.doctype) && doctypes.add(c.doctype))
+		((window.beeone && beeone.shell && beeone.shell.sections) || []).forEach((s) =>
+			s.commands.forEach(
+				(c) => ["doctype", "tree"].includes(c.type) && ua_accounting.ui.is_ua_doctype(c.target) && doctypes.add(c.target)
 			)
 		);
 		Object.keys(L.COLUMNS).forEach((d) => doctypes.add(d));

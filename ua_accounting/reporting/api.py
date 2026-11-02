@@ -1,8 +1,11 @@
 """Whitelisted methods of the reports.
 
 Browser calls:
-    run(report, filters)            -> table model
-    export_xlsx(report, filters)    -> Excel file (GET download)
+    run(report, filters, variant)         -> table model
+    export_xlsx(report, filters, variant) -> Excel file (GET download)
+    export_pdf(report, filters, variant)  -> PDF file (GET download)
+    A variant (name or title of a saved variant of the user, see frappe.beeone.api.report_variants) sets the
+    filters, the grouping, the hidden columns and the conditional formatting; the screen and the files use the same table.
     account_info(account)           -> flags and subconto of an account (for the form)
     subconto_types()                -> subconto types (for the "any subconto" filter)
 
@@ -11,6 +14,7 @@ A new report: write build(raw_filters) -> table model and add it to REPORTS.
 
 import frappe
 from frappe import _
+from frappe.beeone import report_export, report_variants
 
 from ua_accounting.reporting.chart import Chart
 from ua_accounting.reporting.export import to_xlsx
@@ -27,22 +31,39 @@ REPORTS = {
 READ_DOCTYPES = ("UA Accounting Entry", "UA Account Turnover")
 
 
-def _build(report, filters):
+def _build(report, filters, variant=None):
     if report not in REPORTS:
         frappe.throw(_("Невідомий звіт {0}").format(report))
     for doctype in READ_DOCTYPES:
         frappe.has_permission(doctype, "read", throw=True)
-    return frappe.get_attr(REPORTS[report])(filters)
+    if not variant:
+        return frappe.get_attr(REPORTS[report])(filters)
+    saved = report_variants.get_variant(report, title=variant, name=variant)
+    if not saved:
+        frappe.throw(_("Невідомий варіант {0}").format(variant))
+    settings = saved["settings"]
+    given = frappe.parse_json(filters) if isinstance(filters, str) else dict(filters or {})
+    given.setdefault("group_by", settings["group_by"])
+    table = frappe.get_attr(REPORTS[report])({**settings["filters"], **{k: v for k, v in given.items() if v not in (None, "")}})
+    return report_variants.apply_to_table(table, settings)
 
 
 @frappe.whitelist()
-def run(report, filters=None):
-    return _build(report, filters)
+def run(report, filters=None, variant=None):
+    return _build(report, filters, variant)
 
 
 @frappe.whitelist()
-def export_xlsx(report, filters=None):
-    table = _build(report, filters)
+def export_pdf(report, filters=None, variant=None):
+    table = _build(report, filters, variant)
+    frappe.response["filename"] = f"{report}.pdf"
+    frappe.response["filecontent"] = report_export.to_pdf(table)
+    frappe.response["type"] = "binary"
+
+
+@frappe.whitelist()
+def export_xlsx(report, filters=None, variant=None):
+    table = _build(report, filters, variant)
     frappe.response["filename"] = f"{report}.xlsx"
     frappe.response["filecontent"] = to_xlsx(table)
     frappe.response["type"] = "binary"

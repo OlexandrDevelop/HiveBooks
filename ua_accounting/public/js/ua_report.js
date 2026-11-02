@@ -97,7 +97,7 @@ ua_accounting.reports.CONFIG = {
 // ------------------------------------------------------------------ helpers
 
 const esc = (v) => frappe.utils.escape_html(v == null ? "" : String(v));
-const icon = (name, cls) => ua_accounting.ui.icon(name, cls);
+const icon = (name, cls) => beeone.ui.icon(name, cls);
 
 function fmt_number(value, precision) {
 	if (value === null || value === undefined || value === "" || Math.abs(value) < 0.0000001) return "";
@@ -228,11 +228,11 @@ ua_accounting.reports.MultiLink = class MultiLink {
 		this.$chips.empty();
 		this.values.forEach((v) => {
 			const $chip = $(
-				`<span class="ua-chip is-on"><span class="ua-chip-text"></span>` +
-					`<button type="button" class="ua-chip-x" aria-label="${esc(__("Прибрати"))}">${icon("x")}</button></span>`
+				`<span class="bo-chip is-on"><span class="ua-chip-text"></span>` +
+					`<button type="button" class="bo-chip-x" aria-label="${esc(__("Прибрати"))}">${icon("x")}</button></span>`
 			);
 			$chip.find(".ua-chip-text").text(this.titles[v] || v || __("<не задано>"));
-			$chip.find(".ua-chip-x").on("click", (e) => {
+			$chip.find(".bo-chip-x").on("click", (e) => {
 				e.stopPropagation();
 				this.remove(v);
 			});
@@ -331,21 +331,21 @@ ua_accounting.reports.ReportPage = class ReportPage {
 	// ---------- page head (mockup ".ph")
 	make_head() {
 		this.$root.append(`
-			<div class="ua-ph">
-				<h1 class="ua-ph-title"><span class="ua-rpt-title">${esc(this.cfg.title)}</span>
-					<span class="ua-tag">${esc(__("Бухгалтерський облік"))}</span></h1>
-				<div class="ua-ph-actions">
-					<button type="button" class="ua-btn ua-btn--ghost" data-act="settings" aria-expanded="true">${icon("sliders")}${esc(
+			<div class="bo-ph">
+				<h1 class="bo-ph-title"><span class="ua-rpt-title">${esc(this.cfg.title)}</span>
+					<span class="bo-tag">${esc(__("Бухгалтерський облік"))}</span></h1>
+				<div class="bo-ph-actions">
+					<button type="button" class="bo-btn bo-btn--ghost" data-act="settings" aria-expanded="true">${icon("sliders")}${esc(
 						__("Налаштування")
 					)}${icon("chev-d", "ua-i-chev")}</button>
-					<span class="ua-toolbar-sep"></span>
-					<button type="button" class="ua-btn" data-act="print">${icon("printer")}${esc(__("Друк"))}</button>
-					<button type="button" class="ua-btn" data-act="excel">${icon("sheet")}Excel</button>
-					<button type="button" class="ua-btn ua-btn--icon" data-act="more" aria-haspopup="menu" aria-expanded="false"
+					<span class="bo-toolbar-sep"></span>
+					<button type="button" class="bo-btn" data-act="print">${icon("printer")}${esc(__("Друк"))}</button>
+					<button type="button" class="bo-btn" data-act="excel">${icon("sheet")}Excel</button>
+					<button type="button" class="bo-btn bo-btn--icon" data-act="more" aria-haspopup="menu" aria-expanded="false"
 						aria-label="${esc(__("Ще"))}" title="${esc(__("Ще"))}">${icon("more")}</button>
-					<button type="button" class="ua-btn ua-btn--primary" data-act="run">${icon("refresh")}${esc(
+					<button type="button" class="bo-btn bo-btn--primary" data-act="run">${icon("refresh")}${esc(
 						__("Сформувати")
-					)}<span class="ua-kbd">Ctrl Enter</span></button>
+					)}<span class="bo-kbd">Ctrl Enter</span></button>
 				</div>
 			</div>`);
 	}
@@ -353,23 +353,23 @@ ua_accounting.reports.ReportPage = class ReportPage {
 	// ---------- settings card
 	make_settings() {
 		const cfg = this.cfg;
-		const $set = $(`<div class="ua-settings"><section class="ua-card" aria-label="${esc(__("Налаштування звіту"))}">
+		const $set = $(`<div class="ua-settings"><section class="bo-card" aria-label="${esc(__("Налаштування звіту"))}">
 			<div class="ua-set-row ua-set-main">
 				<div class="ua-period" role="group" aria-label="${esc(__("Період звіту"))}">
-					<button type="button" class="ua-btn ua-btn--icon" data-act="prev" aria-label="${esc(__("Попередній період"))}"
+					<button type="button" class="bo-btn bo-btn--icon" data-act="prev" aria-label="${esc(__("Попередній період"))}"
 						title="${esc(__("Попередній період"))}">${icon("chev-l")}</button>
-					<button type="button" class="ua-btn ua-period-field" data-act="period" aria-haspopup="dialog" aria-expanded="false">
+					<button type="button" class="bo-btn ua-period-field" data-act="period" aria-haspopup="dialog" aria-expanded="false">
 						${icon("calendar")}<span class="ua-period-text"></span>${icon("chev-d")}</button>
-					<button type="button" class="ua-btn ua-btn--icon" data-act="next" aria-label="${esc(__("Наступний період"))}"
+					<button type="button" class="bo-btn bo-btn--icon" data-act="next" aria-label="${esc(__("Наступний період"))}"
 						title="${esc(__("Наступний період"))}">${icon("chev-r")}</button>
 				</div>
-				<div class="ua-seg ua-units" role="group" aria-label="${esc(__("Швидкий вибір періоду"))}">
+				<div class="bo-seg ua-units" role="group" aria-label="${esc(__("Швидкий вибір періоду"))}">
 					<button type="button" data-unit="month">${esc(__("Місяць"))}</button><button type="button" data-unit="quarter">${esc(
 						__("Квартал")
 					)}</button><button type="button" data-unit="year">${esc(__("Рік"))}</button>
 				</div>
 				<span class="ua-set-sep"></span>
-				<button type="button" class="ua-chip" data-act="orgs" aria-haspopup="dialog" aria-expanded="false">${icon(
+				<button type="button" class="bo-chip" data-act="orgs" aria-haspopup="dialog" aria-expanded="false">${icon(
 					"building"
 				)}${esc(__("Організація"))}: <b class="ua-orgs-text"></b>${icon("chev-d")}</button>
 			</div>
@@ -392,7 +392,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 		// accounts: chips in a popover (OSV, card) or one account in the row (OSV by account)
 		if (cfg.accounts === "multi") {
 			$main.append(
-				`<button type="button" class="ua-chip" data-act="accounts" aria-haspopup="dialog" aria-expanded="false">${icon(
+				`<button type="button" class="bo-chip" data-act="accounts" aria-haspopup="dialog" aria-expanded="false">${icon(
 					"list"
 				)}${esc(__("Рахунки"))}: <b class="ua-acc-text"></b>${icon("chev-d")}</button>`
 			);
@@ -416,7 +416,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 
 		// currency: one value in a popover; the chip stands next to "Валютна сума" (see update_chips)
 		const $cur_chip = $(
-			`<button type="button" class="ua-chip" data-act="currency" aria-haspopup="dialog" aria-expanded="false">${icon(
+			`<button type="button" class="bo-chip" data-act="currency" aria-haspopup="dialog" aria-expanded="false">${icon(
 				"cash"
 			)}${esc(__("Валюта"))}: <b class="ua-cur-text"></b>${icon("chev-d")}</button>`
 		);
@@ -434,7 +434,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 			this.opt[f.key] = f.value;
 			if (f.type === "select") {
 				$(
-					`<label class="ua-set-label">${esc(f.label)} <select class="ua-input ua-input--sm" data-opt-select="${f.key}">${f.options
+					`<label class="ua-set-label">${esc(f.label)} <select class="bo-input bo-input--sm" data-opt-select="${f.key}">${f.options
 						.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`)
 						.join("")}</select></label>`
 				).insertBefore($right);
@@ -448,9 +448,9 @@ ua_accounting.reports.ReportPage = class ReportPage {
 			}
 			if (f.type !== "check") return;
 			$(
-				`<label class="ua-toggle" data-opt-wrap="${f.key}"><input type="checkbox" data-opt="${f.key}"${
+				`<label class="bo-toggle" data-opt-wrap="${f.key}"><input type="checkbox" data-opt="${f.key}"${
 					f.value ? " checked" : ""
-				}><span class="ua-toggle-track"></span>${esc(f.label)}</label>`
+				}><span class="bo-toggle-track"></span>${esc(f.label)}</label>`
 			).insertBefore($right);
 		});
 
@@ -458,7 +458,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 		if ($cur_toggle.length) $cur_chip.insertAfter($cur_toggle);
 		else $cur_chip.insertBefore($right);
 		if (cfg.accounts !== "none") $right.append(
-			`<button type="button" class="ua-chip ua-chip--dashed" data-act="add-sub">${icon("plus")}${esc(
+			`<button type="button" class="bo-chip bo-chip--dashed" data-act="add-sub">${icon("plus")}${esc(
 				__("Відбір по субконто")
 			)}</button>`
 		);
@@ -466,7 +466,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 			this.sk = "0";
 			$right.append(
 				`<span class="ua-set-sep"></span><span class="ua-set-label" id="ua-sk-${cfg.report}">${esc(__("Субконто"))}</span>` +
-					`<div class="ua-seg ua-sk" role="radiogroup" aria-labelledby="ua-sk-${cfg.report}">` +
+					`<div class="bo-seg ua-sk" role="radiogroup" aria-labelledby="ua-sk-${cfg.report}">` +
 					[
 						["0", __("Ні")],
 						["1", __("1 рівень")],
@@ -484,7 +484,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 					[1, 2, 3]
 						.map(
 							(n) =>
-								`<select class="ua-input ua-input--sm ua-level" data-level="${n}" aria-label="${esc(
+								`<select class="bo-input bo-input--sm ua-level" data-level="${n}" aria-label="${esc(
 									__("Групування {0}", [n])
 								)}"><option value="">—</option></select>`
 						)
@@ -499,11 +499,11 @@ ua_accounting.reports.ReportPage = class ReportPage {
 	}
 
 	make_result() {
-		this.$card = $(`<section class="ua-card ua-rpt-card" aria-label="${esc(__("Звіт"))}">
+		this.$card = $(`<section class="bo-card ua-rpt-card" aria-label="${esc(__("Звіт"))}">
 			<div class="ua-rpt-head"><div class="ua-rpt-meta"></div>
 				<span class="ua-hint" hidden>${icon("info")}${esc(__("Клік по сумі — розшифровка"))}</span></div>
 			<div class="ua-rpt-msg" hidden></div>
-			<div class="ua-table-wrap ua-rpt-wrap"></div>
+			<div class="bo-table-wrap ua-rpt-wrap"></div>
 		</section>`).appendTo(this.$root);
 		this.$wrap = this.$card.find(".ua-rpt-wrap");
 		this.$wrap.on("scroll", () => this.$wrap.toggleClass("is-scrolled", this.$wrap[0].scrollTop > 0));
@@ -572,7 +572,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 			if (e.key !== "Enter" || !(e.ctrlKey || e.metaKey)) return;
 			if (!$(this.wrapper).is(":visible") || $(".modal.show").length) return;
 			e.preventDefault();
-			ua_accounting.ui.close_menu();
+			beeone.ui.close_menu();
 			this.run();
 		});
 		$(window).on("resize", () => this.fit());
@@ -588,9 +588,9 @@ ua_accounting.reports.ReportPage = class ReportPage {
 
 	more_menu(btn) {
 		const html =
-			`<button class="ua-menu-item" data-x="expand">${icon("chev-d")}${esc(__("Розгорнути все"))}</button>` +
-			`<button class="ua-menu-item" data-x="collapse">${icon("chev-r")}${esc(__("Згорнути все"))}</button>`;
-		ua_accounting.ui.menu(
+			`<button class="bo-menu-item" data-x="expand">${icon("chev-d")}${esc(__("Розгорнути все"))}</button>` +
+			`<button class="bo-menu-item" data-x="collapse">${icon("chev-r")}${esc(__("Згорнути все"))}</button>`;
+		beeone.ui.menu(
 			btn,
 			html,
 			(item) => {
@@ -606,13 +606,13 @@ ua_accounting.reports.ReportPage = class ReportPage {
 	// a popover that holds a live control (chips of organizations, accounts or a currency)
 	chip_menu(btn, title, $box, clear) {
 		const html =
-			`<div class="ua-menu-label">${esc(title)}</div><div class="ua-pop-slot"></div>` +
-			`<div class="ua-pop-foot"><button type="button" class="ua-btn ua-btn--sm ua-btn--ghost" data-act="clear">${esc(
+			`<div class="bo-menu-label">${esc(title)}</div><div class="ua-pop-slot"></div>` +
+			`<div class="ua-pop-foot"><button type="button" class="bo-btn bo-btn--sm bo-btn--ghost" data-act="clear">${esc(
 				__("Усі")
-			)}</button><button type="button" class="ua-btn ua-btn--sm ua-btn--primary" data-act="done">${esc(
+			)}</button><button type="button" class="bo-btn bo-btn--sm bo-btn--primary" data-act="done">${esc(
 				__("Готово")
 			)}</button></div>`;
-		ua_accounting.ui.menu(
+		beeone.ui.menu(
 			btn,
 			html,
 			(item) => {
@@ -692,16 +692,16 @@ ua_accounting.reports.ReportPage = class ReportPage {
 			this.date_to = this.field(this.$date_box, { fieldtype: "Date", fieldname: "date_to", label: __("По") });
 		}
 		const html =
-			`<div class="ua-pp"><div class="ua-pp-quick"><div class="ua-menu-label">${esc(__("Швидкий вибір"))}</div>` +
-			QUICK.map((q, i) => `<button type="button" class="ua-menu-item" data-q="${i}">${esc(q.label)}</button>`).join("") +
-			`</div><div class="ua-pp-custom"><div class="ua-menu-label">${esc(__("Довільний період"))}</div>` +
+			`<div class="ua-pp"><div class="ua-pp-quick"><div class="bo-menu-label">${esc(__("Швидкий вибір"))}</div>` +
+			QUICK.map((q, i) => `<button type="button" class="bo-menu-item" data-q="${i}">${esc(q.label)}</button>`).join("") +
+			`</div><div class="ua-pp-custom"><div class="bo-menu-label">${esc(__("Довільний період"))}</div>` +
 			`<div class="ua-pop-slot"></div></div>` +
-			`<div class="ua-pop-foot"><button type="button" class="ua-btn ua-btn--sm" data-act="cancel">${esc(
+			`<div class="ua-pop-foot"><button type="button" class="bo-btn bo-btn--sm" data-act="cancel">${esc(
 				__("Скасувати")
-			)}</button><button type="button" class="ua-btn ua-btn--sm ua-btn--primary" data-act="ok">${esc(
+			)}</button><button type="button" class="bo-btn bo-btn--sm bo-btn--primary" data-act="ok">${esc(
 				__("Застосувати")
 			)}</button></div></div>`;
-		ua_accounting.ui.menu(
+		beeone.ui.menu(
 			btn,
 			html,
 			(item) => {
@@ -758,7 +758,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 		};
 		sel.$input.on("change", apply_type);
 		$(
-			`<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon ua-btn--sm" aria-label="${esc(
+			`<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon bo-btn--sm" aria-label="${esc(
 				__("Прибрати відбір")
 			)}">${icon("x")}</button>`
 		)
@@ -915,15 +915,15 @@ ua_accounting.reports.ReportPage = class ReportPage {
 		let rows = "";
 		for (let i = 0; i < 12; i++) {
 			const w = 30 + ((i * 17) % 40);
-			rows += `<tr class="ua-skel-tr"><td><span class="ua-skel" style="width:${w}%"></span></td>`;
+			rows += `<tr class="ua-skel-tr"><td><span class="bo-skel" style="width:${w}%"></span></td>`;
 			for (let j = 0; j < 6; j++) {
-				rows += `<td><span class="ua-skel" style="width:${40 + ((i * 7 + j * 13) % 45)}%;margin-left:auto"></span></td>`;
+				rows += `<td><span class="bo-skel" style="width:${40 + ((i * 7 + j * 13) % 45)}%;margin-left:auto"></span></td>`;
 			}
 			rows += "</tr>";
 		}
 		this.$card.find(".ua-hint, .ua-rpt-msg").prop("hidden", true);
 		this.$wrap.html(
-			`<table class="ua-table ua-rpt-skel" aria-busy="true" aria-label="${esc(__("Завантаження"))}"><tbody>${rows}</tbody></table>`
+			`<table class="bo-table ua-rpt-skel" aria-busy="true" aria-label="${esc(__("Завантаження"))}"><tbody>${rows}</tbody></table>`
 		);
 		this.fit();
 	}
@@ -931,7 +931,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 	show_state(o) {
 		this.$card.find(".ua-rpt-head").prop("hidden", !this.model);
 		this.$card.find(".ua-hint, .ua-rpt-msg").prop("hidden", true);
-		this.$wrap.html(`<div class="ua-state-box">${ua_accounting.ui.empty_html(o)}</div>`);
+		this.$wrap.html(`<div class="ua-state-box">${beeone.ui.empty_html(o)}</div>`);
 		this.fit();
 	}
 
@@ -992,7 +992,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 		this.apply_visibility(true);
 		// the second head row sticks right under the first one
 		const h = this.$wrap.find("thead tr").first().outerHeight() || 34;
-		this.$wrap[0].style.setProperty("--ua-h1", h + "px");
+		this.$wrap[0].style.setProperty("--bo-h1", h + "px");
 		this.fit();
 	}
 
@@ -1009,7 +1009,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 			if ((c.rowspan || 1) === 1) for (let k = 0; k < span; k++) under.push(pos + k);
 			pos += span;
 		});
-		const al = (i) => (cols[i] && cols[i].align === "right" ? " ua-r" : cols[i] && cols[i].align === "center" ? " ua-c" : "");
+		const al = (i) => (cols[i] && cols[i].align === "right" ? " bo-r" : cols[i] && cols[i].align === "center" ? " bo-c" : "");
 		const g = (i) => (gs.has(i) ? " ua-gs" : "");
 		let p = 0;
 		const head1 = (m.header[0] || [])
@@ -1038,7 +1038,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 		const body = this.body_rows.map((r, i) => this.row_html(r, i, gs, al)).join("");
 		const foot = this.foot ? `<tfoot>${this.row_html(this.foot, -1, gs, al, true)}</tfoot>` : "";
 		return (
-			`<table class="ua-table ua-rpt ua-rpt--${this.cfg.report}${numeric ? " ua-rpt--fixed" : ""}${
+			`<table class="bo-table ua-rpt ua-rpt--${this.cfg.report}${numeric ? " ua-rpt--fixed" : ""}${
 				m.header.length > 1 ? " ua-rpt--two" : ""
 			}" aria-label="${esc(m.title)}"><colgroup>${colgroup}</colgroup>` +
 			`<thead><tr>${head1}</tr>${head2 ? `<tr>${head2}</tr>` : ""}</thead><tbody>${body}</tbody>${foot}</table>`
@@ -1077,7 +1077,7 @@ ua_accounting.reports.ReportPage = class ReportPage {
 					html = fmt_number(v, col.kind === "money" ? 2 : 3);
 					if (html && r.drill && !is_foot) html = `<span class="ua-amt" tabindex="0" role="button" data-i="${i}">${html}</span>`;
 				} else if (col.kind === "lines") {
-					html = (v || []).map((x, n) => (n ? `<span class="ua-cell-sub">${esc(x)}</span>` : `<b>${esc(x)}</b>`)).join("");
+					html = (v || []).map((x, n) => (n ? `<span class="bo-cell-sub">${esc(x)}</span>` : `<b>${esc(x)}</b>`)).join("");
 				} else if (col.kind === "doc" && r.links[col.key]) {
 					const l = r.links[col.key];
 					html = `<a href="${esc(frappe.utils.get_form_link(l.doctype, l.name))}">${esc(v)}</a>`;
@@ -1156,10 +1156,10 @@ ua_accounting.reports.ReportPage = class ReportPage {
 			{ to: "osv_account", icon: "sheet", label: __("ОСВ по рахунку {0}", [d.account]) },
 		];
 		const html =
-			`<div class="ua-menu-label">${esc(__("Розшифровка · рахунок {0}", [d.account]))}</div>` +
-			items.map((x) => `<button class="ua-menu-item" data-to="${x.to}">${icon(x.icon)}${esc(x.label)}</button>`).join("");
+			`<div class="bo-menu-label">${esc(__("Розшифровка · рахунок {0}", [d.account]))}</div>` +
+			items.map((x) => `<button class="bo-menu-item" data-to="${x.to}">${icon(x.icon)}${esc(x.label)}</button>`).join("");
 		el.classList.add("is-active");
-		ua_accounting.ui.menu(el, html, (item) => this.drill(Object.assign({}, d, { to: item.dataset.to })), {
+		beeone.ui.menu(el, html, (item) => this.drill(Object.assign({}, d, { to: item.dataset.to })), {
 			cls: "ua-drill-pop",
 			on_close: () => el.classList.remove("is-active"),
 		});

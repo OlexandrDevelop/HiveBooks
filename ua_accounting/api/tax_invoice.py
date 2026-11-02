@@ -88,3 +88,8 @@ def make_from_cash_receipt(source_name):
 @frappe.whitelist()
 def make_from_cash_payment(source_name):
     return _draft(tax.CASH_OUT, source_name)
+
+
+@frappe.whitelist()
+def make_from_service_act(source_name):
+    return _draft(tax.SERVICE, source_name)

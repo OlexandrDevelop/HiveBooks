@@ -39,13 +39,13 @@ _v = _asset_version()
 
 app_include_css = [
     f"/assets/ua_accounting/css/{name}.css?v={_v}"
-    for name in ("ua_theme", "ua_components", "ua_desk", "ua_report")
+    for name in ("ua_desk", "ua_report")
 ]
 app_include_js = [
     f"/assets/ua_accounting/js/{name}.js?v={_v}"
     for name in (
         "ua_desk",
-        "ua_ui",
+        "ua_org",
         "ua_tree_sidebar",
         "ua_list",
         "ua_form_toolbar",
@@ -56,9 +56,16 @@ app_include_js = [
     )
 ]
 
-# BeeOne owns the desktop shell. The former ua_shell.js rendered a second,
-# competing sidebar on startup and hid the platform's multi-window desktop.
-beeone_sections = ["ua_accounting.beeone_shell.sections"]
+# beeone desktop shell: sections of the function panel and widgets of the desk
+beeone_sections = ["ua_accounting.desk_shell.beeone_sections"]
+beeone_widgets = ["ua_accounting.desk_shell.beeone_widgets"]
+beeone_role_desks = ["ua_accounting.desk_shell.beeone_role_desks"]
+
+# demo data: bench beeone demo --app ua_accounting (bench ua-demo wraps it)
+beeone_demo = ["ua_accounting.setup.demo.beeone_demo"]
+
+# first-run wizard of the core: the steps of HiveBooks
+beeone_setup_steps = ["ua_accounting.setup.wizard.beeone_setup_steps"]
 
 jinja = {
     "methods": [
@@ -116,8 +123,6 @@ doc_events = {
         "before_cancel": ["ua_accounting.administration.check_period", "ua_accounting.accounting.month_closing.guard_cancel"],
         "on_trash": "ua_accounting.administration.check_period",
         "before_update_after_submit": "ua_accounting.administration.check_access",
-        "on_submit": ["ua_accounting.accounting.stock.recalc_later"],
-        "on_cancel": ["ua_accounting.accounting.stock.recalc_later"],
     }
 }
 
@@ -137,6 +142,8 @@ beeone_validators = {
     "iban": "ua_accounting.exchange.nbu.validate_iban",
 }
 beeone_lock_date = ["ua_accounting.accounting.ledger.get_lock_date"]
+# beeone: monthly totals of the accounting register are kept in UA Account Turnover by the core adapter
+beeone_accounting_totals = {"UA Accounting Entry": "ua_accounting.accounting.ledger.totals_mapping"}
 
 # beeone provider contracts: the signature library (EUSign) and the receipt service format stay in this app
 beeone_signature_providers = {"iit_eusign": "ua_accounting.accounting.signature_provider.EUSignSignature"}
@@ -152,6 +159,9 @@ basis_map = [
     {"source": "UA Purchase Receipt", "target": "UA Tax Invoice", "label": "Податкова накладна (отримана)", "method": "ua_accounting.api.tax_invoice.make_from_receipt", "submit_first": True},
     {"source": "UA Cash Receipt", "target": "UA Tax Invoice", "label": "Податкова накладна (аванс)", "method": "ua_accounting.api.tax_invoice.make_from_cash_receipt", "submit_first": True},
     {"source": "UA Cash Payment", "target": "UA Tax Invoice", "label": "Податкова накладна (аванс)", "method": "ua_accounting.api.tax_invoice.make_from_cash_payment", "submit_first": True},
+    {"source": "UA Customer Order", "target": "UA Payment Invoice", "label": "Інвойс", "method": "ua_accounting.ua_documents.doctype.ua_customer_order.ua_customer_order.make_invoice", "submit_first": True},
+    {"source": "UA Payment Invoice", "target": "UA Cash Receipt", "label": "Надходження коштів", "method": "ua_accounting.api.invoice.make_payment", "submit_first": True},
+    {"source": "UA Service Act", "target": "UA Tax Invoice", "label": "Податкова накладна", "method": "ua_accounting.api.tax_invoice.make_from_service_act", "submit_first": True},
     {"source": "UA Tax Invoice", "target": "UA Tax Adjustment", "label": "Розрахунок коригування", "method": "ua_accounting.api.tax_adjustment.make_adjustment", "submit_first": True},
 ]
 

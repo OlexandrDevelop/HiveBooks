@@ -4194,7 +4194,9 @@ UA Own Work Line,Рядок акта власного виробництва
 UA Packaging Balance,Розрахунки за тару
 UA Packaging Line,Рядок тари
 UA Packaging Return,Повернення тари
-UA Payment Invoice,Рахунок на оплату покупцю
+UA Payment Invoice,Інвойс (рахунок на оплату)
+UA Invoice Adjustment,Коригування інвойсу
+UA Payment Allocation,Розподіл оплати за інвойсом
 UA Payment Order,Платіжне доручення
 UA Payroll,Нарахування зарплати
 UA Payroll Accruals Report,Звіт по нарахуваннях
@@ -5238,3 +5240,133 @@ zoom-out,зменшити
 {} is not a valid date string.,{} не є дійсним рядком дати.
 Розрахунок резерву сумнівних боргів,Розрахунок резерву сумнівних боргів
 ← Back to upload files,"← Назад, щоб завантажити файли"
+Account {0} is a group and cannot be posted,Рахунок {0} є групою: проведення неможливе
+Account {0} does not define subaccount {1},Рахунок {0} не має субконто {1}
+Subaccount {0} requires a DocType and a value,"Субконто {0}: потрібна пара (DocType, назва)"
+A missing account side is allowed only for off-balance accounts,Порожній рахунок дозволений лише для позабалансових
+Balance-sheet and off-balance accounts cannot be combined,Не можна поєднувати балансовий і позабалансовий рахунок
+Amount and quantity cannot both be zero,Сума та кількість дорівнюють нулю
+An accounting entry needs at least one account,Проводка: не вказано рахунки
+1 window,1 вікно
+{0} windows,Вікон: {0}
+Accent: cobalt,Акцент: кобальт
+Accent: teal,Акцент: бірюза
+Add widget,Додати віджет
+Edit widget,Змінити віджет
+Remove widget,Прибрати віджет
+Widget removed,Віджет прибрано
+Catalogs,Довідники
+Commands,Команди
+Could not load data,Не вдалося отримати дані
+Try again,Спробувати ще раз
+"Documents, lists and reports open as windows.","Документи, журнали і звіти відкриваються як вікна."
+Don't save,Не записувати
+Favorites,Обране
+Recent,Нещодавні
+Open windows,Відкриті вікна
+"Find a command, report or open window…","Знайти команду, звіт або відкрите вікно…"
+"Good afternoon, {0}","Доброго дня, {0}"
+"Good evening, {0}","Добрий вечір, {0}"
+"Good morning, {0}","Доброго ранку, {0}"
+"Good night, {0}","Доброї ночі, {0}"
+Keyboard shortcuts,Гарячі клавіші
+Large,Великий
+Small,Малий
+Wide,Широкий
+Maximize,Розгорнути
+Minimize,Згорнути
+Restore size,Відновити розмір
+Mini report,Міні-звіт
+Quarter,Квартал
+Move down,Перемістити нижче
+Move up,Перемістити вище
+Next window,Наступне вікно
+No access,Немає доступу
+No data for the period,Даних за період немає
+Nothing found,Нічого не знайдено
+Recent documents,Останні документи
+Reset layout,Скинути розкладку
+Save and close,Записати і закрити
+Save changes?,Зберегти зміни?
+Sections,Розділи
+Shortcut,Швидкий доступ
+Show desktop,Показати робочий стіл
+This quarter,Цей квартал
+This year,Цей рік
+"Unloaded from memory, will open again","Вивантажено з пам'яті, відкриється знову"
+Widgets,Віджети
+Window N on the task bar,Вікно N на панелі задач
+Window closed: {0},Вікно закрито: {0}
+Window minimized: {0},Вікно згорнуто: {0}
+Window opened: {0},Вікно відкрито: {0}
+Your widgets will be here,Тут будуть ваші віджети
+documents,документів
+no read permission,немає права читання
+"""{0}"" has changes. If you close it without saving, the changes will be lost.","Документ «{0}» змінено. Якщо закрити без запису, зміни буде втрачено."
+"You may not read ""{0}"". No data is shown.",Немає права читати «{0}». Дані не показано.
+A short wizard collects what you need to start real work,"Короткий майстер збере все, що потрібно для початку реальної роботи"
+App {0} has no demo data generator. Apps with one: {1},Застосунок {0} не має генератора демоданих. Застосунки з генератором: {1}
+Back,Назад
+"Country, time zone and currency of the site","Країна, часовий пояс і валюта сайту"
+Date format,Формат дати
+Decide later,Вирішити пізніше
+Demo data,Демодані
+Demo data already exists. Use --reset to delete it and create it again.,"Демодані вже існують. Використайте --reset, щоб видалити їх і створити знову."
+Demo data failed,Не вдалося завантажити демодані
+Demo data is already loaded,Демодані вже завантажено
+Demo data is being processed,Демодані обробляються
+Demo data is being processed. Wait a few minutes.,Демодані обробляються. Зачекайте кілька хвилин.
+Demo data is loaded,Демодані завантажено
+Demo data is loading,Демодані завантажуються
+Demo data is not yet supported on this database,Демодані поки не підтримуються на цій базі даних
+Demo data is ready,Демодані готові
+Demo data removed,Демодані видалено
+Demo data self-check failed: {0},Самоперевірка демоданих не пройшла: {0}
+Enter the organization's initial settings,Ввести початкові налаштування організації
+Fill with demo data,Заповнити демоданими
+How do you want to start?,З чого почати?
+Initial settings,Початкові налаштування
+Initial setup,Початкове налаштування
+Loading registers…,Завантаження регістрів…
+Look around with ready sample records,Ознайомтеся з готовими прикладами записів
+Movements and balances,Рухи та залишки
+No app provides demo data,Жоден застосунок не надає демоданих
+No registers available,Регістрів немає
+Number format,Формат чисел
+Only the sample records are deleted. Your own data stays.,Видаляються лише приклади записів. Ваші власні дані залишаються.
+Open a register to inspect its movements. Use filters and the seamless list scroll to explore large volumes.,"Відкрийте регістр, щоб переглянути його рухи. Для великих обсягів користуйтеся фільтрами та безперервним прокручуванням списку."
+Open again,Відкрити знову
+Open movements,Відкрити рухи
+Register explorer,Огляд регістрів
+Registers,Регістри
+Remove demo data,Видалити демодані
+Role desk,Робочий стіл ролі
+Sample records to look around,Приклади записів для ознайомлення
+Sample records will be created. This takes a few minutes.,Буде створено приклади записів. Це триватиме кілька хвилин.
+Save and continue,Зберегти й продовжити
+Save and finish,Зберегти й завершити
+Step {0} is not finished,Крок «{0}» не завершено
+Step {0} of {1},Крок {0} з {1}
+The demo job failed. See the error log.,Завантаження демоданих завершилось помилкою. Див. журнал помилок.
+The initial settings are entered,Початкові налаштування введено
+The layout is too big,Розкладка завелика
+"The site already has its own data, so demo data cannot be added","На сайті вже є власні дані, тому демодані додати не можна"
+The step could not be saved,Крок не вдалося зберегти
+There is no demo data,Демоданих немає
+This step is required,Цей крок обов'язковий
+This takes a few minutes,Це триватиме кілька хвилин
+Time zone,Часовий пояс
+Unknown choice {0},Невідомий вибір {0}
+Unknown language {0},Невідома мова {0}
+Unknown scale {0}. Use: {1},Невідомий масштаб {0}. Використайте: {1}
+Unknown setup step {0},Невідомий крок налаштування {0}
+Welcome,Ласкаво просимо
+Window: close,Вікно: закрити
+{0} has a value that is not in the list,{0}: значення немає в списку
+{0} must be a date,{0} має бути датою
+{0} must be a list,{0} має бути списком
+{0} must be a number,{0} має бути числом
+{0} must be a whole number,{0} має бути цілим числом
+{0} was not found,{0}: не знайдено
+Regional settings,Регіональні налаштування
+UA Exchange Rate,Курси валют

@@ -12,7 +12,7 @@ import frappe
 from frappe import _
 from frappe.utils import flt, get_last_day, getdate
 
-from ua_accounting.accounting.utils import first_of_month, next_names, std_columns
+from ua_accounting.accounting.utils import first_of_month, register_append, register_delete
 from ua_accounting.accounting_policy import policy_for
 
 READERS = ("UA Accountant", "UA Accounting Manager", "UA Chief Accountant", "System Manager")
@@ -29,10 +29,6 @@ LIMIT_CODE = {G1: "EP_LIMIT_G1_MULT", G2: "EP_LIMIT_G2_MULT", G3: "EP_LIMIT_G3_M
 FIXED_MAX_PCT = {G1: 10, G2: 20}  # ПКУ 293.1: % of the living minimum (G1) / minimum wage (G2)
 PERIODS = {"Q1": 3, "H1": 6, "9M": 9, "Y": 12}
 ORDER = ["Q1", "H1", "9M", "Y"]
-INCOME_FIELDS = [
-    "posting_date", "period", "registrar_type", "registrar", "line_no", "organization",
-    "income_amount", "vat_amount", "document_description", "content",
-]
 
 # leaf accounts of the simplified chart of small enterprises (Наказ №291, малі підприємства)
 SIMPLE_CHART_ACCOUNTS = frozenset("""
@@ -146,13 +142,11 @@ def post_income(doc):
         "income_amount": income, "vat_amount": vat, "document_description": description[:140],
         "content": doc.content_text(),
     }
-    std = std_columns()
-    name = next_names(BOOK, 1)[0]
-    frappe.db.bulk_insert(BOOK, ["name"] + INCOME_FIELDS + list(std), [[name] + [row[f] for f in INCOME_FIELDS] + list(std.values())])
+    register_append(BOOK, doc, [row])
 
 
 def cancel_income(doc):
-    frappe.db.delete(BOOK, {"registrar_type": doc.doctype, "registrar": doc.name})
+    register_delete(BOOK, doc)
 
 
 def income_between(organization, date_from, date_to):

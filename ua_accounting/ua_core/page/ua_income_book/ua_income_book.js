@@ -18,13 +18,13 @@ frappe.pages["ua-income-book"].on_page_load = function (wrapper) {
 				<td>${esc(r.document_description)}</td><td class="text-right">${money(r.income_amount)}</td></tr>`).join("");
 			const quarters = book.quarters.map((q) => `<tr><td colspan="3">Разом за ${q.quarter} квартал</td>
 				<td class="text-right">${money(q.income)}</td></tr>`).join("");
-			$body.html(`<div class="ua-card"><h2>Книга обліку доходів</h2>
+			$body.html(`<div class="bo-card"><h2>Книга обліку доходів</h2>
 				<table class="table table-bordered"><thead><tr><th>№</th><th>Дата</th><th>Відомості про документ</th>
 				<th class="text-right">Сума доходу</th></tr></thead><tbody>${rows}${quarters}
 				<tr><td colspan="3"><b>Разом за період</b></td><td class="text-right"><b>${money(book.total_income)}</b></td></tr>
 				</tbody></table></div>`);
 		});
 	}
-	$body.html(`<div class="ua-card"><h2>Книга обліку доходів</h2><p>Оберіть організацію та період.</p></div>`);
+	$body.html(`<div class="bo-card"><h2>Книга обліку доходів</h2><p>Оберіть організацію та період.</p></div>`);
 	setTimeout(run, 300);
 };

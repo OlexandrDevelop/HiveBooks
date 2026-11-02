@@ -100,7 +100,7 @@ def sale_entries(doc, settle, used):
 SOURCES = (
     ("UA Purchase Receipt", "-1", "p.exchange_rate"),
     ("UA Sales Invoice", "1", "p.exchange_rate"),
-    ("UA Packaging Return", f"if(p.direction = '{FROM_BUYER}', -1, 1)", "1"),
+    ("UA Packaging Return", f"case when p.direction = '{FROM_BUYER}' then -1 else 1 end", "1"),
 )
 
 

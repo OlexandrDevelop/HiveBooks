@@ -106,13 +106,13 @@ def has_currency_amounts(account):
     for side in ("dr", "cr"):
         if frappe.db.sql(
             f"select 1 from `tabUA Accounting Entry` where account_{side} = %s "
-            f"and (ifnull(currency_{side}, '') != '' or ifnull(currency_amount_{side}, 0) != 0) limit 1",
+            f"and (coalesce(currency_{side}, '') != '' or coalesce(currency_amount_{side}, 0) != 0) limit 1",
             account,
         ):
             return True
     return bool(
         frappe.db.sql(
-            "select 1 from `tabUA Account Turnover` where account = %s and ifnull(currency, '') != '' limit 1",
+            "select 1 from `tabUA Account Turnover` where account = %s and coalesce(currency, '') != '' limit 1",
             account,
         )
     )

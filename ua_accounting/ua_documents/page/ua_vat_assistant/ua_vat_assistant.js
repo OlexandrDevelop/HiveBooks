@@ -7,7 +7,7 @@ frappe.pages["ua-vat-assistant"].on_page_load = function (wrapper) {
 	frappe.route_options = null;
 	const shell_org = ua_accounting.shell.current_org ? ua_accounting.shell.current_org() : null;
 	const esc = frappe.utils.escape_html;
-	const money = (v) => ua_accounting.ui.money(v || 0);
+	const money = (v) => beeone.ui.money(v || 0);
 	const day = (iso) => (iso ? frappe.datetime.str_to_user(iso) : "");
 	const field = (opts) => page.add_field(Object.assign({ change: () => run() }, opts));
 
@@ -44,8 +44,8 @@ frappe.pages["ua-vat-assistant"].on_page_load = function (wrapper) {
 		return ((data && data.to_issue) || [])
 			.map(
 				(r, i) => `<tr><td>${esc(r.basis)}</td><td>${esc(r.counterparty_title || r.counterparty)}</td><td>${day(r.date)}</td>
-				<td class="text-right ua-num">${money(r.base)}</td><td class="text-right ua-num">${money(r.vat)}</td>
-				<td class="text-right ua-num">${money(r.total)}</td><td>${day(r.deadline)}</td>
+				<td class="text-right bo-num">${money(r.base)}</td><td class="text-right bo-num">${money(r.vat)}</td>
+				<td class="text-right bo-num">${money(r.total)}</td><td>${day(r.deadline)}</td>
 				<td><button class="btn btn-xs btn-default" data-act="issue" data-i="${i}">${__("Створити податкову накладну")}</button></td></tr>`
 			)
 			.join("");
@@ -56,13 +56,13 @@ frappe.pages["ua-vat-assistant"].on_page_load = function (wrapper) {
 			.map(
 				(r) => `<tr><td><a href="/desk/ua-tax-invoice/${encodeURIComponent(r.tax_invoice)}">${esc(r.tax_invoice)}</a></td>
 				<td>${day(r.date)}</td><td>${esc(r.counterparty_title || r.counterparty)}</td>
-				<td class="text-right ua-num">${money(r.vat)}</td><td>${esc(__(r.erpn_status))}</td><td>${day(r.deadline)}</td>
+				<td class="text-right bo-num">${money(r.vat)}</td><td>${esc(__(r.erpn_status))}</td><td>${day(r.deadline)}</td>
 				<td>${
 					r.overdue_days
-						? `<span class="ua-badge ua-badge--cancelled">${__("Прострочено")}: ${r.overdue_days}</span>`
+						? `<span class="bo-badge bo-badge--cancelled">${__("Прострочено")}: ${r.overdue_days}</span>`
 						: __("Залишилось днів: {0}", [r.days_left])
 				}</td>
-				<td class="text-right ua-num">${r.penalty ? `${money(r.penalty)} (${r.penalty_pct}%)` : ""}</td></tr>`
+				<td class="text-right bo-num">${r.penalty ? `${money(r.penalty)} (${r.penalty_pct}%)` : ""}</td></tr>`
 			)
 			.join("");
 	}
@@ -79,27 +79,27 @@ frappe.pages["ua-vat-assistant"].on_page_load = function (wrapper) {
 			.map((m) => `<tr><td>${esc(kinds[m.kind] || m.kind)}</td><td>${esc(m.number)}</td><td>${day(m.date)}</td><td>${sides(m.ours)}</td><td>${sides(m.theirs)}</td></tr>`)
 			.join("");
 		return `<p>${__("Збігається: {0}", [comparison.matched])}</p>
-			<table class="table table-bordered ua-table"><thead><tr><th>${__("Розбіжність")}</th><th>${__("Номер")}</th><th>${__("Дата")}</th>
+			<table class="table table-bordered bo-table"><thead><tr><th>${__("Розбіжність")}</th><th>${__("Номер")}</th><th>${__("Дата")}</th>
 			<th>${__("В обліку: база / ПДВ")}</th><th>${__("В ЄРПН: база / ПДВ")}</th></tr></thead><tbody>${rows || empty(5)}</tbody></table>`;
 	}
 
 	function render() {
 		const d = data || { consolidated: { base: 0, vat: 0, count: 0 }, deadlines: {} };
 		$body.html(`
-			<div class="ua-card"><h3>${__("Виписати податкові накладні")}</h3>
-			<table class="table table-bordered ua-table"><thead><tr><th>${__("Документ")}</th><th>${__("Покупець")}</th><th>${__("Дата")}</th>
+			<div class="bo-card"><h3>${__("Виписати податкові накладні")}</h3>
+			<table class="table table-bordered bo-table"><thead><tr><th>${__("Документ")}</th><th>${__("Покупець")}</th><th>${__("Дата")}</th>
 				<th class="text-right">${__("База")}</th><th class="text-right">${__("ПДВ")}</th><th class="text-right">${__("Разом")}</th>
 				<th>${__("Виписати до")}</th><th></th></tr></thead><tbody>${issue_rows() || empty(8)}</tbody></table>
 			<p>${__("Зведена податкова накладна наприкінці місяця: документів {0}, база {1}, ПДВ {2}", [
 				d.consolidated.count, money(d.consolidated.base), money(d.consolidated.vat)])}</p></div>
-			<div class="ua-card"><h3>${__("Зареєструвати в ЄРПН")}</h3>
-			<table class="table table-bordered ua-table"><thead><tr><th>${__("Податкова накладна")}</th><th>${__("Дата")}</th><th>${__("Покупець")}</th>
+			<div class="bo-card"><h3>${__("Зареєструвати в ЄРПН")}</h3>
+			<table class="table table-bordered bo-table"><thead><tr><th>${__("Податкова накладна")}</th><th>${__("Дата")}</th><th>${__("Покупець")}</th>
 				<th class="text-right">${__("ПДВ")}</th><th>${__("Статус ЄРПН")}</th><th>${__("Зареєструвати до")}</th><th>${__("Строк")}</th>
 				<th class="text-right">${__("Штраф")}</th></tr></thead><tbody>${register_rows() || empty(8)}</tbody></table></div>
-			<div class="ua-card"><h3>${__("Строки")}</h3>
+			<div class="bo-card"><h3>${__("Строки")}</h3>
 			<p>${__("Декларація з ПДВ")}: <b>${day(d.deadlines.declaration)}</b></p>
 			<p>${__("Сплата ПДВ")}: <b>${day(d.deadlines.payment)}</b></p></div>
-			<div class="ua-card"><h3>${__("Звірка з ЄРПН")}</h3>
+			<div class="bo-card"><h3>${__("Звірка з ЄРПН")}</h3>
 			<p class="text-muted">${__("Вставте реєстр з ЄРПН: рядок на документ, поля через «;» — номер; дата (РРРР-ММ-ДД); ІПН; база; ПДВ")}</p>
 			<textarea class="form-control ua-va-register" rows="5"></textarea>
 			<p><button class="btn btn-default btn-sm" data-act="compare">${__("Звірити")}</button></p>${comparison_html()}</div>`);

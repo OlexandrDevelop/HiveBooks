@@ -1,0 +1,287 @@
+{
+ "doctype": "Sequence",
+ "name": "UA Stock Cost",
+ "sequence_name": "UA Stock Cost",
+ "mode": "Synchronous",
+ "key_fields": "organization",
+ "restore_method": "ua_accounting.accounting.stock.restore_sequence_stock_cost",
+ "documents": [
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Acquiring Settlement"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Advance Report"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Asset Acceptance"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Asset Depreciation"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Asset Modernization"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Asset Revaluation"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Asset Sale"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Asset Writeoff"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Bad Debt Write-off"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Bank Statement"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Cash Collection"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Cash Disbursement"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Cash Payment"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Cash Receipt"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Commission Agent Report"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Commission Receipt"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Commission Return"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Commission Transfer"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Currency Exchange"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Currency Revaluation"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Customs Import"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Debt Adjustment"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Dividend Accrual"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Finance Lease Receipt"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Journal Operation"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Lease Interest Accrual"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Lease Payment"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Leased Asset Receipt"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Leased Asset Return"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Loan Drawdown"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Loan Interest Accrual"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Loan Repayment"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Low Value Issue"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Opening Balances"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Own Work Act"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Packaging Return"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Payroll"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Principal Report"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Production Month Closing"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Production Report"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Provision Accrual"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Purchase Receipt"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Purchase Return"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Rent Accrual"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Requirement Invoice"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Retail Return"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Retail Revaluation"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Retail Sales Report"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Salary Payment"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Sales Invoice"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Sales Return"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Service Act"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Service Receipt"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Special Wear Issue"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Special Wear Monthly Writeoff"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Special Wear Return"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Special Wear Writeoff"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Stock Assembly"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Stock Surplus"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Stock Transfer"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Stock Writeoff"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Tax Adjustment"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Tax Payment"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Tolling Intake"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Tolling Output"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Tolling Receipt"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Tolling Transfer"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA Vacation Reserve Inventory"
+  },
+  {
+   "doctype": "Sequence Document",
+   "document_type": "UA VAT Allocation"
+  }
+ ],
+ "registers": []
+}

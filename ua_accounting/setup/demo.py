@@ -7,6 +7,7 @@ posted documents for the last months. The same seed gives the same data
 Run (from the bench folder):
     bench --site ua-dev.localhost ua-demo --scale small
     bench --site ua-dev.localhost ua-demo --reset
+    bench --site ua-dev.localhost beeone demo --app ua_accounting --scale small   (what ua-demo wraps)
     bench --site ua-dev.localhost execute ua_accounting.setup.demo.make_demo --kwargs "{'scale': 'small'}"
 
 Every record that the generator creates gets the tag `ua-demo` (field
@@ -18,6 +19,7 @@ import datetime
 import random
 
 import frappe
+from frappe.beeone.demo import run_demo, tag_records, tagged
 from frappe.utils import add_months, flt, get_first_day, getdate, today
 
 TAG = "ua-demo"
@@ -212,26 +214,33 @@ SERVICE_EXPENSE = {"rent": "Оренда приміщення", "telecom": "Зв
 def make_demo(scale="small", seed=42, reset=False, delete_only=False, **overrides):
     """Create the demo data. Refuses to run when demo data exists, unless `reset`.
 
+    The mechanics (tag, reset, seed, scale, self-check) are in the core: `frappe.beeone.demo`.
     reset=True deletes the demo records first, then creates them again.
     delete_only=True only deletes. `overrides` change a value of the scale
     (items, counterparties, months, docs_per_day, opening_stock_items, fast_items).
     """
-    if scale not in SCALES:
-        frappe.throw(f"Unknown scale {scale}. Use: {', '.join(SCALES)}")
-    if frappe.session.user in (None, "Guest"):
-        frappe.set_user("Administrator")
-    cfg = {**SCALES[scale], **{k: v for k, v in overrides.items() if v is not None}}
+    return run_demo("ua_accounting", scale=scale, seed=seed, reset=reset, delete_only=delete_only, **overrides)
 
-    if demo_exists():
-        if not (reset or delete_only):
-            frappe.throw("Demo data already exists. Use --reset to delete it and create it again.")
-    if reset or delete_only:
-        counts = delete_demo()
-        print(f"Deleted demo records: {counts}")
-        if delete_only:
-            return counts
 
-    gen = Generator(cfg, int(seed))
+def beeone_demo():
+    """Provider of the core demo framework (hook `beeone_demo`)."""
+    return {
+        "app": "ua_accounting",
+        "tag": TAG,
+        "root_doctype": "UA Organization",
+        "databases": ["mariadb", "postgres"],
+        "scales": SCALES,
+        "documents": DOC_ORDER,
+        "catalogs": CATALOG_ORDER,
+        "before_delete": clear_main_contracts,
+        "generate": generate,
+        "check": self_check,
+        "report": print_summary,
+    }
+
+
+def generate(cfg, seed):
+    gen = Generator(cfg, seed)
     try:
         gen.run()
     except Exception:
@@ -239,78 +248,17 @@ def make_demo(scale="small", seed=42, reset=False, delete_only=False, **override
         gen.flush_tags()
         frappe.db.commit()
         raise
-    result = gen.summary()
-    print_summary(result)
-    return result
+    return gen.summary()
 
 
-def demo_exists():
-    return bool(frappe.db.exists("UA Organization", {"_user_tags": ("like", f"%{TAG}%")}))
-
-
-def tagged(doctype):
-    return frappe.get_all(
-        doctype,
-        filters={"_user_tags": ("like", f"%{TAG}%")},
-        pluck="name",
-        order_by="creation desc",
-        limit_page_length=0,
-    )
-
-
-def delete_demo():
-    """Cancel and delete the tagged documents, then the tagged catalogs."""
-    # delete_doc queues one background job per record to clean links; run them at once instead
-    original_enqueue = frappe.enqueue
-
-    def enqueue_now(method, *args, **kwargs):
-        if method == "frappe.model.delete_doc.delete_dynamic_links":
-            return frappe.get_attr(method)(kwargs["doctype"], kwargs["name"])
-        return original_enqueue(method, *args, **kwargs)
-
-    frappe.enqueue = enqueue_now
-    try:
-        return _delete_demo()
-    finally:
-        frappe.enqueue = original_enqueue
-
-
-def _delete_demo():
-    counts = {}
-    for doctype in DOC_ORDER:
-        names = tagged(doctype)
-        for i, name in enumerate(names, start=1):
-            doc = frappe.get_doc(doctype, name)
-            if doc.docstatus == 1:
-                doc.flags.ignore_permissions = True
-                doc.cancel()
-            if i % 50 == 0:
-                frappe.db.commit()
-        for name in names:
-            frappe.delete_doc(doctype, name, force=1, ignore_permissions=True, delete_permanently=True)
-        counts[doctype] = len(names)
-        frappe.db.commit()
-
-    for name in tagged("UA Counterparty"):
+def clear_main_contracts():
+    for name in tagged(TAG, "UA Counterparty"):
         frappe.db.set_value("UA Counterparty", name, "main_contract", None, update_modified=False)
-    for doctype, is_tree in CATALOG_ORDER:
-        if is_tree:
-            names = frappe.get_all(
-                doctype,
-                filters={"_user_tags": ("like", f"%{TAG}%")},
-                pluck="name",
-                order_by="lft desc",
-                limit_page_length=0,
-            )
-        else:
-            names = tagged(doctype)
-        for i, name in enumerate(names, start=1):
-            frappe.delete_doc(doctype, name, force=1, ignore_permissions=True, delete_permanently=True)
-            if i % 200 == 0:
-                frappe.db.commit()
-        counts[doctype] = len(names)
-        frappe.db.commit()
-    return {k: v for k, v in counts.items() if v}
+
+
+def self_check(result):
+    """The OSV of the demo period must balance (turnover and closing, Dt = Kt)."""
+    return {"ok": result["osv"]["balanced"], "osv": result["osv"]}
 
 
 def check_osv():
@@ -385,7 +333,9 @@ class Generator:
         self.since_commit = 0
 
         self.end = getdate(today())
-        self.start = get_first_day(add_months(self.end, -(int(cfg["months"]) - 1)))
+        # A rolling window of `months` months (T-430: "documents over the last 3 months"). A calendar window
+        # starting on the 1st of the month would hold only two months of business days right after a month end.
+        self.start = add_months(self.end, -int(cfg["months"])) + datetime.timedelta(days=1)
 
         self.org = None
         self.persons = {}
@@ -437,12 +387,7 @@ class Generator:
 
     def flush_tags(self):
         for doctype, names in self.created.items():
-            for i in range(0, len(names), 500):
-                chunk = names[i : i + 500]
-                frappe.db.sql(
-                    f"update `tab{doctype}` set `_user_tags` = %s where name in ({', '.join(['%s'] * len(chunk))})",
-                    [f",{TAG}", *chunk],
-                )
+            tag_records(TAG, doctype, names)
         self.created = {}
 
     def later(self, date, fn):
@@ -1105,7 +1050,7 @@ class Generator:
 
     def schedule_monthly(self):
         months = []
-        d = self.start
+        d = get_first_day(self.start)
         while d <= self.end:
             months.append(d)
             d = get_first_day(add_months(d, 1))

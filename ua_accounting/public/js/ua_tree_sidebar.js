@@ -8,7 +8,7 @@ ua_accounting.ui.render_group_tree = function (listview, parent_field) {
 	const doctype = listview.doctype;
 	const title_field = frappe.get_meta(doctype).title_field || "name";
 	const esc = frappe.utils.escape_html;
-	const icon = (n, c) => ua_accounting.ui.icon(n, c);
+	const icon = (n, c) => beeone.ui.icon(n, c);
 	const $list = listview.$page.find(".frappe-list").first();
 
 	// the list card and the tree card share one grid
@@ -20,22 +20,22 @@ ua_accounting.ui.render_group_tree = function (listview, parent_field) {
 	let $card = $grid.find(".ua-tree-card");
 	if (!$card.length) {
 		$card = $(
-			`<section class="ua-card ua-tree-card" aria-labelledby="ua-tree-title">
-				<div class="ua-tree-head"><h2 class="ua-card-title" id="ua-tree-title">${esc(__("Групи"))}</h2>
-					<div class="ua-right">
-						<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon ua-btn--sm" data-tree="collapse" aria-label="${esc(
+			`<section class="bo-card ua-tree-card" aria-labelledby="ua-tree-title">
+				<div class="ua-tree-head"><h2 class="bo-card-title" id="ua-tree-title">${esc(__("Групи"))}</h2>
+					<div class="bo-right">
+						<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon bo-btn--sm" data-tree="collapse" aria-label="${esc(
 							__("Згорнути все")
-						)}" data-ua-tip="${esc(__("Згорнути все"))}">${icon("chev-u")}</button>
+						)}" data-bo-tip="${esc(__("Згорнути все"))}">${icon("chev-u")}</button>
 						${
 							listview.can_create
-								? `<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon ua-btn--sm" data-tree="new" aria-label="${esc(
+								? `<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon bo-btn--sm" data-tree="new" aria-label="${esc(
 										__("Створити групу")
-								  )}" data-ua-tip="${esc(__("Створити групу"))}">${icon("folder-plus")}</button>`
+								  )}" data-bo-tip="${esc(__("Створити групу"))}">${icon("folder-plus")}</button>`
 								: ""
 						}
 					</div>
 				</div>
-				<nav class="ua-tree" role="tree" aria-label="${esc(__("Групи"))}">${ua_accounting.ui.skeleton_rows(8, [70])}</nav>
+				<nav class="ua-tree" role="tree" aria-label="${esc(__("Групи"))}">${beeone.ui.skeleton_rows(8, [70])}</nav>
 			</section>`
 		);
 		$grid.prepend($card);
@@ -101,7 +101,7 @@ ua_accounting.ui.render_group_tree = function (listview, parent_field) {
 						const is_sel = g.name === sel;
 						return (
 							`<li role="treeitem" aria-expanded="${kids ? !!is_open : ""}" aria-selected="${is_sel}">` +
-							`<button type="button" class="ua-tnode${is_open ? " is-open" : ""}${is_sel ? " is-sel" : ""}" style="--ua-lvl:${lvl}" data-node="${esc(
+							`<button type="button" class="ua-tnode${is_open ? " is-open" : ""}${is_sel ? " is-sel" : ""}" style="--bo-lvl:${lvl}" data-node="${esc(
 								g.name
 							)}">` +
 							`<span class="ua-tw${kids ? "" : " leaf"}" data-tw="${esc(g.name)}">${icon("chev-r")}</span>` +
@@ -119,7 +119,7 @@ ua_accounting.ui.render_group_tree = function (listview, parent_field) {
 			'<ul role="group"><li role="treeitem" aria-expanded="true" aria-selected="' +
 			!sel +
 			'">' +
-			`<button type="button" class="ua-tnode is-open${sel ? "" : " is-sel"}" style="--ua-lvl:0" data-node="">` +
+			`<button type="button" class="ua-tnode is-open${sel ? "" : " is-sel"}" style="--bo-lvl:0" data-node="">` +
 			`<span class="ua-tw leaf"></span>${icon("folder-open", "ua-fic")}<span class="ua-tl">${esc(__("Усі"))}</span>` +
 			`<span class="ua-tc">${count(all)}</span></button></li></ul>`;
 		$card.find(".ua-tree").html(root + level("", 0));

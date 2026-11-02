@@ -1,48 +1,48 @@
 /* Month-end closing page (T-441). Reads only tokens. */
 .ua-mc {
-	padding: var(--ua-s-6) var(--ua-s-8) var(--ua-s-10);
+	padding: var(--bo-s-6) var(--bo-s-8) var(--bo-s-10);
 	display: flex;
 	flex-direction: column;
-	gap: var(--ua-s-4);
+	gap: var(--bo-s-4);
 }
 .ua-mc-head {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: var(--ua-s-4);
-	padding: var(--ua-s-4) var(--ua-s-5);
+	gap: var(--bo-s-4);
+	padding: var(--bo-s-4) var(--bo-s-5);
 }
 .ua-mc-pick,
 .ua-mc-actions {
 	display: flex;
 	align-items: center;
-	gap: var(--ua-s-3);
+	gap: var(--bo-s-3);
 }
 .ua-mc-pick label {
 	display: flex;
 	align-items: center;
-	gap: var(--ua-s-2);
-	color: var(--ua-text-2);
-	font-size: var(--ua-fs-13);
+	gap: var(--bo-s-2);
+	color: var(--bo-text-2);
+	font-size: var(--bo-fs-13);
 }
 .ua-mc-pick select {
-	height: var(--ua-h-control, 32px);
-	padding: 0 var(--ua-s-3);
-	border: 1px solid var(--ua-border);
-	border-radius: var(--ua-r-md);
-	background: var(--ua-surface);
-	color: var(--ua-text);
+	height: var(--bo-h-control, 32px);
+	padding: 0 var(--bo-s-3);
+	border: 1px solid var(--bo-border);
+	border-radius: var(--bo-r-md);
+	background: var(--bo-surface);
+	color: var(--bo-text);
 }
 .ua-mc-org {
-	font-weight: var(--ua-fw-medium);
-	color: var(--ua-text);
+	font-weight: var(--bo-fw-medium);
+	color: var(--bo-text);
 }
 .ua-mc-lock {
-	color: var(--ua-warning-text);
-	background: var(--ua-warning-soft);
-	border-radius: var(--ua-r-md);
-	padding: var(--ua-s-2) var(--ua-s-4);
-	font-size: var(--ua-fs-13);
+	color: var(--bo-warning-text);
+	background: var(--bo-warning-soft);
+	border-radius: var(--bo-r-md);
+	padding: var(--bo-s-2) var(--bo-s-4);
+	font-size: var(--bo-fs-13);
 }
 .ua-mc-card {
 	padding: 0;
@@ -52,7 +52,7 @@
 	max-width: 420px;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	color: var(--ua-text-2);
+	color: var(--bo-text-2);
 }
 .ua-mc-row-actions {
 	text-align: right;

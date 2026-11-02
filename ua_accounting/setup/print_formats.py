@@ -25,6 +25,8 @@ STYLE = """<style>
 .ua-form td.logo img { max-height: 60px; max-width: 90px; }
 .ua-form .cancel { color: #b00; font-weight: bold; }
 .ua-form .words { margin: 6px 0; }
+.ua-form .qr { text-align: right; margin: 6px 0; }
+.ua-form .qr img { width: 80px; height: 80px; }
 .ua-form .cut { border-top: 1px dashed #333; margin: 18px 0 10px; }
 </style>"""
 
@@ -35,6 +37,7 @@ MACROS = """{% macro party(label, p) %}<div>{{ label }}: <b>{{ (p.title or "")|e
 {% macro sign(left, right) %}<table class="sign"><tr><td>{{ left }}</td><td>Директор ________________ {{ (org.director_name or "")|e }}</td>
 <td>Головний бухгалтер ________________ {{ (org.accountant_name or "")|e }}</td><td>{{ right }}</td></tr></table><div>М.П.</div>{% endmacro %}
 {% macro money(value, currency) %}{{ uk_money(value) }} {{ "грн" if (not currency or currency == "UAH") else currency|e }}{% endmacro %}
+{% macro qr(payload) %}<div class="qr"><img src="{{ qr_code(payload) }}" alt="QR" width="80" height="80"></div>{% endmacro %}
 """
 
 SETUP = '{% set org = org_info(doc.organization) %}{% set cp = party_info(doc.counterparty) %}'
@@ -69,21 +72,28 @@ REF = '<div class="ref">Довідково: код контрагента в с�
 
 SELLER = '{{ party("Постачальник", org) }}{{ bank(org.bank) }}{{ party("Покупець", cp) }}'
 CONTRACT = '{% if doc.contract %}<div>Договір: {{ doc.contract|e }}</div>{% endif %}'
+# an event made from an Invoice names it as the basis (T-533)
+INVOICE_BASIS = ('{% if doc.invoice %}<div>Підстава: рахунок № {{ doc.invoice|e }} від '
+                 '{{ uk_date(frappe.db.get_value("UA Payment Invoice", doc.invoice, "posting_date")) }}</div>{% endif %}')
+TERMS = ('{% if doc.due_date %}<div>Оплатити до: {{ uk_date(doc.due_date) }}</div>{% endif %}'
+         '{% if doc.payment_terms %}<div>Умови розрахунків: {{ doc.payment_terms|e }}</div>{% endif %}')
 
-INVOICE = form("Рахунок на оплату", '<div class="meta">', SELLER, CONTRACT, "</div>", ROWS,
+INVOICE = form("Рахунок на оплату", '<div class="meta">', SELLER, CONTRACT, TERMS, "</div>", ROWS,
+               '{{ qr("UA-INV:" ~ doc.name ~ "|" ~ doc.posting_date ~ "|" ~ doc.total_amount) }}',
                '{{ sign("", "") }}', REF)
 
 ACT_WORKS = form(
     "Акт виконаних робіт",
-    '<div class="meta">{{ party("Виконавець", org) }}{{ party("Замовник", cp) }}', CONTRACT, "</div>", ROWS,
+    '<div class="meta">{{ party("Виконавець", org) }}{{ party("Замовник", cp) }}', CONTRACT, INVOICE_BASIS, "</div>", ROWS,
     "<p>Зазначені послуги виконано в повному обсязі. Замовник претензій до обсягу, якості та строків "
     "надання послуг не має.</p>", '{{ sign("Виконавець", "Замовник ________________") }}', REF)
 
 SALES_INVOICE = form(
     "Видаткова накладна",
-    '<div class="meta">', SELLER, CONTRACT,
+    '<div class="meta">', SELLER, CONTRACT, INVOICE_BASIS,
     '{% if doc.warehouse %}<div>Склад: {{ title_of("UA Warehouse", doc.warehouse)|e }}</div>{% endif %}</div>',
-    ROWS, '{{ sign("Відвантажив", "Отримав ________________") }}', REF)
+    ROWS, '{{ qr("UA-INV:" ~ doc.name ~ "|" ~ doc.posting_date ~ "|" ~ doc.total_amount) }}',
+    '{{ sign("Відвантажив", "Отримав ________________") }}', REF)
 
 RECEIPT = form(
     "Прибуткова накладна",
@@ -113,11 +123,37 @@ TAX_INVOICE = form(
 <p class="words">Усього з ПДВ прописом: <b>{{ money_in_words(doc.total_amount, doc.currency) }}</b></p>
 """, '{{ sign("", "") }}', REF)
 
+# Tax invoice (ПН) of the document UA Tax Invoice: its own lines, the registration in ЄРПН and the basis (T-533)
+TAX_INVOICE_DOC = form(
+    "Податкова накладна",
+    """<div class="meta">{{ party("Постачальник (продавець)", org) }}{{ party("Одержувач (покупець)", cp) }}
+<div>Дата складення: {{ uk_date(doc.posting_date) }}, номер: {{ (doc.number or doc.name)|e }}</div>
+<div>Вид: {{ (doc.invoice_kind or "")|e }}{% if doc.contract %}, договір: {{ doc.contract|e }}{% endif %}</div>
+{% if doc.basis %}<div>Підстава: {{ (doc.basis_type or "")|e }} {{ doc.basis|e }}</div>{% endif %}</div>
+<table>
+<tr><th>№</th><th>Номенклатура постачання</th><th>Код УКТЗЕД</th><th>Од.</th><th class="n">Кількість</th>
+<th class="n">Ціна без ПДВ</th><th class="n">Ставка ПДВ, %</th><th class="n">Обсяг постачання без ПДВ</th>
+<th class="n">Сума ПДВ</th></tr>
+{% for r in doc.lines %}
+<tr><td>{{ loop.index }}</td><td>{{ (r.description or "")|e }}</td><td>{{ (r.ukt_zed or "")|e }}</td>
+<td>{{ (r.uom or "")|e }}</td><td class="n">{{ r.quantity }}</td><td class="n">{{ uk_money(r.price) }}</td>
+<td class="n">{{ (r.vat_rate or "")|e }}</td><td class="n">{{ uk_money(r.base_amount) }}</td>
+<td class="n">{{ uk_money(r.vat_amount) }}</td></tr>
+{% endfor %}
+</table>
+<div class="total">Усього обсяг постачання без ПДВ: <b>{{ uk_money(doc.total_base) }}</b></div>
+<div class="total">Сума ПДВ: <b>{{ uk_money(doc.total_vat) }}</b></div>
+<div class="total">Усього з ПДВ: <b>{{ uk_money(doc.total_amount) }}</b></div>
+<p class="words">Усього з ПДВ прописом: <b>{{ money_in_words(doc.total_amount, doc.currency) }}</b></p>
+<div>Реєстрація в ЄРПН: {{ (doc.erpn_status or "")|e }}{% if doc.erpn_reg_number %}, реєстраційний номер {{ doc.erpn_reg_number|e }}{% endif %}{% if doc.erpn_reg_date %} від {{ uk_date(doc.erpn_reg_date) }}{% endif %}</div>
+""", '{{ sign("", "") }}', REF)
+
 WAYBILL = form(
     "Товарно-транспортна накладна",
     """<div class="meta">{{ party("Вантажовідправник", org) }}{{ bank(org.bank) }}{{ party("Вантажоодержувач", cp) }}
 <div>Пункт навантаження: {{ (org.legal_address or "")|e }}</div>
 <div>Пункт розвантаження: {{ (cp.legal_address or "")|e }}</div>
+""" + INVOICE_BASIS + """
 <div>Автомобіль: {{ (doc.vehicle_no or "")|e }}</div>
 <div>Водій: {{ (doc.driver_name or "")|e }}</div></div>
 {% set rows = (doc.goods or []) + (doc.services or []) %}
@@ -230,6 +266,7 @@ FORMATS = (
     ("UA Рахунок на оплату", "UA Payment Invoice", INVOICE),
     ("UA Акт виконаних робіт", "UA Service Act", ACT_WORKS),
     ("UA Податкова накладна", "UA Sales Invoice", TAX_INVOICE),
+    ("UA Податкова накладна (ПН)", "UA Tax Invoice", TAX_INVOICE_DOC),
     ("UA ТТН", "UA Sales Invoice", WAYBILL),
     ("UA ПКО", "UA Cash Receipt", PKO),
     ("UA ВКО", "UA Cash Payment", VKO),

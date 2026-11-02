@@ -12595,7 +12595,13 @@ msgid "UA Packaging Return"
 msgstr "Повернення тари"
 
 msgid "UA Payment Invoice"
-msgstr "Рахунок на оплату покупцю"
+msgstr "Інвойс (рахунок на оплату)"
+
+msgid "UA Invoice Adjustment"
+msgstr "Коригування інвойсу"
+
+msgid "UA Payment Allocation"
+msgstr "Розподіл оплати за інвойсом"
 
 msgid "UA Payment Order"
 msgstr "Платіжне доручення"
@@ -15777,3 +15783,6 @@ msgstr "Регістр {0} не має оборотів"
 
 msgid "The start of the period is after its end"
 msgstr "Початок періоду пізніший за його кінець"
+
+msgid "UA Exchange Rate"
+msgstr "Курси валют"

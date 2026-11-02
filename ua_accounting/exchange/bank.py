@@ -55,9 +55,9 @@ def existing_counts(bank_account, lines):
             continue
         rows = frappe.db.sql(
             """select s.name from `tabUA Bank Statement Line` l join `tabUA Bank Statement` s on s.name = l.parent
-            where s.bank_account = %s and ifnull(s.format, '') != '' and s.docstatus < 2 and l.posting_date = %s
-            and ifnull(l.number, '') = %s and l.amount = %s and l.direction = %s
-            and upper(replace(ifnull(l.counterparty_iban, ''), ' ', '')) = %s and trim(ifnull(l.purpose, '')) = %s""",
+            where s.bank_account = %s and coalesce(s.format, '') != '' and s.docstatus < 2 and l.posting_date = %s
+            and coalesce(l.number, '') = %s and l.amount = %s and l.direction = %s
+            and upper(replace(coalesce(l.counterparty_iban, ''), ' ', '')) = %s and trim(coalesce(l.purpose, '')) = %s""",
             (bank_account, ln["posting_date"], ln["number"], ln["amount"], ln["direction"], key[4], key[5]), pluck=True)
         found[key] = [len(rows), rows[0] if rows else None]
     return found

@@ -8,10 +8,10 @@ frappe.provide("ua_accounting.form");
 (function () {
 	const F = ua_accounting.form;
 	const esc = (v) => frappe.utils.escape_html(v == null ? "" : String(v));
-	const icon = (n, c) => ua_accounting.ui.icon(n, c);
-	const money = (v) => ua_accounting.ui.money(v, { cur: true });
+	const icon = (n, c) => beeone.ui.icon(n, c);
+	const money = (v) => beeone.ui.money(v, { cur: true });
 
-	F.kind = (frm) => (document.body.classList.contains("ua-shell") ? ua_accounting.ui.kind(frm.doctype) : null);
+	F.kind = (frm) => (document.body.classList.contains("bo-shell") ? ua_accounting.ui.kind(frm.doctype) : null);
 
 	F.perm = (frm) => (frm.perm && frm.perm[0]) || {};
 
@@ -31,7 +31,7 @@ frappe.provide("ua_accounting.form");
 	};
 
 	F.status = function (frm) {
-		if (frm.is_new()) return ["ua-badge--draft", __("Чернетка")];
+		if (frm.is_new()) return ["bo-badge--draft", __("Чернетка")];
 		if (frappe.get_meta(frm.doctype).is_submittable) {
 			const b = ua_accounting.list.BADGE[frm.doc.docstatus] || ua_accounting.list.BADGE[0];
 			return [b[0], __(b[1])];
@@ -51,22 +51,22 @@ frappe.provide("ua_accounting.form");
 			$block = $(
 				`<div class="ua-ph-block ua-doc-head">
 					<div class="ua-doc-title-row">
-						<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon" data-ua-cmd="back" aria-label="${esc(
+						<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon" data-ua-cmd="back" aria-label="${esc(
 							__("До списку")
-						)}" data-ua-tip="${esc(__("До списку · Esc"))}">${icon("chev-l")}</button>
+						)}" data-bo-tip="${esc(__("До списку · Esc"))}">${icon("chev-l")}</button>
 						<h1 class="ua-doc-title"><span class="ua-doc-type"></span> <span class="ua-no"></span></h1>
-						<span class="ua-badge ua-badge--lg ua-doc-status" role="status"></span>
+						<span class="bo-badge bo-badge--lg ua-doc-status" role="status"></span>
 						<span class="ua-dirty">${esc(__("Є незаписані зміни"))}</span>
-						<div class="ua-right">
-							<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon" data-ua-cmd="prev" aria-label="${esc(
+						<div class="bo-right">
+							<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon" data-ua-cmd="prev" aria-label="${esc(
 								__("Попередній документ")
-							)}" data-ua-tip="${esc(__("Попередній"))}">${icon("chev-u")}</button>
-							<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon" data-ua-cmd="next" aria-label="${esc(
+							)}" data-bo-tip="${esc(__("Попередній"))}">${icon("chev-u")}</button>
+							<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon" data-ua-cmd="next" aria-label="${esc(
 								__("Наступний документ")
-							)}" data-ua-tip="${esc(__("Наступний"))}">${icon("chev-d")}</button>
-							<button type="button" class="ua-btn ua-btn--ghost ua-btn--icon ua-fav" data-ua-cmd="fav" aria-pressed="false" aria-label="${esc(
+							)}" data-bo-tip="${esc(__("Наступний"))}">${icon("chev-d")}</button>
+							<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon ua-fav" data-ua-cmd="fav" aria-pressed="false" aria-label="${esc(
 								__("В обране")
-							)}" data-ua-tip="${esc(__("Додати в обране"))}">${icon("star")}</button>
+							)}" data-bo-tip="${esc(__("Додати в обране"))}">${icon("star")}</button>
 						</div>
 					</div>
 					<div class="ua-doc-toolbar" role="toolbar" aria-label="${esc(__("Команди документа"))}"></div>
@@ -82,7 +82,7 @@ frappe.provide("ua_accounting.form");
 		const st = F.status(frm);
 		$block
 			.find(".ua-doc-status")
-			.attr("class", `ua-badge ua-badge--lg ua-doc-status ${st ? st[0] : ""}`)
+			.attr("class", `bo-badge bo-badge--lg ua-doc-status ${st ? st[0] : ""}`)
 			.text(st ? st[1] : "")
 			.prop("hidden", !st);
 		const fav = !frm.is_new() && ua_accounting.shell.is_fav(F.fav_entry(frm).key);
@@ -100,11 +100,11 @@ frappe.provide("ua_accounting.form");
 
 	const btn = (cmd, label, ic, opts) => {
 		opts = opts || {};
-		const cls = ["ua-btn"];
-		if (opts.primary) cls.push("ua-btn--primary");
-		if (opts.ghost) cls.push("ua-btn--ghost");
-		if (opts.icon_only) cls.push("ua-btn--icon");
-		const tip = opts.tip ? ` data-ua-tip="${esc(opts.tip)}"` : "";
+		const cls = ["bo-btn"];
+		if (opts.primary) cls.push("bo-btn--primary");
+		if (opts.ghost) cls.push("bo-btn--ghost");
+		if (opts.icon_only) cls.push("bo-btn--icon");
+		const tip = opts.tip ? ` data-bo-tip="${esc(opts.tip)}"` : "";
 		const menu = opts.menu ? ' aria-haspopup="menu" aria-expanded="false"' : "";
 		const aria = opts.icon_only ? ` aria-label="${esc(label)}"` : "";
 		return (
@@ -153,12 +153,12 @@ frappe.provide("ua_accounting.form");
 			if (!frm.is_new() && (!show || show(frm))) mid.push(btn("extra" + i, __(label), ic));
 		});
 		if (!frm.is_new()) mid.push(btn("print", __("Друк"), "printer"));
-		const sep = left.length && mid.length ? '<span class="ua-toolbar-sep"></span>' : "";
+		const sep = left.length && mid.length ? '<span class="bo-toolbar-sep"></span>' : "";
 		$bar.html(
 			left.join("") +
 				sep +
 				mid.join("") +
-				`<div class="ua-right">${btn("more", __("Ще дії"), "more", { ghost: true, icon_only: true, menu: true })}${btn(
+				`<div class="bo-right">${btn("more", __("Ще дії"), "more", { ghost: true, icon_only: true, menu: true })}${btn(
 					"close_list",
 					__("Закрити"),
 					null,
@@ -221,16 +221,16 @@ frappe.provide("ua_accounting.form");
 			return;
 		}
 		const can_post = frm.doc.docstatus === 0 && F.perm(frm).submit && F.perm(frm).write;
-		const d = ua_accounting.ui.dialog({
+		const d = beeone.ui.dialog({
 			title: __("Проводок ще немає"),
 			width: 480,
 			html:
-				`<div class="ua-dialog-head"><div><div class="ua-dialog-title">${esc(__("Проводок ще немає"))}</div>` +
-				`<div class="ua-dialog-sub">${esc(__("Документ не проведено, тому він не формує записів Дт/Кт."))}</div></div>` +
-				`<button class="ua-btn ua-btn--ghost ua-btn--icon" data-close aria-label="${esc(__("Закрити"))}">${icon("x")}</button></div>` +
-				`<div class="ua-dialog-foot"><span></span><div class="ua-right"><button class="ua-btn" data-close>${esc(__("Скасувати"))}</button>` +
+				`<div class="bo-dialog-head"><div><div class="bo-dialog-title">${esc(__("Проводок ще немає"))}</div>` +
+				`<div class="bo-dialog-sub">${esc(__("Документ не проведено, тому він не формує записів Дт/Кт."))}</div></div>` +
+				`<button class="bo-btn bo-btn--ghost bo-btn--icon" data-close aria-label="${esc(__("Закрити"))}">${icon("x")}</button></div>` +
+				`<div class="bo-dialog-foot"><span></span><div class="bo-right"><button class="bo-btn" data-close>${esc(__("Скасувати"))}</button>` +
 				(can_post
-					? `<button class="ua-btn ua-btn--primary" data-act="post" autofocus>${icon("checks")}${esc(__("Провести і показати"))}</button>`
+					? `<button class="bo-btn bo-btn--primary" data-act="post" autofocus>${icon("checks")}${esc(__("Провести і показати"))}</button>`
 					: "") +
 				"</div></div>",
 		});
@@ -255,13 +255,13 @@ frappe.provide("ua_accounting.form");
 		const list = basis_entries(frm);
 		ua_accounting.ui.menu(
 			el,
-			`<div class="ua-menu-label">${esc(__("Створити на підставі"))}</div>` +
-				list.map((b, i) => `<button class="ua-menu-item" data-i="${i}">${icon("file-plus")}${esc(__(b.label))}</button>`).join(""),
+			`<div class="bo-menu-label">${esc(__("Створити на підставі"))}</div>` +
+				list.map((b, i) => `<button class="bo-menu-item" data-i="${i}">${icon("file-plus")}${esc(__(b.label))}</button>`).join(""),
 			(item) => {
 				const b = list[+item.getAttribute("data-i")];
 				if (!b) return;
 				if (frm.doc.docstatus !== 1) {
-					ua_accounting.ui.toast({ type: "warning", title: __("Спочатку проведіть документ"), text: __("Документ на підставі створюється з проведеного.") });
+					beeone.ui.toast({ type: "warning", title: __("Спочатку проведіть документ"), text: __("Документ на підставі створюється з проведеного.") });
 					return;
 				}
 				if (window.beeone?.basis?.create) window.beeone.basis.create(frm, b);
@@ -273,18 +273,18 @@ frappe.provide("ua_accounting.form");
 		const perm = F.perm(frm);
 		const items = [];
 		if (!frm.is_new() && frm.perm[0] && frappe.model.can_create(frm.doctype)) {
-			items.push(`<button class="ua-menu-item" data-a="copy">${icon("copy")}${esc(__("Скопіювати"))}</button>`);
+			items.push(`<button class="bo-menu-item" data-a="copy">${icon("copy")}${esc(__("Скопіювати"))}</button>`);
 		}
 		if (!frm.is_new()) {
-			items.push(`<button class="ua-menu-item" data-a="reload">${icon("refresh")}${esc(__("Оновити з бази"))}</button>`);
-			items.push(`<button class="ua-menu-item" data-a="history">${icon("history")}${esc(__("Історія змін"))}</button>`);
+			items.push(`<button class="bo-menu-item" data-a="reload">${icon("refresh")}${esc(__("Оновити з бази"))}</button>`);
+			items.push(`<button class="bo-menu-item" data-a="history">${icon("history")}${esc(__("Історія змін"))}</button>`);
 		}
 		if (!frm.is_new() && frm.doc.docstatus !== 1 && perm.delete) {
-			items.push('<div class="ua-menu-sep"></div>');
-			items.push(`<button class="ua-menu-item is-danger" data-a="delete">${icon("trash")}${esc(__("Видалити"))}</button>`);
+			items.push('<div class="bo-menu-sep"></div>');
+			items.push(`<button class="bo-menu-item is-danger" data-a="delete">${icon("trash")}${esc(__("Видалити"))}</button>`);
 		}
-		if (!items.length) items.push(`<div class="ua-menu-empty">${esc(__("Інших дій немає"))}</div>`);
-		ua_accounting.ui.menu(
+		if (!items.length) items.push(`<div class="bo-menu-empty">${esc(__("Інших дій немає"))}</div>`);
+		beeone.ui.menu(
 			el,
 			items.join(""),
 			(item) => {
@@ -318,19 +318,19 @@ frappe.provide("ua_accounting.form");
 			go();
 			return;
 		}
-		const d = ua_accounting.ui.dialog({
+		const d = beeone.ui.dialog({
 			title: __("Записати зміни?"),
 			width: 460,
 			html:
-				`<div class="ua-dialog-head"><div><div class="ua-dialog-title">${esc(__("Записати зміни?"))}</div>` +
-				`<div class="ua-dialog-sub">${esc(
+				`<div class="bo-dialog-head"><div><div class="bo-dialog-title">${esc(__("Записати зміни?"))}</div>` +
+				`<div class="bo-dialog-sub">${esc(
 					frm.is_new()
 						? __("Новий документ ще не записано.")
 						: __("У документі {0} є незаписані зміни.", [ua_accounting.shell.doc_title(frm)])
 				)}</div></div></div>` +
-				`<div class="ua-dialog-foot"><button class="ua-btn ua-btn--danger-ghost" data-act="drop">${esc(__("Не записувати"))}</button>` +
-				`<div class="ua-right"><button class="ua-btn" data-close>${esc(__("Скасувати"))}</button>` +
-				`<button class="ua-btn ua-btn--primary" data-act="save" autofocus>${esc(__("Записати"))}</button></div></div>`,
+				`<div class="bo-dialog-foot"><button class="bo-btn bo-btn--danger-ghost" data-act="drop">${esc(__("Не записувати"))}</button>` +
+				`<div class="bo-right"><button class="bo-btn" data-close>${esc(__("Скасувати"))}</button>` +
+				`<button class="bo-btn bo-btn--primary" data-act="save" autofocus>${esc(__("Записати"))}</button></div></div>`,
 		});
 		d.box.setAttribute("role", "alertdialog");
 		$(d.box).on("click", "[data-act]", function () {
@@ -372,14 +372,14 @@ frappe.provide("ua_accounting.form");
 		// "Основне" card (+ side card for documents)
 		const $grid = $(`<div class="ua-doc-grid${is_doc ? "" : " ua-doc-grid--single"}"></div>`);
 		const $main = $(
-			`<section class="ua-card ua-main-card"><div class="ua-card-head"><h2 class="ua-card-title">${esc(
+			`<section class="bo-card ua-main-card"><div class="bo-card-head"><h2 class="bo-card-title">${esc(
 				__("Основне")
 			)}</h2></div><div class="ua-main-body"></div></section>`
 		);
 		$grid.append($main);
 		if (is_doc) {
 			$grid.append(
-				`<aside class="ua-card ua-aside" aria-label="${esc(__("Відомості про документ"))}"><div class="ua-aside-body"></div></aside>`
+				`<aside class="bo-card ua-aside" aria-label="${esc(__("Відомості про документ"))}"><div class="ua-aside-body"></div></aside>`
 			);
 		}
 		const first = groups.main[0] || sections[0];
@@ -387,13 +387,13 @@ frappe.provide("ua_accounting.form");
 		// catalogs: only the first section joins the card, the others stay cards of their own
 		const into_main = is_doc ? groups.main : groups.main.slice(0, 1);
 		into_main.forEach((s) => $main.find(".ua-main-body").append(s.wrapper));
-		groups.main.slice(into_main.length).forEach((s) => $(s.wrapper).addClass("ua-card ua-sec-card"));
+		groups.main.slice(into_main.length).forEach((s) => $(s.wrapper).addClass("bo-card ua-sec-card"));
 
 		// table part card with tabs
 		if (groups.table.length) {
 			const $tp = $(
-				`<section class="ua-card ua-tp" aria-label="${esc(__("Табличні частини"))}">` +
-					`<div class="ua-tabs ua-tp-tabs" role="tablist"></div><div class="ua-tp-toolbar" role="toolbar" aria-label="${esc(
+				`<section class="bo-card ua-tp" aria-label="${esc(__("Табличні частини"))}">` +
+					`<div class="bo-tabs ua-tp-tabs" role="tablist"></div><div class="ua-tp-toolbar" role="toolbar" aria-label="${esc(
 						__("Команди таблиці")
 					)}"></div><div class="ua-tp-body"></div></section>`
 			);
@@ -404,13 +404,13 @@ frappe.provide("ua_accounting.form");
 				$(s.wrapper).attr("data-ua-tab", key).addClass("ua-tp-section");
 				$tp.find(".ua-tp-body").append(s.wrapper);
 				$tp.find(".ua-tp-tabs").append(
-					`<button type="button" class="ua-tab" role="tab" data-tab="${esc(key)}">${esc(
+					`<button type="button" class="bo-tab" role="tab" data-tab="${esc(key)}">${esc(
 						__((grid_field && grid_field.df.label) || (s.df && s.df.label) || "")
-					)} <span class="ua-count"></span></button>`
+					)} <span class="bo-count"></span></button>`
 				);
 			});
-			frm.ua_tab = frm.ua_tab || $tp.find(".ua-tab").first().attr("data-tab");
-			$tp.on("click", ".ua-tab", function () {
+			frm.ua_tab = frm.ua_tab || $tp.find(".bo-tab").first().attr("data-tab");
+			$tp.on("click", ".bo-tab", function () {
 				frm.ua_tab = $(this).attr("data-tab");
 				F.render_tp(frm);
 			});
@@ -428,7 +428,7 @@ frappe.provide("ua_accounting.form");
 			const $foot = $(
 				`<div class="ua-doc-foot">` +
 					(has_comment
-						? `<label class="ua-input ua-comment" data-ua-tip="${esc(__("Коментар видно лише в базі, він не друкується"))}">${icon(
+						? `<label class="bo-input ua-comment" data-bo-tip="${esc(__("Коментар видно лише в базі, він не друкується"))}">${icon(
 								"pencil"
 						  )}<input data-ua-comment placeholder="${esc(__("Коментар"))}" aria-label="${esc(__("Коментар"))}"></label>`
 						: "") +
@@ -449,32 +449,32 @@ frappe.provide("ua_accounting.form");
 		$tp.find(".ua-tp-section").each(function () {
 			$(this).toggleClass("ua-tp-off", $(this).attr("data-ua-tab") !== tab);
 		});
-		$tp.find(".ua-tab").each(function () {
+		$tp.find(".bo-tab").each(function () {
 			const key = $(this).attr("data-tab");
 			const on = key === tab;
 			$(this).toggleClass("is-on", on).attr("aria-selected", on);
-			$(this).find(".ua-count").text((frm.doc[key] || []).length);
+			$(this).find(".bo-count").text((frm.doc[key] || []).length);
 		});
-		ua_accounting.ui.place_ink($tp.find(".ua-tp-tabs")[0]);
+		beeone.ui.place_ink($tp.find(".ua-tp-tabs")[0]);
 		const field = frm.fields_dict[tab];
 		const grid = field && field.grid;
 		const editable = !!grid && frm.doc.docstatus === 0 && !grid.df.read_only && !!F.perm(frm).write;
 		const rows = (frm.doc[tab] || []).length;
 		const sel = grid ? grid.get_selected_children().length : 0;
 		const b = (cmd, label, ic, extra) =>
-			`<button type="button" class="ua-btn ua-btn--sm${extra && extra.icon_only ? " ua-btn--ghost ua-btn--icon" : ""}" data-tp="${cmd}"` +
-			`${extra && extra.tip ? ` data-ua-tip="${esc(extra.tip)}"` : ""}${extra && extra.icon_only ? ` aria-label="${esc(label)}"` : ""}>` +
+			`<button type="button" class="bo-btn bo-btn--sm${extra && extra.icon_only ? " bo-btn--ghost bo-btn--icon" : ""}" data-tp="${cmd}"` +
+			`${extra && extra.tip ? ` data-bo-tip="${esc(extra.tip)}"` : ""}${extra && extra.icon_only ? ` aria-label="${esc(label)}"` : ""}>` +
 			`${icon(ic)}${extra && extra.icon_only ? "" : esc(label)}</button>`;
 		$tp.find(".ua-tp-toolbar").html(
 			(editable
 				? b("add", __("Додати"), "plus", { tip: "Ins" }) +
-				  '<span class="ua-toolbar-sep"></span>' +
+				  '<span class="bo-toolbar-sep"></span>' +
 				  b("up", __("Перемістити вгору"), "arrow-up", { icon_only: true, tip: __("Вгору · Ctrl + Shift + ↑") }) +
 				  b("down", __("Перемістити вниз"), "arrow-down", { icon_only: true, tip: __("Вниз · Ctrl + Shift + ↓") }) +
 				  b("copy", __("Скопіювати рядок"), "copy", { icon_only: true, tip: __("Скопіювати") }) +
 				  b("delete", __("Видалити рядок"), "trash", { icon_only: true, tip: __("Видалити") })
 				: "") +
-				`<span class="ua-right ua-tp-meta">${esc(
+				`<span class="bo-right ua-tp-meta">${esc(
 					sel ? __("Вибрано {0} з {1}", [sel, rows]) : rows ? __("Рядків: {0}", [rows]) : ""
 				)}</span>`
 		);
@@ -483,7 +483,7 @@ frappe.provide("ua_accounting.form");
 		if (!rows && grid) {
 			const label = __((field.df && field.df.label) || "");
 			$(grid.wrapper).append(
-				`<div class="ua-tp-empty">${ua_accounting.ui.empty_html({
+				`<div class="ua-tp-empty">${beeone.ui.empty_html({
 					art: tab === "goods" ? "package" : "file",
 					title: tab === "goods" ? __("Додайте товари") : __("Таблиця «{0}» порожня", [label]),
 					text: editable ? __("Натисніть «Додати», щоб внести перший рядок.") : "",
@@ -504,7 +504,7 @@ frappe.provide("ua_accounting.form");
 			ua_accounting.form.move_rows(frm, grid, cmd === "up" ? -1 : 1);
 		} else if (cmd === "copy" || cmd === "delete") {
 			if (!grid.get_selected_children().length) {
-				ua_accounting.ui.toast({ type: "info", title: __("Відмітьте рядки"), text: __("Поставте позначку зліва від рядка.") });
+				beeone.ui.toast({ type: "info", title: __("Відмітьте рядки"), text: __("Поставте позначку зліва від рядка.") });
 				return;
 			}
 			if (cmd === "copy") {
@@ -522,21 +522,21 @@ frappe.provide("ua_accounting.form");
 		const $side = $(frm.layout.wrapper).find(".ua-aside-body");
 		if (!$side.length) return;
 		const last = (txt) =>
-			`<div class="ua-last-ev">${icon("history", "ua-i-sm")}<span>${esc(txt)}</span>` +
-			(frm.is_new() ? "" : `<button class="ua-btn ua-btn--ghost ua-btn--sm" data-side="history">${esc(__("Історія змін"))}</button>`) +
+			`<div class="ua-last-ev">${icon("history", "bo-i-sm")}<span>${esc(txt)}</span>` +
+			(frm.is_new() ? "" : `<button class="bo-btn bo-btn--ghost bo-btn--sm" data-side="history">${esc(__("Історія змін"))}</button>`) +
 			"</div>";
 		if (frm.is_new()) {
 			$side.html(
-				`<div class="ua-card-head"><h2 class="ua-card-title">${esc(__("Взаєморозрахунки"))}</h2></div>` +
-					`<div class="ua-card-body ua-side-note">${esc(__("Після запису тут будуть взаєморозрахунки та пов’язані документи."))}</div>` +
-					`<div class="ua-last-ev is-new">${icon("history", "ua-i-sm")}<span>${esc(__("Документ ще не записано"))}</span></div>`
+				`<div class="bo-card-head"><h2 class="bo-card-title">${esc(__("Взаєморозрахунки"))}</h2></div>` +
+					`<div class="bo-card-body ua-side-note">${esc(__("Після запису тут будуть взаєморозрахунки та пов’язані документи."))}</div>` +
+					`<div class="ua-last-ev is-new">${icon("history", "bo-i-sm")}<span>${esc(__("Документ ще не записано"))}</span></div>`
 			);
 			return;
 		}
 		if (frm.ua_side_for !== frm.doc.name + frm.doc.modified) {
 			$side.html(
-				`<div class="ua-card-head"><h2 class="ua-card-title">${esc(__("Взаєморозрахунки"))}</h2></div>` +
-					`<div class="ua-card-body">${ua_accounting.ui.skeleton_rows(3, [80])}</div>`
+				`<div class="bo-card-head"><h2 class="bo-card-title">${esc(__("Взаєморозрахунки"))}</h2></div>` +
+					`<div class="bo-card-body">${beeone.ui.skeleton_rows(3, [80])}</div>`
 			);
 		}
 		const key = frm.doc.name + frm.doc.modified;
@@ -546,11 +546,11 @@ frappe.provide("ua_accounting.form");
 			.then((r) => {
 				if (frm.ua_side_for !== key) return;
 				const kv = (label, v, hint) =>
-					`<div class="ua-kv"><span>${esc(label)}</span><b class="ua-num">${esc(v)}${
+					`<div class="ua-kv"><span>${esc(label)}</span><b class="bo-num">${esc(v)}${
 						hint ? ` <span class="ua-kv-hint">${esc(hint)}</span>` : ""
 					}</b></div>`;
 				const side = (v) => (v > 0 ? __("Дт") : v < 0 ? __("Кт") : "");
-				let html = `<div class="ua-card-head"><h2 class="ua-card-title">${esc(__("Взаєморозрахунки"))}</h2></div><div class="ua-card-body ua-kvs">`;
+				let html = `<div class="bo-card-head"><h2 class="bo-card-title">${esc(__("Взаєморозрахунки"))}</h2></div><div class="bo-card-body ua-kvs">`;
 				const s = r.settlement;
 				if (s) {
 					html += kv(__("Сальдо до документа"), money(Math.abs(s.before)), side(s.before));
@@ -566,23 +566,23 @@ frappe.provide("ua_accounting.form");
 					(d) =>
 						`<a class="ua-rel" href="${esc(frappe.utils.get_form_link(d.doctype, d.name))}"><span class="ua-fi">${icon(
 							"file"
-						)}</span><div class="ua-grow">${esc(__(d.doctype))}<small>${esc(d.name)}${
+						)}</span><div class="bo-grow">${esc(__(d.doctype))}<small>${esc(d.name)}${
 							d.posting_date ? ` ${esc(__("від"))} ${esc(frappe.datetime.str_to_user(d.posting_date))}` : ""
 						} · ${esc(d.role === "basis" ? __("підстава") : __("на підставі"))}</small></div></a>`
 				);
 				basis_entries(frm).forEach(({ label }, i) => {
 					if ((r.related || []).some((d) => d.role === "derived" && __(d.doctype) === __(label))) return;
 					rel.push(
-						`<div class="ua-rel"><span class="ua-fi">${icon("file-plus")}</span><div class="ua-grow">${esc(__(label))}<small>${esc(
+						`<div class="ua-rel"><span class="ua-fi">${icon("file-plus")}</span><div class="bo-grow">${esc(__(label))}<small>${esc(
 							__("Ще не створено")
-						)}</small></div><button class="ua-btn ua-btn--sm ua-btn--secondary" data-side="basis" data-i="${i}">${esc(
+						)}</small></div><button class="bo-btn bo-btn--sm bo-btn--secondary" data-side="basis" data-i="${i}">${esc(
 							__("Створити")
 						)}</button></div>`
 					);
 				});
 				html +=
-					`<div class="ua-card-head ua-aside-sep"><h2 class="ua-card-title">${esc(__("Пов’язані документи"))}</h2></div>` +
-					`<div class="ua-card-body ua-rels">${rel.length ? rel.join("") : `<div class="ua-side-note">${esc(__("Пов’язаних документів немає"))}</div>`}</div>`;
+					`<div class="bo-card-head ua-aside-sep"><h2 class="bo-card-title">${esc(__("Пов’язані документи"))}</h2></div>` +
+					`<div class="bo-card-body ua-rels">${rel.length ? rel.join("") : `<div class="ua-side-note">${esc(__("Пов’язаних документів немає"))}</div>`}</div>`;
 				html += last(__("Записано {0}", [frappe.datetime.str_to_user(r.modified).slice(0, 16)]));
 				$side.html(html);
 			})
@@ -590,12 +590,12 @@ frappe.provide("ua_accounting.form");
 				if (frm.ua_side_for !== key) return;
 				frm.ua_side_for = null;
 				$side.html(
-					ua_accounting.ui.empty_html({
+					beeone.ui.empty_html({
 						error: true,
 						title: __("Не вдалося завантажити"),
 						text: __("Взаєморозрахунки та пов’язані документи недоступні."),
 						actions: [{ label: __("Повторити"), act: "side-retry", icon: "refresh" }],
-						cls: "ua-empty--sm",
+						cls: "bo-empty--sm",
 					})
 				);
 			});
@@ -607,7 +607,7 @@ frappe.provide("ua_accounting.form");
 				const b = basis_entries(frm)[+$(this).attr("data-i")];
 				if (!b) return;
 				if (frm.doc.docstatus !== 1) {
-					ua_accounting.ui.toast({ type: "warning", title: __("Спочатку проведіть документ"), text: __("Документ на підставі створюється з проведеного.") });
+					beeone.ui.toast({ type: "warning", title: __("Спочатку проведіть документ"), text: __("Документ на підставі створюється з проведеного.") });
 					return;
 				}
 				if (window.beeone?.basis?.create) window.beeone.basis.create(frm, b);
@@ -622,16 +622,16 @@ frappe.provide("ua_accounting.form");
 		if (!$foot.length) return;
 		const d = frm.doc;
 		const cur = d.currency && d.currency !== "UAH" ? d.currency : "₴";
-		const m = (v) => `${ua_accounting.ui.money(v || 0)} ${cur}`;
+		const m = (v) => `${beeone.ui.money(v || 0)} ${cur}`;
 		const parts = [];
 		if (frappe.meta.has_field(frm.doctype, "total_amount")) {
-			parts.push(`<span class="ua-t">${esc(__("Сума без ПДВ"))} <b class="ua-num">${esc(m(d.total_net))}</b></span>`);
-			parts.push(`<span class="ua-t">${esc(__("ПДВ"))} <b class="ua-num">${esc(m(d.vat_total))}</b></span>`);
-			parts.push(`<span class="ua-t ua-t-grand">${esc(__("Всього"))} <b class="ua-num">${esc(m(d.total_amount))}</b></span>`);
-			if (cur !== "₴" && d.base_total) parts.push(`<span class="ua-t">${esc(__("у гривнях"))} <b class="ua-num">${esc(money(d.base_total))}</b></span>`);
+			parts.push(`<span class="ua-t">${esc(__("Сума без ПДВ"))} <b class="bo-num">${esc(m(d.total_net))}</b></span>`);
+			parts.push(`<span class="ua-t">${esc(__("ПДВ"))} <b class="bo-num">${esc(m(d.vat_total))}</b></span>`);
+			parts.push(`<span class="ua-t ua-t-grand">${esc(__("Всього"))} <b class="bo-num">${esc(m(d.total_amount))}</b></span>`);
+			if (cur !== "₴" && d.base_total) parts.push(`<span class="ua-t">${esc(__("у гривнях"))} <b class="bo-num">${esc(money(d.base_total))}</b></span>`);
 		} else if (frappe.meta.has_field(frm.doctype, "amount")) {
-			if (d.vat_amount) parts.push(`<span class="ua-t">${esc(__("ПДВ"))} <b class="ua-num">${esc(m(d.vat_amount))}</b></span>`);
-			parts.push(`<span class="ua-t ua-t-grand">${esc(__("Сума"))} <b class="ua-num">${esc(m(d.amount))}</b></span>`);
+			if (d.vat_amount) parts.push(`<span class="ua-t">${esc(__("ПДВ"))} <b class="bo-num">${esc(m(d.vat_amount))}</b></span>`);
+			parts.push(`<span class="ua-t ua-t-grand">${esc(__("Сума"))} <b class="bo-num">${esc(m(d.amount))}</b></span>`);
 		}
 		$foot.find(".ua-totals").html(parts.join(""));
 		const $c = $foot.find("[data-ua-comment]");
@@ -705,7 +705,7 @@ frappe.provide("ua_accounting.form");
 		const route = frappe.get_route() || [];
 		if (!frm || route[0] !== "Form" || route[1] !== frm.doctype || !F.kind(frm)) return;
 		if ($(document.activeElement).is("input, textarea, select, [contenteditable=true]")) return;
-		if ($(".modal.show").length || document.querySelector(".ua-dialog-backdrop") || ua_accounting.ui.menu_open()) return;
+		if ($(".modal.show").length || document.querySelector(".bo-dialog-backdrop") || beeone.ui.menu_open()) return;
 		if (document.documentElement.classList.contains("ua-fpanel-open")) return;
 		F.leave(frm, () => frappe.set_route("List", frm.doctype));
 	});
@@ -758,7 +758,7 @@ frappe.provide("ua_accounting.form");
 		const original = frappe.show_alert;
 		const TYPE = { green: "success", red: "error", orange: "warning", yellow: "warning", blue: "info", gray: "info" };
 		frappe.show_alert = function (message, seconds, actions) {
-			if (!document.body.classList.contains("ua-shell") || !ua_accounting.ui.toast) {
+			if (!document.body.classList.contains("bo-shell") || !beeone.ui.toast) {
 				return original.apply(this, arguments);
 			}
 			const o = typeof message === "string" ? { message } : message || {};
@@ -767,7 +767,7 @@ frappe.provide("ua_accounting.form");
 				.text()
 				.trim();
 			if (!text) return original.apply(this, arguments);
-			ua_accounting.ui.toast({
+			beeone.ui.toast({
 				title: o.title ? $("<div>").html(o.title).text() : text,
 				text: o.title ? text : "",
 				type: TYPE[o.indicator] || "success",

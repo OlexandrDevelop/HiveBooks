@@ -53,9 +53,12 @@ def valid_ua_iban(iban):
 def next_number(doc):
     """Number of the order per organization and year: the last number plus one, like in 1C."""
     year = getdate(doc.posting_date).year
-    last = frappe.db.sql(
-        """select max(cast(number as unsigned)) from `tabUA Payment Order`
-        where organization = %s and year(posting_date) = %s""", (doc.organization, year))[0][0]
+    numbers = frappe.db.sql_list(
+        """select number from `tabUA Payment Order`
+        where organization = %s and posting_date >= %s and posting_date <= %s""",
+        (doc.organization, f"{year}-01-01", f"{year}-12-31"),
+    )
+    last = max((int(number) for number in numbers if number and number.isascii() and number.isdigit()), default=0)
     return str(int(last or 0) + 1)
 
 
@@ -93,6 +96,11 @@ class UABankStatement(AccountingDocument):
             if expected and row.direction != expected:
                 frappe.throw(_("Операція «{0}» має напрямок «{1}», а в рядку «{2}»").format(
                     row.operation_type, expected, row.direction))
+            if row.get("invoice"):
+                inv = frappe.db.get_value("UA Payment Invoice", row.invoice, ["docstatus", "counterparty", "contract"], as_dict=True)
+                if row.operation_type != "Оплата від покупця" or not inv or inv.docstatus != 1 or \
+                        (inv.counterparty, inv.contract) != (row.counterparty, row.contract):
+                    frappe.throw(_("Інвойс {0} не підходить до оплати в рядку виписки").format(row.invoice))
             if row.payment_order:
                 order = frappe.db.get_value("UA Payment Order", row.payment_order,
                                             ["organization", "bank_account", "amount", "docstatus"], as_dict=True)
@@ -128,6 +136,8 @@ class UABankStatement(AccountingDocument):
             incoming = row.direction == "Надходження"
             bank_sub = {"BankAccount": self.bank_account, "CashFlowItem": row.cash_flow_item}
             other_sub = {"Counterparty": row.counterparty, "Contract": row.contract, "Person": row.person}
+            if row.get("invoice") and row.operation_type == "Оплата від покупця":
+                other_sub["SettlementDoc"] = ("UA Payment Invoice", row.invoice)
             entries.append(self.entry(bank_account if incoming else other, other if incoming else bank_account,
                                       flt(flt(row.amount) * flt(self.exchange_rate), 2),
                                       bank_sub if incoming else other_sub, other_sub if incoming else bank_sub,
@@ -142,11 +152,18 @@ class UABankStatement(AccountingDocument):
         super().on_submit()
         self.update_orders("Сплачено")
         self.refresh_later()
+        self.refresh_invoices()
 
     def on_cancel(self):
         super().on_cancel()
         self.update_orders("Створено")
         self.refresh_later()
+        self.refresh_invoices()
+
+    def refresh_invoices(self):
+        from ua_accounting.accounting import invoice
+
+        invoice.refresh_many(row.get("invoice") for row in self.lines)
 
     def update_orders(self, status):
         for row in self.lines:

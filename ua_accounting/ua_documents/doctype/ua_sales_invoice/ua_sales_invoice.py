@@ -18,6 +18,7 @@ from ua_accounting.accounting.documents import (
     new_from_basis,
     settlement_balance,
 )
+from ua_accounting.accounting.invoice import InvoiceEvent, add_event_key_index
 from ua_accounting.accounting.retail import is_retail
 from ua_accounting.accounting.stock import take_cost
 
@@ -27,7 +28,7 @@ VAT_PREPAID_ACCOUNT = "643"
 VAT_DEDUCTION_ACCOUNT = "704"
 
 
-class UASalesInvoice(TradeDocument):
+class UASalesInvoice(InvoiceEvent, TradeDocument):
     """Реалізація товарів та послуг.
 
     Dt 361 Ct 70x   revenue (with VAT)
@@ -89,7 +90,10 @@ class UASalesInvoice(TradeDocument):
         applied = 0.0
         alloc = {}
         gross_total = sum(g["gross"] for g in groups.values())
-        if self.offset_advance and gross_total:
+        if self.invoice and gross_total:
+            applied, advance_entries = self.invoice_advance(gross_total, settle)
+            entries.extend(advance_entries)
+        elif self.offset_advance and gross_total:
             balance = settlement_balance(
                 self.organization,
                 ADVANCE_ACCOUNT,
@@ -101,16 +105,17 @@ class UASalesInvoice(TradeDocument):
             )
             applied = min(max(balance, 0), gross_total)
         if applied > 0:
-            entries.append(
-                self.entry(
-                    ADVANCE_ACCOUNT,
-                    settle,
-                    applied,
-                    self.settle_sub,
-                    self.settle_sub,
-                    cur_amount=flt(applied / self.exchange_rate, 2),
+            if not self.invoice:
+                entries.append(
+                    self.entry(
+                        ADVANCE_ACCOUNT,
+                        settle,
+                        applied,
+                        self.settle_sub,
+                        self.settle_sub,
+                        cur_amount=flt(applied / self.exchange_rate, 2),
+                    )
                 )
-            )
             alloc = allocate_advance(groups, applied, self.vat_mode)
 
         # the VAT liability of the advance part was recorded when the advance was paid:
@@ -194,9 +199,16 @@ def make_cash_receipt(source_name, target_doc=None):
     """Надходження коштів на підставі реалізації."""
     sale = frappe.get_doc("UA Sales Invoice", source_name)
     sale.check_permission("read")
-    doc = new_from_basis(sale, "UA Cash Receipt", "sales_invoice", copy_lines=False)
+    doc = new_from_basis(sale, "UA Cash Receipt", None if sale.invoice else "sales_invoice", copy_lines=False)
     doc.operation_type = "Оплата від покупця"
     doc.settlement_type = "Оплата за реалізацію"
     doc.amount = sale.total_amount
+    if sale.invoice:
+        # the payment of an Invoice event is allocated to the Invoice
+        doc.append("allocations", {"invoice": sale.invoice, "amount": sale.total_amount})
     fill_cash_side(doc)
     return doc
+
+
+def on_doctype_update():
+    add_event_key_index("UA Sales Invoice")

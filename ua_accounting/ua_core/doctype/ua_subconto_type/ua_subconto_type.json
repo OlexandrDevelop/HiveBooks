@@ -9,7 +9,9 @@
   "subconto_name",
   "reference_doctype",
   "is_dynamic",
-  "description"
+  "predefined",
+  "description",
+  "value_types"
  ],
  "fields": [
   {
@@ -40,9 +42,26 @@
    "label": "Довільний тип значення (документи)"
   },
   {
+   "default": "0",
+   "description": "Вбудований вид не можна видалити",
+   "fieldname": "predefined",
+   "fieldtype": "Check",
+   "label": "Предвизначений",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Опис"
+  },
+  {
+   "description": "Заповнюється з довідника; для довільного типу порожньо",
+   "fieldname": "value_types",
+   "fieldtype": "Table",
+   "label": "Типи значень",
+   "options": "Characteristic Value Type",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 0,

@@ -26,8 +26,10 @@ def run():
     setup_default_currency()
     load_vat_rates()
     load_tax_types()
+    setup_subconto_characteristic_chart()
     load_subconto_types()
     load_chart()
+    setup_chart_of_accounts_meta()
     seed_regulatory_parameters.execute()
     seed_regulatory_forms.execute()
     fix_contract_titles()
@@ -214,13 +216,52 @@ def load_subconto_types():
                     "subconto_name": name,
                     "reference_doctype": reference or None,
                     "is_dynamic": dynamic,
+                    "predefined": 1,
                 },
             )
+
+
+def setup_subconto_characteristic_chart():
+    """Describe UA Subconto Type through beeone's chart of characteristic types."""
+    if frappe.db.exists("Characteristic Chart", "UA Subconto Type"):
+        return
+    _insert(
+        "Characteristic Chart",
+        {
+            "chart_doctype": "UA Subconto Type",
+            "value_types_field": "value_types",
+            "predefined_field": "predefined",
+        },
+    )
 
 
 def load_chart():
     for node in _read("chart_of_accounts_ua.json"):
         _load_account(node, None)
+
+
+def setup_chart_of_accounts_meta():
+    """Describe this app's account DocType through beeone's generic chart metadata."""
+    if frappe.db.exists("Chart of Accounts", "UA Account"):
+        return
+    _insert(
+        "Chart of Accounts",
+        {
+            "account_doctype": "UA Account",
+            "code_field": "account_code",
+            "parent_account_field": "parent_ua_account",
+            "group_field": "is_group",
+            "off_balance_field": "off_balance",
+            "quantity_accounting_field": "quantity_accounting",
+            "currency_accounting_field": "currency_accounting",
+            "subconto_table_field": "subconto",
+            "subconto_type_field": "subconto_type",
+            "subconto_type_doctype": "UA Subconto Type",
+            "subconto_reference_doctype_field": "reference_doctype",
+            "subconto_is_dynamic_field": "is_dynamic",
+            "subconto_turnover_only_field": "turnover_only",
+        },
+    )
 
 
 def _load_account(node, parent):

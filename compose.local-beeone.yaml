@@ -1,0 +1,12 @@
+# Builds the image from a local clone of the platform instead of GitHub (testing a platform change before it is pushed).
+# Enabled by `./install.sh --beeone-context DIR`; BEEONE_REF must be a branch of that clone.
+x-local: &local
+  build:
+    additional_contexts:
+      beeone: ${BEEONE_CONTEXT:?Set BEEONE_CONTEXT to a git clone of the platform}
+services:
+  init: *local
+  backend: *local
+  websocket: *local
+  worker: *local
+  scheduler: *local

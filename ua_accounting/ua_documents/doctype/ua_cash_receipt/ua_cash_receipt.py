@@ -5,6 +5,7 @@ from frappe.utils import flt
 from ua_accounting.accounting import simplified_tax
 from ua_accounting.accounting.cash import CashDocument
 from ua_accounting.accounting.bank_cash import check_cash_balance
+from ua_accounting.accounting import invoice as invoices
 from ua_accounting.accounting.documents import EVENT_PAYMENT, TAX_VAT, settlement_balance, vat_info
 
 OP_BUYER = "Оплата від покупця"
@@ -34,6 +35,7 @@ class UACashReceipt(CashDocument):
             check_cash_balance(self.organization, self.cash_desk, self.posting_date, self.amount_uah)
         super().on_submit()
         simplified_tax.post_income(self)
+        self.refresh_invoices()
 
     def before_cancel(self):
         super().before_cancel()
@@ -43,6 +45,10 @@ class UACashReceipt(CashDocument):
     def on_cancel(self):
         super().on_cancel()
         simplified_tax.cancel_income(self)
+        self.refresh_invoices()
+
+    def refresh_invoices(self):
+        invoices.refresh_many(row.invoice for row in self.get("allocations") or [])
 
     def validate(self):
         super().validate()
@@ -50,6 +56,34 @@ class UACashReceipt(CashDocument):
             sale = frappe.db.get_value("UA Sales Invoice", self.sales_invoice, ["counterparty", "docstatus"], as_dict=True)
             if sale.docstatus != 1 or sale.counterparty != self.counterparty:
                 frappe.throw(_("Реалізація {0} не підходить до цієї оплати").format(self.sales_invoice))
+        if self.sales_invoice and not self.get("allocations") and frappe.db.get_value(
+            "UA Sales Invoice", self.sales_invoice, "invoice"
+        ):
+            frappe.throw(_("Оплату реалізації за інвойсом розподіляють за інвойсом: заповніть таблицю «Інвойси»"))
+        self.check_allocations()
+
+    def check_allocations(self):
+        rows = self.get("allocations") or []
+        if not rows:
+            return
+        if not self.is_settlement():
+            frappe.throw(_("Розподіл за інвойсами є лише в оплаті від покупця"))
+        if self.sales_invoice:
+            frappe.throw(_("Оплату розподіляють або за реалізацією, або за інвойсами"))
+        total = 0.0
+        for row in rows:
+            inv = frappe.db.get_value(
+                invoices.INVOICE, row.invoice, ["docstatus", "counterparty", "contract", "currency"], as_dict=True
+            )
+            if not inv or inv.docstatus != 1:
+                frappe.throw(_("Рядок {0}: інвойс {1} не підтверджений").format(row.idx, row.invoice))
+            if (inv.counterparty, inv.contract) != (self.counterparty, self.contract) or inv.currency != self.currency:
+                frappe.throw(_("Рядок {0}: інвойс {1} має інших контрагента, договір або валюту").format(row.idx, row.invoice))
+            if flt(row.amount) <= 0:
+                frappe.throw(_("Рядок {0}: сума має бути більше нуля").format(row.idx))
+            total += flt(row.amount)
+        if flt(total, 2) > flt(self.amount, 2):
+            frappe.throw(_("Сума розподілу {0} перевищує суму оплати {1}").format(flt(total, 2), flt(self.amount, 2)))
 
     def build(self):
         amount = self.amount_uah
@@ -70,6 +104,14 @@ class UACashReceipt(CashDocument):
                 )
             )
             return entries, [], []
+
+        if self.get("allocations"):
+            alloc_entries, alloc_liabilities, allocated = self.allocation_postings()
+            entries.extend(alloc_entries)
+            liabilities.extend(alloc_liabilities)
+            amount = flt(amount - allocated, 2)
+            if amount <= 0:
+                return entries, liabilities, []
 
         sub = dict(self.settle_sub)
         advance_part, advance_vat = amount, self.vat_uah
@@ -112,3 +154,40 @@ class UACashReceipt(CashDocument):
             return 0.0
         percent, taxable = vat_info(self.vat_rate, {})
         return flt(gross * percent / (100 + percent), 2) if taxable and percent else 0.0
+
+    def allocation_postings(self):
+        """Payment allocated to Invoices: the debt of the Invoice is paid first, the rest is its advance.
+
+        Both parts carry the Invoice as the settlement document; the advance part has the VAT liability
+        of the first event (the payment). Returns (entries, VAT rows, allocated amount in UAH).
+        """
+        entries, liabilities, allocated = [], [], 0.0
+        credit = "362" if self.is_foreign else "361"
+        rate = flt(self.exchange_rate) or 1
+        for row in self.allocations:
+            part = flt(flt(row.amount) * rate, 2)
+            sub = {
+                "Counterparty": self.counterparty,
+                "Contract": self.contract,
+                "SettlementDoc": (invoices.INVOICE, row.invoice),
+            }
+            debt = 0.0
+            if not self.is_advance():
+                debt = max(invoices.settlement_debt(credit, row.invoice, self.posting_date, self._ctx), 0)
+            paid = min(part, debt)
+            advance = flt(part - paid, 2)
+            if paid:
+                entries.append(
+                    self.entry(self.cash_account, credit, paid, self.cash_sub, sub, cur_amount=flt(paid / rate, 2))
+                )
+            if advance:
+                entries.append(
+                    self.entry(self.cash_account, "681", advance, self.cash_sub, sub, cur_amount=flt(advance / rate, 2))
+                )
+                vat = self.vat_of(advance)
+                if vat:
+                    entries.append(self.entry("643", "641", vat, {"TaxType": TAX_VAT}, {"TaxType": TAX_VAT}))
+                    liabilities.append(self.vat_row(self.vat_rate, advance - vat, vat, EVENT_PAYMENT))
+                row.db_set("vat_amount", flt(vat / rate, 2), update_modified=False)
+            allocated += part
+        return entries, liabilities, flt(allocated, 2)

@@ -2,6 +2,11 @@
 // Later tasks (documents, reports) reuse the namespace ua_accounting.ui.
 frappe.provide("ua_accounting.ui");
 
+// The UI kit lives in the core (beeone.ui). Pages written as `const ui = ua_accounting.ui` keep working.
+["icon", "money", "close_menu", "menu", "menu_open", "dialog", "place_ink", "toast", "empty_html", "skeleton_rows", "esc", "inject_icons"].forEach((name) => {
+	ua_accounting.ui[name] = (...args) => beeone.ui[name](...args);
+});
+
 // DocType -> parent field of the tree. Add a catalog here to get the group tree in its list.
 ua_accounting.ui.TREE_DOCTYPES = {
 	"UA Counterparty": "parent_ua_counterparty",
@@ -123,9 +128,6 @@ ua_accounting.ui.mark_body = function () {
 };
 
 $(document).on("startup", function () {
-	// The platform shell replaced ua_shell.js, but shared accounting components
-	// still use this class for their design tokens and dialog stacking context.
-	document.body.classList.add("ua-shell");
 	frappe.router.on("change", ua_accounting.ui.mark_body);
 	ua_accounting.ui.mark_body();
 });

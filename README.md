@@ -1,7 +1,7 @@
 # HiveBooks
 
-Автоматичне розгортання з демоданими в Easypanel: [інструкція](DEPLOY.md).
-Compose-файл: `docker-compose.yml`, Build Path: `/`.
+Встановлення однією командою: `./install.sh` ([інструкція](DEPLOY.md)).
+Easypanel: Compose-файл `docker-compose.yml` (MariaDB) або `docker-compose.postgres.yml`, Build Path: `/`.
 
 # HiveBooks
 

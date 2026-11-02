@@ -21,3 +21,11 @@ def make_sales_invoice(source_name, target_doc=None):
     order = frappe.get_doc("UA Customer Order", source_name)
     order.check_permission("read")
     return new_from_basis(order, "UA Sales Invoice", "customer_order")
+
+
+@frappe.whitelist()
+def make_invoice(source_name, target_doc=None):
+    """Інвойс на підставі замовлення покупця."""
+    order = frappe.get_doc("UA Customer Order", source_name)
+    order.check_permission("read")
+    return new_from_basis(order, "UA Payment Invoice", "customer_order")

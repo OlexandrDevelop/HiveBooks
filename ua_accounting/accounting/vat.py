@@ -8,30 +8,10 @@ import frappe
 from frappe import _
 from frappe.utils import flt, getdate
 
-from ua_accounting.accounting.utils import first_of_month, next_names, pick, std_columns
+from ua_accounting.accounting.utils import first_of_month, pick, register_append, register_delete
 
 LIABILITY = "UA VAT Liability Entry"
 CREDIT = "UA VAT Credit Entry"
-
-FIELDS = [
-    "posting_date",
-    "period",
-    "registrar_type",
-    "registrar",
-    "line_no",
-    "organization",
-    "counterparty",
-    "contract",
-    "settlement_doc_type",
-    "settlement_doc",
-    "vat_rate",
-    "event",
-    "base_amount",
-    "vat_amount",
-    "tax_invoice_type",
-    "tax_invoice",
-    "content",
-]
 
 
 def post_vat_entries(doc, liabilities=(), credits=()):
@@ -41,15 +21,14 @@ def post_vat_entries(doc, liabilities=(), credits=()):
 
 def cancel_vat_entries(doc):
     for doctype in (LIABILITY, CREDIT):
-        frappe.db.delete(doctype, {"registrar_type": doc.doctype, "registrar": doc.name})
+        register_delete(doctype, doc)
 
 
 def _insert(doctype, doc, entries):
     entries = list(entries or [])
     if not entries:
         return
-    std = std_columns()
-    values = []
+    rows = []
     for idx, e in enumerate(entries, start=1):
         posting_date = pick(doc, e, "posting_date")
         organization = pick(doc, e, "organization")
@@ -74,7 +53,5 @@ def _insert(doctype, doc, entries):
             "tax_invoice": e.get("tax_invoice") or "",
             "content": (e.get("content") or "")[:140],
         }
-        values.append([row[f] for f in FIELDS] + [std[k] for k in std])
-    names = next_names(doctype, len(values))
-    values = [[name] + value for name, value in zip(names, values, strict=True)]
-    frappe.db.bulk_insert(doctype, ["name"] + FIELDS + list(std), values)
+        rows.append(row)
+    register_append(doctype, doc, rows)

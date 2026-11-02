@@ -6,7 +6,7 @@ frappe.pages["ua-manager-monitor"].on_page_load = function (wrapper) {
 	frappe.route_options = null;
 	const shell_org = ua_accounting.shell.current_org ? ua_accounting.shell.current_org() : null;
 	const esc = frappe.utils.escape_html;
-	const money = (v) => ua_accounting.ui.money(v || 0);
+	const money = (v) => beeone.ui.money(v || 0);
 	const field = (opts) => page.add_field(Object.assign({ change: () => run() }, opts));
 
 	const organization = field({
@@ -29,13 +29,13 @@ frappe.pages["ua-manager-monitor"].on_page_load = function (wrapper) {
 			});
 	}
 
-	const line = (label, value) => `<tr><td>${label}</td><td class="text-right ua-num">${money(value)}</td></tr>`;
-	const card = (title, total, body) => `<div class="ua-card ua-mm-card"><h3>${title}</h3>
-		<div class="ua-kpi-val ua-num">${money(total)}<span class="ua-cur">₴</span></div>${body}</div>`;
+	const line = (label, value) => `<tr><td>${label}</td><td class="text-right bo-num">${money(value)}</td></tr>`;
+	const card = (title, total, body) => `<div class="bo-card ua-mm-card"><h3>${title}</h3>
+		<div class="ua-kpi-val bo-num">${money(total)}<span class="bo-cur">₴</span></div>${body}</div>`;
 
 	function top(rows) {
 		const titles = (data && data.titles) || {};
-		return `<table class="table table-bordered ua-table"><tbody>${
+		return `<table class="table table-bordered bo-table"><tbody>${
 			rows.map((r) => line(esc(titles[r.counterparty] || r.counterparty), r.amount)).join("") ||
 			`<tr><td class="text-muted">${__("Немає даних")}</td></tr>`
 		}</tbody></table>`;
@@ -47,11 +47,11 @@ frappe.pages["ua-manager-monitor"].on_page_load = function (wrapper) {
 		};
 		const months = d.sales.by_month.map((m) => line(esc(m.month), m.amount)).join("");
 		$body.html(`<div class="ua-mm-grid">
-			${card(__("Гроші"), d.money.total, `<table class="table table-bordered ua-table"><tbody>${line(__("Каса"), d.money.cash)}${line(__("Банк"), d.money.bank)}</tbody></table>`)}
+			${card(__("Гроші"), d.money.total, `<table class="table table-bordered bo-table"><tbody>${line(__("Каса"), d.money.cash)}${line(__("Банк"), d.money.bank)}</tbody></table>`)}
 			${card(__("Дебіторська заборгованість"), d.receivable.total, top(d.receivable.top))}
 			${card(__("Кредиторська заборгованість"), d.payable.total, top(d.payable.top))}
-			${card(__("Продажі"), d.sales.total, `<table class="table table-bordered ua-table"><tbody>${months}</tbody></table>`)}
-			${card(__("Прибуток"), d.profit.profit, `<table class="table table-bordered ua-table"><tbody>${line(__("Доходи"), d.profit.income)}${line(__("Витрати"), d.profit.expenses)}</tbody></table>`)}
+			${card(__("Продажі"), d.sales.total, `<table class="table table-bordered bo-table"><tbody>${months}</tbody></table>`)}
+			${card(__("Прибуток"), d.profit.profit, `<table class="table table-bordered bo-table"><tbody>${line(__("Доходи"), d.profit.income)}${line(__("Витрати"), d.profit.expenses)}</tbody></table>`)}
 		</div>`);
 	}
 	render();

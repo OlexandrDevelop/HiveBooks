@@ -9,7 +9,7 @@ import frappe
 from frappe import _
 from frappe.utils import flt, getdate
 
-from ua_accounting.accounting.utils import next_names, std_columns
+from ua_accounting.accounting.utils import register_append, register_delete
 
 LEDGER = "UA Tax Ledger Entry"
 ITEM = "UA Tax Difference Item"
@@ -35,11 +35,11 @@ ARTICLE = {
     LOW_TAX: "ст. 141 ПКУ",
 }
 
-LEDGER_FIELDS = [
+# columns of the entry row that go to the tax register
+LEDGER_FIELDS = (
     "posting_date", "period", "organization", "registrar_type", "registrar", "line_no",
-    "account_dr", "account_cr", "amount_book", "amount_tax", "difference", "content",
-]  # fmt: skip
-
+    "account_dr", "account_cr", "content",
+)  # fmt: skip
 
 # ---------------------------------------------------------------- register
 
@@ -59,20 +59,21 @@ def post_rows(doc, rows, entries):
         tax = book if tax in (None, "") else flt(tax, 2)
         if tax < 0:
             frappe.throw(_("Проводка {0}: сума ПО не може бути від'ємною").format(row["line_no"]))
-        values.append({**row, "amount_book": book, "amount_tax": tax, "difference": flt(book - tax, 2)})
+        values.append(
+            {
+                **{f: row[f] for f in LEDGER_FIELDS if f in row},
+                "amount_book": book,
+                "amount_tax": tax,
+                "difference": flt(book - tax, 2),
+            }
+        )
     if not values:
         return
-    std = std_columns()
-    names = next_names(LEDGER, len(values))
-    frappe.db.bulk_insert(
-        LEDGER,
-        ["name", *LEDGER_FIELDS, *std],
-        [[n, *[v[f] for f in LEDGER_FIELDS], *std.values()] for n, v in zip(names, values, strict=True)],
-    )
+    register_append(LEDGER, doc, values)
 
 
 def cancel_rows(doc):
-    frappe.db.delete(LEDGER, {"registrar_type": doc.doctype, "registrar": doc.name})
+    register_delete(LEDGER, doc)
 
 
 def _check_access(organization=None):

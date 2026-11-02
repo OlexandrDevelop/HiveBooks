@@ -18,7 +18,8 @@
   "expense_item",
   "department",
   "account",
-  "warranty_repair"
+  "warranty_repair",
+  "invoice_row"
  ],
  "fields": [
   {
@@ -131,6 +132,14 @@
    "fieldtype": "Check",
    "label": "Гарантійний ремонт",
    "description": "Витрати покриваються із забезпечення гарантійних зобов'язань (473)"
+  },
+  {
+   "fieldname": "invoice_row",
+   "fieldtype": "Data",
+   "label": "Рядок інвойсу",
+   "hidden": 1,
+   "read_only": 1,
+   "print_hide": 1
   }
  ],
  "index_web_pages_for_search": 0,

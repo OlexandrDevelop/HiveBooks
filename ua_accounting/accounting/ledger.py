@@ -6,46 +6,56 @@ Documents call:
     repost_entries(doc, entries)  cancel + post in one transaction
 
 The module never commits. It runs in the transaction of the caller.
-Only MariaDB is supported (INSERT ... ON DUPLICATE KEY UPDATE).
+Movements go through the core RecordSet of the register "UA Accounting Entry" and the
+monthly totals (UA Account Turnover) through the core accounting totals adapter
+(frappe.beeone.accounting_totals), with the column mapping `totals_mapping()` below.
+post_entries appends rows to the registrar (as before); cancel_entries removes all of
+them; repost_entries is cancel + post.
 """
-
-import hashlib
 
 import frappe
 from frappe import _
+from frappe.beeone import accounting_totals
+from frappe.beeone.accounting_meta import normalize_accounting_entry
+from frappe.beeone.registers import record_set
 from frappe.utils import flt, getdate
 
 from ua_accounting.accounting import simplified_tax, tax_ledger, vat
-from ua_accounting.accounting.utils import first_of_month, next_names, pick, std_columns
+from ua_accounting.accounting.utils import first_of_month, next_names, pick
 
 ENTRY = "UA Accounting Entry"
 TURNOVER = "UA Account Turnover"
 SIDES = ("dr", "cr")
 SLOTS = (1, 2, 3)
+CHART = "UA Account"
 
-ENTRY_FIELDS = [
-    "posting_date",
-    "period",
-    "registrar_type",
-    "registrar",
-    "line_no",
-    "organization",
-    "account_dr",
-    "account_cr",
-    *[f"subconto_{s}{i}_type" for s in SIDES for i in SLOTS],
-    *[f"subconto_{s}{i}" for s in SIDES for i in SLOTS],
-    "amount",
-    "quantity_dr",
-    "quantity_cr",
-    "currency_dr",
-    "currency_cr",
-    "currency_amount_dr",
-    "currency_amount_cr",
-    "content",
-]
 
-# numeric columns of the totals table, changed by every posting
-TURNOVER_SUMS = ("debit", "credit", "quantity_dr", "quantity_cr", "currency_dr", "currency_cr")
+
+def totals_mapping():
+    """Columns of the entry and totals DocTypes for the core accounting totals adapter (hook beeone_accounting_totals)."""
+    both = {"debit": "dr", "credit": "cr"}
+    return {
+        "chart": CHART,
+        "period": "period",
+        "organization": "organization",
+        "amount": "amount",
+        "account": {side: f"account_{short}" for side, short in both.items()},
+        "subconto": {side: [f"subconto_{short}{i}" for i in SLOTS] for side, short in both.items()},
+        "quantity": {side: f"quantity_{short}" for side, short in both.items()},
+        "currency": {side: f"currency_{short}" for side, short in both.items()},
+        "currency_amount": {side: f"currency_amount_{short}" for side, short in both.items()},
+        "totals": {
+            "period": "period",
+            "organization": "organization",
+            "account": "account",
+            "subconto": ["subconto1", "subconto2", "subconto3"],
+            "currency": "currency",
+            "debit": "debit",
+            "credit": "credit",
+            "quantity": {"debit": "quantity_dr", "credit": "quantity_cr"},
+            "currency_amount": {"debit": "currency_dr", "credit": "currency_cr"},
+        },
+    }
 
 
 # ---------------------------------------------------------------- public API
@@ -58,33 +68,15 @@ def post_entries(doc, entries):
         return
     ctx = {}
     rows = [_build_row(doc, e, idx, ctx) for idx, e in enumerate(entries, start=1)]
-
-    values = []
-    std = std_columns()
-    names = next_names(ENTRY, len(rows))
-    for name, row in zip(names, rows, strict=True):
-        values.append([name] + [row[f] for f in ENTRY_FIELDS] + [std[k] for k in std])
-    frappe.db.bulk_insert(ENTRY, ["name"] + ENTRY_FIELDS + list(std), values)
+    # moves the name sequence over rows made with AUTO_INCREMENT, once per process
+    next_names(ENTRY, 0)
+    record_set(ENTRY, doc.doctype, doc.name, keep_blank=True).append(rows)
     tax_ledger.post_rows(doc, rows, entries)
-
-    deltas = {}
-    for row in rows:
-        _add_deltas(deltas, row, ctx, 1)
-    _apply_deltas(deltas)
 
 
 def cancel_entries(doc):
     """Delete entries of the registrar and take them out of the totals."""
-    filters = {"registrar_type": doc.doctype, "registrar": doc.name}
-    rows = frappe.get_all(ENTRY, filters=filters, fields=["*"], limit_page_length=0)
-    if rows:
-        ctx = {}
-        deltas = {}
-        for row in rows:
-            _add_deltas(deltas, row, ctx, -1)
-        _apply_deltas(deltas)
-        frappe.db.delete(ENTRY, filters)
-        _delete_empty_totals(list(deltas))
+    record_set(ENTRY, doc.doctype, doc.name).delete()
     tax_ledger.cancel_rows(doc)
     vat.cancel_vat_entries(doc)
 
@@ -98,34 +90,12 @@ def repost_entries(doc, entries):
 def rebuild_totals(organization=None, from_period=None):
     """Recompute the totals table from entries. For repair and checks.
 
-    Without filters all totals are rebuilt. Manager only.
+    Without filters all totals are rebuilt. `organization` and `from_period` (the month of the
+    date and later) limit the rebuild; other totals stay. Manager only.
     """
     frappe.only_for(("UA Accounting Manager", "System Manager"))
-    filters = {}
-    if organization:
-        filters["organization"] = organization
-    if from_period:
-        filters["period"] = (">=", first_of_month(from_period))
-    frappe.db.delete(TURNOVER, filters)
-
-    ctx = {}
-    deltas = {}
-    last_name = 0
-    while True:
-        batch = frappe.get_all(
-            ENTRY,
-            filters={**filters, "name": (">", last_name)},
-            fields=["*"],
-            order_by="name asc",
-            limit_page_length=10000,
-        )
-        if not batch:
-            break
-        for row in batch:
-            _add_deltas(deltas, row, ctx, 1)
-        last_name = batch[-1].name
-    _apply_deltas(deltas)
-    return len(deltas)
+    from_period = first_of_month(from_period) if from_period else None
+    return accounting_totals.rebuild(ENTRY, organization, from_period)
 
 
 # ---------------------------------------------------------------- internals
@@ -156,29 +126,6 @@ def _account(name, ctx):
     return acc
 
 
-def _map_subconto(account, acc, values):
-    """Map {subconto type: value} to 3 slots of (doctype, value)."""
-    slots = [("", "")] * len(SLOTS)
-    types = [s.subconto_type for s in acc.subconto]
-    for key, value in (values or {}).items():
-        if key not in types:
-            frappe.throw(
-                _("Рахунок {0} не має субконто {1}").format(account, key),
-                exc=frappe.ValidationError,
-            )
-        pos = types.index(key)
-        meta = acc.subconto[pos]
-        if not value:
-            continue
-        if meta.is_dynamic:
-            if not (isinstance(value, (tuple, list)) and len(value) == 2):
-                frappe.throw(_("Субконто {0}: потрібна пара (DocType, назва)").format(key))
-            slots[pos] = (value[0], value[1])
-        else:
-            slots[pos] = (meta.reference_doctype or "", value)
-    return slots
-
-
 def _build_row(doc, e, idx, ctx):
     posting_date = pick(doc, e, "posting_date")
     organization = pick(doc, e, "organization")
@@ -188,11 +135,20 @@ def _build_row(doc, e, idx, ctx):
     if not frappe.db.exists("UA Organization", organization):
         frappe.throw(_("Організацію {0} не знайдено").format(organization))
 
-    account_dr = e.get("account_dr") or ""
-    account_cr = e.get("account_cr") or ""
-    if not account_dr and not account_cr:
-        frappe.throw(_("Проводка {0}: не вказано рахунки").format(idx))
-
+    entry = normalize_accounting_entry(
+        frappe.get_cached_doc("Chart of Accounts", CHART),
+        debit=e.get("account_dr"),
+        credit=e.get("account_cr"),
+        amount=flt(e.get("amount")),
+        quantity_debit=flt(e.get("quantity_dr")),
+        quantity_credit=flt(e.get("quantity_cr")),
+        currency_debit=e.get("currency_dr"),
+        currency_credit=e.get("currency_cr"),
+        currency_amount_debit=flt(e.get("currency_amount_dr")),
+        currency_amount_credit=flt(e.get("currency_amount_cr")),
+        subconto_debit=e.get("subconto_dr"),
+        subconto_credit=e.get("subconto_cr"),
+    )
     row = {
         "posting_date": posting_date,
         "period": first_of_month(posting_date),
@@ -200,122 +156,24 @@ def _build_row(doc, e, idx, ctx):
         "registrar": doc.name,
         "line_no": idx,
         "organization": organization,
-        "account_dr": account_dr,
-        "account_cr": account_cr,
-        "amount": flt(e.get("amount")),
-        "quantity_dr": 0,
-        "quantity_cr": 0,
-        "currency_dr": "",
-        "currency_cr": "",
-        "currency_amount_dr": 0,
-        "currency_amount_cr": 0,
+        "account_dr": (entry["debit"] or {}).get("account", ""),
+        "account_cr": (entry["credit"] or {}).get("account", ""),
+        "amount": entry["amount"],
         "content": (e.get("content") or "")[:140],
     }
-
-    accs = {}
-    for side, account in (("dr", account_dr), ("cr", account_cr)):
-        slots = [("", "")] * len(SLOTS)
-        if account:
-            acc = _account(account, ctx)
-            if acc.is_group:
-                frappe.throw(_("Проводка {0}: рахунок {1} є групою").format(idx, account))
-            accs[side] = acc
-            simplified_tax.check_posting_account(organization, posting_date, account, ctx)
-            slots = _map_subconto(account, acc, e.get(f"subconto_{side}"))
-            if acc.quantity_accounting:
-                row[f"quantity_{side}"] = flt(e.get(f"quantity_{side}"))
-            if acc.currency_accounting:
-                row[f"currency_{side}"] = e.get(f"currency_{side}") or ""
-                row[f"currency_amount_{side}"] = flt(e.get(f"currency_amount_{side}"))
-        for i, (dt, val) in enumerate(slots, start=1):
-            row[f"subconto_{side}{i}_type"] = dt
-            row[f"subconto_{side}{i}"] = val
-
-    if not account_dr or not account_cr:
-        # one-sided entry: allowed only for off-balance accounts
-        acc = accs.get("dr") or accs.get("cr")
-        if not acc.off_balance:
-            frappe.throw(
-                _("Проводка {0}: порожній рахунок дозволений лише для позабалансових").format(idx)
-            )
-    elif accs["dr"].off_balance != accs["cr"].off_balance:
-        frappe.throw(_("Проводка {0}: не можна поєднувати балансовий і позабалансовий рахунок").format(idx))
-
-    if not row["amount"] and not row["quantity_dr"] and not row["quantity_cr"]:
-        frappe.throw(_("Проводка {0}: сума та кількість дорівнюють нулю").format(idx))
+    for side, short in (("debit", "dr"), ("credit", "cr")):
+        data = entry.get(side) or {}
+        if data:
+            simplified_tax.check_posting_account(organization, posting_date, data["account"], ctx)
+        row[f"quantity_{short}"] = flt(data.get("quantity"))
+        row[f"currency_{short}"] = data.get("currency") or ""
+        row[f"currency_amount_{short}"] = flt(data.get("currency_amount"))
+        slots = data.get("subconto") or []
+        for i in SLOTS:
+            slot = slots[i - 1] if i <= len(slots) else {}
+            row[f"subconto_{short}{i}_type"] = slot.get("doctype") or ""
+            row[f"subconto_{short}{i}"] = slot.get("value") or ""
     return row
-
-
-def _totals_key(row, side, acc):
-    """Return (name, key columns) of the totals row for one side of an entry."""
-    subs = []
-    for i in SLOTS:
-        value = row.get(f"subconto_{side}{i}") or ""
-        # turnover-only subconto has no balance: store ""
-        if i > len(acc.subconto) or acc.subconto[i - 1].turnover_only:
-            value = ""
-        subs.append(value)
-    currency = (row.get(f"currency_{side}") or "") if acc.currency_accounting else ""
-    account = row[f"account_{side}"]
-    period = str(row["period"])
-    parts = [period, row["organization"], account, *subs, currency]
-    name = hashlib.sha1("|".join(parts).encode()).hexdigest()
-    key = {
-        "period": period,
-        "organization": row["organization"],
-        "account": account,
-        "subconto1": subs[0],
-        "subconto2": subs[1],
-        "subconto3": subs[2],
-        "currency": currency,
-    }
-    return name, key
-
-
-def _add_deltas(deltas, row, ctx, sign):
-    """Add the effect of one entry row (sign=1) or its removal (sign=-1)."""
-    for side in SIDES:
-        account = row.get(f"account_{side}")
-        if not account:
-            continue
-        acc = _account(account, ctx)
-        name, key = _totals_key(row, side, acc)
-        d = deltas.get(name)
-        if d is None:
-            d = deltas[name] = {**key, **{k: 0 for k in TURNOVER_SUMS}}
-        d["debit" if side == "dr" else "credit"] += sign * flt(row["amount"])
-        d[f"quantity_{side}"] += sign * flt(row.get(f"quantity_{side}"))
-        d[f"currency_{side}"] += sign * flt(row.get(f"currency_amount_{side}"))
-
-
-def _apply_deltas(deltas):
-    """Upsert deltas in the totals table. One atomic statement per key."""
-    cols = ["period", "organization", "account", "subconto1", "subconto2", "subconto3", "currency"]
-    std = std_columns()
-    insert_cols = ["name", *std, *cols, *TURNOVER_SUMS]
-    update = ", ".join(f"`{c}` = `{c}` + VALUES(`{c}`)" for c in TURNOVER_SUMS)
-    sql = (
-        f"INSERT INTO `tab{TURNOVER}` ({', '.join(f'`{c}`' for c in insert_cols)}) "
-        f"VALUES ({', '.join(['%s'] * len(insert_cols))}) "
-        f"ON DUPLICATE KEY UPDATE {update}, `modified` = VALUES(`modified`)"
-    )
-    # fixed order lowers the risk of deadlocks between two documents
-    for name in sorted(deltas):
-        d = deltas[name]
-        frappe.db.sql(
-            sql,
-            [name, *std.values(), *[d[c] for c in cols], *[d[c] for c in TURNOVER_SUMS]],
-        )
-
-
-def _delete_empty_totals(names):
-    zero = " AND ".join(f"`{c}` = 0" for c in TURNOVER_SUMS)
-    for i in range(0, len(names), 500):
-        chunk = names[i : i + 500]
-        frappe.db.sql(
-            f"DELETE FROM `tab{TURNOVER}` WHERE name IN ({', '.join(['%s'] * len(chunk))}) AND {zero}",
-            chunk,
-        )
 
 
 def get_lock_date(doc):

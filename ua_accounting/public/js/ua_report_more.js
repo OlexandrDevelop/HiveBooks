@@ -6,7 +6,7 @@ frappe.provide("ua_accounting.reports");
 
 const MORE_API = "ua_accounting.api.reports.";
 const mesc = (v) => frappe.utils.escape_html(v == null ? "" : String(v));
-const micon = (name, cls) => ua_accounting.ui.icon(name, cls);
+const micon = (name, cls) => beeone.ui.icon(name, cls);
 
 // The page "ua-account-turnover" has the same URL as the list of the DocType "UA Account Turnover".
 // The desk gives a short URL to the DocType, so the page wins here; the list stays at
@@ -116,22 +116,22 @@ ua_accounting.reports.MorePage = class MorePage {
 	// ---------- page head
 	make_head() {
 		this.$root.append(`
-			<div class="ua-ph">
-				<h1 class="ua-ph-title"><span class="ua-rpt-title">${mesc(this.cfg.title)}</span>
-					<span class="ua-tag">${mesc(__("Бухгалтерський облік"))}</span></h1>
-				<div class="ua-ph-actions">
-					<button type="button" class="ua-btn" data-act="print">${micon("printer")}${mesc(__("Друк"))}</button>
-					<button type="button" class="ua-btn" data-act="excel">${micon("sheet")}Excel</button>
-					<button type="button" class="ua-btn ua-btn--primary" data-act="run">${micon("refresh")}${mesc(
+			<div class="bo-ph">
+				<h1 class="bo-ph-title"><span class="ua-rpt-title">${mesc(this.cfg.title)}</span>
+					<span class="bo-tag">${mesc(__("Бухгалтерський облік"))}</span></h1>
+				<div class="bo-ph-actions">
+					<button type="button" class="bo-btn" data-act="print">${micon("printer")}${mesc(__("Друк"))}</button>
+					<button type="button" class="bo-btn" data-act="excel">${micon("sheet")}Excel</button>
+					<button type="button" class="bo-btn bo-btn--primary" data-act="run">${micon("refresh")}${mesc(
 						__("Сформувати")
-					)}<span class="ua-kbd">Ctrl Enter</span></button>
+					)}<span class="bo-kbd">Ctrl Enter</span></button>
 				</div>
 			</div>`);
 	}
 
 	// ---------- settings: organization, period and the fields of the report
 	make_settings() {
-		const $set = $(`<div class="ua-settings"><section class="ua-card" aria-label="${mesc(__("Налаштування звіту"))}">
+		const $set = $(`<div class="ua-settings"><section class="bo-card" aria-label="${mesc(__("Налаштування звіту"))}">
 			<div class="ua-set-row ua-set-main"></div>
 			<div class="ua-set-row ua-set-opts"></div>
 		</section></div>`).appendTo(this.$root);
@@ -149,13 +149,13 @@ ua_accounting.reports.MorePage = class MorePage {
 		for (const f of this.cfg.fields) {
 			if (f.type === "subconto_type") {
 				this.controls[f.key] = $(
-					`<label class="ua-set-label">${mesc(f.label)} <select class="ua-input ua-input--sm" data-type-select="${f.key}"></select></label>`
+					`<label class="ua-set-label">${mesc(f.label)} <select class="bo-input bo-input--sm" data-type-select="${f.key}"></select></label>`
 				).appendTo($opts);
 				this.fill_types(this.controls[f.key].find("select")[0]);
 			} else if (f.type === "levels") {
 				const $l = $(`<span class="ua-set-label">${mesc(f.label)}</span>`).appendTo($opts);
 				this.levels = [1, 2, 3].map((n) =>
-					$(`<select class="ua-input ua-input--sm" data-type-select="level${n}" data-blank="1" aria-label="${mesc(f.label)} ${n}"></select>`)
+					$(`<select class="bo-input bo-input--sm" data-type-select="level${n}" data-blank="1" aria-label="${mesc(f.label)} ${n}"></select>`)
 						.appendTo($opts)
 						.each((i, s) => this.fill_types(s))
 				);
@@ -202,11 +202,11 @@ ua_accounting.reports.MorePage = class MorePage {
 	}
 
 	make_result() {
-		this.$card = $(`<section class="ua-card ua-rpt-card" aria-label="${mesc(__("Звіт"))}">
+		this.$card = $(`<section class="bo-card ua-rpt-card" aria-label="${mesc(__("Звіт"))}">
 			<div class="ua-rpt-head"><div class="ua-rpt-meta"></div>
 				<span class="ua-hint" hidden>${micon("info")}${mesc(__("Клік по рядку або сумі — розшифровка"))}</span></div>
 			<div class="ua-rpt-msg" hidden></div>
-			<div class="ua-table-wrap ua-rpt-wrap"></div>
+			<div class="bo-table-wrap ua-rpt-wrap"></div>
 		</section>`).appendTo(this.$root);
 		this.$wrap = this.$card.find(".ua-rpt-wrap");
 		this.$wrap.on("scroll", () => this.$wrap.toggleClass("is-scrolled", this.$wrap[0].scrollTop > 0));
@@ -378,7 +378,7 @@ ua_accounting.reports.MorePage = class MorePage {
 	show_state(o) {
 		this.$card.find(".ua-rpt-head").prop("hidden", !this.model);
 		this.$card.find(".ua-hint, .ua-rpt-msg").prop("hidden", true);
-		this.$wrap.html(`<div class="ua-state-box">${ua_accounting.ui.empty_html(o)}</div>`);
+		this.$wrap.html(`<div class="ua-state-box">${beeone.ui.empty_html(o)}</div>`);
 		this.fit();
 	}
 
@@ -423,7 +423,7 @@ ua_accounting.reports.MorePage = class MorePage {
 	table_html() {
 		const m = this.model;
 		const cols = m.columns;
-		const al = (c) => (c.align === "right" ? " ua-r" : c.align === "center" ? " ua-c" : "");
+		const al = (c) => (c.align === "right" ? " bo-r" : c.align === "center" ? " bo-c" : "");
 		const grouped = m.header.length > 1;
 		let pos = 0;
 		const head1 = m.header[0]
@@ -449,7 +449,7 @@ ua_accounting.reports.MorePage = class MorePage {
 		const body = this.body_rows.map((r) => this.row_html(r)).join("");
 		const foot = this.foot ? `<tfoot>${this.row_html(this.foot, true)}</tfoot>` : "";
 		return (
-			`<table class="ua-table ua-rpt ua-rpt--more ua-rpt--${this.cfg.report}" aria-label="${mesc(m.title)}">` +
+			`<table class="bo-table ua-rpt ua-rpt--more ua-rpt--${this.cfg.report}" aria-label="${mesc(m.title)}">` +
 			`<thead><tr>${head1}</tr>${head2 ? `<tr>${head2}</tr>` : ""}</thead><tbody>${body}</tbody>${foot}</table>`
 		);
 	}
@@ -484,7 +484,7 @@ ua_accounting.reports.MorePage = class MorePage {
 				if (col.kind === "label") {
 					return `<td class="ua-acc-cell" data-key="${mesc(col.key)}"><div class="ua-acc-in" style="--depth:${r.level || 0}">${html}</div></td>`;
 				}
-				const cls = `ua-${col.kind}${col.align === "right" ? " ua-r" : col.align === "center" ? " ua-c" : ""}`;
+				const cls = `ua-${col.kind}${col.align === "right" ? " bo-r" : col.align === "center" ? " bo-c" : ""}`;
 				return `<td class="${cls}" data-key="${mesc(col.key)}">${html}</td>`;
 			})
 			.join("");
@@ -511,10 +511,10 @@ ua_accounting.reports.MorePage = class MorePage {
 		if (!d) return;
 		const title = ua_accounting.reports.MORE_TITLES[d.report] || d.report;
 		const html =
-			`<div class="ua-menu-label">${mesc(__("Розшифровка"))}</div>` +
-			`<button class="ua-menu-item" data-to="${mesc(d.report)}">${micon("file")}${mesc(__("Відкрити: {0}", [title]))}</button>`;
+			`<div class="bo-menu-label">${mesc(__("Розшифровка"))}</div>` +
+			`<button class="bo-menu-item" data-to="${mesc(d.report)}">${micon("file")}${mesc(__("Відкрити: {0}", [title]))}</button>`;
 		td.classList.add("is-active");
-		ua_accounting.ui.menu(td, html, () => this.drill(d), {
+		beeone.ui.menu(td, html, () => this.drill(d), {
 			cls: "ua-drill-pop",
 			on_close: () => td.classList.remove("is-active"),
 		});

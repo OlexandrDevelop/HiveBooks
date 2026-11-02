@@ -52,12 +52,14 @@ def _debts(organization, account, day, sign):
     }
 
 
-def _turnover(organization, prefix_pattern, date_from, date_to, side):
+def _turnover(organization, prefixes, date_from, date_to, side):
+    """Turnover of the accounts that start with one of the `prefixes`."""
+    like = " or ".join([f"account_{side} like %s"] * len(prefixes))
     return flt(
         frappe.db.sql(
             f"""select coalesce(sum(amount), 0) from `tabUA Accounting Entry` where organization = %s
-            and posting_date between %s and %s and account_{side} regexp %s""",
-            (organization, date_from, date_to, prefix_pattern),
+            and posting_date between %s and %s and ({like})""",
+            (organization, date_from, date_to, *[p + "%" for p in prefixes]),
         )[0][0]
     )
 
@@ -72,14 +74,15 @@ def _sales_by_month(organization, date_from, date_to):
     months = {}
     for side, sign in (("cr", 1), ("dr", -1)):
         rows = frappe.db.sql(
-            f"""select date_format(posting_date, '%%Y-%%m') as month, sum(amount) as amount
+            f"""select posting_date, sum(amount) as amount
             from `tabUA Accounting Entry` where organization = %s and posting_date between %s and %s
-            and account_{side} like '70%%' group by 1""",
+            and account_{side} like '70%%' group by posting_date""",
             (organization, date_from, date_to),
             as_dict=True,
         )
         for r in rows:
-            months[r.month] = months.get(r.month, 0.0) + sign * flt(r.amount)
+            month = getdate(r.posting_date).strftime("%Y-%m")
+            months[month] = months.get(month, 0.0) + sign * flt(r.amount)
     return [{"month": m, "amount": flt(v, 2)} for m, v in sorted(months.items()) if flt(v, 2)]
 
 
@@ -90,9 +93,9 @@ def get_widgets(organization, date_from, date_to):
     if not frappe.db.exists("UA Organization", organization):
         frappe.throw(_("Організацію {0} не знайдено").format(organization), frappe.ValidationError)
     by_month = _sales_by_month(organization, date_from, date_to)
-    income = _net_income(organization, "^7", date_from, date_to)
+    income = _net_income(organization, ("7",), date_from, date_to)
     expenses = flt(
-        _turnover(organization, "^9[0-7]", date_from, date_to, "dr") - _turnover(organization, "^9[0-7]", date_from, date_to, "cr"), 2
+        _turnover(organization, tuple(f"9{i}" for i in range(8)), date_from, date_to, "dr") - _turnover(organization, tuple(f"9{i}" for i in range(8)), date_from, date_to, "cr"), 2
     )
     receivable = _debts(organization, "361", date_to, 1)
     payable = _debts(organization, "631", date_to, -1)

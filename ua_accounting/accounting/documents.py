@@ -9,9 +9,9 @@ import re
 
 import frappe
 from frappe import _
-from frappe.beeone import numbering
+from frappe.beeone import accounting_query, numbering
 from frappe.model.document import Document
-from frappe.utils import flt, getdate
+from frappe.utils import add_months, flt, getdate
 
 from ua_accounting.accounting import ledger, vat
 from ua_accounting.accounting.utils import first_of_month, title_of
@@ -151,17 +151,26 @@ def settlement_balance(organization, account, counterparty, contract, side, date
     ct_slot = slot_of(account, "Contract", ctx)
     if not cp_slot:
         return 0.0
-    sql = (
-        "select coalesce(sum(debit), 0), coalesce(sum(credit), 0) from `tabUA Account Turnover` "
-        "where organization = %s and account = %s and period <= %s and "
-        f"subconto{cp_slot} = %s"
-    )
-    values = [organization, account, first_of_month(date), counterparty or ""]
+    filters = [(cp_slot - 1, [counterparty or ""])]
     if ct_slot:
-        sql += f" and subconto{ct_slot} = %s"
-        values.append(contract or "")
-    debit, credit = frappe.db.sql(sql, values)[0]
+        filters.append((ct_slot - 1, [contract or ""]))
+    # whole months up to the month of `date`, from the totals
+    end = add_months(first_of_month(date), 1)
+    result = accounting_query.acc_turnover(
+        "UA Accounting Entry", None, end, [accounting_query.Group([account], filters=filters)], [organization]
+    )
+    debit, credit = accounting_query.sum_vectors(result)[:2]
     return flt(credit - debit if side == "cr" else debit - credit, 2)
+
+
+def _sum_columns(query, values, lock):
+    """Sums of two columns of the rows a query selects.
+
+    `lock` adds FOR UPDATE. PostgreSQL refuses a lock on an aggregate, so the rows are read and
+    locked and the sums are made here. The sums are the same on both databases.
+    """
+    rows = frappe.db.sql(query + (" for update" if lock else ""), values)
+    return sum(flt(row[0]) for row in rows), sum(flt(row[1]) for row in rows)
 
 
 def stock_balance(organization, account, item, warehouse, date, ctx, lock=False):
@@ -177,24 +186,25 @@ def stock_balance(organization, account, item, warehouse, date, ctx, lock=False)
     if not it or not wh:
         return 0.0, 0.0
     first = first_of_month(date)
-    suffix = " for update" if lock else ""
-    amount, qty = frappe.db.sql(
-        f"""select coalesce(sum(debit - credit), 0), coalesce(sum(quantity_dr - quantity_cr), 0)
+    amount, qty = _sum_columns(
+        f"""select debit - credit, quantity_dr - quantity_cr
         from `tabUA Account Turnover`
         where organization = %s and account = %s and period < %s
-        and subconto{it} = %s and subconto{wh} = %s{suffix}""",
+        and subconto{it} = %s and subconto{wh} = %s""",
         (organization, account, first, item, warehouse),
-    )[0]
+        lock,
+    )
     for side in ("dr", "cr"):
         sign = 1 if side == "dr" else -1
-        e_amount, e_qty = frappe.db.sql(
-            f"""select coalesce(sum(amount), 0), coalesce(sum(quantity_{side}), 0)
+        e_amount, e_qty = _sum_columns(
+            f"""select amount, quantity_{side}
             from `tabUA Accounting Entry`
             where organization = %s and account_{side} = %s
             and posting_date >= %s and posting_date <= %s
-            and subconto_{side}{it} = %s and subconto_{side}{wh} = %s{suffix}""",
+            and subconto_{side}{it} = %s and subconto_{side}{wh} = %s""",
             (organization, account, first, getdate(date), item, warehouse),
-        )[0]
+            lock,
+        )
         amount += sign * e_amount
         qty += sign * e_qty
     return flt(amount, 2), flt(qty, 3)
@@ -257,6 +267,15 @@ class AccountingDocument(Document):
             frappe.throw(_("Документ не створює жодної проводки"))
         ledger.post_entries(self, entries)
         vat.post_vat_entries(self, liabilities, credits)
+
+    def repost_in_sequence(self, sequence=None):
+        """Post the document again in the sequence restore. The tax invoice links of the VAT rows stay."""
+        from ua_accounting.accounting import stock
+
+        links = stock._vat_links(self.doctype, self.name)
+        ledger.cancel_entries(self)
+        self.post_document()
+        stock._restore_vat_links(self.doctype, self.name, links)
 
     def build(self):
         """Return (entries, vat liabilities, vat credits)."""

@@ -342,10 +342,11 @@ def next_reg_number(organization):
     for doctype in (tax.PN, tax.RK, SIGNED):
         field = "dps_reg_number" if doctype == SIGNED else "erpn_reg_number"
         for (value,) in frappe.db.sql(
-            f"select `{field}` from `tab{doctype}` where organization = %s and `{field}` regexp '^[0-9]{{10}}$'",
+            f"select `{field}` from `tab{doctype}` where organization = %s and length(`{field}`) = 10",
             organization,
         ):
-            best = max(best, int(value))
+            if value.isascii() and value.isdigit():
+                best = max(best, int(value))
     return str(best + 1)
 
 

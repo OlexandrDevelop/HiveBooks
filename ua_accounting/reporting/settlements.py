@@ -2,6 +2,7 @@
 
 import frappe
 from frappe import _
+from frappe.beeone import accounting_query
 from frappe.utils import flt, getdate
 
 from ua_accounting.accounting import settlements
@@ -26,19 +27,10 @@ def side_sums(organization, account, side, date_from, date_to, counter=None, cou
 
     `counter`: LIKE patterns of the other account to take; `counter_not`: exact accounts to leave out.
     """
-    other = "cr" if side == "dr" else "dr"
-    sql = f"""select subconto_{side}1 sub_key, coalesce(sum(case when posting_date < %s then amount end), 0) before_sum,
-        coalesce(sum(case when posting_date >= %s then amount end), 0) turn_sum
-        from `tabUA Accounting Entry` where organization = %s and account_{side} = %s and posting_date <= %s"""
-    values = [date_from, date_from, organization, account, date_to]
-    if counter:
-        sql += " and (" + " or ".join([f"account_{other} like %s"] * len(counter)) + ")"
-        values += list(counter)
-    if counter_not:
-        sql += f" and account_{other} not in ({', '.join(['%s'] * len(counter_not))})"
-        values += list(counter_not)
-    sql += f" group by subconto_{side}1"
-    return {r[0] or "": [flt(r[1], 2), flt(r[2], 2)] for r in frappe.db.sql(sql, values)}
+    long = {"dr": "debit", "cr": "credit"}[side]
+    return accounting_query.acc_side_sums(
+        "UA Accounting Entry", long, account, date_from, date_to, organization, counter or (), counter_not or ()
+    )
 
 
 def merge(*sources):

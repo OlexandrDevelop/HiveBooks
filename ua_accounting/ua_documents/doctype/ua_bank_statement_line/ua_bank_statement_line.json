@@ -7,6 +7,7 @@
   "operation_type",
   "counterparty",
   "contract",
+  "invoice",
   "settlement_type",
   "amount",
   "cash_flow_item",
@@ -130,6 +131,12 @@
    "fieldname": "document",
    "fieldtype": "Data",
    "label": "Документ"
+  },
+  {
+   "fieldname": "invoice",
+   "fieldtype": "Link",
+   "label": "Інвойс",
+   "options": "UA Payment Invoice"
   }
  ],
  "istable": 1,

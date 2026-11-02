@@ -1,8 +1,10 @@
 """The shared query layer of the reports.
 
-All reports read the ledger only through this module.
+All reports read the ledger only through this module. The SQL itself lives in the core
+(frappe.beeone.accounting_query: acc_turnover, acc_entries, acc_corr_turnover); this module
+resolves the filters against the Ukrainian chart of accounts and gives the core its groups.
 
-Speed rule: a period is cut into whole months and edge days.
+Speed rule (done by the core): a period is cut into whole months and edge days.
     whole months  -> UA Account Turnover (monthly totals)
     edge days     -> UA Accounting Entry (only the partial months)
 So a year report reads at most 12 totals rows per key plus two partial months.
@@ -12,18 +14,17 @@ Scope = the filters resolved against the chart of accounts:
     - for each account the subconto slot of every filter and of every grouping level.
 Accounts with the same layout are read together ("classes"), so the SQL stays short.
 
-A new filter: add it to filters.py, then to Scope (resolve) and `_common_where`
-(SQL for both tables). All reports get it.
+A new filter: add it to filters.py, then to Scope (resolve). All reports get it.
 """
 
-import frappe
-from frappe.utils import flt, get_first_day
+from frappe.beeone import accounting_query as core
 
-TOTALS = "tabUA Account Turnover"
+REGISTER = "UA Accounting Entry"
 ENTRIES = "tabUA Accounting Entry"
 SIDES = ("dr", "cr")
+LONG = {"dr": "debit", "cr": "credit"}
 # order of the numbers in a result vector
-SUMS = ("debit", "credit", "qty_dr", "qty_cr", "cur_dr", "cur_cr")
+SUMS = core.SUMS
 
 ENTRY_FIELDS = [
     "name",
@@ -46,34 +47,8 @@ ENTRY_FIELDS = [
     "content",
 ]
 
-
-# ---------------------------------------------------------------- periods
-
-
-def split_range(begin, end):
-    """Cut the days [begin, end) into whole months and edge days.
-
-    begin=None means "from the start of the books".
-    Returns (months, edges):
-        months  (first_period, last_period_exclusive) read from totals, or None
-        edges   list of (from_day, to_day_exclusive) read from entries
-    """
-    if begin is not None and end <= begin:
-        return None, []
-    edges = []
-    m_from = begin
-    if begin is not None and begin.day != 1:
-        m_from = get_first_day(begin, 0, 1)
-        if end <= m_from:
-            return None, [(begin, end)]
-        edges.append((begin, m_from))
-    m_to = end
-    if end.day != 1:
-        m_to = get_first_day(end)
-        edges.append((m_to, end))
-    if m_from is not None and m_to <= m_from:
-        return None, edges
-    return (m_from, m_to), edges
+split_range = core.split_range
+sum_vectors = core.sum_vectors
 
 
 # ---------------------------------------------------------------- scope
@@ -147,129 +122,18 @@ class Scope:
         return True
 
 
-# ---------------------------------------------------------------- SQL helpers
+# ---------------------------------------------------------------- core readers
 
 
-class _Where:
-    def __init__(self):
-        self.parts = []
-        self.params = []
-
-    def add(self, sql, *params):
-        self.parts.append(sql)
-        self.params.extend(params)
-
-    def in_(self, column, values):
-        values = list(values)
-        if not values:
-            self.parts.append("1 = 0")
-            return
-        self.parts.append(f"{column} IN ({', '.join(['%s'] * len(values))})")
-        self.params.extend(values)
-
-    def sql(self):
-        return " AND ".join(self.parts) if self.parts else "1 = 1"
+def _groups(scope):
+    return [
+        core.Group(cls.accounts, cls.level_slots, zip(cls.filter_slots, (f["values"] for f in scope.flt.subconto)), cls.slow)
+        for cls in scope.classes
+    ]
 
 
-def _common_where(scope, cls, w, cols, with_org=True):
-    """Conditions that are the same for the totals table and one side of the entries.
-
-    cols: column names {"account", "org", "currency", "slot": fn(n) -> column}
-    """
-    flt_ = scope.flt
-    if with_org and flt_.organizations:
-        w.in_(cols["org"], flt_.organizations)
-    w.in_(cols["account"], cls.accounts)
-    if flt_.currency:
-        w.add(f"{cols['currency']} = %s", flt_.currency)
-    for f, slot in zip(flt_.subconto, cls.filter_slots):
-        w.in_(cols["slot"](slot + 1), f["values"])
-
-
-def _select_dims(scope, cls, cols):
-    """SELECT list and GROUP BY list for account, grouping levels and currency."""
-    select = [f"{cols['account']} AS account"]
-    group = [cols["account"]]
-    for i, slot in enumerate(cls.level_slots):
-        if slot is None:
-            select.append(f"'' AS l{i}")
-        else:
-            select.append(f"{cols['slot'](slot + 1)} AS l{i}")
-            group.append(f"l{i}")
-    if scope.by_currency:
-        select.append(f"{cols['currency']} AS currency")
-        group.append("currency")
-    else:
-        select.append("'' AS currency")
-    return select, group
-
-
-def _merge(out, rows, n_levels):
-    for r in rows:
-        key = (r["account"], tuple(r[f"l{i}"] or "" for i in range(n_levels)), r["currency"] or "")
-        vec = out.get(key)
-        if vec is None:
-            vec = out[key] = [0.0] * len(SUMS)
-        for i, name in enumerate(SUMS):
-            vec[i] += flt(r[name])
-
-
-# ---------------------------------------------------------------- aggregation
-
-
-def _read_totals(scope, cls, months, out):
-    m_from, m_to = months
-    w = _Where()
-    if m_from is not None:
-        w.add("period >= %s", m_from)
-    w.add("period < %s", m_to)
-    cols = {
-        "account": "account",
-        "org": "organization",
-        "currency": "currency",
-        "slot": lambda n: f"subconto{n}",
-    }
-    _common_where(scope, cls, w, cols)
-    select, group = _select_dims(scope, cls, cols)
-    sql = (
-        f"SELECT {', '.join(select)}, SUM(debit) AS debit, SUM(credit) AS credit, "
-        "SUM(quantity_dr) AS qty_dr, SUM(quantity_cr) AS qty_cr, "
-        "SUM(currency_dr) AS cur_dr, SUM(currency_cr) AS cur_cr "
-        f"FROM `{TOTALS}` WHERE {w.sql()} GROUP BY {', '.join(group)}"
-    )
-    _merge(out, frappe.db.sql(sql, w.params, as_dict=True), len(scope.levels))
-
-
-def _read_entries(scope, cls, edges, out):
-    for begin, end in edges:
-        for side in SIDES:
-            w = _Where()
-            if begin is not None:
-                w.add("posting_date >= %s", begin)
-            w.add("posting_date < %s", end)
-            cols = {
-                "account": f"account_{side}",
-                "org": "organization",
-                "currency": f"currency_{side}",
-                "slot": lambda n, side=side: f"subconto_{side}{n}",
-            }
-            _common_where(scope, cls, w, cols)
-            select, group = _select_dims(scope, cls, cols)
-            if side == "dr":
-                sums = (
-                    "SUM(amount) AS debit, 0 AS credit, SUM(quantity_dr) AS qty_dr, 0 AS qty_cr, "
-                    "SUM(currency_amount_dr) AS cur_dr, 0 AS cur_cr"
-                )
-            else:
-                sums = (
-                    "0 AS debit, SUM(amount) AS credit, 0 AS qty_dr, SUM(quantity_cr) AS qty_cr, "
-                    "0 AS cur_dr, SUM(currency_amount_cr) AS cur_cr"
-                )
-            sql = (
-                f"SELECT {', '.join(select)}, {sums} FROM `{ENTRIES}` "
-                f"WHERE {w.sql()} GROUP BY {', '.join(group)}"
-            )
-            _merge(out, frappe.db.sql(sql, w.params, as_dict=True), len(scope.levels))
+def _org(scope):
+    return scope.flt.organizations
 
 
 def aggregate(scope, begin, end):
@@ -278,28 +142,16 @@ def aggregate(scope, begin, end):
     Returns {(account, (level values...), currency): [debit, credit, qty_dr, qty_cr,
     cur_dr, cur_cr]}. Grouping levels without a subconto for the account give "".
     """
-    out = {}
-    months, edges = split_range(begin, end)
-    for cls in scope.classes:
-        if cls.slow:
-            _read_entries(scope, cls, [(begin, end)], out)
-            continue
-        if months:
-            _read_totals(scope, cls, months, out)
-        _read_entries(scope, cls, edges, out)
-    return out
-
-
-def sum_vectors(result):
-    """One vector with the sum of all rows of an aggregate() result."""
-    total = [0.0] * len(SUMS)
-    for vec in result.values():
-        for i, v in enumerate(vec):
-            total[i] += v
-    return total
-
-
-# ---------------------------------------------------------------- entry rows
+    return core.acc_turnover(
+        REGISTER,
+        begin,
+        end,
+        _groups(scope),
+        _org(scope),
+        scope.flt.currency,
+        scope.by_currency,
+        len(scope.levels),
+    )
 
 
 def side_condition(scope, sides=SIDES):
@@ -308,23 +160,7 @@ def side_condition(scope, sides=SIDES):
     Accounts, currency and subconto filters of the scope apply to the same side of the entry.
     The organization is not included. None when no account of the scope can match.
     """
-    parts = []
-    params = []
-    for cls in scope.classes:
-        for side in sides:
-            sw = _Where()
-            cols = {
-                "account": f"account_{side}",
-                "org": "organization",
-                "currency": f"currency_{side}",
-                "slot": lambda n, side=side: f"subconto_{side}{n}",
-            }
-            _common_where(scope, cls, sw, cols, with_org=False)
-            parts.append(f"({sw.sql()})")
-            params.extend(sw.params)
-    if not parts:
-        return None
-    return f"({' OR '.join(parts)})", params
+    return core.acc_side_condition(REGISTER, _groups(scope), [LONG[s] for s in sides], scope.flt.currency)
 
 
 def list_entries(scope, begin, end, limit):
@@ -332,28 +168,9 @@ def list_entries(scope, begin, end, limit):
 
     Ordered by date and order of posting. Returns (rows, truncated).
     """
-    flt_ = scope.flt
-    w = _Where()
-    w.add("posting_date >= %s", begin)
-    w.add("posting_date < %s", end)
-    if flt_.organizations:
-        w.in_("organization", flt_.organizations)
-
-    cond = side_condition(scope)
-    if cond is None:
-        return [], False
-    w.add(cond[0])
-    w.params.extend(cond[1])
-
-    fields = ", ".join(f"`{f}`" for f in ENTRY_FIELDS)
-    rows = frappe.db.sql(
-        f"SELECT {fields} FROM `{ENTRIES}` WHERE {w.sql()} "
-        "ORDER BY posting_date ASC, name ASC LIMIT %s",
-        [*w.params, limit + 1],
-        as_dict=True,
+    return core.acc_entries(
+        REGISTER, begin, end, _groups(scope), ENTRY_FIELDS, limit, _org(scope), scope.flt.currency
     )
-    truncated = len(rows) > limit
-    return rows[:limit], truncated
 
 
 def corr_turnover(scope, begin, end):
@@ -362,25 +179,4 @@ def corr_turnover(scope, begin, end):
     Returns {(account, corr_account): [debit, credit]}. Read from entries (the totals
     table has no corresponding account). begin=None: from the start.
     """
-    out = {}
-    for cls in scope.classes:
-        for side, other in (("dr", "cr"), ("cr", "dr")):
-            w = _Where()
-            if begin is not None:
-                w.add("posting_date >= %s", begin)
-            w.add("posting_date < %s", end)
-            cols = {
-                "account": f"account_{side}",
-                "org": "organization",
-                "currency": f"currency_{side}",
-                "slot": lambda n, side=side: f"subconto_{side}{n}",
-            }
-            _common_where(scope, cls, w, cols)
-            sql = (
-                f"SELECT account_{side} AS account, account_{other} AS corr, SUM(amount) AS total "
-                f"FROM `{ENTRIES}` WHERE {w.sql()} GROUP BY account_{side}, account_{other}"
-            )
-            for r in frappe.db.sql(sql, w.params, as_dict=True):
-                vec = out.setdefault((r["account"], r["corr"] or ""), [0.0, 0.0])
-                vec[0 if side == "dr" else 1] += flt(r["total"])
-    return out
+    return core.acc_corr_turnover(REGISTER, begin, end, _groups(scope), _org(scope), scope.flt.currency)
