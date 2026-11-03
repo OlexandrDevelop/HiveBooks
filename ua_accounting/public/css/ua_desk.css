@@ -694,7 +694,7 @@ body.bo-shell .ua-list-card .ua-lrow:has(.list-row-checkbox:checked) .bo-row-act
 }
 
 
-/* footer: info, Frappe page sizes (20 / 100 / 500 / 2500), "Завантажити ще", bulk bar */
+/* footer: row counter and bulk bar (the platform paging area has no page-size controls) */
 body.bo-shell .ua-list-card .list-paging-area.ua-foot {
 	display: flex !important;
 	position: relative;
@@ -708,12 +708,13 @@ body.bo-shell .ua-list-card .list-paging-area.ua-foot {
 	color: var(--bo-text-2);
 	font-size: var(--bo-fs-12);
 }
-body.bo-shell .ua-foot .level-left {
-	margin-left: auto;
-	order: 2;
-}
+body.bo-shell .ua-foot .level-left,
 body.bo-shell .ua-foot .level-right {
 	order: 3;
+}
+body.bo-shell .ua-foot .level-left:empty,
+body.bo-shell .ua-foot .level-right:empty {
+	display: none;
 }
 body.bo-shell .ua-foot .ua-foot-info {
 	order: 1;
@@ -721,38 +722,9 @@ body.bo-shell .ua-foot .ua-foot-info {
 body.bo-shell .ua-foot .ua-bulk {
 	order: 0;
 }
-body.bo-shell .ua-foot.has-sel .level-left,
 body.bo-shell .ua-foot.has-sel .ua-foot-info {
 	opacity: 0;
 	visibility: hidden;
-}
-body.bo-shell .ua-foot .btn-more,
-body.bo-shell .ua-foot .es-button {
-	height: var(--bo-h-control-sm);
-	padding: 0 10px;
-	border: 1px solid transparent;
-	border-radius: var(--bo-r-md);
-	background: transparent;
-	color: var(--bo-text-2);
-	font-size: var(--bo-fs-12);
-	box-shadow: none;
-}
-body.bo-shell .ua-foot .btn-more:hover,
-body.bo-shell .ua-foot .es-button:hover {
-	background: var(--bo-surface-2);
-	color: var(--bo-text);
-}
-body.bo-shell .ua-foot .es-tab-buttons,
-body.bo-shell .ua-foot .tab-buttons {
-	background: transparent;
-	gap: 2px;
-}
-body.bo-shell .ua-foot [aria-checked="true"],
-body.bo-shell .ua-foot [aria-selected="true"],
-body.bo-shell .ua-foot .es-pill.active,
-body.bo-shell .ua-foot .is-active {
-	background: var(--bo-accent-soft);
-	color: var(--bo-accent-text);
 }
 body.bo-shell .ua-bulk [hidden] {
 	display: none;
