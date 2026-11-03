@@ -458,6 +458,27 @@ body.bo-shell .ua-doc-list .layout-main-section {
 	box-shadow: none;
 }
 body.bo-shell .ua-doc-list .page-body {
+	padding-bottom: 0;
+}
+/* the card fills the window body (not the viewport): flex chain from the window down to the card */
+body.bo-shell .bo-win-body:has(> .ua-doc-list) {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+body.bo-shell .bo-win-body > .ua-doc-list {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+body.bo-shell .ua-doc-list :is(.page-body, .page-body > .container, .page-wrapper, .page-content, .layout-main, .layout-main-section-wrapper, .layout-main-section):not(.ua-cat-grid) {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+body.bo-shell .ua-doc-list .page-body > .container {
 	padding-bottom: var(--bo-s-4);
 }
 .ua-list-top .ua-views-row {
@@ -484,8 +505,8 @@ body.bo-shell .ua-list-card.frappe-list {
 	margin: 0;
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - var(--bo-h-topbar) - 236px);
-	min-height: 320px;
+	flex: 1;
+	min-height: 0;
 	padding: 0;
 	border: 1px solid var(--bo-border);
 	border-radius: var(--bo-r-lg);
@@ -1960,8 +1981,7 @@ body.bo-shell .ua-doc-list:not(.ua-cat-tree) .ua-cat-grid {
 }
 body.bo-shell .ua-cat-grid > .ua-tree-card,
 body.bo-shell .ua-cat-grid > .ua-list-card.frappe-list {
-	height: calc(100vh - var(--bo-h-topbar) - 190px);
-	min-height: 320px;
+	min-height: 0;
 }
 body.bo-shell .ua-list-top--catalog .ua-filters {
 	margin-bottom: var(--bo-s-4);
