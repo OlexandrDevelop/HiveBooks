@@ -22,6 +22,12 @@ RUN test "$APP_NAME" = ua_accounting -o "$APP_NAME" = ua_trade && \
     ./env/bin/pip install -e "apps/$APP_NAME" && \
     printf '\n%s\n' "$APP_NAME" >> sites/apps.txt && \
     bench build --app "$APP_NAME" && \
+    if [ -f "apps/$APP_NAME/owner_app/pyproject.toml" ]; then \
+        ln -s "$APP_NAME/owner_app" apps/owner_custom && \
+        ./env/bin/pip install -e apps/owner_custom && \
+        printf '%s\n' owner_custom >> sites/apps.txt && \
+        bench build --app owner_custom; \
+    fi && \
     ./env/bin/python -c "import shutil; shutil.copytree('sites/assets', '/home/frappe/image-assets', ignore=shutil.ignore_patterns('node_modules'))"
 COPY --chown=frappe:frappe deploy/bootstrap.sh /home/frappe/bootstrap.sh
 ENV CONFIGURATION_APP=$APP_NAME

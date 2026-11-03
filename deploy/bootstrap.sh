@@ -14,7 +14,11 @@ mkdir -p sites/assets
 # Replace only those links, never uploaded site files.
 find sites/assets -maxdepth 1 -type l -delete
 cp -a /home/frappe/image-assets/. sites/assets/
-printf 'frappe\n%s\n' "$CONFIGURATION_APP" > sites/apps.txt
+# owner_custom: the owner's own app (see CUSTOMIZE.md); present when the image was built with owner_app/
+APPS=("$CONFIGURATION_APP")
+[ ! -d apps/owner_custom ] || APPS+=(owner_custom)
+printf 'frappe\n' > sites/apps.txt
+printf '%s\n' "${APPS[@]}" >> sites/apps.txt
 bench set-config -g db_host db
 bench set-config -gp db_port "$DB_PORT"
 bench set-config -g redis_cache redis://redis-cache:6379
@@ -33,9 +37,13 @@ if [ ! -f "sites/$SITE_NAME/site_config.json" ]; then
     fi
 fi
 # install-app is skipped on subsequent deployments; migration always runs.
-if ! bench --site "$SITE_NAME" list-apps --format json | python -c 'import json,os,sys; sys.exit(os.environ["CONFIGURATION_APP"] not in json.load(sys.stdin).get(os.environ["SITE_NAME"], []))'; then
-    bench --site "$SITE_NAME" install-app "$CONFIGURATION_APP"
-fi
+for app in "${APPS[@]}"; do
+    if ! bench --site "$SITE_NAME" list-apps --format json | APP="$app" python -c 'import json,os,sys; sys.exit(os.environ["APP"] not in json.load(sys.stdin).get(os.environ["SITE_NAME"], []))'; then
+        bench --site "$SITE_NAME" install-app "$app"
+    fi
+done
+# dev mode (./install.sh --dev): DocTypes edited in the UI are written to the mounted checkout
+bench set-config -gp developer_mode "${DEV_MODE:-0}"
 bench --site "$SITE_NAME" migrate
 # the stock Frappe setup wizard is completed without questions; the site is fixed to one language
 prepare=(bench --site "$SITE_NAME" beeone prepare-site --language "${SITE_LANGUAGE:-uk}")

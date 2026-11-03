@@ -1,6 +1,7 @@
 # HiveBooks
 
 Встановлення однією командою: `./install.sh` ([інструкція](DEPLOY.md)).
+Власні зміни та оновлення: `./install.sh --dev`, `./update.sh` ([інструкція](CUSTOMIZE.md)).
 Easypanel: Compose-файл `docker-compose.yml` (MariaDB) або `docker-compose.postgres.yml`, Build Path: `/`.
 
 # HiveBooks

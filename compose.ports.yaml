@@ -1,5 +1,6 @@
 # Local installs only: publishes the web server. Easypanel routes the domain itself and does not use this file.
+# HTTP_HOST_IP is 127.0.0.1 in dev mode (./install.sh --dev).
 services:
   frontend:
     ports:
-      - '${HTTP_PORT:-8080}:8080'
+      - '${HTTP_HOST_IP:-0.0.0.0}:${HTTP_PORT:-8080}:8080'

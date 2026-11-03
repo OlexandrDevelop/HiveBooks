@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.sh text eol=lf
+*.xsd -text
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary

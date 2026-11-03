@@ -1,0 +1,19 @@
+# Dev mode (local only): the checkout is mounted over the app code, Python reloads, developer_mode is on.
+# Enabled by `./install.sh --dev`. Never expose this stack to a network.
+x-dev: &dev
+  volumes:
+    - .:/home/frappe/frappe-bench/apps/ua_accounting
+  environment:
+    DEV_MODE: '1'
+services:
+  init: *dev
+  backend:
+    <<: *dev
+    command: [/home/frappe/frappe-bench/env/bin/gunicorn, --chdir=/home/frappe/frappe-bench/sites, --bind=0.0.0.0:8000, --workers=1, --threads=4, --worker-class=gthread, --timeout=120, --reload, 'frappe.app:application']
+  websocket: *dev
+  worker: *dev
+  scheduler: *dev
+  frontend:
+    volumes:
+      - .:/src:ro
+      - ./deploy/nginx.dev.conf:/etc/nginx/templates/default.conf.template:ro

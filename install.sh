@@ -2,11 +2,13 @@
 # HiveBooks: встановлення однією командою.
 #   ./install.sh                                  питає тип бази, домен і пароль
 #   ./install.sh --db postgres --site erp.example.com --admin-password '...' --yes
-# Повторний запуск (після git pull) нічого не питає: перебудовує образ і оновлює сайт.
+# Повторний запуск нічого не питає: перебудовує образ і оновлює сайт (для оновлень з GitHub: ./update.sh).
+#   ./install.sh --dev     режим розробки: каталог із кодом підключається до контейнерів (лише локально)
+#   ./install.sh --prod    повернення до звичайного режиму (код береться з образу)
 set -euo pipefail
 cd "$(dirname "$0")"
 
-DB=""; SITE=""; ADMIN_PASSWORD_ARG=""; HTTP_PORT_ARG=""; PROJECT_ARG=""; BEEONE_CONTEXT_ARG="${BEEONE_CONTEXT:-}"; YES=0
+DB=""; SITE=""; ADMIN_PASSWORD_ARG=""; HTTP_PORT_ARG=""; PROJECT_ARG=""; BEEONE_CONTEXT_ARG="${BEEONE_CONTEXT:-}"; YES=0; MODE=""
 die() { echo "Помилка: $*" >&2; exit 1; }
 
 while [ $# -gt 0 ]; do
@@ -17,8 +19,10 @@ while [ $# -gt 0 ]; do
     --http-port) HTTP_PORT_ARG="${2:?--http-port ПОРТ}"; shift 2 ;;
     --project) PROJECT_ARG="${2:?--project НАЗВА}"; shift 2 ;;
     --beeone-context) BEEONE_CONTEXT_ARG="${2:?--beeone-context КАТАЛОГ}"; shift 2 ;;
+    --dev) MODE=dev; shift ;;
+    --prod) MODE=prod; shift ;;
     --yes|-y) YES=1; shift ;;
-    -h|--help) sed -n 2,6p "$0"; exit 0 ;;
+    -h|--help) sed -n 2,9p "$0"; exit 0 ;;
     *) die "невідомий параметр $1" ;;
   esac
 done
@@ -72,7 +76,23 @@ if [ -n "$BEEONE_CONTEXT_ARG" ]; then
   grep -q 'compose.local-beeone.yaml' .env || sed -i 's|^COMPOSE_FILE=.*|&:compose.local-beeone.yaml|' .env
 fi
 
+if [ "$MODE" = dev ]; then
+  grep -q '^DEV_MODE=' .env || echo "DEV_MODE=1" >> .env
+  grep -q '^HTTP_HOST_IP=' .env || echo "HTTP_HOST_IP=127.0.0.1" >> .env
+  grep -q 'compose.dev.yaml' .env || sed -i 's|^COMPOSE_FILE=.*|&:compose.dev.yaml|' .env
+  if [ "$(uname -s)" = Linux ] && [ "$(id -u)" != 1000 ]; then
+    echo "Увага: ваш користувач має uid $(id -u), а контейнери пишуть від uid 1000. Щоб зміни з інтерфейсу потрапляли у файли, виконайте:" >&2
+    echo "  setfacl -R -m u:1000:rwX -m d:u:1000:rwX ." >&2
+  fi
+  echo "Режим розробки: сайт доступний лише на цьому комп'ютері (127.0.0.1). Не відкривайте його в мережу."
+elif [ "$MODE" = prod ]; then
+  sed -i '/^DEV_MODE=/d;/^HTTP_HOST_IP=/d;s|:compose\.dev\.yaml||' .env
+fi
+
 docker compose up -d --build || { echo "Не вдалося запустити. Журнал ініціалізації:" >&2; docker compose logs init >&2 || true; exit 1; }
+
+# nginx must not keep the address of a replaced backend container
+docker compose restart frontend >/dev/null
 
 set -a; . ./.env; set +a
 command -v curl >/dev/null || { echo "Запущено (curl не знайдено, перевірку відповіді пропущено): http://localhost:${HTTP_PORT:-8080}"; exit 0; }

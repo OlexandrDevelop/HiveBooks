@@ -1,0 +1,4 @@
+[pre_model_sync]
+# owner_custom.patches.example
+
+[post_model_sync]
