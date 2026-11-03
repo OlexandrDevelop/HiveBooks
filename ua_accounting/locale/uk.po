@@ -21,6 +21,9 @@ msgstr "&quot;Члени команди&quot; або &quot;Управління&
 msgid "\"amended_from\" field must be present to do an amendment."
 msgstr "Щоб внести поправку, повинно бути присутнє поле &quot;Змінено_від&quot;."
 
+msgid "\"{0}\" has changes. If you close it without saving, the changes will be lost."
+msgstr "Документ «{0}» змінено. Якщо закрити без запису, зміни буде втрачено."
+
 msgid "\"{0}\" is not a valid Google Sheets URL"
 msgstr "&quot;{0}&quot; не є дійсною URL-адресою Google Таблиць"
 
@@ -93,6 +96,9 @@ msgstr "1 рядок до {0}"
 msgid "1 week ago"
 msgstr "1 тиждень тому"
 
+msgid "1 window"
+msgstr "1 вікно"
+
 msgid "1 year ago"
 msgstr "1 рік тому"
 
@@ -123,11 +129,17 @@ msgstr "Список ресурсів, які Клієнт App матиме до
 msgid "A log of request errors"
 msgstr "Журнал помилок запитів"
 
+msgid "A missing account side is allowed only for off-balance accounts"
+msgstr "Порожній рахунок дозволений лише для позабалансових"
+
 msgid "A new account has been created for you at {0}"
 msgstr "Нову обліковку було створено для вас в {0}"
 
 msgid "A recurring {0} {1} has been created for you via Auto Repeat {2}."
 msgstr "Для вас було створено повторний {0} {1} через Автоповтор {2}."
+
+msgid "A short wizard collects what you need to start real work"
+msgstr "Короткий майстер збере все, що потрібно для початку реальної роботи"
 
 msgid "A symbol for this currency. For e.g. $"
 msgstr "Символ цієї валюти. Наприклад, ₴"
@@ -165,6 +177,9 @@ msgstr "API-ключ не може бути регенерований"
 msgid "API Key of the user(Event Subscriber) on the producer site"
 msgstr "Ключ API користувача (передплатник події) на сайті виробника"
 
+msgid "API Keys"
+msgstr "Ключі API"
+
 msgid "API Method"
 msgstr "Метод API"
 
@@ -201,6 +216,12 @@ msgstr "Залишилося приблизно {0} хвилин"
 msgid "About {0} seconds remaining"
 msgstr "Залишилося приблизно {0} секунд"
 
+msgid "Accent: cobalt"
+msgstr "Акцент: кобальт"
+
+msgid "Accent: teal"
+msgstr "Акцент: бірюза"
+
 msgid "Accept Payment"
 msgstr "приймати Оплата"
 
@@ -227,6 +248,12 @@ msgstr "Рахунок"
 
 msgid "Account SID"
 msgstr "SID рахунку"
+
+msgid "Account {0} does not define subaccount {1}"
+msgstr "Рахунок {0} не має субконто {1}"
+
+msgid "Account {0} is a group and cannot be posted"
+msgstr "Рахунок {0} є групою: проведення неможливе"
 
 msgid "Accounts Manager"
 msgstr "Диспетчер облікових записів"
@@ -351,6 +378,9 @@ msgstr "Додати учасників"
 msgid "Add Review"
 msgstr "Додати відгук"
 
+msgid "Add Roles"
+msgstr "Додати ролі"
+
 msgid "Add Row"
 msgstr "Додати"
 
@@ -446,6 +476,9 @@ msgstr "Додати до таблиці"
 
 msgid "Add to this activity by mailing to {0}"
 msgstr "Додайте до історії, надіславши лист на {0}"
+
+msgid "Add widget"
+msgstr "Додати віджет"
 
 msgid "Add your own translations"
 msgstr "Додати свої власні переклади"
@@ -777,8 +810,14 @@ msgstr "Сума На підставі поле"
 msgid "Amount Field"
 msgstr "сума поле"
 
+msgid "Amount and quantity cannot both be zero"
+msgstr "Сума та кількість дорівнюють нулю"
+
 msgid "Amount must be greater than 0."
 msgstr "Сума повинна бути більше 0."
+
+msgid "An accounting entry needs at least one account"
+msgstr "Проводка: не вказано рахунки"
 
 msgid "An error occured during the payment process. Please contact us."
 msgstr "Під час здійснення платежу сталася помилка. Будь ласка, зв&#39;яжіться з нами."
@@ -839,6 +878,9 @@ msgstr "Додаток не знайдено"
 
 msgid "App {0} already installed"
 msgstr "Додаток {0} вже встановлено"
+
+msgid "App {0} has no demo data generator. Apps with one: {1}"
+msgstr "Застосунок {0} не має генератора демоданих. Застосунки з генератором: {1}"
 
 msgid "App {0} is not installed"
 msgstr "Не встановлений App {0}"
@@ -923,6 +965,9 @@ msgstr "Стан затвердження"
 
 msgid "Approved"
 msgstr "Затверджений"
+
+msgid "Apps"
+msgstr "Застосунки"
 
 msgid "Archive"
 msgstr "архів"
@@ -1158,6 +1203,9 @@ msgstr "Аутентифікація ..."
 msgid "Authentication"
 msgstr "засвідчення справжності"
 
+msgid "Authentication Apps you can use are:"
+msgstr "Застосунки автентифікації:"
+
 msgid "Authentication Apps you can use are: "
 msgstr "Програми автентифікації, які ви можете використовувати, є:"
 
@@ -1272,11 +1320,20 @@ msgstr "Далеко"
 msgid "BCC"
 msgstr "BCC"
 
+msgid "Back"
+msgstr "Назад"
+
 msgid "Back to Desk"
 msgstr "Повернутися до столу"
 
+msgid "Back to Home"
+msgstr "На головну"
+
 msgid "Back to Login"
 msgstr "Повернутися до сторінки входу"
+
+msgid "Back to sign in"
+msgstr "Назад до входу"
 
 msgid "Background Color"
 msgstr "Колір фону"
@@ -1322,6 +1379,12 @@ msgstr "Резервне копіювання загальнодоступних
 
 msgid "Backups"
 msgstr "резервні копії"
+
+msgid "Balance"
+msgstr "Залишок"
+
+msgid "Balance-sheet and off-balance accounts cannot be combined"
+msgstr "Не можна поєднувати балансовий і позабалансовий рахунок"
 
 msgid "Banner"
 msgstr "Банер"
@@ -1496,6 +1559,9 @@ msgstr "Назва відра"
 
 msgid "Build Report"
 msgstr "Побудувати звіт"
+
+msgid "Built on {0}"
+msgstr "Створено на {0}"
 
 msgid "Bulk Delete"
 msgstr "Масове видалення"
@@ -1763,6 +1829,9 @@ msgstr "Етикетка картки"
 
 msgid "Cards"
 msgstr "Картки"
+
+msgid "Catalogs"
+msgstr "Довідники"
 
 msgid "Categorize blog posts."
 msgstr "Класифікувати повідомлення в блозі."
@@ -2118,6 +2187,9 @@ msgstr "Комбінація типу грантів ( <code>{0}</code> ) та �
 msgid "Command {0} is not registered for {1}"
 msgstr "Команду {0} не зареєстровано для {1}"
 
+msgid "Commands"
+msgstr "Команди"
+
 msgid "Comment"
 msgstr "Прокоментуйте"
 
@@ -2373,11 +2445,17 @@ msgstr "Скопійовано у буфер обміну."
 msgid "Copied {0} {1} to clipboard"
 msgstr "Скопійовано: {0} {1}"
 
+msgid "Copy Apps Version"
+msgstr "Копіювати версії застосунків"
+
 msgid "Copy file URL to clipboard"
 msgstr "Копіювати адресу файлу"
 
 msgid "Copy to Clipboard"
 msgstr "Копіювати"
+
+msgid "Copy token to clipboard"
+msgstr "Копіювати токен у буфер обміну"
 
 msgid "Copyright"
 msgstr "Авторське право"
@@ -2409,6 +2487,9 @@ msgstr "Не вдалося знайти {0} в {1}"
 msgid "Could not identify {0}"
 msgstr "Неможливо визначити {0}"
 
+msgid "Could not load data"
+msgstr "Не вдалося отримати дані"
+
 msgid "Could not map column {0} to field {1}"
 msgstr "Не вдалося зіставити стовпець {0} із полем {1}"
 
@@ -2439,11 +2520,17 @@ msgstr "Країна"
 msgid "Country Name"
 msgstr "Назва країни"
 
+msgid "Country, time zone and currency of the site"
+msgstr "Країна, часовий пояс і валюта сайту"
+
 msgid "County"
 msgstr "Область"
 
 msgid "Create"
 msgstr "Створити"
+
+msgid "Create Account"
+msgstr "Створити обліковий запис"
 
 msgid "Create Board"
 msgstr "Створити дошку"
@@ -2823,6 +2910,9 @@ msgstr "Формат дати"
 msgid "Date and Number Format"
 msgstr "Дата і номер Формат"
 
+msgid "Date format"
+msgstr "Формат дати"
+
 msgid "Date {0} must be in format: {1}"
 msgstr "Дата {0} має бути у форматі: {1}"
 
@@ -2858,6 +2948,9 @@ msgstr "Шановний користувач,"
 
 msgid "Dear {0}"
 msgstr "Шановний {0}"
+
+msgid "Decide later"
+msgstr "Вирішити пізніше"
 
 msgid "Default"
 msgstr "За замовчуванням"
@@ -2952,6 +3045,9 @@ msgstr "Затримується"
 msgid "Delete"
 msgstr "Видалити"
 
+msgid "Delete Account"
+msgstr "Видалити обліковий запис"
+
 msgid "Delete All"
 msgstr "Видалити все"
 
@@ -3011,6 +3107,42 @@ msgstr "Помилка доставки"
 
 msgid "Delivery Status"
 msgstr "Статус поставки"
+
+msgid "Demo data"
+msgstr "Демодані"
+
+msgid "Demo data already exists. Use --reset to delete it and create it again."
+msgstr "Демодані вже існують. Використайте --reset, щоб видалити їх і створити знову."
+
+msgid "Demo data failed"
+msgstr "Не вдалося завантажити демодані"
+
+msgid "Demo data is already loaded"
+msgstr "Демодані вже завантажено"
+
+msgid "Demo data is being processed"
+msgstr "Демодані обробляються"
+
+msgid "Demo data is being processed. Wait a few minutes."
+msgstr "Демодані обробляються. Зачекайте кілька хвилин."
+
+msgid "Demo data is loaded"
+msgstr "Демодані завантажено"
+
+msgid "Demo data is loading"
+msgstr "Демодані завантажуються"
+
+msgid "Demo data is not yet supported on this database"
+msgstr "Демодані поки не підтримуються на цій базі даних"
+
+msgid "Demo data is ready"
+msgstr "Демодані готові"
+
+msgid "Demo data removed"
+msgstr "Демодані видалено"
+
+msgid "Demo data self-check failed: {0}"
+msgstr "Самоперевірка демоданих не пройшла: {0}"
 
 msgid "Department"
 msgstr "Відділ"
@@ -3084,11 +3216,17 @@ msgstr "Не знайшли {0} {0} ({1})"
 msgid "Did not remove"
 msgstr "Не видалити"
 
+msgid "Didn't receive the link?"
+msgstr "Не отримали посилання?"
+
 msgid "Different \"States\" this document can exist in. Like \"Open\", \"Pending Approval\" etc."
 msgstr "Різні \"Стани\" в яких може перебувати цей документ. Як-от \"Відкритий\", \"В очікуванні затвердження\" і т.д."
 
 msgid "Digits"
 msgstr "Цифри"
+
+msgid "Dimensions"
+msgstr "Виміри"
 
 msgid "Direct"
 msgstr "Прямий"
@@ -3255,6 +3393,9 @@ msgstr "Посилання на документ"
 msgid "Document Links"
 msgstr "Посилання на документи"
 
+msgid "Document Movements"
+msgstr "Рух документа"
+
 msgid "Document Name"
 msgstr "Назва документа"
 
@@ -3366,6 +3507,9 @@ msgstr "Документи, які не вдалося відновити"
 msgid "Documents that were already restored"
 msgstr "Документи, які вже були відновлені"
 
+msgid "Documents, lists and reports open as windows."
+msgstr "Документи, журнали і звіти відкриваються як вікна."
+
 msgid "Domain"
 msgstr "Галузь"
 
@@ -3393,11 +3537,20 @@ msgstr "Не надсилайте електронні листи"
 msgid "Don't create new records"
 msgstr "Не створюйте нові записи"
 
+msgid "Don't have an account?"
+msgstr "Немає облікового запису?"
+
 msgid "Don't have an account? Sign up"
 msgstr "Ще не зареєстровані? зареєструватися"
 
 msgid "Don't know, ask 'help'"
 msgstr "Не знаю, зверніться до \"Довідки\""
+
+msgid "Don't panic. Run this command and reload the page:"
+msgstr "Без паніки. Виконайте цю команду й оновіть сторінку:"
+
+msgid "Don't save"
+msgstr "Не записувати"
 
 msgid "Done"
 msgstr "Готово"
@@ -3597,6 +3750,9 @@ msgstr "Змінити рядок"
 msgid "Edit to add content"
 msgstr "Редагувати, щоб додати вміст"
 
+msgid "Edit widget"
+msgstr "Змінити віджет"
+
 msgid "Edit {0}"
 msgstr "Редагувати {0}"
 
@@ -3734,6 +3890,12 @@ msgstr "Email був відзначений як спам"
 
 msgid "Email has been moved to trash"
 msgstr "E-mail був переміщений в кошик"
+
+msgid "Email is mandatory to create User Email"
+msgstr "Для створення пошти користувача потрібна електронна адреса"
+
+msgid "Email is required."
+msgstr "Потрібна електронна пошта."
 
 msgid "Email not sent to {0} (unsubscribed / disabled)"
 msgstr "E-mail не надсилаються {0} (відписався / відключено)"
@@ -3915,6 +4077,9 @@ msgstr "Введіть модуль python або виберіть тип кон
 msgid "Enter static url parameters here (Eg. sender=ERPNext, username=ERPNext, password=1234 etc.)"
 msgstr "Введіть тут статичні параметри URL (Як-от, sender=ERPNext, username=ERPNext, password=1234 тощо)"
 
+msgid "Enter the organization's initial settings"
+msgstr "Ввести початкові налаштування організації"
+
 msgid "Enter url parameter for message"
 msgstr "Введіть URL параметр для повідомлення"
 
@@ -4043,6 +4208,9 @@ msgstr "Журнал оновлення подій"
 
 msgid "Event and other calendars."
 msgstr "Подія та інші календарі."
+
+msgid "Events"
+msgstr "Події"
 
 msgid "Events in Today's Calendar"
 msgstr "Подію в сьогоднішньому календарі"
@@ -4208,6 +4376,9 @@ msgstr "Невдача"
 
 msgid "FavIcon"
 msgstr "FavIcon"
+
+msgid "Favorites"
+msgstr "Обране"
 
 msgid "Fax"
 msgstr "Факс"
@@ -4377,6 +4548,9 @@ msgstr "Файл {0} не існує"
 msgid "Files"
 msgstr "Файли"
 
+msgid "Fill with demo data"
+msgstr "Заповнити демоданими"
+
 msgid "Filter"
 msgstr "Відбір"
 
@@ -4442,6 +4616,9 @@ msgstr "Фільтри будуть доступні через <code>filters</c
 
 msgid "Filters {0}"
 msgstr "Відбір {0}"
+
+msgid "Find a command, report or open window…"
+msgstr "Знайти команду, звіт або відкрите вікно…"
 
 msgid "Find {0} in {1}"
 msgstr "Знайти {0} в {1}"
@@ -4614,6 +4791,9 @@ msgstr "Забули пароль"
 msgid "Forgot Password?"
 msgstr "Забули пароль?"
 
+msgid "Forgot password?"
+msgstr "Забули пароль?"
+
 msgid "Form Customization"
 msgstr "Налаштування форми"
 
@@ -4628,6 +4808,9 @@ msgstr "формат"
 
 msgid "Format Data"
 msgstr "Формат даних"
+
+msgid "Forum"
+msgstr "Форум"
 
 msgid "Forward"
 msgstr "Вперед"
@@ -4649,6 +4832,12 @@ msgstr "фраппе"
 
 msgid "Frappe Framework"
 msgstr "Фраппе рамки"
+
+msgid "Frappe Framework Version"
+msgstr "Версія Frappe Framework"
+
+msgid "Frappe Support"
+msgstr "Підтримка Frappe"
 
 msgid "Frappe page builder using components"
 msgstr "Конструктор сторінок Frappe з використанням компонентів"
@@ -4694,6 +4883,9 @@ msgstr "Повна сторінка"
 
 msgid "Full Width"
 msgstr "Повна ширина"
+
+msgid "Full name is required."
+msgstr "Потрібне повне ім'я."
 
 msgid "Function"
 msgstr "Функція"
@@ -4743,11 +4935,17 @@ msgstr "Стать"
 msgid "Genderqueer"
 msgstr "Гендерквір"
 
+msgid "Generate"
+msgstr "Сформувати"
+
 msgid "Generate Keys"
 msgstr "Генерувати клавіші"
 
 msgid "Generate New Report"
 msgstr "Створити новий звіт"
+
+msgid "Generate Random Password"
+msgstr "Згенерувати випадковий пароль"
 
 msgid "Generated File"
 msgstr "Згенерований файл"
@@ -4818,6 +5016,9 @@ msgstr "Вперед"
 msgid "Go Back"
 msgstr "Повертайся"
 
+msgid "Go to Home Page"
+msgstr "На головну сторінку"
+
 msgid "Go to Page"
 msgstr "Перейти на сторінку"
 
@@ -4848,8 +5049,23 @@ msgstr "Гоа"
 msgid "Goal"
 msgstr "Мета"
 
+msgid "Good"
+msgstr "Добрий"
+
 msgid "Good Work 🎉"
 msgstr "Гарна робота 🎉"
+
+msgid "Good afternoon, {0}"
+msgstr "Доброго дня, {0}"
+
+msgid "Good evening, {0}"
+msgstr "Добрий вечір, {0}"
+
+msgid "Good morning, {0}"
+msgstr "Доброго ранку, {0}"
+
+msgid "Good night, {0}"
+msgstr "Доброї ночі, {0}"
 
 msgid "Google"
 msgstr "Google"
@@ -5003,6 +5219,9 @@ msgstr "Назва групи"
 
 msgid "Group Node"
 msgstr "Вузол групи"
+
+msgid "Group by"
+msgstr "Групувати за"
 
 msgid "Group name cannot be empty."
 msgstr "Ім&#39;я групи не може бути порожнім."
@@ -5160,6 +5379,9 @@ msgstr "Сховати власні типи документів та звіт�
 msgid "Hide Days"
 msgstr "Сховати дні"
 
+msgid "Hide Error"
+msgstr "Сховати помилку"
+
 msgid "Hide Footer Signup"
 msgstr "Приховати Footer Реєстрація"
 
@@ -5237,6 +5459,9 @@ msgstr "Досягнуто погодинне обмеження комента�
 
 msgid "Hourly rate limit for generating password reset links"
 msgstr "Обмеження погодинної ставки для створення посилань для скидання пароля"
+
+msgid "How do you want to start?"
+msgstr "З чого почати?"
 
 msgid "How should this currency be formatted? If not set, will use system defaults"
 msgstr "Як має бути відформатована валюта? Якщо не встановлено, будуть використовуватись системні значення за замовчуванням"
@@ -5346,6 +5571,9 @@ msgstr "Якщо будь-яку роль користувача позначе�
 msgid "If these instructions where not helpful, please add in your suggestions on GitHub Issues."
 msgstr "Якщо ці інструкції вам не допомогли, додайте, будь ласка, ваші пропозиції у розділ Issues репозиторію на GitHub"
 
+msgid "If this email is registered with us, we have sent password reset instructions to it. Please check your inbox."
+msgstr "Якщо цю електронну адресу зареєстровано в нас, ми надіслали на неї інструкції зі скидання пароля. Перевірте свою скриньку."
+
 msgid "If this is checked the documents will have the same name as they have on the Event Producer's site"
 msgstr "Якщо це встановлено, документи матимуть те саме ім’я, що і на сайті виробника подій"
 
@@ -5426,6 +5654,12 @@ msgstr "Поле Зображення повинно бути типу Приє�
 
 msgid "Images"
 msgstr "зображень"
+
+msgid "Impersonate"
+msgstr "Увійти від імені"
+
+msgid "Impersonate as {0}"
+msgstr "Увійти від імені {0}"
 
 msgid "Impersonated by {0}"
 msgstr "Від імені користувача: {0}"
@@ -5604,6 +5838,9 @@ msgstr "Невірний код підтвердження"
 msgid "Incorrect email or password. Please check your login credentials."
 msgstr "Неправильна електронна адреса чи пароль. Будь ласка, перевірте свої дані для входу."
 
+msgid "Incorrect password"
+msgstr "Неправильний пароль"
+
 msgid "Incorrect value in row {0}: {1} must be {2} {3}"
 msgstr "Неправильне значення в рядку {0}: {1} повинен бути {2} {3}"
 
@@ -5636,6 +5873,12 @@ msgstr "Інформація:"
 
 msgid "Initial Sync Count"
 msgstr "Первісна синхронізація Count"
+
+msgid "Initial settings"
+msgstr "Початкові налаштування"
+
+msgid "Initial setup"
+msgstr "Початкове налаштування"
 
 msgid "InnoDB"
 msgstr "InnoDB"
@@ -5675,6 +5918,9 @@ msgstr "Встановлений додаток"
 
 msgid "Installed Applications"
 msgstr "Встановлені програми"
+
+msgid "Installed Apps"
+msgstr "Встановлені застосунки"
 
 msgid "Instructions Emailed"
 msgstr "інструкції по електронній пошті"
@@ -5754,6 +6000,9 @@ msgstr "Недійсні облікові дані"
 msgid "Invalid Date"
 msgstr "Недійсна дата"
 
+msgid "Invalid Email."
+msgstr "Недійсна електронна адреса."
+
 msgid "Invalid Filter Value"
 msgstr "Недійсне значення фільтра"
 
@@ -5814,6 +6063,9 @@ msgstr "Невірний ім&#39;я користувача або пароль 
 msgid "Invalid column"
 msgstr "Недійсний стовпець"
 
+msgid "Invalid credentials, try again."
+msgstr "Неправильний логін або пароль, спробуйте ще раз."
+
 msgid "Invalid expression set in filter {0}"
 msgstr "Недійсний набір виразів у фільтрі {0}"
 
@@ -5843,6 +6095,9 @@ msgstr "Недійсний шлях включення"
 
 msgid "Invalid json added in the custom options: {0}"
 msgstr "Додано недійсний JSON у спеціальних параметрах: {0}"
+
+msgid "Invalid login credentials"
+msgstr "Неправильний логін або пароль"
 
 msgid "Invalid login or password"
 msgstr "Невірне ім’я користувача або пароль"
@@ -6087,6 +6342,9 @@ msgstr "Ключ"
 msgid "Keyboard Shortcuts"
 msgstr "Гарячі клавіши"
 
+msgid "Keyboard shortcuts"
+msgstr "Гарячі клавіші"
+
 msgid "Knowledge Base"
 msgstr "База знань"
 
@@ -6185,6 +6443,9 @@ msgstr "Назва мови"
 
 msgid "Language, Date and Time settings"
 msgstr "Налаштування мови, дати та часу"
+
+msgid "Large"
+msgstr "Великий"
 
 msgid "Last"
 msgstr "Остання"
@@ -6335,6 +6596,9 @@ msgstr "Давайте уникати повторюваних слів і си�
 
 msgid "Let's prepare the system for first use."
 msgstr "Давайте підготуємо систему для першого використання."
+
+msgid "Let's setup your account."
+msgstr "Налаштуємо ваш обліковий запис."
 
 msgid "Let's take you back to onboarding"
 msgstr "Повернемо вас до інбордингу"
@@ -6504,6 +6768,9 @@ msgstr "Завантаження файлу імпорту ..."
 msgid "Loading preview..."
 msgstr "Завантаження..."
 
+msgid "Loading registers…"
+msgstr "Завантаження регістрів…"
+
 msgid "Loading..."
 msgstr "Завантаження ..."
 
@@ -6588,6 +6855,9 @@ msgstr "Ім’я користувача є обов’язковим"
 msgid "Login Required"
 msgstr "Для цього треба увійти в систему"
 
+msgid "Login To {0}"
+msgstr "Вхід до {0}"
+
 msgid "Login Verification Code from {}"
 msgstr "Вхідний код введення з {}"
 
@@ -6603,11 +6873,26 @@ msgstr "Час сесії входу закінчився, оновіть сто
 msgid "Login to comment"
 msgstr "Увійдіть щоб коментувати"
 
+msgid "Login to {0}"
+msgstr "Вхід до {0}"
+
 msgid "Login token required"
 msgstr "Треба ввімкнути токен"
 
+msgid "Login with Email Link"
+msgstr "Увійти за посиланням з листа"
+
 msgid "Login with LDAP"
 msgstr "Вхід з LDAP"
+
+msgid "Login with password"
+msgstr "Увійти за паролем"
+
+msgid "Login with username and password is not allowed."
+msgstr "Вхід за іменем користувача й паролем не дозволено."
+
+msgid "Login with {0}"
+msgstr "Увійти через {0}"
 
 msgid "Logo Width"
 msgstr "Ширина логотипу"
@@ -6630,6 +6915,9 @@ msgstr "Колоди"
 msgid "Long Text"
 msgstr "Довгий текст"
 
+msgid "Look around with ready sample records"
+msgstr "Ознайомтеся з готовими прикладами записів"
+
 msgid "Looks Great"
 msgstr "Виглядає здорово"
 
@@ -6647,6 +6935,9 @@ msgstr "Схоже, щось пішло не так під час операці
 
 msgid "Looks like you didn't change the value"
 msgstr "Схоже, ви не змінили значення"
+
+msgid "Looks like you haven’t added any third party apps."
+msgstr "Схоже, ви не додали жодного стороннього застосунку."
 
 msgid "Low"
 msgstr "Низький"
@@ -6701,6 +6992,9 @@ msgstr "Робить сторінку загальнодоступною"
 
 msgid "Male"
 msgstr "Чоловік"
+
+msgid "Manage 3rd party apps"
+msgstr "Керування сторонніми застосунками"
 
 msgid "Manage Third Party Apps"
 msgstr "Керування сторонніми додатками"
@@ -6762,6 +7056,9 @@ msgstr "Зображень"
 msgid "Mark all as Read"
 msgstr "Позначити всіх як прочитані"
 
+msgid "Mark all as read"
+msgstr "Позначити все прочитаним"
+
 msgid "Mark as Read"
 msgstr "Відзначити як прочитане"
 
@@ -6803,6 +7100,9 @@ msgstr "максимальне значення"
 
 msgid "Max width for type Currency is 100px in row {0}"
 msgstr "Максимальна ширина для тип валюти 100px в рядку {0}"
+
+msgid "Maximize"
+msgstr "Розгорнути"
 
 msgid "Maximum"
 msgstr "Максимум"
@@ -6936,8 +7236,17 @@ msgstr "Віха"
 msgid "Milestone Tracker"
 msgstr "Віховий трекер"
 
+msgid "Mini report"
+msgstr "Міні-звіт"
+
+msgid "Minimize"
+msgstr "Згорнути"
+
 msgid "Minimum"
 msgstr "Мінімум"
+
+msgid "Minimum 8 characters, including at least one number or special character."
+msgstr "Щонайменше 8 символів, серед них хоча б одна цифра або спеціальний знак."
 
 msgid "Minimum Password Score"
 msgstr "Мінімальний бал пароля"
@@ -6959,6 +7268,9 @@ msgstr "Відсутні параметри для входу"
 
 msgid "Mizoram"
 msgstr "Мізорам"
+
+msgid "Mobile"
+msgstr "Мобільний"
 
 msgid "Mobile No"
 msgstr "Номер мобільного"
@@ -7056,14 +7368,23 @@ msgstr "Курсор на наступну колонку"
 msgid "Move cursor to previous column"
 msgstr "Курсор на попередню колонку"
 
+msgid "Move down"
+msgstr "Перемістити нижче"
+
 msgid "Move to Row Number"
 msgstr "Переміщення до рядкового номера"
 
 msgid "Move to..."
 msgstr "Перемістити в..."
 
+msgid "Move up"
+msgstr "Перемістити вище"
+
 msgid "Move {0}"
 msgstr "Перемістити: {0}"
+
+msgid "Movements and balances"
+msgstr "Рухи та залишки"
 
 msgid "Moving {0}"
 msgstr "Переміщення: {0}"
@@ -7103,6 +7424,9 @@ msgstr "Mx"
 
 msgid "My Account"
 msgstr "Моя обліковка"
+
+msgid "My Profile"
+msgstr "Мій профіль"
 
 msgid "My Settings"
 msgstr "Мої налаштування"
@@ -7272,6 +7596,9 @@ msgstr "Нові дані буде вставлено."
 msgid "New module created {0}"
 msgstr "Створено новий модуль {0}"
 
+msgid "New password cannot be same as old password"
+msgstr "Новий пароль не може збігатися зі старим"
+
 msgid "New updates are available"
 msgstr "Нові оновлення доступні"
 
@@ -7295,6 +7622,9 @@ msgstr "Нові {0}: {1}"
 
 msgid "New {} releases for the following apps are available"
 msgstr "Доступні нові {} версії для наступних додатків"
+
+msgid "Newly created user {0} has no roles enabled."
+msgstr "У нового користувача {0} немає жодної ролі."
 
 msgid "Newsletter"
 msgstr "Інформаційний бюлетень"
@@ -7368,6 +7698,9 @@ msgstr "Наступний рік"
 msgid "Next actions"
 msgstr "Подальші дії"
 
+msgid "Next window"
+msgstr "Наступне вікно"
+
 msgid "No"
 msgstr "Ні"
 
@@ -7413,6 +7746,9 @@ msgstr "Більше активності немає"
 msgid "No Name Specified for {0}"
 msgstr "Ім&#39;я не вказано для {0}"
 
+msgid "No New Notifications"
+msgstr "Нових сповіщень немає"
+
 msgid "No Permissions Specified"
 msgstr "Ні Права доступу Задані"
 
@@ -7440,11 +7776,20 @@ msgstr "Записів не створено"
 msgid "No Results"
 msgstr "Немає результатів"
 
+msgid "No Roles Specified"
+msgstr "Ролі не вказано"
+
 msgid "No Tags"
 msgstr "немає тегів"
 
 msgid "No Upcoming Events"
 msgstr "Ніяких майбутніх подій немає"
+
+msgid "No access"
+msgstr "Немає доступу"
+
+msgid "No active user found with email address {0}"
+msgstr "Активного користувача з електронною адресою {0} не знайдено"
 
 msgid "No activity"
 msgstr "Немає активності"
@@ -7454,6 +7799,9 @@ msgstr "Жодної адреси ще не додано"
 
 msgid "No alerts for today"
 msgstr "Немає попереджень на сьогодні"
+
+msgid "No app provides demo data"
+msgstr "Жоден застосунок не надає демоданих"
 
 msgid "No changes in document"
 msgstr "Без змін у документі"
@@ -7472,6 +7820,12 @@ msgstr "Немає контактів ще не додавали."
 
 msgid "No contacts linked to document"
 msgstr "Немає контактів, пов’язаних із документом"
+
+msgid "No data for the period"
+msgstr "Даних за період немає"
+
+msgid "No data for the selected period and filters"
+msgstr "Немає даних за вибраний період і відбір"
 
 msgid "No data found in the file. Please reattach the new file with data."
 msgstr "У файлі не знайдено жодних даних. Повторно встановіть новий файл із даними."
@@ -7542,6 +7896,9 @@ msgstr "Кількість рядків (макс 500)"
 msgid "No of emails remaining to be synced"
 msgstr "Ні листів, що залишилися бути синхронізований"
 
+msgid "No other document types."
+msgstr "Інших типів документів немає."
+
 msgid "No pending or current jobs for this site"
 msgstr "На цьому веб-сайті немає очікуваних чи поточних завдань"
 
@@ -7557,6 +7914,9 @@ msgstr "Немає дозволу, щоб прочитати {0}"
 msgid "No permission to {0} {1} {2}"
 msgstr "Немає доступу для {0} {1} {2}"
 
+msgid "No pinned document types."
+msgstr "Закріплених типів документів немає."
+
 msgid "No posts yet"
 msgstr "Повідомлень ще немає"
 
@@ -7571,6 +7931,9 @@ msgstr "Немає записів помічені."
 
 msgid "No records will be exported"
 msgstr "Записи не експортуються"
+
+msgid "No registers available"
+msgstr "Регістрів немає"
 
 msgid "No results found"
 msgstr "Нічого не знайдено"
@@ -7749,17 +8112,26 @@ msgstr "Примітка. За замовчуванням надсилаютьс
 msgid "Note: Changing the Page Name will break previous URL to this page."
 msgstr "Примітка: Зміна імені сторінки зламається попередній URL цієї сторінки."
 
+msgid "Note: Etc timezones have their signs reversed."
+msgstr "Примітка: у часових поясах Etc знаки обернені."
+
 msgid "Note: For best results,  images must be of the same size and width must be greater than height."
 msgstr "Примітка. Для найкращих результатів зображення повинні бути однакового розміру, а ширина повинна перевищувати висоту."
 
 msgid "Note: Multiple sessions will be allowed in case of mobile device"
 msgstr "Примітка: Декілька сесій буде дозволено в разі мобільного пристрою"
 
+msgid "Note: This will be shared with user."
+msgstr "Примітка: це буде передано користувачеві."
+
 msgid "Notes"
 msgstr "Примітки"
 
 msgid "Notes:"
 msgstr "Примітки:"
+
+msgid "Nothing found"
+msgstr "Нічого не знайдено"
 
 msgid "Nothing has been added yet."
 msgstr "Нічого ще не додано."
@@ -7787,6 +8159,9 @@ msgstr "Повідомлення Підписаний документ"
 
 msgid "Notification Tones"
 msgstr "Тональні сповіщення"
+
+msgid "Notification categories"
+msgstr "Категорії сповіщень"
 
 msgid "Notifications"
 msgstr "Сповіщення"
@@ -7832,6 +8207,9 @@ msgstr "Картки з номерами"
 
 msgid "Number Format"
 msgstr "Числовий формат"
+
+msgid "Number format"
+msgstr "Формат чисел"
 
 msgid "Number of Backups"
 msgstr "Кількість резервних копій"
@@ -7904,6 +8282,9 @@ msgstr "Старий Потрібно пароль."
 
 msgid "Older backups will be automatically deleted"
 msgstr "Більш старі резервні копії будуть автоматично видалені"
+
+msgid "On Date"
+msgstr "На дату"
 
 msgid "On or After"
 msgstr "Не раніше"
@@ -7983,6 +8364,12 @@ msgstr "Лише один {0} можна встановити як основн�
 msgid "Only standard DocTypes are allowed to be customized from Customize Form."
 msgstr "Лише стандартні DocTypes можуть бути налаштовані з налаштування форми."
 
+msgid "Only the first rows are shown"
+msgstr "Показано лише перші рядки"
+
+msgid "Only the sample records are deleted. Your own data stays."
+msgstr "Видаляються лише приклади записів. Ваші власні дані залишаються."
+
 msgid "Only users involved in the document are listed"
 msgstr "Перераховані лише користувачі, які беруть участь у документі"
 
@@ -7994,6 +8381,9 @@ msgstr "На жаль"
 
 msgid "Oops! Something went wrong"
 msgstr "Нам Щось пішло не так"
+
+msgid "Oops! Something went wrong."
+msgstr "Йой! Щось пішло не так."
 
 msgid "Oops, you are not allowed to know that"
 msgstr "На жаль, ви не можете знати, що"
@@ -8040,6 +8430,12 @@ msgstr "Відкрийте діалогове вікно із обов&#39;яз�
 msgid "Open a module or tool"
 msgstr "Відкриття модуля або інструменту"
 
+msgid "Open a register to inspect its movements. Use filters and the seamless list scroll to explore large volumes."
+msgstr "Відкрийте регістр, щоб переглянути його рухи. Для великих обсягів користуйтеся фільтрами та безперервним прокручуванням списку."
+
+msgid "Open again"
+msgstr "Відкрити знову"
+
 msgid "Open file"
 msgstr "Відкрити файл"
 
@@ -8048,6 +8444,12 @@ msgstr "Відкрити файл в новій вкладці"
 
 msgid "Open list item"
 msgstr "Відкрити елемент списку"
+
+msgid "Open movements"
+msgstr "Відкрити рухи"
+
+msgid "Open windows"
+msgstr "Відкриті вікна"
 
 msgid "Open your authentication app on your mobile phone."
 msgstr "Відкрийте додаток для автентифікації на своєму мобільному телефоні."
@@ -8102,6 +8504,9 @@ msgstr "Параметри для {0} повинні бути встановле
 
 msgid "Options not set for link field {0}"
 msgstr "Опції не встановлений галузі зв&#39;язку {0}"
+
+msgid "Or"
+msgstr "або"
 
 msgid "Or login with"
 msgstr "Або увійдіть в систему з"
@@ -8286,11 +8691,29 @@ msgstr "Пароль для Base DN"
 msgid "Password is required or select Awaiting Password"
 msgstr "Пароль потрібно або вибрати Надалі пароль"
 
+msgid "Password is required."
+msgstr "Потрібен пароль."
+
+msgid "Password missing in Email Account"
+msgstr "У поштовому обліковому записі немає пароля"
+
 msgid "Password not found"
 msgstr "Пароль не знайдений"
 
+msgid "Password requirements not met"
+msgstr "Вимоги до пароля не виконано"
+
 msgid "Password reset instructions have been sent to your email"
 msgstr "Інструкції щодо зміни паролю були відправлені на вашу електронну пошту"
+
+msgid "Password size exceeded the maximum allowed size"
+msgstr "Пароль довший за дозволений"
+
+msgid "Password size exceeded the maximum allowed size."
+msgstr "Пароль довший за дозволений."
+
+msgid "Passwords do not match"
+msgstr "Паролі не збігаються"
 
 msgid "Passwords do not match!"
 msgstr "Паролі не збігаються!"
@@ -8511,6 +8934,9 @@ msgstr "Будь ласка, перевірте значення парамет�
 msgid "Please check your email for verification"
 msgstr "Будь ласка, перевірте свою електронну пошту для перевірки"
 
+msgid "Please check your email."
+msgstr "Перевірте свою електронну пошту."
+
 msgid "Please check your registered email address for instructions on how to proceed. Do not close this window as you will have to return to it."
 msgstr "Будь ласка, перевірте свою зареєстровану електронну адресу, щоб дізнатися, як продовжити. Не закривайте це вікно, тому що вам доведеться повернутися до нього."
 
@@ -8574,14 +9000,29 @@ msgstr "Будь ласка, введіть Client Secret до ввімкнен�
 msgid "Please enter Redirect URL"
 msgstr "Будь ласка, введіть URL-адресу переспрямування"
 
+msgid "Please enter a valid email."
+msgstr "Введіть дійсну електронну адресу."
+
 msgid "Please enter the password"
 msgstr "Будь ласка, введіть пароль"
+
+msgid "Please enter the password for: <b>{0}</b>"
+msgstr "Введіть пароль для: <b>{0}</b>"
 
 msgid "Please enter valid mobile nos"
 msgstr "Будь ласка, введіть дійсні номери мобільних"
 
 msgid "Please enter values for App Access Key and App Secret Key"
 msgstr "Будь ласка, введіть значення для App Access Key і App Secret Key"
+
+msgid "Please enter your email, we'll send you password reset link"
+msgstr "Введіть свою електронну адресу, ми надішлемо посилання для скидання пароля"
+
+msgid "Please enter your new password."
+msgstr "Введіть новий пароль."
+
+msgid "Please enter your old password."
+msgstr "Введіть старий пароль."
 
 msgid "Please fill the following mandatory fields before saving:"
 msgstr "Заповніть обов’язкові поля перед записом:"
@@ -8712,6 +9153,9 @@ msgstr "Спочатку налаштуйте повідомлення"
 msgid "Please setup default Email Account from Setup > Email > Email Account"
 msgstr "Установіть обліковий запис електронної пошти за замовчуванням у програмі Налаштування&gt; Електронна пошта&gt; Обліковий запис електронної пошти"
 
+msgid "Please setup default outgoing Email Account from Settings > Email Account"
+msgstr "Налаштуйте типовий вихідний поштовий обліковий запис: Налаштування > Обліковий запис пошти"
+
 msgid "Please specify"
 msgstr "Будь ласка уточніть"
 
@@ -8738,6 +9182,9 @@ msgstr "Наведені бали"
 
 msgid "Pondicherry"
 msgstr "Пондічеррі"
+
+msgid "Poor"
+msgstr "Слабкий"
 
 msgid "Port"
 msgstr "Порт"
@@ -9093,6 +9540,9 @@ msgstr "Підключення QZ-лотка активне!"
 msgid "QZ Tray Failed: "
 msgstr "Помилка лотка QZ:"
 
+msgid "Quarter"
+msgstr "Квартал"
+
 msgid "Quarter Day"
 msgstr "день Квартал"
 
@@ -9189,6 +9639,9 @@ msgstr "Лише для читання"
 msgid "Read Only Depends On"
 msgstr "Читання залежить лише від цього"
 
+msgid "Read Only Mode"
+msgstr "Режим лише для читання"
+
 msgid "Read Time"
 msgstr "Час читання"
 
@@ -9219,8 +9672,14 @@ msgstr "Приймач за роллю"
 msgid "Receiver Parameter"
 msgstr "Параметр отримувача"
 
+msgid "Recent"
+msgstr "Нещодавні"
+
 msgid "Recent Activity"
 msgstr "Остання активність"
+
+msgid "Recent documents"
+msgstr "Останні документи"
 
 msgid "Recent years are easy to guess."
 msgstr "За останні роки легко здогадатися."
@@ -9342,11 +9801,20 @@ msgstr "Оновлюється…"
 msgid "Region"
 msgstr "Область"
 
+msgid "Regional settings"
+msgstr "Регіональні налаштування"
+
 msgid "Register OAuth Client App"
 msgstr "Реєстрація OAuth Client App"
 
+msgid "Register explorer"
+msgstr "Огляд регістрів"
+
 msgid "Registered but disabled"
 msgstr "Зареєстрований але відключений"
+
+msgid "Registers"
+msgstr "Регістри"
 
 msgid "Rejected"
 msgstr "Відхилено"
@@ -9428,6 +9896,12 @@ msgstr "Видалити тег"
 
 msgid "Remove all customizations?"
 msgstr "Видалити всі налаштування?"
+
+msgid "Remove demo data"
+msgstr "Видалити демодані"
+
+msgid "Remove widget"
+msgstr "Прибрати віджет"
 
 msgid "Removed {0}"
 msgstr "Вилучені {0}"
@@ -9597,6 +10071,9 @@ msgstr "Потрібна довірена довідка"
 msgid "Res: {0}"
 msgstr "Res: {0}"
 
+msgid "Resend"
+msgstr "Надіслати ще раз"
+
 msgid "Reset"
 msgstr "скидання"
 
@@ -9621,6 +10098,12 @@ msgstr "Скидання пароля ключа"
 msgid "Reset Permissions for {0}?"
 msgstr "Скидання дозволів для {0}?"
 
+msgid "Reset layout"
+msgstr "Скинути розкладку"
+
+msgid "Reset link emailed"
+msgstr "Посилання для скидання надіслано"
+
 msgid "Reset to default"
 msgstr "Скинути до типових"
 
@@ -9639,6 +10122,9 @@ msgstr "Відповідь"
 msgid "Response Type"
 msgstr "відповідь Тип"
 
+msgid "Rest of the day"
+msgstr "Решта дня"
+
 msgid "Restore"
 msgstr "Відновлення"
 
@@ -9647,6 +10133,9 @@ msgstr "Відновлення початкових дозволів"
 
 msgid "Restore or permanently delete a document."
 msgstr "Відновлення або повністю видалити документ."
+
+msgid "Restore size"
+msgstr "Відновити розмір"
 
 msgid "Restore to default settings?"
 msgstr "Відновлення заводських налаштувань?"
@@ -9765,6 +10254,12 @@ msgstr "Роль профілю"
 msgid "Role and Level"
 msgstr "Роль і рівень"
 
+msgid "Role desk"
+msgstr "Робочий стіл ролі"
+
+msgid "Role has been set as per the user type {0}"
+msgstr "Роль встановлено відповідно до типу користувача {0}"
+
 msgid "Roles"
 msgstr "Ролі"
 
@@ -9861,6 +10356,9 @@ msgstr "Рядок {0}: заборонено вимикати Обов&#39;яз�
 msgid "Row {0}: Not allowed to enable Allow on Submit for standard fields"
 msgstr "Ряд {0}: Чи не дозволяється включити Дозволити на Надіслати на стандартних полів"
 
+msgid "Rows"
+msgstr "Рядки"
+
 msgid "Rows Added"
 msgstr "ряди Додано"
 
@@ -9954,6 +10452,12 @@ msgstr "Те саме поле вводиться більше одного ра
 msgid "Sample"
 msgstr "Зразок"
 
+msgid "Sample records to look around"
+msgstr "Приклади записів для ознайомлення"
+
+msgid "Sample records will be created. This takes a few minutes."
+msgstr "Буде створено приклади записів. Це триватиме кілька хвилин."
+
 msgid "Saturday"
 msgstr "Субота"
 
@@ -9974,6 +10478,18 @@ msgstr "Зберегти фільтр"
 
 msgid "Save Report"
 msgstr "Зберегти звіт"
+
+msgid "Save and close"
+msgstr "Записати і закрити"
+
+msgid "Save and continue"
+msgstr "Зберегти й продовжити"
+
+msgid "Save and finish"
+msgstr "Зберегти й завершити"
+
+msgid "Save changes?"
+msgstr "Зберегти зміни?"
 
 msgid "Save filters"
 msgstr "Збережіть фільтри"
@@ -10128,11 +10644,23 @@ msgstr "Розділ Перерва"
 msgid "Section Heading"
 msgstr "Тема розділу"
 
+msgid "Sections"
+msgstr "Розділи"
+
 msgid "Security"
 msgstr "Безпека"
 
+msgid "Security Alert: Your account is being impersonated"
+msgstr "Попередження безпеки: хтось входить від імені вашого облікового запису"
+
+msgid "Security Alert: Your password has been changed."
+msgstr "Попередження безпеки: ваш пароль змінено."
+
 msgid "Security Settings"
 msgstr "Налаштування безпеки"
+
+msgid "See all Activity"
+msgstr "Уся активність"
 
 msgid "See all past reports."
 msgstr "Переглянути всі попередні звіти."
@@ -10142,6 +10670,9 @@ msgstr "Детальніше див. На https://docs.aws.amazon.com/general/la
 
 msgid "See on Website"
 msgstr "Подивитися на веб-сайті"
+
+msgid "See previous responses"
+msgstr "Переглянути попередні відповіді"
 
 msgid "See the document at {0}"
 msgstr "Переглянути документ у {0}"
@@ -10359,6 +10890,9 @@ msgstr "Надіслати електронну пошту для успішно
 msgid "Send Email for Successful backup"
 msgstr "Надіслати електронний лист для успішного резервного копіювання"
 
+msgid "Send Link"
+msgstr "Надіслати посилання"
+
 msgid "Send Me A Copy of Outgoing Emails"
 msgstr "Надіслати мені копію вихідних повідомлень"
 
@@ -10415,6 +10949,9 @@ msgstr "Відправити дні до або після звітної дат
 
 msgid "Send enquiries to this email address"
 msgstr "Відправити запити на цю електронну адресу"
+
+msgid "Send login link"
+msgstr "Надіслати посилання для входу"
 
 msgid "Send me a copy"
 msgstr "Надіслати мені копію"
@@ -10686,6 +11223,9 @@ msgstr "Коротке ім&#39;я"
 msgid "Short keyboard patterns are easy to guess"
 msgstr "Короткі клавіатурні шаблони легко вгадати"
 
+msgid "Shortcut"
+msgstr "Швидкий доступ"
+
 msgid "Shortcuts"
 msgstr "Ярлики"
 
@@ -10709,6 +11249,9 @@ msgstr "Показати інформаційну панель"
 
 msgid "Show Document"
 msgstr "Показати документ"
+
+msgid "Show Error"
+msgstr "Показати помилку"
 
 msgid "Show External Link Warning"
 msgstr "Попереджати про зовнішні посилання"
@@ -10736,6 +11279,9 @@ msgstr "Показати зв'язки"
 
 msgid "Show More Activity"
 msgstr "Показати більше активності"
+
+msgid "Show Password"
+msgstr "Показати пароль"
 
 msgid "Show Percentage Stats"
 msgstr "Показати статистику відсотків"
@@ -10791,6 +11337,9 @@ msgstr "Показати як сітку"
 msgid "Show as cc"
 msgstr "Показати в кубічних сантиметрах"
 
+msgid "Show desktop"
+msgstr "Показати робочий стіл"
+
 msgid "Show failed jobs"
 msgstr "Показувати не вдалося робочих місць"
 
@@ -10841,6 +11390,9 @@ msgstr "Бічна панель Налаштування"
 
 msgid "Sidebar and Comments"
 msgstr "Бічна панель і коментарі"
+
+msgid "Sign In"
+msgstr "Вхід"
 
 msgid "Sign Up"
 msgstr "Зареєструватися"
@@ -10944,6 +11496,9 @@ msgstr "Ім&#39;я Слайд-шоу"
 msgid "Slideshow like display for the website"
 msgstr "Використовувати режим слайд-шоу для веб-сайту"
 
+msgid "Small"
+msgstr "Малий"
+
 msgid "Small Text"
 msgstr "Малий Текст"
 
@@ -11007,6 +11562,9 @@ msgstr "Щось пішло не так під час завантаження D
 msgid "Something went wrong while saving customizations"
 msgstr "Під час збереження налаштувань сталася помилка"
 
+msgid "Something went wrong."
+msgstr "Щось пішло не так."
+
 msgid "Sorry! I could not find what you were looking for."
 msgstr "Вибачте! Я не міг знайти те, що ви шукали."
 
@@ -11036,6 +11594,9 @@ msgstr "Сортування поля {0} повинен бути дійсним
 
 msgid "Source"
 msgstr "Джерело"
+
+msgid "Source Code"
+msgstr "Вихідний код"
 
 msgid "Source Message"
 msgstr "Повідомлення джерела"
@@ -11175,6 +11736,12 @@ msgstr "Статус: {0}"
 msgid "Step"
 msgstr "Крок"
 
+msgid "Step {0} is not finished"
+msgstr "Крок «{0}» не завершено"
+
+msgid "Step {0} of {1}"
+msgstr "Крок {0} з {1}"
+
 msgid "Steps"
 msgstr "Кроки"
 
@@ -11187,11 +11754,17 @@ msgstr "Закріплено"
 msgid "Stopped"
 msgstr "Зупинився"
 
+msgid "Store the API secret securely. It won't be displayed again."
+msgstr "Збережіть секрет API у безпечному місці. Його більше не буде показано."
+
 msgid "Stores the JSON of last known versions of various installed apps. It is used to show release notes."
 msgstr "Зберігає JSON з останніх відомих версій різних встановлених додатків. Він використовується, щоб показати примітки до випуску."
 
 msgid "Straight rows of keys are easy to guess"
 msgstr "Прямі ряди клавіш легко вгадати"
+
+msgid "Strength:"
+msgstr "Надійність:"
 
 msgid "Stripe Settings"
 msgstr "налаштування нашивки"
@@ -11220,6 +11793,9 @@ msgstr "Суб-валюта. Наприклад, \"коп.\""
 msgid "Sub-domain provided by erpnext.com"
 msgstr "Піддомен наданий erpnext.com"
 
+msgid "Subaccount {0} requires a DocType and a value"
+msgstr "Субконто {0}: потрібна пара (DocType, назва)"
+
 msgid "Subdomain"
 msgstr "піддомен"
 
@@ -11243,6 +11819,9 @@ msgstr "Надіслати після імпортування"
 
 msgid "Submit an Issue"
 msgstr "Подати поблему"
+
+msgid "Submit another response"
+msgstr "Надіслати ще одну відповідь"
 
 msgid "Submit the document first"
 msgstr "Спочатку проведіть документ"
@@ -11325,6 +11904,9 @@ msgstr "Успішно імпортовано {0} записів із {1}. Кл�
 msgid "Successfully imported {0} records."
 msgstr "{0} записів успішно імпортовано."
 
+msgid "Successfully signed out"
+msgstr "Ви успішно вийшли"
+
 msgid "Successfully updated translations"
 msgstr "Успішно оновлені переклади"
 
@@ -11367,6 +11949,9 @@ msgstr "Перемикання на робочий стіл"
 msgid "Switch theme"
 msgstr "Змінити тему"
 
+msgid "Switch to Desk"
+msgstr "Перейти до робочого столу"
+
 msgid "Symbol"
 msgstr "Символ"
 
@@ -11408,6 +11993,9 @@ msgstr "Система"
 
 msgid "System Console"
 msgstr "Системна консоль"
+
+msgid "System Health"
+msgstr "Стан системи"
 
 msgid "System Manager"
 msgstr "Менеджер системи"
@@ -11547,6 +12135,9 @@ msgstr "Текст, відображений протягом Посилання
 msgid "Thank you"
 msgstr "Дякую"
 
+msgid "Thank you for spending your valuable time to fill this form"
+msgstr "Дякуємо, що приділили час заповненню цієї форми"
+
 msgid "Thank you for your email"
 msgstr "Дякую вам за вашу електронну пошту"
 
@@ -11592,6 +12183,9 @@ msgstr "Коментар не може бути порожнім"
 msgid "The count shown is an estimated count. Click here to see the accurate count."
 msgstr "Кількість приблизна. Натисніть, щоб побачити точну."
 
+msgid "The demo job failed. See the error log."
+msgstr "Завантаження демоданих завершилось помилкою. Див. журнал помилок."
+
 msgid "The document could not be correctly assigned"
 msgstr "Документ не може бути правильно призначений"
 
@@ -11603,6 +12197,15 @@ msgstr "Перший користувач стане System Manager (ви мож
 
 msgid "The following records needs to be created before we can import your file."
 msgstr "Наступні записи потрібно створити, перш ніж ми зможемо імпортувати ваш файл."
+
+msgid "The initial settings are entered"
+msgstr "Початкові налаштування введено"
+
+msgid "The layout is too big"
+msgstr "Розкладка завелика"
+
+msgid "The link you trying to login is invalid or expired."
+msgstr "Посилання для входу недійсне або прострочене."
 
 msgid "The mapping configuration between two doctypes."
 msgstr "Конфігурація відображення між двома доктипами."
@@ -11625,14 +12228,26 @@ msgstr "Термін дії вашого пароля закінчився."
 msgid "The process for deletion of {0} data associated with {1} has been initiated."
 msgstr "Ініційовано процес видалення {0} даних, пов’язаних із {1}."
 
+msgid "The reset password link has been expired"
+msgstr "Термін дії посилання для скидання пароля скінчився"
+
+msgid "The reset password link has either been used before or is invalid"
+msgstr "Посилання для скидання пароля вже використано або воно недійсне"
+
 msgid "The resource you are looking for is not available"
 msgstr "Ресурс, який ви шукаєте не доступний"
+
+msgid "The site already has its own data, so demo data cannot be added"
+msgstr "На сайті вже є власні дані, тому демодані додати не можна"
 
 msgid "The site which is consuming your events."
 msgstr "Сайт, який споживає ваші події."
 
 msgid "The site you want to subscribe to for consuming events."
 msgstr "Веб-сайт, на який ви хочете підписатися для споживання подій."
+
+msgid "The step could not be saved"
+msgstr "Крок не вдалося зберегти"
 
 msgid "The system provides many pre-defined roles. You can add new roles to set finer permissions."
 msgstr "Система забезпечує безліч визначених функцій. Ви можете додати нові ролі, щоб встановити більш тонкі дозволу."
@@ -11658,6 +12273,9 @@ msgstr "Тема URL"
 msgid "There are documents which have workflow states that do not exist in this Workflow. It is recommended that you add these states to the Workflow and change their states before removing these states."
 msgstr "Є документи, які мають стани робочого циклу, яких у цьому робочому процесі не існує. Перед видаленням цих станів рекомендується додати ці стани до робочого циклу та змінити їх."
 
+msgid "There are no upcoming events for you."
+msgstr "Найближчих подій для вас немає."
+
 msgid "There are some linked records which needs to be created before we can import your file. Do you want to create the following missing records automatically?"
 msgstr "Є кілька пов&#39;язаних записів, які потрібно створити, перш ніж ми зможемо імпортувати ваш файл. Ви хочете автоматично створити такі відсутні записи?"
 
@@ -11672,6 +12290,9 @@ msgstr "Існує помилка в адресному шаблоні {0}"
 
 msgid "There is no data to be exported"
 msgstr "Немає даних для експорту"
+
+msgid "There is no demo data"
+msgstr "Демоданих немає"
 
 msgid "There is some problem with the file url: {0}"
 msgstr "Існує деяка проблема з файлової URL: {0}"
@@ -11760,6 +12381,9 @@ msgstr "Цей документ був змінений після надсил�
 msgid "This document has been reverted"
 msgstr "Цей документ було повернено"
 
+msgid "This document has no movements"
+msgstr "Цей документ не має руху"
+
 msgid "This document has unsaved changes which might not appear in final PDF. <br> Consider saving the document before printing."
 msgstr "Документ має незаписані зміни, яких може не бути в друкованій формі. <br> Запишіть документ перед друком."
 
@@ -11835,6 +12459,9 @@ msgstr "Це може бути надруковано на кількох сто
 msgid "This month"
 msgstr "Цього місяця"
 
+msgid "This quarter"
+msgstr "Цей квартал"
+
 msgid "This query style is discontinued"
 msgstr "Цей стиль запиту припиняється"
 
@@ -11849,6 +12476,18 @@ msgstr "Цей запит користувачем ще не затвердже�
 
 msgid "This role update User Permissions for a user"
 msgstr "Це оновлення роль права користувачів для користувача"
+
+msgid "This site is in read only mode, full functionality will be restored soon."
+msgstr "Сайт у режимі лише для читання, повна функціональність невдовзі відновиться."
+
+msgid "This site needs a migration"
+msgstr "Сайт потребує міграції"
+
+msgid "This step is required"
+msgstr "Цей крок обов'язковий"
+
+msgid "This takes a few minutes"
+msgstr "Це триватиме кілька хвилин"
 
 msgid "This title will be used as the title of the webpage as well as in meta tags"
 msgstr "Цей заголовок буде використовуватися як заголовок веб-сторінки, а також як мета-теги"
@@ -11867,6 +12506,9 @@ msgstr "Це вийде з {0} з усіх інших пристроїв"
 
 msgid "This will permanently remove your data."
 msgstr "Це назавжди видалить ваші дані."
+
+msgid "This year"
+msgstr "Цей рік"
 
 msgid "Throttled"
 msgstr "Дросельний"
@@ -11906,6 +12548,9 @@ msgstr "Час в секундах, щоб зберегти зображення
 
 msgid "Time series based on is required to create a dashboard chart"
 msgstr "Для створення діаграми інформаційної панелі необхідний часовий ряд на основі"
+
+msgid "Time zone"
+msgstr "Часовий пояс"
 
 msgid "Time {0} must be in format: {1}"
 msgstr "Час {0} повинен бути у форматі: {1}"
@@ -12024,6 +12669,9 @@ msgstr "Переключити діаграму"
 msgid "Toggle Charts"
 msgstr "Переключити графіки"
 
+msgid "Toggle Full Width"
+msgstr "Перемкнути повну ширину"
+
 msgid "Toggle Grid View"
 msgstr "Переключити режим перегляду сітки"
 
@@ -12047,6 +12695,9 @@ msgstr "Завтра"
 
 msgid "Too Many Requests"
 msgstr "Забагато запитів"
+
+msgid "Too many requests. Please try again later."
+msgstr "Забагато запитів. Спробуйте пізніше."
 
 msgid "Too many users signed up recently, so the registration is disabled. Please try back in an hour"
 msgstr "Занадто багато користувачів зареєструвалися в останнім часом, так що реєстрація відключена. Будь ласка, спробуйте ще раз через годину"
@@ -12192,6 +12843,9 @@ msgstr "Трипура"
 msgid "Try a different search."
 msgstr "Спробуйте інший пошук."
 
+msgid "Try again"
+msgstr "Спробувати ще раз"
+
 msgid "Try to avoid repeated words and characters"
 msgstr "Намагайтеся уникати повторюваних слів і символів"
 
@@ -12200,6 +12854,9 @@ msgstr "Спробуйте використовувати більш довги�
 
 msgid "Tuesday"
 msgstr "Вівторок"
+
+msgid "Turnovers"
+msgstr "Обороти"
 
 msgid "Twilio Number"
 msgstr "Номер Twilio"
@@ -12456,6 +13113,9 @@ msgstr "Співробітники"
 msgid "UA Exchange Log"
 msgstr "Журнал обміну"
 
+msgid "UA Exchange Rate"
+msgstr "Курси валют"
+
 msgid "UA Exchange Settings"
 msgstr "Налаштування обміну"
 
@@ -12497,6 +13157,9 @@ msgstr "Нематеріальні активи"
 
 msgid "UA Inventory Line"
 msgstr "Рядок інвентаризації"
+
+msgid "UA Invoice Adjustment"
+msgstr "Коригування інвойсу"
 
 msgid "UA Item"
 msgstr "Номенклатура"
@@ -12594,14 +13257,11 @@ msgstr "Рядок тари"
 msgid "UA Packaging Return"
 msgstr "Повернення тари"
 
-msgid "UA Payment Invoice"
-msgstr "Інвойс (рахунок на оплату)"
-
-msgid "UA Invoice Adjustment"
-msgstr "Коригування інвойсу"
-
 msgid "UA Payment Allocation"
 msgstr "Розподіл оплати за інвойсом"
+
+msgid "UA Payment Invoice"
+msgstr "Інвойс (рахунок на оплату)"
 
 msgid "UA Payment Order"
 msgstr "Платіжне доручення"
@@ -13023,8 +13683,23 @@ msgstr "Невідомий користувач"
 msgid "Unknown View"
 msgstr "Невідомий вигляд"
 
+msgid "Unknown choice {0}"
+msgstr "Невідомий вибір {0}"
+
 msgid "Unknown file encoding. Tried utf-8, windows-1250, windows-1252."
 msgstr "Невідомий кодування файлів. Пробував UTF-8, Windows-1250, Windows -1252."
+
+msgid "Unknown language {0}"
+msgstr "Невідома мова {0}"
+
+msgid "Unknown scale {0}. Use: {1}"
+msgstr "Невідомий масштаб {0}. Використайте: {1}"
+
+msgid "Unknown setup step {0}"
+msgstr "Невідомий крок налаштування {0}"
+
+msgid "Unloaded from memory, will open again"
+msgstr "Вивантажено з пам'яті, відкриється знову"
 
 msgid "Unpin"
 msgstr "Відкрутити"
@@ -13080,14 +13755,23 @@ msgstr "Майбутні події"
 msgid "Upcoming Events for Today"
 msgstr "Майбутні події Сьогодні"
 
+msgid "Upcoming events"
+msgstr "Найближчі події"
+
 msgid "Update"
 msgstr "Оновлення"
+
+msgid "Update Available"
+msgstr "Доступне оновлення"
 
 msgid "Update Existing Records"
 msgstr "Оновити існуючі записи"
 
 msgid "Update Field"
 msgstr "Оновлення поле"
+
+msgid "Update Password"
+msgstr "Змінити пароль"
 
 msgid "Update Settings"
 msgstr "Параметри оновлення"
@@ -13218,6 +13902,9 @@ msgstr "Використання суб-запиту або функції об�
 msgid "Use socketio to upload file"
 msgstr "Використовуйте socketio для завантаження файлу"
 
+msgid "Use strong passwords."
+msgstr "Використовуйте надійні паролі."
+
 msgid "Use this fieldname to generate title"
 msgstr "Використовуйте ім'я цього поля щоб генерувати заголовок"
 
@@ -13346,6 +14033,12 @@ msgstr "Користувач {0} не має доступу до докумен�
 
 msgid "User {0} has requested for data deletion"
 msgstr "Користувач {0} подав запит на видалення даних"
+
+msgid "User {0} has started an impersonation session as you. <br><br><b>Reason provided:</b> {1}"
+msgstr "Користувач {0} почав сеанс від вашого імені. <br><br><b>Причина:</b> {1}"
+
+msgid "User {0} impersonated as {1}"
+msgstr "Користувач {0} увійшов від імені {1}"
 
 msgid "User {0} is disabled"
 msgstr "Користувач {0} відключена"
@@ -13524,6 +14217,9 @@ msgstr "Історія змін"
 msgid "View Comment"
 msgstr "Переглянути коментар"
 
+msgid "View Doctype Permissions"
+msgstr "Переглянути права на тип документа"
+
 msgid "View Full Log"
 msgstr "Переглянути повний журнал"
 
@@ -13571,6 +14267,9 @@ msgstr "Переглянуто за"
 
 msgid "Visit"
 msgstr "Візит"
+
+msgid "Visit Frappe Support Portal"
+msgstr "Відкрити портал підтримки Frappe"
 
 msgid "Visit Web Page"
 msgstr "Відвідайте веб-сторінку"
@@ -13734,6 +14433,9 @@ msgstr "Щотижня"
 msgid "Weekly Long"
 msgstr "Щотижня Довго"
 
+msgid "Welcome"
+msgstr "Ласкаво просимо"
+
 msgid "Welcome Email Template"
 msgstr "Ласкаво просимо шаблон електронної пошти"
 
@@ -13745,6 +14447,9 @@ msgstr "Привітальний лист відправлено"
 
 msgid "Welcome to {0}"
 msgstr "Ласкаво просимо в {0}"
+
+msgid "Welcome! Please sign in to continue."
+msgstr "Ласкаво просимо! Увійдіть, щоб продовжити."
 
 msgid "West Bengal"
 msgstr "Західна Бенгалія"
@@ -13760,6 +14465,15 @@ msgstr "Коли ви Відновите документ після Скасу�
 
 msgid "Which view of the associated DocType should this shortcut take you to?"
 msgstr "До якого перегляду пов&#39;язаного типу DocType повинен потрапити цей ярлик?"
+
+msgid "Wide"
+msgstr "Широкий"
+
+msgid "Widget removed"
+msgstr "Віджет прибрано"
+
+msgid "Widgets"
+msgstr "Віджети"
 
 msgid "Width"
 msgstr "Ширина"
@@ -13787,6 +14501,21 @@ msgstr "Буде показано, тільки якщо заголовки ро
 
 msgid "Will run scheduled jobs only once a day for inactive sites. Default 4 days if set to 0."
 msgstr "Запускатимуть заплановані завдання лише раз на день для неактивних сайтів. За замовчуванням 4 дні, якщо встановлено 0."
+
+msgid "Window N on the task bar"
+msgstr "Вікно N на панелі задач"
+
+msgid "Window closed: {0}"
+msgstr "Вікно закрито: {0}"
+
+msgid "Window minimized: {0}"
+msgstr "Вікно згорнуто: {0}"
+
+msgid "Window opened: {0}"
+msgstr "Вікно відкрито: {0}"
+
+msgid "Window: close"
+msgstr "Вікно: закрити"
 
 msgid "With Letter head"
 msgstr "З головою Лист"
@@ -14061,6 +14790,9 @@ msgstr "Ви отримали нове повідомлення від:"
 msgid "You have been successfully logged out"
 msgstr "Ви успішно вийшли"
 
+msgid "You have no new notifications"
+msgstr "Нових сповіщень немає"
+
 msgid "You have not entered a value. The field will be set to empty."
 msgstr "Значення не введено. Поле буде порожнім."
 
@@ -14081,6 +14813,9 @@ msgstr "Ви змінили це востаннє"
 
 msgid "You may continue with onboarding"
 msgstr "Ви можете продовжувати роботу на борту"
+
+msgid "You may not read \"{0}\". No data is shown."
+msgstr "Немає права читати «{0}». Дані не показано."
 
 msgid "You must login to submit this form"
 msgstr "Ви повинні увійти, щоб подати цю форму"
@@ -14187,8 +14922,20 @@ msgstr "Ваша інформація була надіслана"
 msgid "Your login id is"
 msgstr "Ваше ім’я користувача —"
 
+msgid "Your new password has been set successfully."
+msgstr "Новий пароль успішно встановлено."
+
+msgid "Your old password is incorrect."
+msgstr "Старий пароль неправильний."
+
 msgid "Your organization name and address for the email footer."
 msgstr "Ім'я та адреса Вашої організації для підвалу листів електронної пошти."
+
+msgid "Your password has been changed and you might have been logged out of all systems.<br>Please contact the Administrator for further assistance."
+msgstr "Ваш пароль змінено, вас могло бути виведено з усіх систем.<br>Зверніться до адміністратора по допомогу."
+
+msgid "Your password has expired. Please set a new password."
+msgstr "Термін дії пароля скінчився. Встановіть новий пароль."
 
 msgid "Your payment has been successfully registered."
 msgstr "Ваш платіж успішно зареєстровано."
@@ -14213,6 +14960,9 @@ msgstr "Ваша сесія закінчилася, будь ласка, уві�
 
 msgid "Your system is being updated. Please refresh again after a few moments."
 msgstr "Ваша система оновлюється. Будь ласка, оновіть ще раз через кілька хвилин."
+
+msgid "Your widgets will be here"
+msgstr "Тут будуть ваші віджети"
 
 msgid "Zero"
 msgstr "нуль"
@@ -14473,6 +15223,9 @@ msgstr "за спаданням"
 msgid "document type..., e.g. customer"
 msgstr "тип документа ..., наприклад, клієнт"
 
+msgid "documents"
+msgstr "документів"
+
 msgid "domain name"
 msgstr "Доменне ім&#39;я"
 
@@ -14481,6 +15234,9 @@ msgstr "завантажити"
 
 msgid "download-alt"
 msgstr "скачати альт-"
+
+msgid "e.g."
+msgstr "напр."
 
 msgid "e.g. \"Support\", \"Sales\", \"Jerry Yang\""
 msgstr "наприклад, \"Підтримка\", \"Продажі\", \"Іван Василенко\""
@@ -14762,6 +15518,9 @@ msgstr "новий тип документа"
 
 msgid "no failed attempts"
 msgstr "немає невдалих спроб"
+
+msgid "no read permission"
+msgstr "немає права читання"
 
 msgid "none of"
 msgstr "Жоден з"
@@ -15361,6 +16120,9 @@ msgstr "{0} набрав {1} балів за {2} {3}"
 msgid "{0} h"
 msgstr "{0} год"
 
+msgid "{0} has a value that is not in the list"
+msgstr "{0}: значення немає в списку"
+
 msgid "{0} has already assigned default value for {1}."
 msgstr "{0} вже призначив значення за замовчуванням для {1}."
 
@@ -15445,6 +16207,9 @@ msgstr "{0} збережений"
 msgid "{0} items selected"
 msgstr "{0} вибрані товари"
 
+msgid "{0} just impersonated as you. They gave this reason: {1}"
+msgstr "{0} щойно увійшов від вашого імені. Причина: {1}"
+
 msgid "{0} last edited this"
 msgstr "{0} змінив це востаннє"
 
@@ -15468,6 +16233,18 @@ msgstr "{0} місяці тому"
 
 msgid "{0} moved under {1}"
 msgstr "{0} переміщено до {1}"
+
+msgid "{0} must be a date"
+msgstr "{0} має бути датою"
+
+msgid "{0} must be a list"
+msgstr "{0} має бути списком"
+
+msgid "{0} must be a number"
+msgstr "{0} має бути числом"
+
+msgid "{0} must be a whole number"
+msgstr "{0} має бути цілим числом"
 
 msgid "{0} must be after {1}"
 msgstr "{0} повинен бути після {1}"
@@ -15580,6 +16357,9 @@ msgstr "{0} очікується переклад"
 msgid "{0} un-shared this document with {1}"
 msgstr "{0} не поділився цим документом з {1}"
 
+msgid "{0} unread notifications"
+msgstr "Непрочитаних сповіщень: {0}"
+
 msgid "{0} updated"
 msgstr "{0} оновлений"
 
@@ -15592,8 +16372,14 @@ msgstr "{0} переглянув це"
 msgid "{0} w"
 msgstr "{0} ж"
 
+msgid "{0} was not found"
+msgstr "{0}: не знайдено"
+
 msgid "{0} weeks ago"
 msgstr "{0} тижні тому"
+
+msgid "{0} windows"
+msgstr "Вікон: {0}"
 
 msgid "{0} y"
 msgstr "{0} р"
@@ -15735,54 +16521,3 @@ msgstr "Розрахунок резерву сумнівних боргів"
 
 msgid "← Back to upload files"
 msgstr "← Назад, щоб завантажити файли"
-
-msgid "Document Movements"
-msgstr "Рухи документа"
-
-msgid "Balance"
-msgstr "Залишки"
-
-msgid "Turnovers"
-msgstr "Обороти"
-
-msgid "Generate"
-msgstr "Сформувати"
-
-msgid "On Date"
-msgstr "На дату"
-
-msgid "Group by"
-msgstr "Групувати за"
-
-msgid "Dimensions"
-msgstr "Виміри"
-
-msgid "Rows"
-msgstr "Рядків"
-
-msgid "Only the first rows are shown"
-msgstr "Показано лише перші рядки"
-
-msgid "This document has no movements"
-msgstr "У цього документа немає рухів"
-
-msgid "No data for the selected period and filters"
-msgstr "Немає даних за вибраний період і відбір"
-
-msgid "{0} is not a dimension of register {1}"
-msgstr "{0} не є виміром регістру {1}"
-
-msgid "{0} is not a resource of register {1}"
-msgstr "{0} не є ресурсом регістру {1}"
-
-msgid "Register {0} has no balance"
-msgstr "Регістр {0} не має залишків"
-
-msgid "Register {0} has no turnover"
-msgstr "Регістр {0} не має оборотів"
-
-msgid "The start of the period is after its end"
-msgstr "Початок періоду пізніший за його кінець"
-
-msgid "UA Exchange Rate"
-msgstr "Курси валют"

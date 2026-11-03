@@ -56,6 +56,9 @@ app_include_js = [
     )
 ]
 
+# website pages (login, 404): titles in the user's language
+update_website_context = ["ua_accounting.guest_pages.translate_title"]
+
 # beeone desktop shell: sections of the function panel and widgets of the desk
 beeone_sections = ["ua_accounting.desk_shell.beeone_sections"]
 beeone_widgets = ["ua_accounting.desk_shell.beeone_widgets"]

@@ -516,3 +516,257 @@ Balance-sheet and off-balance accounts cannot be combined,Не можна поє
 Amount and quantity cannot both be zero,Сума та кількість дорівнюють нулю
 An accounting entry needs at least one account,Проводка: не вказано рахунки
 UA Exchange Rate,Курси валют
+Apps,Застосунки
+Authentication Apps you can use are:,Застосунки автентифікації:
+Back to Home,На головну
+Back to sign in,Назад до входу
+Built on {0},Створено на {0}
+Create Account,Створити обліковий запис
+Delete Account,Видалити обліковий запис
+Didn't receive the link?,Не отримали посилання?
+Don't have an account?,Немає облікового запису?
+Don't panic. Run this command and reload the page:,Без паніки. Виконайте цю команду й оновіть сторінку:
+Email is required.,Потрібна електронна пошта.
+Full name is required.,Потрібне повне ім'я.
+Good,Добрий
+Hide Error,Сховати помилку
+Invalid Email.,Недійсна електронна адреса.
+"Invalid credentials, try again.","Неправильний логін або пароль, спробуйте ще раз."
+Let's setup your account.,Налаштуємо ваш обліковий запис.
+Login To {0},Вхід до {0}
+Login with password,Увійти за паролем
+Login with {0},Увійти через {0}
+Looks like you haven’t added any third party apps.,"Схоже, ви не додали жодного стороннього застосунку."
+Manage 3rd party apps,Керування сторонніми застосунками
+"Minimum 8 characters, including at least one number or special character.","Щонайменше 8 символів, серед них хоча б одна цифра або спеціальний знак."
+Mobile,Мобільний
+New password cannot be same as old password,Новий пароль не може збігатися зі старим
+No active user found with email address {0},Активного користувача з електронною адресою {0} не знайдено
+Oops! Something went wrong.,Йой! Щось пішло не так.
+Password is required.,Потрібен пароль.
+Passwords do not match,Паролі не збігаються
+Please check your email.,Перевірте свою електронну пошту.
+Please enter a valid email.,Введіть дійсну електронну адресу.
+"Please enter your email, we'll send you password reset link","Введіть свою електронну адресу, ми надішлемо посилання для скидання пароля"
+Please enter your new password.,Введіть новий пароль.
+Please enter your old password.,Введіть старий пароль.
+Poor,Слабкий
+Read Only Mode,Режим лише для читання
+Resend,Надіслати ще раз
+Reset link emailed,Посилання для скидання надіслано
+See previous responses,Переглянути попередні відповіді
+Send Link,Надіслати посилання
+Send login link,Надіслати посилання для входу
+Show Error,Показати помилку
+Something went wrong.,Щось пішло не так.
+Strength:,Надійність:
+Submit another response,Надіслати ще одну відповідь
+Thank you for spending your valuable time to fill this form,"Дякуємо, що приділили час заповненню цієї форми"
+The link you trying to login is invalid or expired.,Посилання для входу недійсне або прострочене.
+"This site is in read only mode, full functionality will be restored soon.","Сайт у режимі лише для читання, повна функціональність невдовзі відновиться."
+This site needs a migration,Сайт потребує міграції
+Too many requests. Please try again later.,Забагато запитів. Спробуйте пізніше.
+Use strong passwords.,Використовуйте надійні паролі.
+Your new password has been set successfully.,Новий пароль успішно встановлено.
+Your old password is incorrect.,Старий пароль неправильний.
+Your password has expired. Please set a new password.,Термін дії пароля скінчився. Встановіть новий пароль.
+Update Password,Змінити пароль
+Toggle Full Width,Перемкнути повну ширину
+Switch to Desk,Перейти до робочого столу
+My Profile,Мій профіль
+Invalid login credentials,Неправильний логін або пароль
+Incorrect password,Неправильний пароль
+Sign In,Вхід
+Welcome! Please sign in to continue.,"Ласкаво просимо! Увійдіть, щоб продовжити."
+Login with Email Link,Увійти за посиланням з листа
+Forgot password?,Забули пароль?
+Login to {0},Вхід до {0}
+Show Password,Показати пароль
+Or,або
+1 window,1 вікно
+{0} windows,Вікон: {0}
+Accent: cobalt,Акцент: кобальт
+Accent: teal,Акцент: бірюза
+Add widget,Додати віджет
+Edit widget,Змінити віджет
+Remove widget,Прибрати віджет
+Widget removed,Віджет прибрано
+Catalogs,Довідники
+Commands,Команди
+Could not load data,Не вдалося отримати дані
+Try again,Спробувати ще раз
+"Documents, lists and reports open as windows.","Документи, журнали і звіти відкриваються як вікна."
+Don't save,Не записувати
+Favorites,Обране
+Recent,Нещодавні
+Open windows,Відкриті вікна
+"Find a command, report or open window…","Знайти команду, звіт або відкрите вікно…"
+"Good afternoon, {0}","Доброго дня, {0}"
+"Good evening, {0}","Добрий вечір, {0}"
+"Good morning, {0}","Доброго ранку, {0}"
+"Good night, {0}","Доброї ночі, {0}"
+Keyboard shortcuts,Гарячі клавіші
+Large,Великий
+Small,Малий
+Wide,Широкий
+Maximize,Розгорнути
+Minimize,Згорнути
+Restore size,Відновити розмір
+Mini report,Міні-звіт
+Quarter,Квартал
+Move down,Перемістити нижче
+Move up,Перемістити вище
+Next window,Наступне вікно
+No access,Немає доступу
+No data for the period,Даних за період немає
+Nothing found,Нічого не знайдено
+Recent documents,Останні документи
+Reset layout,Скинути розкладку
+Save and close,Записати і закрити
+Save changes?,Зберегти зміни?
+Sections,Розділи
+Shortcut,Швидкий доступ
+Show desktop,Показати робочий стіл
+This quarter,Цей квартал
+This year,Цей рік
+"Unloaded from memory, will open again","Вивантажено з пам'яті, відкриється знову"
+Widgets,Віджети
+Window N on the task bar,Вікно N на панелі задач
+Window closed: {0},Вікно закрито: {0}
+Window minimized: {0},Вікно згорнуто: {0}
+Window opened: {0},Вікно відкрито: {0}
+Your widgets will be here,Тут будуть ваші віджети
+documents,документів
+no read permission,немає права читання
+"""{0}"" has changes. If you close it without saving, the changes will be lost.","Документ «{0}» змінено. Якщо закрити без запису, зміни буде втрачено."
+"You may not read ""{0}"". No data is shown.",Немає права читати «{0}». Дані не показано.
+A short wizard collects what you need to start real work,"Короткий майстер збере все, що потрібно для початку реальної роботи"
+App {0} has no demo data generator. Apps with one: {1},Застосунок {0} не має генератора демоданих. Застосунки з генератором: {1}
+Back,Назад
+"Country, time zone and currency of the site","Країна, часовий пояс і валюта сайту"
+Date format,Формат дати
+Decide later,Вирішити пізніше
+Demo data,Демодані
+Demo data already exists. Use --reset to delete it and create it again.,"Демодані вже існують. Використайте --reset, щоб видалити їх і створити знову."
+Demo data failed,Не вдалося завантажити демодані
+Demo data is already loaded,Демодані вже завантажено
+Demo data is being processed,Демодані обробляються
+Demo data is being processed. Wait a few minutes.,Демодані обробляються. Зачекайте кілька хвилин.
+Demo data is loaded,Демодані завантажено
+Demo data is loading,Демодані завантажуються
+Demo data is not yet supported on this database,Демодані поки не підтримуються на цій базі даних
+Demo data is ready,Демодані готові
+Demo data removed,Демодані видалено
+Demo data self-check failed: {0},Самоперевірка демоданих не пройшла: {0}
+Enter the organization's initial settings,Ввести початкові налаштування організації
+Fill with demo data,Заповнити демоданими
+How do you want to start?,З чого почати?
+Initial settings,Початкові налаштування
+Initial setup,Початкове налаштування
+Loading registers…,Завантаження регістрів…
+Look around with ready sample records,Ознайомтеся з готовими прикладами записів
+Movements and balances,Рухи та залишки
+No app provides demo data,Жоден застосунок не надає демоданих
+No registers available,Регістрів немає
+Number format,Формат чисел
+Only the sample records are deleted. Your own data stays.,Видаляються лише приклади записів. Ваші власні дані залишаються.
+Open a register to inspect its movements. Use filters and the seamless list scroll to explore large volumes.,"Відкрийте регістр, щоб переглянути його рухи. Для великих обсягів користуйтеся фільтрами та безперервним прокручуванням списку."
+Open again,Відкрити знову
+Open movements,Відкрити рухи
+Register explorer,Огляд регістрів
+Registers,Регістри
+Remove demo data,Видалити демодані
+Role desk,Робочий стіл ролі
+Sample records to look around,Приклади записів для ознайомлення
+Sample records will be created. This takes a few minutes.,Буде створено приклади записів. Це триватиме кілька хвилин.
+Save and continue,Зберегти й продовжити
+Save and finish,Зберегти й завершити
+Step {0} is not finished,Крок «{0}» не завершено
+Step {0} of {1},Крок {0} з {1}
+The demo job failed. See the error log.,Завантаження демоданих завершилось помилкою. Див. журнал помилок.
+The initial settings are entered,Початкові налаштування введено
+The layout is too big,Розкладка завелика
+"The site already has its own data, so demo data cannot be added","На сайті вже є власні дані, тому демодані додати не можна"
+The step could not be saved,Крок не вдалося зберегти
+There is no demo data,Демоданих немає
+This step is required,Цей крок обов'язковий
+This takes a few minutes,Це триватиме кілька хвилин
+Time zone,Часовий пояс
+Unknown choice {0},Невідомий вибір {0}
+Unknown language {0},Невідома мова {0}
+Unknown scale {0}. Use: {1},Невідомий масштаб {0}. Використайте: {1}
+Unknown setup step {0},Невідомий крок налаштування {0}
+Welcome,Ласкаво просимо
+Window: close,Вікно: закрити
+{0} has a value that is not in the list,{0}: значення немає в списку
+{0} must be a date,{0} має бути датою
+{0} must be a list,{0} має бути списком
+{0} must be a number,{0} має бути числом
+{0} must be a whole number,{0} має бути цілим числом
+{0} was not found,{0}: не знайдено
+Regional settings,Регіональні налаштування
+API Keys,Ключі API
+Add Roles,Додати ролі
+Copy Apps Version,Копіювати версії застосунків
+Copy token to clipboard,Копіювати токен у буфер обміну
+Email is mandatory to create User Email,Для створення пошти користувача потрібна електронна адреса
+Events,Події
+Forum,Форум
+Frappe Framework Version,Версія Frappe Framework
+Frappe Support,Підтримка Frappe
+System Health,Стан системи
+Generate Random Password,Згенерувати випадковий пароль
+"If this email is registered with us, we have sent password reset instructions to it. Please check your inbox.","Якщо цю електронну адресу зареєстровано в нас, ми надіслали на неї інструкції зі скидання пароля. Перевірте свою скриньку."
+Impersonate,Увійти від імені
+Impersonate as {0},Увійти від імені {0}
+Installed Apps,Встановлені застосунки
+Login with username and password is not allowed.,Вхід за іменем користувача й паролем не дозволено.
+Mark all as read,Позначити все прочитаним
+Newly created user {0} has no roles enabled.,У нового користувача {0} немає жодної ролі.
+No New Notifications,Нових сповіщень немає
+No Roles Specified,Ролі не вказано
+No other document types.,Інших типів документів немає.
+No pinned document types.,Закріплених типів документів немає.
+Note: Etc timezones have their signs reversed.,Примітка: у часових поясах Etc знаки обернені.
+Note: This will be shared with user.,Примітка: це буде передано користувачеві.
+Notification categories,Категорії сповіщень
+Password missing in Email Account,У поштовому обліковому записі немає пароля
+Password requirements not met,Вимоги до пароля не виконано
+Password size exceeded the maximum allowed size,Пароль довший за дозволений
+Password size exceeded the maximum allowed size.,Пароль довший за дозволений.
+Please enter the password for: <b>{0}</b>,Введіть пароль для: <b>{0}</b>
+Please setup default outgoing Email Account from Settings > Email Account,Налаштуйте типовий вихідний поштовий обліковий запис: Налаштування > Обліковий запис пошти
+Rest of the day,Решта дня
+Role has been set as per the user type {0},Роль встановлено відповідно до типу користувача {0}
+Security Alert: Your account is being impersonated,Попередження безпеки: хтось входить від імені вашого облікового запису
+Security Alert: Your password has been changed.,Попередження безпеки: ваш пароль змінено.
+See all Activity,Уся активність
+Source Code,Вихідний код
+Store the API secret securely. It won't be displayed again.,Збережіть секрет API у безпечному місці. Його більше не буде показано.
+Successfully signed out,Ви успішно вийшли
+The reset password link has been expired,Термін дії посилання для скидання пароля скінчився
+The reset password link has either been used before or is invalid,Посилання для скидання пароля вже використано або воно недійсне
+There are no upcoming events for you.,Найближчих подій для вас немає.
+Upcoming events,Найближчі події
+Update Available,Доступне оновлення
+User {0} has started an impersonation session as you. <br><br><b>Reason provided:</b> {1},Користувач {0} почав сеанс від вашого імені. <br><br><b>Причина:</b> {1}
+User {0} impersonated as {1},Користувач {0} увійшов від імені {1}
+View Doctype Permissions,Переглянути права на тип документа
+Visit Frappe Support Portal,Відкрити портал підтримки Frappe
+You have no new notifications,Нових сповіщень немає
+Your password has been changed and you might have been logged out of all systems.<br>Please contact the Administrator for further assistance.,"Ваш пароль змінено, вас могло бути виведено з усіх систем.<br>Зверніться до адміністратора по допомогу."
+e.g.,напр.
+{0} just impersonated as you. They gave this reason: {1},{0} щойно увійшов від вашого імені. Причина: {1}
+{0} unread notifications,Непрочитаних сповіщень: {0}
+Go to Home Page,На головну сторінку
+Balance,Залишок
+Dimensions,Виміри
+Document Movements,Рух документа
+Generate,Сформувати
+Group by,Групувати за
+No data for the selected period and filters,Немає даних за вибраний період і відбір
+On Date,На дату
+Only the first rows are shown,Показано лише перші рядки
+Rows,Рядки
+This document has no movements,Цей документ не має руху
+Turnovers,Обороти

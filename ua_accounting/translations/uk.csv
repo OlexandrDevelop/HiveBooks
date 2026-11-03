@@ -3,6 +3,7 @@
 """Parent"" signifies the parent table in which this row must be added","""Батько"" означає батьківську таблицю, в якій повинен бути доданий цей ряд"
 """Team Members"" or ""Management""",&quot;Члени команди&quot; або &quot;Управління&quot;
 """amended_from"" field must be present to do an amendment.","Щоб внести поправку, повинно бути присутнє поле &quot;Змінено_від&quot;."
+"""{0}"" has changes. If you close it without saving, the changes will be lost.","Документ «{0}» змінено. Якщо закрити без запису, зміни буде втрачено."
 """{0}"" is not a valid Google Sheets URL",&quot;{0}&quot; не є дійсною URL-адресою Google Таблиць
 &lt;head&gt; HTML,&lt;HEAD&gt; HTML-
 'In Global Search' not allowed for type {0} in row {1},"""В глобальному пошуку"" не дозволений тип поля {0} в рядку {1}"
@@ -27,6 +28,7 @@
 1 row from {0},1 рядок з {0}
 1 row to {0},1 рядок до {0}
 1 week ago,1 тиждень тому
+1 window,1 вікно
 1 year ago,1 рік тому
 5 Records,5 Записи
 ; not allowed in condition,; не допускаються в умові
@@ -37,8 +39,10 @@ A featured post must have a cover image,Рекомендована публік�
 A field with the name '{}' already exists in doctype {}.,Поле з назвою &quot;{}&quot; вже існує в doctype {}.
 A list of resources which the Client App will have access to after the user allows it.<br> e.g. project,"Список ресурсів, які Клієнт App матиме доступ до після того, як користувач дозволяє. <br> наприклад, проект"
 A log of request errors,Журнал помилок запитів
+A missing account side is allowed only for off-balance accounts,Порожній рахунок дозволений лише для позабалансових
 A new account has been created for you at {0},Нову обліковку було створено для вас в {0}
 A recurring {0} {1} has been created for you via Auto Repeat {2}.,Для вас було створено повторний {0} {1} через Автоповтор {2}.
+A short wizard collects what you need to start real work,"Короткий майстер збере все, що потрібно для початку реальної роботи"
 A symbol for this currency. For e.g. $,"Символ цієї валюти. Наприклад, ₴"
 A user who posts blogs.,"Користувач, який публікує блоги."
 A word by itself is easy to guess.,Слово саме по собі неважко здогадатися.
@@ -51,6 +55,7 @@ API Endpoint Args,API кінцевої точки Args
 API Key,ключ API
 API Key cannot be  regenerated,API-ключ не може бути регенерований
 API Key of the user(Event Subscriber) on the producer site,Ключ API користувача (передплатник події) на сайті виробника
+API Keys,Ключі API
 API Method,Метод API
 API Password,API Пароль
 API Secret,API Секретний
@@ -63,6 +68,8 @@ About Us Team Member,Про нас Команда Член
 About {0} minute remaining,Залишилося приблизно {0} хвилини
 About {0} minutes remaining,Залишилося приблизно {0} хвилин
 About {0} seconds remaining,Залишилося приблизно {0} секунд
+Accent: cobalt,Акцент: кобальт
+Accent: teal,Акцент: бірюза
 Accept Payment,приймати Оплата
 Access Key ID,Ідентифікатор ключа доступу
 Access Key Secret,Ключовий секрет доступу
@@ -72,6 +79,8 @@ Access Token URL,URL Токена доступу
 Access not allowed from this IP Address,Доступ заборонено з цієї IP-адреси
 Account,Рахунок
 Account SID,SID рахунку
+Account {0} does not define subaccount {1},Рахунок {0} не має субконто {1}
+Account {0} is a group and cannot be posted,Рахунок {0} є групою: проведення неможливе
 Accounts Manager,Диспетчер облікових записів
 Accounts User,Облікові записи користувачів
 Action,Дія
@@ -113,6 +122,7 @@ Add Multiple,Додати кілька
 Add New Permission Rule,Додати нове правило дозволу
 Add Participants,Додати учасників
 Add Review,Додати відгук
+Add Roles,Додати ролі
 Add Row,Додати
 Add Signature,Додати підпис
 Add Space on Bottom,Додайте пробіл знизу
@@ -145,6 +155,7 @@ Add to Dashboard,Додати на інформаційну панель
 Add to ToDo,Додати до завдання
 Add to table,Додати до таблиці
 Add to this activity by mailing to {0},"Додайте до історії, надіславши лист на {0}"
+Add widget,Додати віджет
 Add your own translations,Додати свої власні переклади
 Add {0},Створити: {0}
 "Added HTML in the &lt;head&gt; section of the web page, primarily used for website verification and SEO","Додана HTML в &lt;HEAD&gt; частина веб-сторінки, в основному використовується для перевірки веб-сайтів та SEO"
@@ -255,7 +266,9 @@ Amending,Відновлення
 Amount,Сума
 Amount Based On Field,Сума На підставі поле
 Amount Field,сума поле
+Amount and quantity cannot both be zero,Сума та кількість дорівнюють нулю
 Amount must be greater than 0.,Сума повинна бути більше 0.
+An accounting entry needs at least one account,Проводка: не вказано рахунки
 An error occured during the payment process. Please contact us.,"Під час здійснення платежу сталася помилка. Будь ласка, зв&#39;яжіться з нами."
 An error occurred while setting Session Defaults,Під час встановлення стандартних параметрів сесії сталася помилка
 An icon file with .ico extension. Should be 16 x 16 px. Generated using a favicon generator. [favicon-generator.org],Значок файлу з розширенням .ico розширенням. Повинно бути 16 х 16 пікселів. Генерується з використанням генератора FavIcon. [favicon-generator.org]
@@ -276,6 +289,7 @@ App Name,Ім&#39;я програми
 App Secret Key,App Secret Key
 App not found,Додаток не знайдено
 App {0} already installed,Додаток {0} вже встановлено
+App {0} has no demo data generator. Apps with one: {1},Застосунок {0} не має генератора демоданих. Застосунки з генератором: {1}
 App {0} is not installed,Не встановлений App {0}
 Append Emails to Sent Folder,Додайте електронні листи до надісланої папки
 Append To,Додати до
@@ -304,6 +318,7 @@ Appreciation,Вдячність
 Approval Required,Потрібне затвердження
 Approval Status,Стан затвердження
 Approved,Затверджений
+Apps,Застосунки
 Archive,архів
 Archived,Читальний зал
 Archived Columns,архівні Колони
@@ -382,6 +397,7 @@ Auth Token,Токен автентифікації
 Auth URL Data,Auth URL Data
 Authenticating...,Аутентифікація ...
 Authentication,засвідчення справжності
+Authentication Apps you can use are:,Застосунки автентифікації:
 Authentication Apps you can use are: ,"Програми автентифікації, які ви можете використовувати, є:"
 Authentication Credentials,Перевірка автентичності
 Authentication failed while receiving emails from Email Account: {0}.,Помилка автентифікації під час отримання електронних листів з облікового запису електронної пошти: {0}.
@@ -420,8 +436,11 @@ Awaiting Password,Очікує пароль
 Awaiting password,очікування пароля
 Away,Далеко
 BCC,BCC
+Back,Назад
 Back to Desk,Повернутися до столу
+Back to Home,На головну
 Back to Login,Повернутися до сторінки входу
+Back to sign in,Назад до входу
 Background Color,Колір фону
 Background Email Queue,Фон E-mail черзі
 Background Jobs,фонові завдання
@@ -437,6 +456,8 @@ Backup Limit,Резервний ліміт
 Backup job is already queued. You will receive an email with the download link,Резервна робота вже в черзі. Ви отримаєте електронний лист із посиланням на завантаження
 Backup public and private files along with the database.,Резервне копіювання загальнодоступних та приватних файлів разом із базою даних.
 Backups,резервні копії
+Balance,Залишок
+Balance-sheet and off-balance accounts cannot be combined,Не можна поєднувати балансовий і позабалансовий рахунок
 Banner,Банер
 Banner HTML,Банер HTML
 Banner Image,Картинка банера
@@ -495,6 +516,7 @@ Browser not supported,Браузер не підтримується
 Brute Force Security,Брутні сили безпеки
 Bucket Name,Назва відра
 Build Report,Побудувати звіт
+Built on {0},Створено на {0}
 Bulk Delete,Масове видалення
 Bulk Edit,Групова зміна
 Bulk Edit {0},Масова зміна {0}
@@ -584,6 +606,7 @@ Card,Картка
 Card Details,Інформація про картку
 Card Label,Етикетка картки
 Cards,Картки
+Catalogs,Довідники
 Categorize blog posts.,Класифікувати повідомлення в блозі.
 Category,Категорія
 Category Description,Опис категорії
@@ -702,6 +725,7 @@ Columns / Fields,Стовпці / поля
 Columns based on,Колони на основі
 Combination of Grant Type (<code>{0}</code>) and Response Type (<code>{1}</code>) not allowed,Комбінація типу грантів ( <code>{0}</code> ) та типу відповіді ( <code>{1}</code> ) не допускається
 Command {0} is not registered for {1},Команду {0} не зареєстровано для {1}
+Commands,Команди
 Comment,Прокоментуйте
 Comment By,Коментар від
 Comment Email,Коментувати електронну пошту
@@ -787,8 +811,10 @@ Controller method get_razorpay_order missing,Відсутній метод ко�
 Conversation Tones,Розмови тонів
 Copied to clipboard.,Скопійовано у буфер обміну.
 Copied {0} {1} to clipboard,Скопійовано: {0} {1}
+Copy Apps Version,Копіювати версії застосунків
 Copy file URL to clipboard,Копіювати адресу файлу
 Copy to Clipboard,Копіювати
+Copy token to clipboard,Копіювати токен у буфер обміну
 Copyright,Авторське право
 Core,Ядро
 Core DocTypes cannot be customized.,Основні DocTypes не можна налаштувати.
@@ -799,6 +825,7 @@ Could not create razorpay order,Не вдалося створити замов�
 Could not find {0},Не вдалося знайти {0}
 Could not find {0} in {1},Не вдалося знайти {0} в {1}
 Could not identify {0},Неможливо визначити {0}
+Could not load data,Не вдалося отримати дані
 Could not map column {0} to field {1},Не вдалося зіставити стовпець {0} із полем {1}
 Could not save customization,Не вдалося зберегти налаштування
 Couldn't Load Desk,Не вдалося завантажити робочий стіл
@@ -809,8 +836,10 @@ Count Filter,Фільтр підрахунку
 Counter,Лічильник
 Country,Країна
 Country Name,Назва країни
+"Country, time zone and currency of the site","Країна, часовий пояс і валюта сайту"
 County,Область
 Create,Створити
+Create Account,Створити обліковий запис
 Create Board,Створити дошку
 Create Card,Створити картку
 Create Chart,Створення діаграми
@@ -937,6 +966,7 @@ Database Name,Ім&#39;я бази даних
 Date,Дата
 Date Format,Формат дати
 Date and Number Format,Дата і номер Формат
+Date format,Формат дати
 Date {0} must be in format: {1},Дата {0} має бути у форматі: {1}
 Dates are often easy to guess.,Дати часто легко вгадати.
 Datetime,"Дата, час"
@@ -949,6 +979,7 @@ Dear,Дорогий
 "Dear System Manager,","Шановний System Manager,"
 "Dear User,","Шановний користувач,"
 Dear {0},Шановний {0}
+Decide later,Вирішити пізніше
 Default,За замовчуванням
 Default Address Template cannot be deleted,Шаблон адреси за замовчуванням не може бути видалений
 Default Inbox,За замовчуванням Вхідні
@@ -980,6 +1011,7 @@ Defines actions on states and the next step and allowed roles.,Визначає 
 Defines workflow states and rules for a document.,Визначає стани робочого процесу і правила для документу.
 Delayed,Затримується
 Delete,Видалити
+Delete Account,Видалити обліковий запис
 Delete All,Видалити все
 Delete Data,Видалити дані
 Delete all,Видалити всі
@@ -1000,6 +1032,18 @@ Deleting {0},Видалення {0}
 Delhi,Делі
 Delivery Failed,Помилка доставки
 Delivery Status,Статус поставки
+Demo data,Демодані
+Demo data already exists. Use --reset to delete it and create it again.,"Демодані вже існують. Використайте --reset, щоб видалити їх і створити знову."
+Demo data failed,Не вдалося завантажити демодані
+Demo data is already loaded,Демодані вже завантажено
+Demo data is being processed,Демодані обробляються
+Demo data is being processed. Wait a few minutes.,Демодані обробляються. Зачекайте кілька хвилин.
+Demo data is loaded,Демодані завантажено
+Demo data is loading,Демодані завантажуються
+Demo data is not yet supported on this database,Демодані поки не підтримуються на цій базі даних
+Demo data is ready,Демодані готові
+Demo data removed,Демодані видалено
+Demo data self-check failed: {0},Самоперевірка демоданих не пройшла: {0}
 Department,Відділ
 Depends On,Залежить від
 Deprecated,Застаріло
@@ -1024,8 +1068,10 @@ Did not add,Чи не додати
 Did not cancel,Чи не скасувати
 Did not find {0} for {0} ({1}),Не знайшли {0} {0} ({1})
 Did not remove,Не видалити
+Didn't receive the link?,Не отримали посилання?
 "Different ""States"" this document can exist in. Like ""Open"", ""Pending Approval"" etc.","Різні ""Стани"" в яких може перебувати цей документ. Як-от ""Відкритий"", ""В очікуванні затвердження"" і т.д."
 Digits,Цифри
+Dimensions,Виміри
 Direct,Прямий
 Direct room with {0} already exists.,Пряма кімната з {0} вже існує.
 Disable Auto Refresh,Вимкнути автоматичне оновлення
@@ -1081,6 +1127,7 @@ Document Follow,Документ Дотримуйтесь
 Document Follow Notification,Документ слідування сповіщення
 Document Link,Посилання на документ
 Document Links,Посилання на документи
+Document Movements,Рух документа
 Document Name,Назва документа
 Document Naming Rule,Правило іменування документів
 Document Naming Rule Condition,Умова правила іменування документа
@@ -1118,6 +1165,7 @@ Documents assigned to you and by you.,"Документи, присвоєні в
 Documents restored successfully,Документи успішно відновлено
 Documents that failed to restore,"Документи, які не вдалося відновити"
 Documents that were already restored,"Документи, які вже були відновлені"
+"Documents, lists and reports open as windows.","Документи, журнали і звіти відкриваються як вікна."
 Domain,Галузь
 Domain Settings,Налаштування галузей
 Domains,Галузі
@@ -1127,8 +1175,11 @@ Don't Import,Не імпортуйте
 Don't Override Status,Чи не Перевизначення статусу
 Don't Send Emails,Не надсилайте електронні листи
 Don't create new records,Не створюйте нові записи
+Don't have an account?,Немає облікового запису?
 Don't have an account? Sign up,Ще не зареєстровані? зареєструватися
 "Don't know, ask 'help'","Не знаю, зверніться до ""Довідки"""
+Don't panic. Run this command and reload the page:,Без паніки. Виконайте цю команду й оновіть сторінку:
+Don't save,Не записувати
 Done,Готово
 Donut,Пончик
 Download,Завантажити
@@ -1195,6 +1246,7 @@ Edit in Full Page,Редагувати на повній сторінці
 Edit in full page,Редагувати в повній сторінці
 Edit row,Змінити рядок
 Edit to add content,"Редагувати, щоб додати вміст"
+Edit widget,Змінити віджет
 Edit {0},Редагувати {0}
 Edit {0} rows,Змінити рядків: {0}
 Editable Grid,редаговані сітки
@@ -1241,6 +1293,8 @@ Email Unsubscribe,E-mail Відписатися
 Email address,Адреса електронної пошти
 Email has been marked as spam,Email був відзначений як спам
 Email has been moved to trash,E-mail був переміщений в кошик
+Email is mandatory to create User Email,Для створення пошти користувача потрібна електронна адреса
+Email is required.,Потрібна електронна пошта.
 Email not sent to {0} (unsubscribed / disabled),E-mail не надсилаються {0} (відписався / відключено)
 Email not verified with {0},Електронна пошта не підтверджено {0}
 Email queued to {0} recipients,Електронна пошта в черзі до одержувачів ({0})
@@ -1301,6 +1355,7 @@ Enter folder name,Введіть ім'я теки
 "Enter keys to enable login via Facebook, Google, GitHub.","Введіть ключі щоб увімкнути вхід через Facebook, Google та GitHub."
 Enter python module or select connector type,Введіть модуль python або виберіть тип коннектора
 "Enter static url parameters here (Eg. sender=ERPNext, username=ERPNext, password=1234 etc.)","Введіть тут статичні параметри URL (Як-от, sender=ERPNext, username=ERPNext, password=1234 тощо)"
+Enter the organization's initial settings,Ввести початкові налаштування організації
 Enter url parameter for message,Введіть URL параметр для повідомлення
 Enter url parameter for receiver nos,Enter url parameter for receiver nos
 Enter your password,Введіть пароль
@@ -1344,6 +1399,7 @@ Event Synced with Google Calendar.,Подія синхронізована з К
 Event Type,Тип події
 Event Update Log,Журнал оновлення подій
 Event and other calendars.,Подія та інші календарі.
+Events,Події
 Events in Today's Calendar,Подію в сьогоднішньому календарі
 Everyone,Всі
 "Ex: ""colors"": [""#d1d8dd"", ""#ff5858""]","Приклад: &quot;кольори&quot;: [&quot;# d1d8dd&quot;, &quot;# ff5858&quot;]"
@@ -1399,6 +1455,7 @@ Failed to send {0} Auto Email Report,Не вдалося надіслати {0} 
 Failed while amending subscription,Помилка під час зміни підписки
 Failure,Невдача
 FavIcon,FavIcon
+Favorites,Обране
 Fax,Факс
 Featured,Рекомендовані
 Feedback,Зворотній зв&#39;язок
@@ -1455,6 +1512,7 @@ File size exceeded the maximum allowed size of {0} MB,Розмір файлу п
 File too big,Файл занадто великий
 File {0} does not exist,Файл {0} не існує
 Files,Файли
+Fill with demo data,Заповнити демоданими
 Filter,Відбір
 Filter By,Фільтрувати за
 Filter Data,Фільтр даних
@@ -1477,6 +1535,7 @@ Filters applied for {0},Фільтри застосовано для {0}
 Filters saved,фільтри збережені
 "Filters will be accessible via <code>filters</code>. <br><br>Send output as <code>result = [result]</code>, or for old style <code>data = [columns], [result]</code>","Фільтри будуть доступні через <code>filters</code> .<br><br> Надіслати вивід як <code>result = [result]</code> , або для <code>data = [columns], [result]</code> старого стилю <code>data = [columns], [result]</code>"
 Filters {0},Відбір {0}
+"Find a command, report or open window…","Знайти команду, звіт або відкрите вікно…"
 Find {0} in {1},Знайти {0} в {1}
 Finished,Готово
 First,Спочатку
@@ -1534,11 +1593,13 @@ Force Show,Force Show
 Force User to Reset Password,Змусити користувача скинути пароль
 Forgot Password,Забули пароль
 Forgot Password?,Забули пароль?
+Forgot password?,Забули пароль?
 Form Customization,Налаштування форми
 Form Settings,Налаштування форми
 Form URL-Encoded,URL-форма форми - закодована
 Format,формат
 Format Data,Формат даних
+Forum,Форум
 Forward,Вперед
 Forward To Email Address,Переслати на адресу електронної пошти
 Fraction,Частка
@@ -1546,6 +1607,8 @@ Fraction Units,Кількість часток в одиниці валюти
 Frames,Рамки
 Frappe,фраппе
 Frappe Framework,Фраппе рамки
+Frappe Framework Version,Версія Frappe Framework
+Frappe Support,Підтримка Frappe
 Frappe page builder using components,Конструктор сторінок Frappe з використанням компонентів
 Frequency,частота
 Frequently Visited Links,Часто відвідувані посилання
@@ -1561,6 +1624,7 @@ Full,Повний
 Full Name,Повне ім&#39;я
 Full Page,Повна сторінка
 Full Width,Повна ширина
+Full name is required.,Потрібне повне ім'я.
 Function,Функція
 Function Based On,Функція заснована на
 Further nodes can be only created under 'Group' type nodes,Подальші вузли можуть бути створені тільки під вузлами типу &quot;група&quot;
@@ -1577,8 +1641,10 @@ Gateway Controller,Контролер шлюзу
 Gateway Settings,Параметри шлюзу
 Gender,Стать
 Genderqueer,Гендерквір
+Generate,Сформувати
 Generate Keys,Генерувати клавіші
 Generate New Report,Створити новий звіт
+Generate Random Password,Згенерувати випадковий пароль
 Generated File,Згенерований файл
 Geo,Гео
 Geolocation,Геолокація
@@ -1602,6 +1668,7 @@ Global Shortcuts,Глобальні ярлики
 Global Unsubscribe,Глобальний Відмовитися
 Go,Вперед
 Go Back,Повертайся
+Go to Home Page,На головну сторінку
 Go to Page,Перейти на сторінку
 Go to next record,Перейти до наступного запису
 Go to previous record,Перейти до попереднього запису
@@ -1612,7 +1679,12 @@ Go to {0} List,Перейдіть до списку {0}
 Go to {0} Page,Перейдіть на сторінку {0}
 Goa,Гоа
 Goal,Мета
+Good,Добрий
 Good Work 🎉,Гарна робота 🎉
+"Good afternoon, {0}","Доброго дня, {0}"
+"Good evening, {0}","Добрий вечір, {0}"
+"Good morning, {0}","Доброго ранку, {0}"
+"Good night, {0}","Доброї ночі, {0}"
 Google,Google
 Google API Settings.,Налаштування API Google.
 Google Analytics Anonymize IP,Google Analytics анонімізує IP
@@ -1664,6 +1736,7 @@ Group By Type,Групувати за видами
 Group By field is required to create a dashboard chart,Групувати за полем потрібно для створення діаграми інформаційної панелі
 Group Name,Назва групи
 Group Node,Вузол групи
+Group by,Групувати за
 Group name cannot be empty.,Ім&#39;я групи не може бути порожнім.
 Groups of DocTypes,Групи DOCTYPES
 Guest,Гість
@@ -1716,6 +1789,7 @@ Hide CTA,Сховати заклик до дії
 Hide Copy,Приховати Копіювати
 Hide Custom DocTypes and Reports,Сховати власні типи документів та звіти
 Hide Days,Сховати дні
+Hide Error,Сховати помилку
 Hide Footer Signup,Приховати Footer Реєстрація
 Hide Login,Сховати логін
 Hide Seconds,Сховати секунди
@@ -1742,6 +1816,7 @@ Hourly,Погодинно
 Hourly Long,Щогодини Довго
 Hourly comment limit reached for: {0},Досягнуто погодинне обмеження коментарів для: {0}
 Hourly rate limit for generating password reset links,Обмеження погодинної ставки для створення посилань для скидання пароля
+How do you want to start?,З чого почати?
 "How should this currency be formatted? If not set, will use system defaults","Як має бути відформатована валюта? Якщо не встановлено, будуть використовуватись системні значення за замовчуванням"
 Hub Sync ID,Ідентифікатор концентратора синхронізації
 I found these: ,Я знайшов це:
@@ -1778,6 +1853,7 @@ If the condition is satisfied user will be rewarded with the points. eg. doc.sta
 If the document has different field names on the Producer and Consumer's end check this and set up the Mapping,"Якщо документ має різні назви полів на кінці виробника та споживача, перевірте це та налаштуйте картографування"
 "If the user has any role checked, then the user becomes a ""System User"". ""System User"" has access to the desktop","Якщо будь-яку роль користувача позначено, тоді він стає ""Системним користувачем"". ""Системний користувач"" має доступ до стільниці"
 "If these instructions where not helpful, please add in your suggestions on GitHub Issues.","Якщо ці інструкції вам не допомогли, додайте, будь ласка, ваші пропозиції у розділ Issues репозиторію на GitHub"
+"If this email is registered with us, we have sent password reset instructions to it. Please check your inbox.","Якщо цю електронну адресу зареєстровано в нас, ми надіслали на неї інструкції зі скидання пароля. Перевірте свою скриньку."
 If this is checked the documents will have the same name as they have on the Event Producer's site,"Якщо це встановлено, документи матимуть те саме ім’я, що і на сайті виробника подій"
 "If this is checked, rows with valid data will be imported and invalid rows will be dumped into a new file for you to import later.","Якщо це буде позначено, буде імпортовано рядки з дійсними даними, а недійсні рядки будуть скинуті до нового файлу для імпорту пізніше."
 If user is the owner,Якщо користувач є власником
@@ -1805,6 +1881,8 @@ Image View,Перегляд зображення
 Image field must be a valid fieldname,Поле Зображення повинно бути допустимим ім&#39;я_поля
 Image field must be of type Attach Image,Поле Зображення повинно бути типу Приєднати зображення
 Images,зображень
+Impersonate,Увійти від імені
+Impersonate as {0},Увійти від імені {0}
 Impersonated by {0},Від імені користувача: {0}
 Implicit,неявний
 Import,Імпорт
@@ -1864,6 +1942,7 @@ Incorrect URL,Неправильна URL-адреса
 Incorrect User or Password,Неправильний користувач або пароль
 Incorrect Verification code,Невірний код підтвердження
 Incorrect email or password. Please check your login credentials.,"Неправильна електронна адреса чи пароль. Будь ласка, перевірте свої дані для входу."
+Incorrect password,Неправильний пароль
 Incorrect value in row {0}: {1} must be {2} {3},Неправильне значення в рядку {0}: {1} повинен бути {2} {3}
 Incorrect value: {0} must be {1} {2},Неправильне значення: {0} повинен бути {1} {2}
 Index,Індекс
@@ -1875,6 +1954,8 @@ Industry Type ID,Ідентифікатор типу галузі
 Info,Інформація
 Info:,Інформація:
 Initial Sync Count,Первісна синхронізація Count
+Initial settings,Початкові налаштування
+Initial setup,Початкове налаштування
 InnoDB,InnoDB
 Insert,Вставити
 Insert Above,Вставити до
@@ -1888,6 +1969,7 @@ Insert Style,Вставити стиль
 Insert new records,Вставте нові записи
 Installed Application,Встановлений додаток
 Installed Applications,Встановлені програми
+Installed Apps,Встановлені застосунки
 Instructions Emailed,інструкції по електронній пошті
 Insufficient Permission for {0},Недостатній Введено в {0}
 Int,Int
@@ -1914,6 +1996,7 @@ Invalid Account SID or Auth Token.,Недійсний SID облікового �
 Invalid CSV Format,Невірний формат CSV
 Invalid Credentials,Недійсні облікові дані
 Invalid Date,Недійсна дата
+Invalid Email.,Недійсна електронна адреса.
 Invalid Filter Value,Недійсне значення фільтра
 Invalid Home Page,Невірний Головна сторінка
 Invalid JSON,Недійсний JSON
@@ -1934,6 +2017,7 @@ Invalid Token,Неприпустимий маркер
 Invalid URL,Недійсна URL-адреса
 Invalid User Name or Support Password. Please rectify and try again.,"Невірний ім&#39;я користувача або пароль Підтримка. Ласка, виправити і спробувати ще раз."
 Invalid column,Недійсний стовпець
+"Invalid credentials, try again.","Неправильний логін або пароль, спробуйте ще раз."
 Invalid expression set in filter {0},Недійсний набір виразів у фільтрі {0}
 Invalid expression set in filter {0} ({1}),Недійсний набір виразів у фільтрі {0} ({1})
 Invalid field name {0},Неправильне ім&#39;я поля {0}
@@ -1944,6 +2028,7 @@ Invalid file path: {0},Невірний шлях до файлу: {0}
 Invalid filter: {0},Недійсний фільтр: {0}
 Invalid include path,Недійсний шлях включення
 Invalid json added in the custom options: {0},Додано недійсний JSON у спеціальних параметрах: {0}
+Invalid login credentials,Неправильний логін або пароль
 Invalid login or password,Невірне ім’я користувача або пароль
 Invalid module path,Недійсний шлях модуля
 Invalid naming series (. missing),Невірний серії імен (. Відсутня)
@@ -2025,6 +2110,7 @@ Keeps track of all communications,Слідкує за всіма комунік�
 Kerala,Керала
 Key,Ключ
 Keyboard Shortcuts,Гарячі клавіши
+Keyboard shortcuts,Гарячі клавіші
 Knowledge Base,База знань
 Knowledge Base Contributor,База знань Учасник
 Knowledge Base Editor,База знань Редактор
@@ -2058,6 +2144,7 @@ Language,Мова
 Language Code,таблиця умовних сигналів
 Language Name,Назва мови
 "Language, Date and Time settings","Налаштування мови, дати та часу"
+Large,Великий
 Last,Остання
 Last 14 Days,Останні 14 днів
 Last 30 Days,Останні 30 днів
@@ -2108,6 +2195,7 @@ Less Than Or Equal To,Менше або дорівнює
 Let's Get Started,Давайте розпочнемо
 Let's avoid repeated words and characters,Давайте уникати повторюваних слів і символів
 Let's prepare the system for first use.,Давайте підготуємо систему для першого використання.
+Let's setup your account.,Налаштуємо ваш обліковий запис.
 Let's take you back to onboarding,Повернемо вас до інбордингу
 Letter,Лист
 Letter Head,Фірмовий заголовок
@@ -2164,6 +2252,7 @@ Loading Filters...,Завантаження фільтрів ...
 Loading full tree...,Завантаження дерева...
 Loading import file...,Завантаження файлу імпорту ...
 Loading preview...,Завантаження...
+Loading registers…,Завантаження регістрів…
 Loading...,Завантаження ...
 Local DocType,Місцевий DocType
 Local Document Type,Тип локального документа
@@ -2192,13 +2281,19 @@ Login Before,Увійти перед
 Login Failed please try again,Не вдалося увійти. Спробуйте ще раз
 Login Id is required,Ім’я користувача є обов’язковим
 Login Required,Для цього треба увійти в систему
+Login To {0},Вхід до {0}
 Login Verification Code from {},Вхідний код введення з {}
 Login and view in Browser,Вхід і перегляд у веб-переглядачі
 Login not allowed at this time,Вхід не дозволяється у цей час
 "Login session expired, refresh page to retry","Час сесії входу закінчився, оновіть сторінку, щоб повторити спробу"
 Login to comment,Увійдіть щоб коментувати
+Login to {0},Вхід до {0}
 Login token required,Треба ввімкнути токен
+Login with Email Link,Увійти за посиланням з листа
 Login with LDAP,Вхід з LDAP
+Login with password,Увійти за паролем
+Login with username and password is not allowed.,Вхід за іменем користувача й паролем не дозволено.
+Login with {0},Увійти через {0}
 Logo Width,Ширина логотипу
 Logout,Вийти
 Logout All Sessions,Вийти з усіх сеансів
@@ -2206,12 +2301,14 @@ Logout All Sessions on Password Reset,Вийти з усіх сеансів пр
 Logout From All Devices After Changing Password,Вихід із усіх пристроїв після зміни пароля
 Logs,Колоди
 Long Text,Довгий текст
+Look around with ready sample records,Ознайомтеся з готовими прикладами записів
 Looks Great,Виглядає здорово
 Looks like someone sent you to an incomplete URL. Please ask them to look into it.,"Схоже, хтось послав вас до неповного URL. Будь ласка, попросіть їх подивитися в неї."
 Looks like something is wrong with this site's Paypal configuration.,"Схоже, щось не так з конфігурацією Paypal цього сайту."
 Looks like something is wrong with this site's payment gateway configuration. No payment has been made.,"Схоже, щось не так з конфігурацією платіжного шлюзу цього сайту. Платіж не було досягнуто."
 "Looks like something went wrong during the transaction. Since we haven't confirmed the payment, Paypal will automatically refund you this amount. If it doesn't, please send us an email and mention the Correlation ID: {0}.","Схоже, щось пішло не так під час операції. Так як ми не підтвердили оплату, Paypal автоматично поверне вам цю суму. Якщо цього не відбулося, будь ласка, надішліть нам по електронній пошті і згадати Кореляція ID: {0}."
 Looks like you didn't change the value,"Схоже, ви не змінили значення"
+Looks like you haven’t added any third party apps.,"Схоже, ви не додали жодного стороннього застосунку."
 Low,Низький
 Madam,пані
 Madhya Pradesh,Мадх&#39;я-Прадеш
@@ -2230,6 +2327,7 @@ Make use of longer keyboard patterns,Використовуйте довших �
 Make {0},Зробіть {0}
 Makes the page public,Робить сторінку загальнодоступною
 Male,Чоловік
+Manage 3rd party apps,Керування сторонніми застосунками
 Manage Third Party Apps,Керування сторонніми додатками
 Mandatory,Обов&#39;язкове
 Mandatory Depends On,Обов’язковість залежить від
@@ -2250,6 +2348,7 @@ Mapping Type,Тип карти
 Mapping column {0} to field {1},Зіставлення стовпця {0} до поля {1}
 Mappings,Зображень
 Mark all as Read,Позначити всіх як прочитані
+Mark all as read,Позначити все прочитаним
 Mark as Read,Відзначити як прочитане
 Mark as Spam,Повідомити про спам
 Mark as Unread,Відзначити як непрочитане
@@ -2264,6 +2363,7 @@ Max Attachments,Найбільша кількість долучень
 Max Length,Максимальна довжина
 Max Value,максимальне значення
 Max width for type Currency is 100px in row {0},Максимальна ширина для тип валюти 100px в рядку {0}
+Maximize,Розгорнути
 Maximum,Максимум
 Maximum Attachment Limit for this record reached.,Досягнуто обмеження за кількістю долучень для цього запису
 Maximum Number of Fields,Максимальна кількість полів
@@ -2308,7 +2408,10 @@ Middle Name (Optional),По батькові (необов&#39;язково)
 Migration ID Field,Поле Ідентифікатор міграції
 Milestone,Віха
 Milestone Tracker,Віховий трекер
+Mini report,Міні-звіт
+Minimize,Згорнути
 Minimum,Мінімум
+"Minimum 8 characters, including at least one number or special character.","Щонайменше 8 символів, серед них хоча б одна цифра або спеціальний знак."
 Minimum Password Score,Мінімальний бал пароля
 Miss,Міс
 Missing Fields,Не заповнені поля
@@ -2316,6 +2419,7 @@ Missing Values Required,Відсутні значення Потрібно
 Missing parameter Kanban Board Name,Відсутній параметр Kanban Board Name
 Missing parameters for login,Відсутні параметри для входу
 Mizoram,Мізорам
+Mobile,Мобільний
 Mobile No,Номер мобільного
 Mobile number,Номер мобільного
 Models (building blocks) of the Application,Моделі (будівельні блоки) додатка
@@ -2348,9 +2452,12 @@ Move cursor to above row,Курсор на рядок вище
 Move cursor to below row,Курсор на рядок нижче
 Move cursor to next column,Курсор на наступну колонку
 Move cursor to previous column,Курсор на попередню колонку
+Move down,Перемістити нижче
 Move to Row Number,Переміщення до рядкового номера
 Move to...,Перемістити в...
+Move up,Перемістити вище
 Move {0},Перемістити: {0}
+Movements and balances,Рухи та залишки
 Moving {0},Переміщення: {0}
 Mr,Містер
 Mrs,пані
@@ -2364,6 +2471,7 @@ Must specify a Query to run,"Необхідно вказати запит, що�
 Mute Sounds,Mute Звуки
 Mx,Mx
 My Account,Моя обліковка
+My Profile,Мій профіль
 My Settings,Мої налаштування
 MyISAM,MyISAM
 Nagaland,Нагаленд
@@ -2420,6 +2528,7 @@ New Shortcut,Новий ярлик
 New Value,нове значення
 New data will be inserted.,Нові дані буде вставлено.
 New module created {0},Створено новий модуль {0}
+New password cannot be same as old password,Новий пароль не може збігатися зі старим
 New updates are available,Нові оновлення доступні
 New value to be set,Нове значення буде встановлено
 New {0},{0} (створення)
@@ -2428,6 +2537,7 @@ New {0} {1} added to Dashboard {2},Нове {0} {1} додано на інфор
 New {0} {1} created,Створено нове {0} {1}
 New {0}: {1},Нові {0}: {1}
 New {} releases for the following apps are available,Доступні нові {} версії для наступних додатків
+Newly created user {0} has no roles enabled.,У нового користувача {0} немає жодної ролі.
 Newsletter,Інформаційний бюлетень
 Newsletter Email Group,Інформаційний бюлетень E-mail Група
 Newsletter Manager,Розсилка менеджер
@@ -2452,6 +2562,7 @@ Next Sync Token,Далі Синхронізований Токен
 Next Week,Наступний тиждень
 Next Year,Наступний рік
 Next actions,Подальші дії
+Next window,Наступне вікно
 No,Ні
 No Active Sessions,Немає активних сеансів
 No Copy,Немає Копіювати
@@ -2467,6 +2578,7 @@ No LDAP User found for email: {0},Не знайдено користувача L
 No Label,ні Етикетка
 No More Activity,Більше активності немає
 No Name Specified for {0},Ім&#39;я не вказано для {0}
+No New Notifications,Нових сповіщень немає
 No Permissions Specified,Ні Права доступу Задані
 No Permissions set for this criteria.,Дозволи не встановлений для цього критеріїв.
 No Permitted Charts,Немає дозволених діаграм
@@ -2476,17 +2588,23 @@ No Preview Available,Попередній перегляд недоступни�
 No Printer is Available.,Немає принтерів.
 No Records Created,Записів не створено
 No Results,Немає результатів
+No Roles Specified,Ролі не вказано
 No Tags,немає тегів
 No Upcoming Events,Ніяких майбутніх подій немає
+No access,Немає доступу
+No active user found with email address {0},Активного користувача з електронною адресою {0} не знайдено
 No activity,Немає активності
 No address added yet.,Жодної адреси ще не додано
 No alerts for today,Немає попереджень на сьогодні
+No app provides demo data,Жоден застосунок не надає демоданих
 No changes in document,Без змін у документі
 No comments yet,Коментарів немає
 No comments yet. Start a new discussion.,Немає коментарів. Почати нову тему повідомлення.
 No conditions provided,Не передбачено жодних умов
 No contacts added yet.,Немає контактів ще не додавали.
 No contacts linked to document,"Немає контактів, пов’язаних із документом"
+No data for the period,Даних за період немає
+No data for the selected period and filters,Немає даних за вибраний період і відбір
 No data found in the file. Please reattach the new file with data.,У файлі не знайдено жодних даних. Повторно встановіть новий файл із даними.
 No data to export,Немає даних для експорту
 No default Address Template found. Please create a new one from Setup > Printing and Branding > Address Template.,Шаблон адреси за замовчуванням не знайдено. Створіть новий із меню Налаштування&gt; Друк та брендинг&gt; Шаблон адреси.
@@ -2510,16 +2628,19 @@ No new Google Contacts synced.,Не синхронізовано нові кон
 No of Columns,Кількість колонок
 No of Rows (Max 500),Кількість рядків (макс 500)
 No of emails remaining to be synced,"Ні листів, що залишилися бути синхронізований"
+No other document types.,Інших типів документів немає.
 No pending or current jobs for this site,На цьому веб-сайті немає очікуваних чи поточних завдань
 No permission for {0},Немає доступу для {0}
 No permission to '{0}' {1},Немає доступу для &#39;{0}&#39; {1}
 No permission to read {0},"Немає дозволу, щоб прочитати {0}"
 No permission to {0} {1} {2},Немає доступу для {0} {1} {2}
+No pinned document types.,Закріплених типів документів немає.
 No posts yet,Повідомлень ще немає
 No records deleted,Записи не видалено
 No records present in {0},Немає записів у {0}
 No records tagged.,Немає записів помічені.
 No records will be exported,Записи не експортуються
+No registers available,Регістрів немає
 No results found,Нічого не знайдено
 No results found for {0} in Global Search,У глобальному пошуку не знайдено результатів для {0}
 No rows,Немає рядків
@@ -2579,10 +2700,13 @@ Note Seen By,Примітка побачених
 Note:,Примітка:
 Note: By default emails for failed backups are sent.,Примітка. За замовчуванням надсилаються електронні листи для невдалих резервних копій.
 Note: Changing the Page Name will break previous URL to this page.,Примітка: Зміна імені сторінки зламається попередній URL цієї сторінки.
+Note: Etc timezones have their signs reversed.,Примітка: у часових поясах Etc знаки обернені.
 "Note: For best results,  images must be of the same size and width must be greater than height.","Примітка. Для найкращих результатів зображення повинні бути однакового розміру, а ширина повинна перевищувати висоту."
 Note: Multiple sessions will be allowed in case of mobile device,Примітка: Декілька сесій буде дозволено в разі мобільного пристрою
+Note: This will be shared with user.,Примітка: це буде передано користувачеві.
 Notes,Примітки
 Notes:,Примітки:
+Nothing found,Нічого не знайдено
 Nothing has been added yet.,Нічого ще не додано.
 Nothing to show,Порожньо
 Nothing to update,Нічого для оновлення
@@ -2592,6 +2716,7 @@ Notification Recipient,Одержувач сповіщення
 Notification Settings,Налаштування сповіщень
 Notification Subscribed Document,Повідомлення Підписаний документ
 Notification Tones,Тональні сповіщення
+Notification categories,Категорії сповіщень
 Notifications,Сповіщення
 Notifications Disabled,Повідомлення вимкнено
 Notifications and bulk mails will be sent from this outgoing server.,Відомості та сипучих пошти буде відправлено від цього вихідного сервера.
@@ -2607,6 +2732,7 @@ Number Card,Номер картки
 Number Card Link,Посилання на номерну картку
 Number Cards,Картки з номерами
 Number Format,Числовий формат
+Number format,Формат чисел
 Number of Backups,Кількість резервних копій
 Number of DB Backups,Кількість резервних копій DB
 Number of DB backups cannot be less than 1,Кількість резервних копій БД не може бути менше 1
@@ -2631,6 +2757,7 @@ Offline,Offline
 Old Password,Старий пароль
 Old Password Required.,Старий Потрібно пароль.
 Older backups will be automatically deleted,Більш старі резервні копії будуть автоматично видалені
+On Date,На дату
 On or After,Не раніше
 On or Before,Не пізніше
 "On {0}, {1} wrote:","На {0}, {1} написав:"
@@ -2657,10 +2784,13 @@ Only files up to {0} MB are supported for preview.,Для перегляду п�
 Only mandatory fields are necessary for new records. You can delete non-mandatory columns if you wish.,"Лише обов&#39;язкові поля, необхідні для нових записів. Ви можете видалити необов&#39;язкові стовпці, якщо хочете."
 Only one {0} can be set as primary.,Лише один {0} можна встановити як основний.
 Only standard DocTypes are allowed to be customized from Customize Form.,Лише стандартні DocTypes можуть бути налаштовані з налаштування форми.
+Only the first rows are shown,Показано лише перші рядки
+Only the sample records are deleted. Your own data stays.,Видаляються лише приклади записів. Ваші власні дані залишаються.
 Only users involved in the document are listed,"Перераховані лише користувачі, які беруть участь у документі"
 Only {0} emailed reports are allowed per user,Тільки {0} по електронній пошті звіти кожному користувачеві дозволено
 Oops,На жаль
 Oops! Something went wrong,Нам Щось пішло не так
+Oops! Something went wrong.,Йой! Щось пішло не так.
 "Oops, you are not allowed to know that","На жаль, ви не можете знати, що"
 Open,Відкрито
 Open Awesomebar,Відкрийте Awesomebar
@@ -2676,9 +2806,13 @@ Open Translation,Відкритий переклад
 Open URL in a New Tab,Відкрийте URL-адресу в новій вкладці
 Open a dialog with mandatory fields to create a new record quickly,Відкрийте діалогове вікно із обов&#39;язковими полями для швидкого створення нової записи
 Open a module or tool,Відкриття модуля або інструменту
+Open a register to inspect its movements. Use filters and the seamless list scroll to explore large volumes.,"Відкрийте регістр, щоб переглянути його рухи. Для великих обсягів користуйтеся фільтрами та безперервним прокручуванням списку."
+Open again,Відкрити знову
 Open file,Відкрити файл
 Open file in new tab,Відкрити файл в новій вкладці
 Open list item,Відкрити елемент списку
+Open movements,Відкрити рухи
+Open windows,Відкриті вікна
 Open your authentication app on your mobile phone.,Відкрийте додаток для автентифікації на своєму мобільному телефоні.
 Open {0},Відкрити {0}
 Open {0} Workspace,Відкрити {0}
@@ -2697,6 +2831,7 @@ Options Help,Довідка з опцій
 Options for select. Each option on a new line.,Варіанти вибору. Кожен варіант з нового рядка.
 Options for {0} must be set before setting the default value.,Параметри для {0} повинні бути встановлені перед встановленням значення за замовчуванням.
 Options not set for link field {0},Опції не встановлений галузі зв&#39;язку {0}
+Or,або
 Or login with,Або увійдіть в систему з
 Order,замовлення
 Org History,Орг Історія
@@ -2758,8 +2893,14 @@ Password cannot be filtered,Пароль не можна відбирати
 Password changed successfully.,Пароль успішно змінено.
 Password for Base DN,Пароль для Base DN
 Password is required or select Awaiting Password,Пароль потрібно або вибрати Надалі пароль
+Password is required.,Потрібен пароль.
+Password missing in Email Account,У поштовому обліковому записі немає пароля
 Password not found,Пароль не знайдений
+Password requirements not met,Вимоги до пароля не виконано
 Password reset instructions have been sent to your email,Інструкції щодо зміни паролю були відправлені на вашу електронну пошту
+Password size exceeded the maximum allowed size,Пароль довший за дозволений
+Password size exceeded the maximum allowed size.,Пароль довший за дозволений.
+Passwords do not match,Паролі не збігаються
 Passwords do not match!,Паролі не збігаються!
 Paste,Паста
 Patch,Пластир
@@ -2833,6 +2974,7 @@ Please attach an image file to set HTML,"Додайте файл зображе�
 Please check the filter values set for Dashboard Chart: {},"Перевірте значення фільтра, встановлені для діаграми інформаційної панелі: {}"
 "Please check the value of ""Fetch From"" set for field {0}","Будь ласка, перевірте значення параметра &quot;Отримати з&quot; для поля {0}"
 Please check your email for verification,"Будь ласка, перевірте свою електронну пошту для перевірки"
+Please check your email.,Перевірте свою електронну пошту.
 Please check your registered email address for instructions on how to proceed. Do not close this window as you will have to return to it.,"Будь ласка, перевірте свою зареєстровану електронну адресу, щоб дізнатися, як продовжити. Не закривайте це вікно, тому що вам доведеться повернутися до нього."
 Please click on the following link to set your new password,"Будь ласка, натисніть на посилання, щоб встановити новий пароль"
 Please close this window,"Будь ласка, закрийте це вікно"
@@ -2854,9 +2996,14 @@ Please enter Base URL,"Будь ласка, введіть базову URL-ад
 Please enter Client ID before social login is enabled,"Будь-ласка, введіть ідентифікатор клієнта, перш ніж ввімкнеться соціальне вхід"
 Please enter Client Secret before social login is enabled,"Будь ласка, введіть Client Secret до ввімкнення соціального входу"
 Please enter Redirect URL,"Будь ласка, введіть URL-адресу переспрямування"
+Please enter a valid email.,Введіть дійсну електронну адресу.
 Please enter the password,"Будь ласка, введіть пароль"
+Please enter the password for: <b>{0}</b>,Введіть пароль для: <b>{0}</b>
 Please enter valid mobile nos,"Будь ласка, введіть дійсні номери мобільних"
 Please enter values for App Access Key and App Secret Key,"Будь ласка, введіть значення для App Access Key і App Secret Key"
+"Please enter your email, we'll send you password reset link","Введіть свою електронну адресу, ми надішлемо посилання для скидання пароля"
+Please enter your new password.,Введіть новий пароль.
+Please enter your old password.,Введіть старий пароль.
 Please fill the following mandatory fields before saving:,Заповніть обов’язкові поля перед записом:
 Please find attached {0}: {1},Прошу знайти додаток {0}: {1}
 Please generate keys for the Event Subscriber User {0} first.,Спершу створіть ключі для користувача абонента події {0}.
@@ -2900,6 +3047,7 @@ Please set the following documents in this Dashboard as standard first.,Спер
 "Please setup SMS before setting it as an authentication method, via SMS Settings","Будь-ласка, настройте SMS, перш ніж встановити його як метод автентифікації, через SMS Settings"
 Please setup a message first,Спочатку налаштуйте повідомлення
 Please setup default Email Account from Setup > Email > Email Account,Установіть обліковий запис електронної пошти за замовчуванням у програмі Налаштування&gt; Електронна пошта&gt; Обліковий запис електронної пошти
+Please setup default outgoing Email Account from Settings > Email Account,Налаштуйте типовий вихідний поштовий обліковий запис: Налаштування > Обліковий запис пошти
 Please specify,Будь ласка уточніть
 Please specify which date field must be checked,"Вкажіть, будь ласка, поля дати, що повинні бути позначені"
 Please specify which value field must be checked,"Вкажіть, будь ласка, поля значення, що повинні бути позначені"
@@ -2909,6 +3057,7 @@ Point Allocation Periodicity,Періодичність розподілу то�
 Points,Очки
 Points Given,Наведені бали
 Pondicherry,Пондічеррі
+Poor,Слабкий
 Port,Порт
 Portal,Портал
 Portal Menu,Меню порталу
@@ -3027,6 +3176,7 @@ QR Code,QR-код
 QR Code for Login Verification,QR-код для верифікації входу
 QZ Tray Connection Active!,Підключення QZ-лотка активне!
 QZ Tray Failed: ,Помилка лотка QZ:
+Quarter,Квартал
 Quarter Day,день Квартал
 Quarterly,Щоквартальний
 Query,Запит
@@ -3059,6 +3209,7 @@ Re: {0},Re: {0}
 Read,Прочитати
 Read Only,Лише для читання
 Read Only Depends On,Читання залежить лише від цього
+Read Only Mode,Режим лише для читання
 Read Time,Час читання
 Read by Recipient,Читає одержувач
 Read by Recipient On,Читає одержувач
@@ -3069,7 +3220,9 @@ Received,Надійшло
 Receiver By Document Field,Приймач за полем документа
 Receiver By Role,Приймач за роллю
 Receiver Parameter,Параметр отримувача
+Recent,Нещодавні
 Recent Activity,Остання активність
+Recent documents,Останні документи
 Recent years are easy to guess.,За останні роки легко здогадатися.
 Recipient,Одержувач
 Recipient Unsubscribed,Підписка скасована
@@ -3110,8 +3263,11 @@ Refresh Token,Поновити токен
 Refreshing,Освіжаючий
 Refreshing...,Оновлюється…
 Region,Область
+Regional settings,Регіональні налаштування
 Register OAuth Client App,Реєстрація OAuth Client App
+Register explorer,Огляд регістрів
 Registered but disabled,Зареєстрований але відключений
+Registers,Регістри
 Rejected,Відхилено
 Relapsed,Рецидив
 Relapses,Рецидиви
@@ -3139,6 +3295,8 @@ Remove Filter,Видалити фільтр
 Remove Section,Видалити розділ
 Remove Tag,Видалити тег
 Remove all customizations?,Видалити всі налаштування?
+Remove demo data,Видалити демодані
+Remove widget,Прибрати віджет
 Removed {0},Вилучені {0}
 Rename,Перейменувати
 Rename many items by uploading a .csv file.,"Перейменувати безліч предметів, завантаживши файл .csv."
@@ -3195,6 +3353,7 @@ Request Timed Out,Інтервал очікування для запиту
 Request URL,Запит URL
 Require Trusted Certificate,Потрібна довірена довідка
 Res: {0},Res: {0}
+Resend,Надіслати ще раз
 Reset,скидання
 Reset Chart,Скинути діаграму
 Reset Fields,Скинути поля
@@ -3203,15 +3362,19 @@ Reset OTP Secret,Скидання OTP Secret
 Reset Password,Скинути пароль
 Reset Password Key,Скидання пароля ключа
 Reset Permissions for {0}?,Скидання дозволів для {0}?
+Reset layout,Скинути розкладку
+Reset link emailed,Посилання для скидання надіслано
 Reset to default,Скинути до типових
 Reset to defaults,Відновити значення за замовчуванням
 Reset your password,Скинути пароль
 Resizing preview...,Зміна розміру...
 Response,Відповідь
 Response Type,відповідь Тип
+Rest of the day,Решта дня
 Restore,Відновлення
 Restore Original Permissions,Відновлення початкових дозволів
 Restore or permanently delete a document.,Відновлення або повністю видалити документ.
+Restore size,Відновити розмір
 Restore to default settings?,Відновлення заводських налаштувань?
 Restored,відновлена
 Restoring Deleted Document,Відновлення видаленого документа
@@ -3251,6 +3414,8 @@ Role Permissions,Дозволи ролі
 Role Permissions Manager,Дозволи ролі менеджера
 Role Profile,Роль профілю
 Role and Level,Роль і рівень
+Role desk,Робочий стіл ролі
+Role has been set as per the user type {0},Роль встановлено відповідно до типу користувача {0}
 Roles,Ролі
 Roles Assigned,"Ролі, призначені"
 Roles HTML,Ролі HTML
@@ -3283,6 +3448,7 @@ Row Values Changed,Значення рядків Змінені
 Row {0},Рядок {0}
 Row {0}: Not allowed to disable Mandatory for standard fields,Рядок {0}: заборонено вимикати Обов&#39;язковий для стандартних полів
 Row {0}: Not allowed to enable Allow on Submit for standard fields,Ряд {0}: Чи не дозволяється включити Дозволити на Надіслати на стандартних полів
+Rows,Рядки
 Rows Added,ряди Додано
 Rows Removed,ряди Вилучені
 Rule,Правило
@@ -3314,6 +3480,8 @@ Salesforce,Відділ продажів
 Salutation,Звертання
 Same Field is entered more than once,Те саме поле вводиться більше одного разу
 Sample,Зразок
+Sample records to look around,Приклади записів для ознайомлення
+Sample records will be created. This takes a few minutes.,Буде створено приклади записів. Це триватиме кілька хвилин.
 Saturday,Субота
 Save,Записати
 Save API Secret: ,Зберегти таємне API:
@@ -3321,6 +3489,10 @@ Save Anyway,Збережи в будь-якому випадку
 Save As,Зберегти як
 Save Filter,Зберегти фільтр
 Save Report,Зберегти звіт
+Save and close,Записати і закрити
+Save and continue,Зберегти й продовжити
+Save and finish,Зберегти й завершити
+Save changes?,Зберегти зміни?
 Save filters,Збережіть фільтри
 Saved,Записано
 Saved Reports,Збережені звіти
@@ -3372,11 +3544,16 @@ Secret Key,секретний ключ
 Section,Розділ
 Section Break,Розділ Перерва
 Section Heading,Тема розділу
+Sections,Розділи
 Security,Безпека
+Security Alert: Your account is being impersonated,Попередження безпеки: хтось входить від імені вашого облікового запису
+Security Alert: Your password has been changed.,Попередження безпеки: ваш пароль змінено.
 Security Settings,Налаштування безпеки
+See all Activity,Уся активність
 See all past reports.,Переглянути всі попередні звіти.
 See https://docs.aws.amazon.com/general/latest/gr/s3.html for details.,Детальніше див. На https://docs.aws.amazon.com/general/latest/gr/s3.html.
 See on Website,Подивитися на веб-сайті
+See previous responses,Переглянути попередні відповіді
 See the document at {0},Переглянути документ у {0}
 Seems API Key or API Secret is wrong !!!,"Здається, ключ API або API Секрет неправильно !!!"
 Seems Publishable Key or Secret Key is wrong !!!,"Здається, до опублікування Key або Секретний ключ не так !!!"
@@ -3449,6 +3626,7 @@ Send Email Alert,Надіслати повідомлення електронн�
 Send Email Print Attachments as PDF (Recommended),Відправити E-mail Друк PDF Вкладення в (рекомендовано)
 Send Email for Successful Backup,Надіслати електронну пошту для успішного резервного копіювання
 Send Email for Successful backup,Надіслати електронний лист для успішного резервного копіювання
+Send Link,Надіслати посилання
 Send Me A Copy of Outgoing Emails,Надіслати мені копію вихідних повідомлень
 Send Notification To,Надіслати сповіщення
 Send Notification to,Надіслати сповіщення
@@ -3468,6 +3646,7 @@ Send an email reminder in the morning,Надіслати електронною 
 Send an email to {0} to link it here,"Надішліть електронний лист на {0}, щоб пов’язати його тут"
 Send days before or after the reference date,Відправити дні до або після звітної дати
 Send enquiries to this email address,Відправити запити на цю електронну адресу
+Send login link,Надіслати посилання для входу
 Send me a copy,Надіслати мені копію
 Send only if there is any data,"Відправити тільки якщо є будь-які дані,"
 Send unsubscribe message in email,Надіслати повідомлення відмови від підписки на електронну пошту
@@ -3558,6 +3737,7 @@ Shipping,Доставка
 Shop,Магазин
 Short Name,Коротке ім&#39;я
 Short keyboard patterns are easy to guess,Короткі клавіатурні шаблони легко вгадати
+Shortcut,Швидкий доступ
 Shortcuts,Ярлики
 Show,Показати
 Show Absolute Datetime in Timeline,Показувати точний час в історії
@@ -3566,6 +3746,7 @@ Show CTA in Blog,Показати заклик до дії в блозі
 Show Calendar,Показати календар
 Show Dashboard,Показати інформаційну панель
 Show Document,Показати документ
+Show Error,Показати помилку
 Show External Link Warning,Попереджати про зовнішні посилання
 Show Failed Logs,Показати помилкові журнали
 Show Form Tour,Екскурсійний тур
@@ -3575,6 +3756,7 @@ Show Keyboard Shortcuts,Показати комбінації клавіш
 Show Line Breaks after Sections,Показати розриви рядків після розділів
 Show Links,Показати зв'язки
 Show More Activity,Показати більше активності
+Show Password,Показати пароль
 Show Percentage Stats,Показати статистику відсотків
 Show Permissions,Показати права Доступу
 Show Preview Popup,Показати попередній перегляд спливаючих вікон
@@ -3593,6 +3775,7 @@ Show all Versions,Показати всі версії
 Show all activity,Показати всю історію
 Show as Grid,Показати як сітку
 Show as cc,Показати в кубічних сантиметрах
+Show desktop,Показати робочий стіл
 Show failed jobs,Показувати не вдалося робочих місць
 Show full form instead of a quick entry modal,Показати повну форму замість швидкого модального введення
 Show in Module Section,Показати в розділі Модуль
@@ -3610,6 +3793,7 @@ Showing {0} of {1} rows.,Показано рядків: {0} з {1}.
 Sidebar Items,Sidebar товари
 Sidebar Settings,Бічна панель Налаштування
 Sidebar and Comments,Бічна панель і коментарі
+Sign In,Вхід
 Sign Up,Зареєструватися
 Sign Up is disabled,Реєстрація відключена
 Sign up,Зареєструватися
@@ -3644,6 +3828,7 @@ Slideshow,Слайд-шоу
 Slideshow Items,Слайд-шоу товари
 Slideshow Name,Ім&#39;я Слайд-шоу
 Slideshow like display for the website,Використовувати режим слайд-шоу для веб-сайту
+Small,Малий
 Small Text,Малий Текст
 Smallest Currency Fraction Value,Значення найменшої частки валюти
 Smallest circulating fraction unit (coin). For e.g. 1 cent for USD and it should be entered as 0.01,"Найменша частка, наявна в обігу (монета). Наприклад, 1 копійка для ГРН, і вона має бути введена як 0,01"
@@ -3665,6 +3850,7 @@ Something went wrong during the token generation. Click on {0} to generate a new
 Something went wrong while generating dropbox access token. Please check error log for more details.,"Щось пішло не так при створенні маркерів доступу Dropbox. Будь ласка, перевірте журнал помилок для отримання більш докладної інформації."
 "Something went wrong while loading Desk. <b>Please relaod the page</b>. If the problem persists, contact the Administrator","Щось пішло не так під час завантаження Desk. <b>Будь ласка, перекодуйте сторінку</b> . Якщо проблема не зникне, зв’яжіться з адміністратором"
 Something went wrong while saving customizations,Під час збереження налаштувань сталася помилка
+Something went wrong.,Щось пішло не так.
 Sorry! I could not find what you were looking for.,"Вибачте! Я не міг знайти те, що ви шукали."
 Sorry! Sharing with Website User is prohibited.,"Вибачте, оприлюднення для  користувача веб-сайту забороняється."
 Sorry! User should have complete access to their own record.,Вибачте! Користувач повинен мати повний доступ до свого запису.
@@ -3675,6 +3861,7 @@ Sort Field,Поле сортування
 Sort Order,Порядок сортування
 Sort field {0} must be a valid fieldname,Сортування поля {0} повинен бути дійсним ім&#39;я_поля
 Source,Джерело
+Source Code,Вихідний код
 Source Message,Повідомлення джерела
 Source Name,ім&#39;я джерела
 Source Text,Оригінальний текст
@@ -3721,12 +3908,16 @@ Status,Стан
 Status Updated,Статус оновлено
 Status: {0},Статус: {0}
 Step,Крок
+Step {0} is not finished,Крок «{0}» не завершено
+Step {0} of {1},Крок {0} з {1}
 Steps,Кроки
 Steps to verify your login,Кроки для підтвердження вашого входу
 Sticky,Закріплено
 Stopped,Зупинився
+Store the API secret securely. It won't be displayed again.,Збережіть секрет API у безпечному місці. Його більше не буде показано.
 Stores the JSON of last known versions of various installed apps. It is used to show release notes.,"Зберігає JSON з останніх відомих версій різних встановлених додатків. Він використовується, щоб показати примітки до випуску."
 Straight rows of keys are easy to guess,Прямі ряди клавіш легко вгадати
+Strength:,Надійність:
 Stripe Settings,налаштування нашивки
 Stripe payment gateway settings,Налаштування оплати шлюзу нашивки
 Style,Стиль
@@ -3736,6 +3927,7 @@ Stylesheet,Таблиця стилів
 Stylesheets for Print Formats,Таблиці стилів для форматів друку
 "Sub-currency. For e.g. ""Cent""","Суб-валюта. Наприклад, ""коп."""
 Sub-domain provided by erpnext.com,Піддомен наданий erpnext.com
+Subaccount {0} requires a DocType and a value,"Субконто {0}: потрібна пара (DocType, назва)"
 Subdomain,піддомен
 Subject,Тема
 Subject Field,Тематичне поле
@@ -3744,6 +3936,7 @@ Submit,Провести
 Submit After Import,Надіслати після імпорту
 Submit after importing,Надіслати після імпортування
 Submit an Issue,Подати поблему
+Submit another response,Надіслати ще одну відповідь
 Submit the document first,Спочатку проведіть документ
 Submit this document to complete this step.,"Надішліть цей документ, щоб завершити цей крок."
 Submit this document to confirm,Проведіть цей документ для підтвердження
@@ -3771,6 +3964,7 @@ Successfully Updated,Успішно оновлене
 Successfully imported {0} record.,Запис імпортовано {0}.
 "Successfully imported {0} records out of {1}. Click on Export Errored Rows, fix the errors and import again.","Успішно імпортовано {0} записів із {1}. Клацніть на Експорт помилкових рядків, виправте помилки та імпортуйте знову."
 Successfully imported {0} records.,{0} записів успішно імпортовано.
+Successfully signed out,Ви успішно вийшли
 Successfully updated translations,Успішно оновлені переклади
 "Successfully updated {0} record out of {1}. Click on Export Errored Rows, fix the errors and import again.","Успішно оновлено {0} запис із {1}. Клацніть на Експорт помилкових рядків, виправте помилки та імпортуйте знову."
 Successfully updated {0} record.,Запис {0} успішно оновлено.
@@ -3785,6 +3979,7 @@ Support Email Address Not Specified,Адреса електронної пошт
 Suspend Sending,призупинити Відправка
 Switch To Desk,Перемикання на робочий стіл
 Switch theme,Змінити тему
+Switch to Desk,Перейти до робочого столу
 Symbol,Символ
 Sync,Синхронізувати
 Sync Calendar,Синхронізувати календар
@@ -3799,6 +3994,7 @@ Syncing {0} of {1},Синхронізується {0} з {1}
 Syntax error in template,Синтаксична помилка в шаблоні
 System,Система
 System Console,Системна консоль
+System Health,Стан системи
 System Manager,Менеджер системи
 System Notification,Повідомлення системи
 System Page,система Page
@@ -3845,6 +4041,7 @@ Text Content,Text Content
 Text Editor,Текстовий редактор
 Text to be displayed for Link to Web Page if this form has a web page. Link route will be automatically generated based on `page_name` and `parent_website_route`,"Текст, відображений протягом Посилання на веб-сторінку, якщо ця форма має веб-сторінку. Маршрут Посилання буде автоматично генерується на основі `` page_name` і parent_website_route`"
 Thank you,Дякую
+Thank you for spending your valuable time to fill this form,"Дякуємо, що приділили час заповненню цієї форми"
 Thank you for your email,Дякую вам за вашу електронну пошту
 Thank you for your feedback!,Спасибі за ваш відгук!
 Thank you for your interest in subscribing to our updates,Дякуємо за вашу зацікавленість у новинах проекту
@@ -3860,10 +4057,14 @@ The basis document {0} is not submitted,Документ-підстава {0} н
 The column {0} has {1} different date formats. Automatically setting {2} as the default format as it is the most common. Please change other values in this column to this format.,"Стовпець {0} має {1} різні формати дат. Автоматично встановлюючи {2} як формат за замовчуванням, оскільки він є найпоширенішим. Будь ласка, змініть інші значення в цьому стовпці на такий формат."
 The comment cannot be empty,Коментар не може бути порожнім
 The count shown is an estimated count. Click here to see the accurate count.,"Кількість приблизна. Натисніть, щоб побачити точну."
+The demo job failed. See the error log.,Завантаження демоданих завершилось помилкою. Див. журнал помилок.
 The document could not be correctly assigned,Документ не може бути правильно призначений
 The document has been assigned to {0},Документ присвоєно {0}
 The first user will become the System Manager (you can change this later).,Перший користувач стане System Manager (ви можете змінити це пізніше).
 The following records needs to be created before we can import your file.,"Наступні записи потрібно створити, перш ніж ми зможемо імпортувати ваш файл."
+The initial settings are entered,Початкові налаштування введено
+The layout is too big,Розкладка завелика
+The link you trying to login is invalid or expired.,Посилання для входу недійсне або прострочене.
 The mapping configuration between two doctypes.,Конфігурація відображення між двома доктипами.
 "The meta description is an HTML attribute that provides a brief summary of a web page. Search engines such as Google often display the meta description in search results, which can influence click-through rates.","Метаопис - це атрибут HTML, який забезпечує короткий підсумок веб-сторінки. Такі пошукові системи, як Google, часто відображають метаопис у результатах пошуку, що може вплинути на рейтинг кліків."
 "The meta image is unique image representing the content of the page. Images for this Card should be at least 280px in width, and at least 150px in height.","Мета-зображення - це унікальне зображення, що представляє вміст сторінки. Зображення для цієї Картки повинні мати принаймні 280 пікселів у ширину та не менше 150 пікселів у висоту."
@@ -3871,9 +4072,13 @@ The name that will appear in Google Calendar,"Назва, яка з&#39;явит
 The page you are looking for is missing. This could be because it is moved or there is a typo in the link.,"Сторінка, яку ви шукаєте, відсутня. Можливо, вона була переміщена або у посиланні є помилка."
 The password of your account has expired.,Термін дії вашого пароля закінчився.
 The process for deletion of {0} data associated with {1} has been initiated.,"Ініційовано процес видалення {0} даних, пов’язаних із {1}."
+The reset password link has been expired,Термін дії посилання для скидання пароля скінчився
+The reset password link has either been used before or is invalid,Посилання для скидання пароля вже використано або воно недійсне
 The resource you are looking for is not available,"Ресурс, який ви шукаєте не доступний"
+"The site already has its own data, so demo data cannot be added","На сайті вже є власні дані, тому демодані додати не можна"
 The site which is consuming your events.,"Сайт, який споживає ваші події."
 The site you want to subscribe to for consuming events.,"Веб-сайт, на який ви хочете підписатися для споживання подій."
+The step could not be saved,Крок не вдалося зберегти
 The system provides many pre-defined roles. You can add new roles to set finer permissions.,"Система забезпечує безліч визначених функцій. Ви можете додати нові ролі, щоб встановити більш тонкі дозволу."
 The user from this field will be rewarded points,Користувач з цього поля отримає бали
 The webhook will be triggered if this expression is true,"Веб-гачок буде спрацьовувати, якщо цей вираз є істинним"
@@ -3882,11 +4087,13 @@ Theme,Тема
 Theme Configuration,Конфігурація теми
 Theme URL,Тема URL
 There are documents which have workflow states that do not exist in this Workflow. It is recommended that you add these states to the Workflow and change their states before removing these states.,"Є документи, які мають стани робочого циклу, яких у цьому робочому процесі не існує. Перед видаленням цих станів рекомендується додати ці стани до робочого циклу та змінити їх."
+There are no upcoming events for you.,Найближчих подій для вас немає.
 There are some linked records which needs to be created before we can import your file. Do you want to create the following missing records automatically?,"Є кілька пов&#39;язаних записів, які потрібно створити, перш ніж ми зможемо імпортувати ваш файл. Ви хочете автоматично створити такі відсутні записи?"
 There are {0} with the same filters already in the queue:,У черзі є {0} з однаковими фільтрами:
 There can be only one Fold in a form,Там може бути тільки один висловуха кішка у формі
 There is an error in your Address Template {0},Існує помилка в адресному шаблоні {0}
 There is no data to be exported,Немає даних для експорту
+There is no demo data,Демоданих немає
 There is some problem with the file url: {0},Існує деяка проблема з файлової URL: {0}
 There is {0} with the same filters already in the queue:,У черзі є {0} з однаковими фільтрами:
 There must be atleast one permission rule.,Там повинно бути принаймні один правило дозволу.
@@ -3916,6 +4123,7 @@ This chart will be available to all Users if this is set,"Ця діаграма 
 This document cannot be reverted,Цей документ неможливо повернути
 This document has been modified after the email was sent.,Цей документ був змінений після надсилання електронного листа.
 This document has been reverted,Цей документ було повернено
+This document has no movements,Цей документ не має руху
 This document has unsaved changes which might not appear in final PDF. <br> Consider saving the document before printing.,"Документ має незаписані зміни, яких може не бути в друкованій формі. <br> Запишіть документ перед друком."
 "This document is already amended, you cannot ammend it again","До цього документа вже внесено зміни, і ви не можете змінити його знову"
 This document is currently queued for execution. Please try again,Цей документ в даний час в чергу на виконання. Будь ласка спробуйте ще раз
@@ -3941,17 +4149,23 @@ This link has already been activated for verification.,Це посилання �
 This link is invalid or expired. Please make sure you have pasted correctly.,"Це посилання є недійсним або закінчився. Будь ласка, переконайтеся, що ви вставили правильно."
 This may get printed on multiple pages,Це може бути надруковано на кількох сторінках
 This month,Цього місяця
+This quarter,Цей квартал
 This query style is discontinued,Цей стиль запиту припиняється
 This report was generated on {0},Цей звіт був створений на {0}
 This report was generated {0}.,Цей звіт створено {0}.
 This request has not yet been approved by the user.,Цей запит користувачем ще не затверджено.
 This role update User Permissions for a user,Це оновлення роль права користувачів для користувача
+"This site is in read only mode, full functionality will be restored soon.","Сайт у режимі лише для читання, повна функціональність невдовзі відновиться."
+This site needs a migration,Сайт потребує міграції
+This step is required,Цей крок обов'язковий
+This takes a few minutes,Це триватиме кілька хвилин
 This title will be used as the title of the webpage as well as in meta tags,"Цей заголовок буде використовуватися як заголовок веб-сторінки, а також як мета-теги"
 "This will be automatically generated when you publish the page, you can also enter a route yourself if you wish","Це буде автоматично сформовано при публікації сторінки. Ви також можете ввести маршрут самостійно, якщо хочете"
 This will be shown in a modal after routing,Це буде показано в модальному режимі після маршрутизації
 This will be shown to the user in a dialog after routing to the report,Це буде показано користувачеві у діалоговому вікні після переходу до звіту
 This will log out {0} from all other devices,Це вийде з {0} з усіх інших пристроїв
 This will permanently remove your data.,Це назавжди видалить ваші дані.
+This year,Цей рік
 Throttled,Дросельний
 Thumbnail URL,Мініатюра URL
 Thursday,Четвер
@@ -3965,6 +4179,7 @@ Time Zones,Часові зони
 Time format,Формат часу
 Time in seconds to retain QR code image on server. Min:<strong>240</strong>,"Час в секундах, щоб зберегти зображення QR-коду на сервері. Мінін .: <strong>240</strong>"
 Time series based on is required to create a dashboard chart,Для створення діаграми інформаційної панелі необхідний часовий ряд на основі
+Time zone,Часовий пояс
 Time {0} must be in format: {1},Час {0} повинен бути у форматі: {1}
 Timeline DocType,терміни DocType
 Timeline Field,терміни поле
@@ -4004,6 +4219,7 @@ Today,сьогодні
 Today's Events,Сьогоднішні події
 Toggle Chart,Переключити діаграму
 Toggle Charts,Переключити графіки
+Toggle Full Width,Перемкнути повну ширину
 Toggle Grid View,Переключити режим перегляду сітки
 Toggle Public/Private,Увімкнути загальнодоступні / приватні
 Toggle Sidebar,Бічна панель
@@ -4012,6 +4228,7 @@ Token,знак
 Token is missing,Маркер відсутній
 Tomorrow,Завтра
 Too Many Requests,Забагато запитів
+Too many requests. Please try again later.,Забагато запитів. Спробуйте пізніше.
 "Too many users signed up recently, so the registration is disabled. Please try back in an hour","Занадто багато користувачів зареєструвалися в останнім часом, так що реєстрація відключена. Будь ласка, спробуйте ще раз через годину"
 Too many writes in one request. Please send smaller requests,"Занадто багато пише в одному запиті. Будь ласка, відправте менші запити"
 Tools,Інструменти
@@ -4060,9 +4277,11 @@ Trigger Primary Action,Первинна дія тригера
 "Trigger on valid methods like ""before_insert"", ""after_update"", etc (will depend on the DocType selected)","Запуск з поважних методи, такі як &quot;before_insert&quot;, &quot;after_update&quot;, і т.д. (буде залежати від обраного DocType)"
 Tripura,Трипура
 Try a different search.,Спробуйте інший пошук.
+Try again,Спробувати ще раз
 Try to avoid repeated words and characters,Намагайтеся уникати повторюваних слів і символів
 Try to use a longer keyboard pattern with more turns,Спробуйте використовувати більш довгий шаблон клавіатури з великою кількістю витків
 Tuesday,Вівторок
+Turnovers,Обороти
 Twilio Number,Номер Twilio
 Twilio Number Group,Група чисел Twilio
 Twilio Settings,Налаштування Twilio
@@ -4148,6 +4367,7 @@ UA E-Reporting Setting,Налаштування електронної звіт�
 UA ERPN Inbound,Отримані ПН з ЄРПН
 UA Employee,Співробітники
 UA Exchange Log,Журнал обміну
+UA Exchange Rate,Курси валют
 UA Exchange Settings,Налаштування обміну
 UA Expense Item,Статті витрат
 UA Finance Lease Receipt,Отримання майна у фінансову оренду
@@ -4162,6 +4382,7 @@ UA Hiring,Прийом на роботу
 UA Income Book Entry,Книга обліку доходів
 UA Intangible Asset,Нематеріальні активи
 UA Inventory Line,Рядок інвентаризації
+UA Invoice Adjustment,Коригування інвойсу
 UA Item,Номенклатура
 UA Item Specification,Специфікації номенклатури
 UA Journal Operation,Операція (бухгалтерська)
@@ -4194,9 +4415,8 @@ UA Own Work Line,Рядок акта власного виробництва
 UA Packaging Balance,Розрахунки за тару
 UA Packaging Line,Рядок тари
 UA Packaging Return,Повернення тари
-UA Payment Invoice,Інвойс (рахунок на оплату)
-UA Invoice Adjustment,Коригування інвойсу
 UA Payment Allocation,Розподіл оплати за інвойсом
+UA Payment Invoice,Інвойс (рахунок на оплату)
 UA Payment Order,Платіжне доручення
 UA Payroll,Нарахування зарплати
 UA Payroll Accruals Report,Звіт по нарахуваннях
@@ -4337,7 +4557,12 @@ Unique,Унікальний
 Unknown Column: {0},Невідомий Колонка: {0}
 Unknown User,Невідомий користувач
 Unknown View,Невідомий вигляд
+Unknown choice {0},Невідомий вибір {0}
 "Unknown file encoding. Tried utf-8, windows-1250, windows-1252.","Невідомий кодування файлів. Пробував UTF-8, Windows-1250, Windows -1252."
+Unknown language {0},Невідома мова {0}
+Unknown scale {0}. Use: {1},Невідомий масштаб {0}. Використайте: {1}
+Unknown setup step {0},Невідомий крок налаштування {0}
+"Unloaded from memory, will open again","Вивантажено з пам'яті, відкриється знову"
 Unpin,Відкрутити
 Unpublish,Зняти з публікації
 Unread,непрочитаний
@@ -4356,9 +4581,12 @@ Unzipped {0} files,Нерозпаковані файли {0}
 Unzipping files...,Розпакування файлів ...
 Upcoming Events,Майбутні події
 Upcoming Events for Today,Майбутні події Сьогодні
+Upcoming events,Найближчі події
 Update,Оновлення
+Update Available,Доступне оновлення
 Update Existing Records,Оновити існуючі записи
 Update Field,Оновлення поле
+Update Password,Змінити пароль
 Update Settings,Параметри оновлення
 Update Translations,Оновити переклади
 Update Type,Тип оновлення
@@ -4402,6 +4630,7 @@ Use TLS,Використовувати TLS
 Use ampersand to match multiple terms,"Використовуйте &, щоб шукати кілька слів"
 Use of sub-query or function is restricted,Використання суб-запиту або функції обмежено
 Use socketio to upload file,Використовуйте socketio для завантаження файлу
+Use strong passwords.,Використовуйте надійні паролі.
 Use this fieldname to generate title,Використовуйте ім'я цього поля щоб генерувати заголовок
 Used For Google Maps Integration.,Використовується для інтеграції карт Google.
 User,Користувач
@@ -4445,6 +4674,8 @@ User {0} cannot be renamed,Користувач {0} не може бути пе�
 User {0} does not have access to this document,Користувач {0} не має доступу до цього документа
 User {0} does not have doctype access via role permission for document {1},Користувач {0} не має доступу до документу через дозвіл на роль документа {1}
 User {0} has requested for data deletion,Користувач {0} подав запит на видалення даних
+User {0} has started an impersonation session as you. <br><br><b>Reason provided:</b> {1},Користувач {0} почав сеанс від вашого імені. <br><br><b>Причина:</b> {1}
+User {0} impersonated as {1},Користувач {0} увійшов від імені {1}
 User {0} is disabled,Користувач {0} відключена
 User {0} not found on the producer site,Користувача {0} не знайдено на сайті виробника
 Username,Ім&#39;я користувача
@@ -4504,6 +4735,7 @@ Video URL,URL-адреса відео
 View All,Подивитись все
 View Audit Trail,Історія змін
 View Comment,Переглянути коментар
+View Doctype Permissions,Переглянути права на тип документа
 View Full Log,Переглянути повний журнал
 View List,Перегляд списку
 View Log,Переглянути журнал
@@ -4520,6 +4752,7 @@ View this in your browser,Оглянути це у вашому перегляд
 View {0},Переглянути {0}
 Viewed By,Переглянуто за
 Visit,Візит
+Visit Frappe Support Portal,Відкрити портал підтримки Frappe
 Visit Web Page,Відвідайте веб-сторінку
 Visitor,Відвідувач
 Warehouse,Склад
@@ -4574,15 +4807,20 @@ Week,тиждень
 Weekdays,Будні дні
 Weekly,Щотижня
 Weekly Long,Щотижня Довго
+Welcome,Ласкаво просимо
 Welcome Email Template,Ласкаво просимо шаблон електронної пошти
 Welcome Message,Привітальне повідомлення
 Welcome email sent,Привітальний лист відправлено
 Welcome to {0},Ласкаво просимо в {0}
+Welcome! Please sign in to continue.,"Ласкаво просимо! Увійдіть, щоб продовжити."
 West Bengal,Західна Бенгалія
 WhatsApp,WhatsApp
 "When enabled this will allow guests to upload files to your application, You can enable this if you wish to collect files from user without having them to log in, for example in job applications web form.","Якщо це ввімкнено, це дозволить гостям завантажувати файли у вашу програму. Ви можете ввімкнути це, якщо ви хочете збирати файли від користувача, не маючи їх входити, наприклад, у веб-форму заявок на роботу."
 "When you Amend a document after Cancel and save it, it will get a new number that is a version of the old number.","Коли ви Відновите документ після Скасування і збережете його, він отримає новий номер, який буде версією старого."
 Which view of the associated DocType should this shortcut take you to?,До якого перегляду пов&#39;язаного типу DocType повинен потрапити цей ярлик?
+Wide,Широкий
+Widget removed,Віджет прибрано
+Widgets,Віджети
 Width,Ширина
 Width in pixels,Ширина в пікселях
 Widths can be set in px or %.,Ширина може бути у рх або%.
@@ -4592,6 +4830,11 @@ Will be used in url (usually first name).,Буде використовуват�
 Will be your login ID,Буде вашим логін ID
 Will only be shown if section headings are enabled,"Буде показано, тільки якщо заголовки розділів включені"
 Will run scheduled jobs only once a day for inactive sites. Default 4 days if set to 0.,"Запускатимуть заплановані завдання лише раз на день для неактивних сайтів. За замовчуванням 4 дні, якщо встановлено 0."
+Window N on the task bar,Вікно N на панелі задач
+Window closed: {0},Вікно закрито: {0}
+Window minimized: {0},Вікно згорнуто: {0}
+Window opened: {0},Вікно відкрито: {0}
+Window: close,Вікно: закрити
 With Letter head,З головою Лист
 With Letterhead,З бланку
 Worflow States Don't Exist,Держави червоного потоку не існують
@@ -4683,6 +4926,7 @@ You gained {0} point,Ви набрали {0} балів
 You gained {0} points,Ви набрали {0} балів
 You have a new message from: ,Ви отримали нове повідомлення від:
 You have been successfully logged out,Ви успішно вийшли
+You have no new notifications,Нових сповіщень немає
 You have not entered a value. The field will be set to empty.,Значення не введено. Поле буде порожнім.
 You have reached the hourly limit for generating password reset links. Please try again later.,Ви досягли погодинного ліміту для створення посилань для скидання пароля. Будь-ласка спробуйте пізніше.
 You have unsaved changes in this form. Please save before you continue.,"Ви не зберегли зміни в цій формі. Будь ласка, збережіть, перш ніж продовжити."
@@ -4690,6 +4934,7 @@ You have unseen {0},Ви не бачили {0}
 You haven't added any Dashboard Charts or Number Cards yet.,Ви ще не додали жодної діаграми інформаційної панелі чи числової картки.
 You last edited this,Ви змінили це востаннє
 You may continue with onboarding,Ви можете продовжувати роботу на борту
+"You may not read ""{0}"". No data is shown.",Немає права читати «{0}». Дані не показано.
 You must login to submit this form,"Ви повинні увійти, щоб подати цю форму"
 You need to be in developer mode to edit a Standard Web Form,"Ви повинні бути в режимі розробника, щоб змінити стандартну веб-форму"
 You need to be in developer mode to edit this document,"Щоб редагувати цей документ, ви повинні бути в режимі розробника"
@@ -4725,7 +4970,11 @@ Your connection request to Google Calendar was successfully accepted,Ваш за
 Your email address,Ваша електронна адреса
 Your information has been submitted,Ваша інформація була надіслана
 Your login id is,Ваше ім’я користувача —
+Your new password has been set successfully.,Новий пароль успішно встановлено.
+Your old password is incorrect.,Старий пароль неправильний.
 Your organization name and address for the email footer.,Ім'я та адреса Вашої організації для підвалу листів електронної пошти.
+Your password has been changed and you might have been logged out of all systems.<br>Please contact the Administrator for further assistance.,"Ваш пароль змінено, вас могло бути виведено з усіх систем.<br>Зверніться до адміністратора по допомогу."
+Your password has expired. Please set a new password.,Термін дії пароля скінчився. Встановіть новий пароль.
 Your payment has been successfully registered.,Ваш платіж успішно зареєстровано.
 Your payment has failed.,Ваш платіж не вдався.
 Your payment is cancelled.,Ваш платіж буде скасовано.
@@ -4734,6 +4983,7 @@ Your payment was successfully accepted,Ваш платіж був успішно
 Your session has expired due to inactivity. Please log in again to continue.,Сеанс завершено через бездіяльність. Увійдіть знову.
 "Your session has expired, please login again to continue.","Ваша сесія закінчилася, будь ласка, увійдіть знову, щоб продовжити."
 Your system is being updated. Please refresh again after a few moments.,"Ваша система оновлюється. Будь ласка, оновіть ще раз через кілька хвилин."
+Your widgets will be here,Тут будуть ваші віджети
 Zero,нуль
 Zero means send records updated at anytime,"Нуль означає, що надіслані записи оновлюються в будь-який момент"
 [Action taken by {0}],[Дію виконав {0}]
@@ -4820,9 +5070,11 @@ dd.mm.yyyy,дд.мм.рррр
 dd/mm/yyyy,дд / мм / рррр
 descending,за спаданням
 "document type..., e.g. customer","тип документа ..., наприклад, клієнт"
+documents,документів
 domain name,Доменне ім&#39;я
 download,завантажити
 download-alt,скачати альт-
+e.g.,напр.
 "e.g. ""Support"", ""Sales"", ""Jerry Yang""","наприклад, ""Підтримка"", ""Продажі"", ""Іван Василенко"""
 e.g. (55 + 434) / 4 or =Math.sin(Math.PI/2)...,"наприклад, (55 + 434) / 4 = або Math.sin (Math.PI / 2) ..."
 e.g. pop.gmail.com / imap.gmail.com,наприклад pop.gmail.com / imap.gmail.com
@@ -4916,6 +5168,7 @@ nbu_rates,Курси НБУ
 new,Створити
 new type of document,новий тип документа
 no failed attempts,немає невдалих спроб
+no read permission,немає права читання
 none of,Жоден з
 now,в даний час
 of,з
@@ -5115,6 +5368,7 @@ zoom-out,зменшити
 {0} gained {1} point for {2} {3},{0} набрав {1} бала за {2} {3}
 {0} gained {1} points for {2} {3},{0} набрав {1} балів за {2} {3}
 {0} h,{0} год
+{0} has a value that is not in the list,{0}: значення немає в списку
 {0} has already assigned default value for {1}.,{0} вже призначив значення за замовчуванням для {1}.
 {0} has been successfully added to the Email Group.,{0} був успішно доданий до Email Групи
 {0} has left the conversation in {1} {2},{0} залишив розмову в {1} {2}
@@ -5143,6 +5397,7 @@ zoom-out,зменшити
 {0} is required.,{0}: обов’язкове поле.
 {0} is saved,{0} збережений
 {0} items selected,{0} вибрані товари
+{0} just impersonated as you. They gave this reason: {1},{0} щойно увійшов від вашого імені. Причина: {1}
 {0} last edited this,{0} змінив це востаннє
 {0} logged in,{0} увійшли в
 {0} logged out: {1},{0} вийшов: {1}
@@ -5151,6 +5406,10 @@ zoom-out,зменшити
 {0} minutes ago,{0} хвилин назад
 {0} months ago,{0} місяці тому
 {0} moved under {1},{0} переміщено до {1}
+{0} must be a date,{0} має бути датою
+{0} must be a list,{0} має бути списком
+{0} must be a number,{0} має бути числом
+{0} must be a whole number,{0} має бути цілим числом
 {0} must be after {1},{0} повинен бути після {1}
 {0} must be one of {1},{0} повинен бути одним з {1}
 {0} must be set first,{0} повинен бути встановлений спочатку
@@ -5188,11 +5447,14 @@ zoom-out,зменшити
 {0} to {1},{0} до {1}
 {0} translations pending,{0} очікується переклад
 {0} un-shared this document with {1},{0} не поділився цим документом з {1}
+{0} unread notifications,Непрочитаних сповіщень: {0}
 {0} updated,{0} оновлений
 {0} values selected,Вибрано значення {0}
 {0} viewed this,{0} переглянув це
 {0} w,{0} ж
+{0} was not found,{0}: не знайдено
 {0} weeks ago,{0} тижні тому
+{0} windows,Вікон: {0}
 {0} y,{0} р
 {0} years ago,{0} років тому
 {0} {1} added,{0} {1} додано
@@ -5240,133 +5502,3 @@ zoom-out,зменшити
 {} is not a valid date string.,{} не є дійсним рядком дати.
 Розрахунок резерву сумнівних боргів,Розрахунок резерву сумнівних боргів
 ← Back to upload files,"← Назад, щоб завантажити файли"
-Account {0} is a group and cannot be posted,Рахунок {0} є групою: проведення неможливе
-Account {0} does not define subaccount {1},Рахунок {0} не має субконто {1}
-Subaccount {0} requires a DocType and a value,"Субконто {0}: потрібна пара (DocType, назва)"
-A missing account side is allowed only for off-balance accounts,Порожній рахунок дозволений лише для позабалансових
-Balance-sheet and off-balance accounts cannot be combined,Не можна поєднувати балансовий і позабалансовий рахунок
-Amount and quantity cannot both be zero,Сума та кількість дорівнюють нулю
-An accounting entry needs at least one account,Проводка: не вказано рахунки
-1 window,1 вікно
-{0} windows,Вікон: {0}
-Accent: cobalt,Акцент: кобальт
-Accent: teal,Акцент: бірюза
-Add widget,Додати віджет
-Edit widget,Змінити віджет
-Remove widget,Прибрати віджет
-Widget removed,Віджет прибрано
-Catalogs,Довідники
-Commands,Команди
-Could not load data,Не вдалося отримати дані
-Try again,Спробувати ще раз
-"Documents, lists and reports open as windows.","Документи, журнали і звіти відкриваються як вікна."
-Don't save,Не записувати
-Favorites,Обране
-Recent,Нещодавні
-Open windows,Відкриті вікна
-"Find a command, report or open window…","Знайти команду, звіт або відкрите вікно…"
-"Good afternoon, {0}","Доброго дня, {0}"
-"Good evening, {0}","Добрий вечір, {0}"
-"Good morning, {0}","Доброго ранку, {0}"
-"Good night, {0}","Доброї ночі, {0}"
-Keyboard shortcuts,Гарячі клавіші
-Large,Великий
-Small,Малий
-Wide,Широкий
-Maximize,Розгорнути
-Minimize,Згорнути
-Restore size,Відновити розмір
-Mini report,Міні-звіт
-Quarter,Квартал
-Move down,Перемістити нижче
-Move up,Перемістити вище
-Next window,Наступне вікно
-No access,Немає доступу
-No data for the period,Даних за період немає
-Nothing found,Нічого не знайдено
-Recent documents,Останні документи
-Reset layout,Скинути розкладку
-Save and close,Записати і закрити
-Save changes?,Зберегти зміни?
-Sections,Розділи
-Shortcut,Швидкий доступ
-Show desktop,Показати робочий стіл
-This quarter,Цей квартал
-This year,Цей рік
-"Unloaded from memory, will open again","Вивантажено з пам'яті, відкриється знову"
-Widgets,Віджети
-Window N on the task bar,Вікно N на панелі задач
-Window closed: {0},Вікно закрито: {0}
-Window minimized: {0},Вікно згорнуто: {0}
-Window opened: {0},Вікно відкрито: {0}
-Your widgets will be here,Тут будуть ваші віджети
-documents,документів
-no read permission,немає права читання
-"""{0}"" has changes. If you close it without saving, the changes will be lost.","Документ «{0}» змінено. Якщо закрити без запису, зміни буде втрачено."
-"You may not read ""{0}"". No data is shown.",Немає права читати «{0}». Дані не показано.
-A short wizard collects what you need to start real work,"Короткий майстер збере все, що потрібно для початку реальної роботи"
-App {0} has no demo data generator. Apps with one: {1},Застосунок {0} не має генератора демоданих. Застосунки з генератором: {1}
-Back,Назад
-"Country, time zone and currency of the site","Країна, часовий пояс і валюта сайту"
-Date format,Формат дати
-Decide later,Вирішити пізніше
-Demo data,Демодані
-Demo data already exists. Use --reset to delete it and create it again.,"Демодані вже існують. Використайте --reset, щоб видалити їх і створити знову."
-Demo data failed,Не вдалося завантажити демодані
-Demo data is already loaded,Демодані вже завантажено
-Demo data is being processed,Демодані обробляються
-Demo data is being processed. Wait a few minutes.,Демодані обробляються. Зачекайте кілька хвилин.
-Demo data is loaded,Демодані завантажено
-Demo data is loading,Демодані завантажуються
-Demo data is not yet supported on this database,Демодані поки не підтримуються на цій базі даних
-Demo data is ready,Демодані готові
-Demo data removed,Демодані видалено
-Demo data self-check failed: {0},Самоперевірка демоданих не пройшла: {0}
-Enter the organization's initial settings,Ввести початкові налаштування організації
-Fill with demo data,Заповнити демоданими
-How do you want to start?,З чого почати?
-Initial settings,Початкові налаштування
-Initial setup,Початкове налаштування
-Loading registers…,Завантаження регістрів…
-Look around with ready sample records,Ознайомтеся з готовими прикладами записів
-Movements and balances,Рухи та залишки
-No app provides demo data,Жоден застосунок не надає демоданих
-No registers available,Регістрів немає
-Number format,Формат чисел
-Only the sample records are deleted. Your own data stays.,Видаляються лише приклади записів. Ваші власні дані залишаються.
-Open a register to inspect its movements. Use filters and the seamless list scroll to explore large volumes.,"Відкрийте регістр, щоб переглянути його рухи. Для великих обсягів користуйтеся фільтрами та безперервним прокручуванням списку."
-Open again,Відкрити знову
-Open movements,Відкрити рухи
-Register explorer,Огляд регістрів
-Registers,Регістри
-Remove demo data,Видалити демодані
-Role desk,Робочий стіл ролі
-Sample records to look around,Приклади записів для ознайомлення
-Sample records will be created. This takes a few minutes.,Буде створено приклади записів. Це триватиме кілька хвилин.
-Save and continue,Зберегти й продовжити
-Save and finish,Зберегти й завершити
-Step {0} is not finished,Крок «{0}» не завершено
-Step {0} of {1},Крок {0} з {1}
-The demo job failed. See the error log.,Завантаження демоданих завершилось помилкою. Див. журнал помилок.
-The initial settings are entered,Початкові налаштування введено
-The layout is too big,Розкладка завелика
-"The site already has its own data, so demo data cannot be added","На сайті вже є власні дані, тому демодані додати не можна"
-The step could not be saved,Крок не вдалося зберегти
-There is no demo data,Демоданих немає
-This step is required,Цей крок обов'язковий
-This takes a few minutes,Це триватиме кілька хвилин
-Time zone,Часовий пояс
-Unknown choice {0},Невідомий вибір {0}
-Unknown language {0},Невідома мова {0}
-Unknown scale {0}. Use: {1},Невідомий масштаб {0}. Використайте: {1}
-Unknown setup step {0},Невідомий крок налаштування {0}
-Welcome,Ласкаво просимо
-Window: close,Вікно: закрити
-{0} has a value that is not in the list,{0}: значення немає в списку
-{0} must be a date,{0} має бути датою
-{0} must be a list,{0} має бути списком
-{0} must be a number,{0} має бути числом
-{0} must be a whole number,{0} має бути цілим числом
-{0} was not found,{0}: не знайдено
-Regional settings,Регіональні налаштування
-UA Exchange Rate,Курси валют
