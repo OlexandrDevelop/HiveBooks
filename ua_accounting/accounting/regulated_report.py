@@ -423,16 +423,18 @@ def profit_tax(organization, date_from, date_to):
 
 
 def _vat_allocator(organization, date_to):
-    """Allocate buyer payments to sales invoices (linked invoice first, then the oldest open one of the
-    counterparty) and return the VAT inside a payment; a refund takes back the latest allocations."""
+    """Allocate buyer payments to Invoices (UA Payment Invoice: the allocated ones first, then the oldest open
+    one of the counterparty) and return the VAT inside a payment; a refund takes back the latest allocations."""
     invoices = {}  # counterparty -> list of [date, name, total, vat, open amount]
     for r in frappe.db.sql(
-        """select name, counterparty, posting_date, total_amount, vat_total from `tabUA Sales Invoice`
+        """select name, counterparty, posting_date, total_amount, vat_total, effective_total from `tabUA Payment Invoice`
         where organization = %s and docstatus = 1 and posting_date <= %s order by posting_date, name""",
         (organization, getdate(date_to)),
         as_dict=True,
     ):
-        invoices.setdefault(r.counterparty, []).append([r.posting_date, r.name, flt(r.total_amount), flt(r.vat_total), flt(r.total_amount)])
+        total = flt(r.effective_total) or flt(r.total_amount)
+        vat = flt(r.vat_total) * total / flt(r.total_amount) if flt(r.total_amount) else 0.0
+        invoices.setdefault(r.counterparty, []).append([r.posting_date, r.name, total, vat, total])
     stacks = {}  # counterparty -> [(invoice row, amount)] of payments, for refunds
 
     def take(row, amount, stack):
@@ -442,13 +444,19 @@ def _vat_allocator(organization, date_to):
             stack.append((row, used))
         return used, (row[3] / row[2] * used if row[2] else 0.0)
 
-    def pay(counterparty, invoice, amount, day):
+    def pay(counterparty, linked, amount, day):
         # only invoices issued up to the payment date can be paid by it
         rows = [r for r in invoices.get(counterparty, []) if r[0] <= day]
         stack = stacks.setdefault(counterparty, [])
         left, vat = amount, 0.0
-        ordered = sorted(rows, key=lambda x: x[1] != invoice)  # the linked invoice first, others by date
-        for row in ordered:
+        # the allocated invoices first (each up to its amount), others by date
+        for invoice, part in linked or []:
+            for row in rows:
+                if row[1] == invoice and left > 0.005:
+                    used, v = take(row, min(part, left), stack)
+                    left -= used
+                    vat += v
+        for row in rows:
             if left <= 0.005:
                 break
             used, v = take(row, left, stack)
@@ -506,8 +514,7 @@ def single_tax_income(organization, date_from, date_to, vat_payer=False):
         for (doctype, name), (signed, day) in docs.items():
             if doctype not in ("UA Cash Receipt", "UA Cash Payment"):
                 continue
-            fields = ["vat_amount", "exchange_rate", "counterparty"] + (["sales_invoice"] if doctype == "UA Cash Receipt" else [])
-            doc = frappe.db.get_value(doctype, name, fields, as_dict=True)
+            doc = frappe.db.get_value(doctype, name, ["vat_amount", "exchange_rate", "counterparty"], as_dict=True)
             if not doc:
                 continue
             if flt(doc.vat_amount):
@@ -515,7 +522,17 @@ def single_tax_income(organization, date_from, date_to, vat_payer=False):
                 if signed < 0:
                     vat = -vat
             elif signed > 0:
-                vat = pay(doc.counterparty, doc.get("sales_invoice"), signed, day)
+                linked = []
+                if doctype == "UA Cash Receipt":
+                    rate = flt(doc.exchange_rate) or 1
+                    linked = [
+                        (row.invoice, flt(row.amount) * rate)
+                        for row in frappe.get_all(
+                            "UA Payment Allocation", filters={"parent": name, "parenttype": doctype},
+                            fields=["invoice", "amount"], order_by="idx",
+                        )
+                    ]
+                vat = pay(doc.counterparty, linked, signed, day)
             else:
                 vat = -refund(doc.counterparty, -signed)
             if day >= year_start:

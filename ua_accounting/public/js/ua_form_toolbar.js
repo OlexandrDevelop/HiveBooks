@@ -69,7 +69,7 @@ frappe.provide("ua_accounting.form");
 			if (frm.doc.docstatus === 0 && perm.submit && perm.write && !frm.save_disabled) {
 				frm.add_custom_button(__("Провести"), () => frm.save("Submit"));
 			}
-			if (POSTING().includes(frm.doctype)) {
+			if (POSTING().includes(frm.doctype) || frm.doctype === "UA Payment Invoice") {
 				const btn = frm.add_custom_button(__("Дт/Кт"), () => {
 					if (frm.doc.docstatus === 1) {
 						ua_accounting.docs.show_entries(frm);

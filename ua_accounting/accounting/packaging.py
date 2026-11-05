@@ -14,6 +14,7 @@ from ua_accounting.accounting.documents import AccountingDocument
 from ua_accounting.accounting.stock import StockDocument, take_cost
 from ua_accounting.accounting.utils import title_of
 
+INVOICE = "UA Payment Invoice"
 PACKAGING_ACCOUNT = "284"
 LINE = "UA Packaging Line"
 TO_SUPPLIER = "Постачальнику"
@@ -99,7 +100,7 @@ def sale_entries(doc, settle, used):
 # (document, sign of the quantity: + the counterparty holds our packaging, exchange rate column)
 SOURCES = (
     ("UA Purchase Receipt", "-1", "p.exchange_rate"),
-    ("UA Sales Invoice", "1", "p.exchange_rate"),
+    ("UA Payment Invoice", "1", "p.exchange_rate"),
     ("UA Packaging Return", f"case when p.direction = '{FROM_BUYER}' then -1 else 1 end", "1"),
 )
 
@@ -108,13 +109,27 @@ def balances(organization, counterparty=None, item=None, date=None, exclude=None
     """[{counterparty, item, quantity, amount}]: positive = the counterparty holds our packaging."""
     result = {}
     for doctype, sign, rate in SOURCES:
-        sql = (
-            f"select p.counterparty, l.item, sum(l.quantity * {sign}) as quantity, "
-            f"sum(l.amount * {sign} * coalesce({rate}, 1)) as amount "
-            f"from `tab{doctype}` p join `tab{LINE}` l on l.parent = p.name and l.parenttype = %s "
-            "where p.docstatus = 1 and p.organization = %s"
-        )
-        values = [doctype, organization]
+        if doctype == INVOICE:
+            # the containers of a sale are rows of the posted shipment events of the Invoice
+            sql = (
+                "select p.counterparty, l.item, sum(l.quantity), sum(l.amount * coalesce(p.exchange_rate, 1)) "
+                "from `tabUA Invoice Event Line` l "
+                "join `tabUA Invoice Event` e on e.parent = l.parent and e.parenttype = %s and e.number = l.event "
+                "join `tabUA Payment Invoice` p on p.name = l.parent "
+                "where l.parenttype = %s and l.line_type = 'packaging' and e.status = 'Проведено' "
+                "and p.docstatus = 1 and p.organization = %s"
+            )
+            values = [doctype, doctype, organization]
+            date_column = "e.posting_date"
+        else:
+            sql = (
+                f"select p.counterparty, l.item, sum(l.quantity * {sign}) as quantity, "
+                f"sum(l.amount * {sign} * coalesce({rate}, 1)) as amount "
+                f"from `tab{doctype}` p join `tab{LINE}` l on l.parent = p.name and l.parenttype = %s "
+                "where p.docstatus = 1 and p.organization = %s"
+            )
+            values = [doctype, organization]
+            date_column = "p.posting_date"
         if counterparty:
             sql += " and p.counterparty = %s"
             values.append(counterparty)
@@ -122,7 +137,7 @@ def balances(organization, counterparty=None, item=None, date=None, exclude=None
             sql += " and l.item = %s"
             values.append(item)
         if date:
-            sql += " and p.posting_date <= %s"
+            sql += f" and {date_column} <= %s"
             values.append(getdate(date))
         if exclude and exclude[0] == doctype:
             sql += " and p.name != %s"

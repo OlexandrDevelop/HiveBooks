@@ -252,19 +252,22 @@ def required_vacation_reserve(days, daily_pay, esv_rate):
 
 
 def warranty_lines(organization, start, end):
-    """Net sales (UAH) of the items with a warranty in a period: [(item, sale date, net)]. Returns are deducted."""
-    result = []
-    for doctype, sign in (("UA Sales Invoice", 1), ("UA Sales Return", -1)):
-        rows = frappe.db.sql(
-            f"""select l.item, d.posting_date, (l.total - l.vat_amount) * coalesce(nullif(d.exchange_rate, 0), 1) as net
-            from `tab{doctype}` d join `tabUA Goods Line` l on l.parent = d.name and l.parenttype = %s
-            where d.organization = %s and d.docstatus = 1 and d.posting_date between %s and %s
-            and coalesce((select warranty_percent from `tabUA Item` i where i.name = l.item), 0) > 0""",
-            (doctype, organization, start, end),
-            as_dict=True,
-        )
-        result.extend((r.item, getdate(r.posting_date), sign * flt(r.net)) for r in rows)
-    return result
+    """Net sales (UAH) of the items with a warranty in a period: [(item, event date, net)].
+
+    The shipments of the Invoices count, the returns are deducted; cancelled events are not counted.
+    """
+    rows = frappe.db.sql(
+        """select l.item, e.posting_date, e.kind, (l.total - l.vat_amount) * coalesce(nullif(d.exchange_rate, 0), 1) as net
+        from `tabUA Invoice Event Line` l
+        join `tabUA Invoice Event` e on e.parent = l.parent and e.parenttype = 'UA Payment Invoice' and e.number = l.event
+        join `tabUA Payment Invoice` d on d.name = l.parent
+        where l.parenttype = 'UA Payment Invoice' and l.line_type = 'goods' and d.organization = %s and d.docstatus = 1
+        and e.status = 'Проведено' and e.kind in ('Відвантаження', 'Повернення') and e.posting_date between %s and %s
+        and coalesce((select warranty_percent from `tabUA Item` i where i.name = l.item), 0) > 0""",
+        (organization, start, end),
+        as_dict=True,
+    )
+    return [(r.item, getdate(r.posting_date), (-1 if r.kind == "Повернення" else 1) * flt(r.net)) for r in rows]
 
 
 def calculate_warranty(organization, period):

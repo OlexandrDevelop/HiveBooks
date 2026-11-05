@@ -25,20 +25,22 @@ def penalty_pct(days_late):
 
 
 def _liability_rows(organization, date_from, date_to, payers):
-    """Open VAT liability rows of sales (no ПН linked) by sale, for buyers who are (not) VAT payers.
+    """Open VAT liability rows of sales (no ПН linked) by event of an Invoice, for buyers who are (not) VAT payers.
 
-    A sale that has a submitted ПН is not open even if a repost of the register lost the link.
+    An event that has a submitted ПН is not open even if a repost of the register lost the link. The returns
+    (negative rows) are not events to issue.
     """
     rows = frappe.db.sql(
-        """select l.registrar as basis, min(l.posting_date) as date, l.counterparty, sum(l.base_amount) as base,
-        sum(l.vat_amount) as vat from `tabUA VAT Liability Entry` l
+        """select l.registrar as basis, coalesce(l.registrar_part, '') as part, min(l.posting_date) as date, l.counterparty,
+        sum(l.base_amount) as base, sum(l.vat_amount) as vat from `tabUA VAT Liability Entry` l
         join `tabUA Counterparty` c on c.name = l.counterparty
         where l.organization = %s and l.registrar_type = %s and l.posting_date between %s and %s
         and l.event != %s and coalesce(l.tax_invoice, '') = '' and c.vat_payer = %s
         and not exists (select 1 from `tabUA Tax Invoice` t where t.docstatus = 1 and t.basis_type = l.registrar_type
-                        and t.basis = l.registrar)
-        group by l.registrar, l.counterparty order by min(l.posting_date), l.registrar""",
-        (organization, tax.SALE, date_from, date_to, tax.EVENT_ADJUSTMENT, 1 if payers else 0),
+                        and t.basis = l.registrar and coalesce(t.basis_part, '') = coalesce(l.registrar_part, ''))
+        group by l.registrar, l.registrar_part, l.counterparty having sum(l.base_amount) > 0
+        order by min(l.posting_date), l.registrar, l.registrar_part""",
+        (organization, tax.INVOICE, date_from, date_to, tax.EVENT_ADJUSTMENT, 1 if payers else 0),
         as_dict=True,
     )
     return rows
@@ -49,7 +51,7 @@ def to_issue(organization, date_from, date_to):
     for r in _liability_rows(organization, date_from, date_to, True):
         out.append(
             {
-                "basis_doctype": tax.SALE, "basis": r.basis, "counterparty": r.counterparty,
+                "basis_doctype": tax.INVOICE, "basis": r.basis, "basis_part": r.part, "counterparty": r.counterparty,
                 "counterparty_title": title_of("UA Counterparty", r.counterparty), "date": str(r.date),
                 "base": flt(r.base, 2), "vat": flt(r.vat, 2), "total": flt(r.base + r.vat, 2),
                 "deadline": str(tax.deadline_of(r.date)),

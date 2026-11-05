@@ -43,7 +43,7 @@ frappe.pages["ua-vat-assistant"].on_page_load = function (wrapper) {
 	function issue_rows() {
 		return ((data && data.to_issue) || [])
 			.map(
-				(r, i) => `<tr><td>${esc(r.basis)}</td><td>${esc(r.counterparty_title || r.counterparty)}</td><td>${day(r.date)}</td>
+				(r, i) => `<tr><td>${esc(r.basis_part ? `${r.basis_part} (${r.basis})` : r.basis)}</td><td>${esc(r.counterparty_title || r.counterparty)}</td><td>${day(r.date)}</td>
 				<td class="text-right bo-num">${money(r.base)}</td><td class="text-right bo-num">${money(r.vat)}</td>
 				<td class="text-right bo-num">${money(r.total)}</td><td>${day(r.deadline)}</td>
 				<td><button class="btn btn-xs btn-default" data-act="issue" data-i="${i}">${__("Створити податкову накладну")}</button></td></tr>`
@@ -118,7 +118,7 @@ frappe.pages["ua-vat-assistant"].on_page_load = function (wrapper) {
 
 	$body.on("click", "[data-act=issue]", function () {
 		const row = data.to_issue[+this.getAttribute("data-i")];
-		frappe.call({ method: "ua_accounting.api.tax_invoice.create_on_basis", args: { basis_doctype: row.basis_doctype, basis_name: row.basis, direction: "Видана" } }).then((r) => {
+		frappe.call({ method: "ua_accounting.api.tax_invoice.create_on_basis", args: { basis_doctype: row.basis_doctype, basis_name: row.basis, basis_part: row.basis_part, direction: "Видана" } }).then((r) => {
 			frappe.set_route("Form", "UA Tax Invoice", r.message);
 		});
 	});

@@ -64,7 +64,7 @@ frappe.provide("ua_accounting.list");
 		"UA Tax Invoice": TAX,
 		"UA Tax Adjustment": TAX_ADJ,
 		"UA VAT Allocation": ALLOCATION,
-		"UA Sales Invoice": TRADE,
+		"UA Payment Invoice": TRADE,
 		"UA Purchase Receipt": TRADE,
 		"UA Customer Order": TRADE,
 		"UA Supplier Order": TRADE,
@@ -77,7 +77,7 @@ frappe.provide("ua_accounting.list");
 		"UA Tax Invoice": "Видані та отримані податкові накладні зі статусом реєстрації в ЄРПН.",
 		"UA Tax Adjustment": "Розрахунки коригування до податкових накладних.",
 		"UA VAT Allocation": "Розподіл податкового кредиту між оподатковуваними і неоподатковуваними операціями.",
-		"UA Sales Invoice": "Відвантаження товарів і послуг покупцям.",
+		"UA Payment Invoice": "Продаж товарів і послуг: події відвантаження, надання послуг і повернення, податкові накладні, оплати.",
 		"UA Purchase Receipt": "Отримання товарів і послуг від постачальників.",
 		"UA Customer Order": "Замовлення покупців до відвантаження.",
 		"UA Supplier Order": "Замовлення товарів у постачальників.",
@@ -383,25 +383,26 @@ frappe.provide("ua_accounting.list");
 		$page.addClass("ua-doc-list");
 		const $main = $page.find(".layout-main-section").first();
 
-		// page head: title + count + text (Frappe's own title sits in the hidden breadcrumbs)
+		// page head: no title (the window bar names the list); a document list puts its view tabs here, a catalog its counts
+		const is_doc = L.is_document(lv.doctype);
 		const $title = $page.find(".page-head .page-title");
 		$title.find(".ua-ph-block").remove();
-		$title.prepend(
-			`<div class="ua-ph-block"><h1 class="bo-ph-title">${esc(__(lv.doctype))} <span class="bo-tag bo-num ua-total"></span></h1>` +
-				(L.TEXT[lv.doctype] ? `<p class="bo-ph-sub">${esc(__(L.TEXT[lv.doctype]))}</p>` : "") +
-				"</div>"
-		);
-
-		const is_doc = L.is_document(lv.doctype);
-		const $top = $(`
-		<div class="ua-list-top${is_doc ? "" : " ua-list-top--catalog"}">
-			<div class="ua-views-row"${is_doc ? "" : " hidden"}>
-				<div class="bo-tabs ua-views" role="tablist">
+		const $block = $('<div class="ua-ph-block"></div>');
+		$title.prepend($block);
+		if (is_doc) {
+			// the description of the list is read by assistive technology, it is not drawn
+			const text = L.TEXT[lv.doctype] ? ` aria-description="${esc(__(L.TEXT[lv.doctype]))}"` : "";
+			$block.append(`
+			<div class="ua-views-row">
+				<div class="bo-tabs ua-views" role="tablist" aria-label="${esc(__("Вигляд списку"))}"${text}>
 					<button class="bo-tab" role="tab" data-view="all">${esc(__("Усі"))} <span class="bo-count"></span></button>
 					<button class="bo-tab" role="tab" data-view="unposted">${esc(__("Не проведені"))} <span class="bo-count"></span></button>
 					<button class="bo-tab" role="tab" data-view="mine">${esc(__("Мої"))} <span class="bo-count"></span></button>
 				</div>
-			</div>
+			</div>`);
+		}
+		const $top = $(`
+		<div class="ua-list-top${is_doc ? "" : " ua-list-top--catalog"}">
 			<div class="ua-filters">
 				<label class="bo-input ua-search">${icon("search")}<input class="ua-q" placeholder="${esc(
 					is_doc ? __("Номер документа") : __("Назва або код")
@@ -422,9 +423,7 @@ frappe.provide("ua_accounting.list");
 		$main.prepend($top);
 		if (!is_doc) {
 			const tf = frappe.get_meta(lv.doctype).title_field;
-			$title.find(".bo-ph-sub").remove();
-			$title.find(".ua-ph-block").append('<p class="bo-ph-sub ua-cat-sub"></p>');
-			$title.find(".ua-total").remove();
+			$block.append('<p class="bo-ph-sub ua-cat-sub"></p>');
 			L.title_field_search = tf;
 			if (ua_accounting.ui.TREE_DOCTYPES[lv.doctype] && lv.can_create) {
 				const $actions = $page.find(".page-head .standard-actions");
@@ -461,7 +460,7 @@ frappe.provide("ua_accounting.list");
 		lv.$result.on("click", ".bo-check, .bo-row-actions", (e) => e.stopPropagation());
 
 		// events
-		$top.on("click", ".bo-tab", function () {
+		$block.on("click", ".bo-tab", function () {
 			L.set_view(lv, $(this).attr("data-view"));
 		});
 		let timer = null;
@@ -877,7 +876,6 @@ frappe.provide("ua_accounting.list");
 			$tabs.find("[data-view=all] .bo-count").text(fmt(all));
 			$tabs.find("[data-view=unposted] .bo-count").text(fmt(unposted));
 			$tabs.find("[data-view=mine] .bo-count").text(fmt(mine));
-			lv.$page.find(".page-head .ua-total").text(fmt(all));
 			beeone.ui.place_ink($tabs[0]);
 		});
 	};

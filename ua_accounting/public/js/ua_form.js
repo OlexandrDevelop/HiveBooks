@@ -17,6 +17,9 @@ frappe.provide("ua_accounting.form");
 
 	F.posting = (frm) => ua_accounting.docs && ua_accounting.docs.POSTING.includes(frm.doctype);
 
+	// documents whose movements the «Дт/Кт» button shows: the posting documents and the Invoice (the movements of its events)
+	F.has_entries = (frm) => F.posting(frm) || frm.doctype === "UA Payment Invoice";
+
 	// ---------------------------------------------------------------- head and toolbar
 
 	F.title_text = function (frm) {
@@ -54,20 +57,9 @@ frappe.provide("ua_accounting.form");
 						<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon" data-ua-cmd="back" aria-label="${esc(
 							__("До списку")
 						)}" data-bo-tip="${esc(__("До списку · Esc"))}">${icon("chev-l")}</button>
-						<h1 class="ua-doc-title"><span class="ua-doc-type"></span> <span class="ua-no"></span></h1>
+						<h1 class="ua-doc-title"><span class="ua-doc-type bo-sr-only"></span> <span class="ua-no"></span></h1>
 						<span class="bo-badge bo-badge--lg ua-doc-status" role="status"></span>
 						<span class="ua-dirty">${esc(__("Є незаписані зміни"))}</span>
-						<div class="bo-right">
-							<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon" data-ua-cmd="prev" aria-label="${esc(
-								__("Попередній документ")
-							)}" data-bo-tip="${esc(__("Попередній"))}">${icon("chev-u")}</button>
-							<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon" data-ua-cmd="next" aria-label="${esc(
-								__("Наступний документ")
-							)}" data-bo-tip="${esc(__("Наступний"))}">${icon("chev-d")}</button>
-							<button type="button" class="bo-btn bo-btn--ghost bo-btn--icon ua-fav" data-ua-cmd="fav" aria-pressed="false" aria-label="${esc(
-								__("В обране")
-							)}" data-bo-tip="${esc(__("Додати в обране"))}">${icon("star")}</button>
-						</div>
 					</div>
 					<div class="ua-doc-toolbar" role="toolbar" aria-label="${esc(__("Команди документа"))}"></div>
 				</div>`
@@ -85,10 +77,10 @@ frappe.provide("ua_accounting.form");
 			.attr("class", `bo-badge bo-badge--lg ua-doc-status ${st ? st[0] : ""}`)
 			.text(st ? st[1] : "")
 			.prop("hidden", !st);
+		F.render_toolbar(frm, $block.find(".ua-doc-toolbar"));
 		const fav = !frm.is_new() && ua_accounting.shell.is_fav(F.fav_entry(frm).key);
 		$block.find(".ua-fav").toggleClass("is-on", fav).attr("aria-pressed", fav).prop("hidden", frm.is_new());
 		$block.find("[data-ua-cmd=prev], [data-ua-cmd=next]").prop("hidden", frm.is_new());
-		F.render_toolbar(frm, $block.find(".ua-doc-toolbar"));
 		F.render_dirty(frm);
 	};
 
@@ -106,11 +98,13 @@ frappe.provide("ua_accounting.form");
 		if (opts.icon_only) cls.push("bo-btn--icon");
 		const tip = opts.tip ? ` data-bo-tip="${esc(opts.tip)}"` : "";
 		const menu = opts.menu ? ' aria-haspopup="menu" aria-expanded="false"' : "";
-		const aria = opts.icon_only ? ` aria-label="${esc(label)}"` : "";
+		// a narrow window hides the labels of secondary buttons (.ua-btn-l): the name stays in aria-label and the tooltip
+		const aria = opts.icon_only || !opts.primary ? ` aria-label="${esc(label)}"` : "";
+		const tip_attr = !opts.tip && !opts.icon_only && !opts.primary ? ` data-bo-tip="${esc(label)}"` : tip;
 		return (
-			`<button type="button" class="${cls.join(" ")}" data-ua-cmd="${cmd}"${tip}${menu}${aria}>` +
+			`<button type="button" class="${cls.join(" ")}" data-ua-cmd="${cmd}"${tip_attr}${menu}${aria}>` +
 			(ic ? icon(ic) : "") +
-			(opts.icon_only ? "" : esc(label)) +
+			(opts.icon_only ? "" : `<span class="ua-btn-l">${esc(label)}</span>`) +
 			(opts.menu && !opts.icon_only ? icon("chev-d") : "") +
 			"</button>"
 		);
@@ -140,7 +134,7 @@ frappe.provide("ua_accounting.form");
 			left.push(btn("amend", __("Змінити"), "pencil", { primary: true }));
 		}
 		if (kind === "document") {
-			if (F.posting(frm)) mid.push(btn("dtkt", __("Дт/Кт"), "dtkt", { tip: __("Проводки документа") }));
+			if (F.has_entries(frm)) mid.push(btn("dtkt", __("Дт/Кт"), "dtkt", { tip: __("Проводки документа") }));
 			const movement_registers = (frappe.boot.beeone_movements || {})[frm.doctype] || [];
 			if (ds === 1 && (movement_registers.length || F.posting(frm))) {
 				mid.push(btn("movements", __("Перегляд рухів"), "list", { tip: __("Рухи документа по регістрах") }));
@@ -149,8 +143,8 @@ frappe.provide("ua_accounting.form");
 				mid.push(btn("basis", __("Створити на підставі"), "branch", { menu: true }));
 			}
 		}
-		((ua_accounting.docs.EXTRA || {})[frm.doctype] || []).forEach(([label, ic, fn, show], i) => {
-			if (!frm.is_new() && (!show || show(frm))) mid.push(btn("extra" + i, __(label), ic));
+		((ua_accounting.docs.EXTRA || {})[frm.doctype] || []).forEach(([label, ic, fn, show, opts], i) => {
+			if (!frm.is_new() && (!show || show(frm))) mid.push(btn("extra" + i, __(label), ic, opts));
 		});
 		if (!frm.is_new()) mid.push(btn("print", __("Друк"), "printer"));
 		const sep = left.length && mid.length ? '<span class="bo-toolbar-sep"></span>' : "";
@@ -158,7 +152,15 @@ frappe.provide("ua_accounting.form");
 			left.join("") +
 				sep +
 				mid.join("") +
-				`<div class="bo-right">${btn("more", __("Ще дії"), "more", { ghost: true, icon_only: true, menu: true })}${btn(
+				`<div class="bo-right">${btn("prev", __("Попередній документ"), "chev-u", { ghost: true, icon_only: true, tip: __("Попередній") })}${btn(
+					"next",
+					__("Наступний документ"),
+					"chev-d",
+					{ ghost: true, icon_only: true, tip: __("Наступний") }
+				)}${btn("fav", __("В обране"), "star", { ghost: true, icon_only: true, tip: __("Додати в обране") }).replace(
+					'class="bo-btn bo-btn--ghost bo-btn--icon"',
+					'class="bo-btn bo-btn--ghost bo-btn--icon ua-fav" aria-pressed="false"'
+				)}${btn("more", __("Ще дії"), "more", { ghost: true, icon_only: true, menu: true })}${btn(
 					"close_list",
 					__("Закрити"),
 					null,
@@ -171,7 +173,7 @@ frappe.provide("ua_accounting.form");
 		const go_list = () => frappe.set_route("List", frm.doctype);
 		if (/^extra\d+$/.test(cmd)) {
 			const extra = (ua_accounting.docs.EXTRA[frm.doctype] || [])[+cmd.slice(5)];
-			return extra && extra[2](frm);
+			return extra && extra[2](frm, el);
 		}
 		switch (cmd) {
 			case "back":
@@ -351,7 +353,8 @@ frappe.provide("ua_accounting.form");
 	F.section_kind = function (section) {
 		const df = section.df || {};
 		const fields = (section.fields_list || []).map((f) => f.df || {});
-		if (fields.some((f) => f.fieldtype === "Table")) return "table";
+		// the card of an Invoice (HTML) is a tab of the table part, like its tables
+		if (fields.some((f) => f.fieldtype === "Table" || f.fieldname === "overview")) return "table";
 		if (df.fieldname === "sb_totals") return "totals";
 		if (df.fieldname === "sb_more" && fields.every((f) => ["comment", "amended_from"].includes(f.fieldname))) return "more";
 		return "main";
@@ -372,14 +375,15 @@ frappe.provide("ua_accounting.form");
 		// "Основне" card (+ side card for documents)
 		const $grid = $(`<div class="ua-doc-grid${is_doc ? "" : " ua-doc-grid--single"}"></div>`);
 		const $main = $(
-			`<section class="bo-card ua-main-card"><div class="bo-card-head"><h2 class="bo-card-title">${esc(
-				__("Основне")
-			)}</h2></div><div class="ua-main-body"></div></section>`
+			`<section class="bo-card ua-main-card" aria-label="${esc(__("Основне"))}">` +
+				// a document has no visible card head (the window bar and the head already name it); a catalog keeps it
+				(is_doc ? "" : `<div class="bo-card-head"><h2 class="bo-card-title">${esc(__("Основне"))}</h2></div>`) +
+				`<div class="ua-main-body"></div></section>`
 		);
 		$grid.append($main);
 		if (is_doc) {
 			$grid.append(
-				`<aside class="bo-card ua-aside" aria-label="${esc(__("Відомості про документ"))}"><div class="ua-aside-body"></div></aside>`
+				`<aside class="bo-card ua-aside" tabindex="0" aria-label="${esc(__("Відомості про документ"))}"><div class="ua-aside-body"></div></aside>`
 			);
 		}
 		const first = groups.main[0] || sections[0];

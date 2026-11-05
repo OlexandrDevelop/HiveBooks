@@ -21,7 +21,7 @@ from frappe.beeone.registers import record_set
 from frappe.utils import flt, getdate
 
 from ua_accounting.accounting import simplified_tax, tax_ledger, vat
-from ua_accounting.accounting.utils import first_of_month, next_names, pick
+from ua_accounting.accounting.utils import first_of_month, next_names, part_of, pick
 
 ENTRY = "UA Accounting Entry"
 TURNOVER = "UA Account Turnover"
@@ -70,15 +70,31 @@ def post_entries(doc, entries):
     rows = [_build_row(doc, e, idx, ctx) for idx, e in enumerate(entries, start=1)]
     # moves the name sequence over rows made with AUTO_INCREMENT, once per process
     next_names(ENTRY, 0)
-    record_set(ENTRY, doc.doctype, doc.name, keep_blank=True).append(rows)
+    record_set(ENTRY, doc.doctype, doc.name, keep_blank=True, part=part_of(doc)).append(rows)
     tax_ledger.post_rows(doc, rows, entries)
+    _refresh_invoices(doc)
 
 
 def cancel_entries(doc):
     """Delete entries of the registrar and take them out of the totals."""
-    record_set(ENTRY, doc.doctype, doc.name).delete()
+    keys = _invoice_contracts(doc)
+    record_set(ENTRY, doc.doctype, doc.name, part=part_of(doc)).delete()
     tax_ledger.cancel_rows(doc)
     vat.cancel_vat_entries(doc)
+    _refresh_invoices(doc, keys)
+
+
+def _invoice_contracts(doc):
+    from ua_accounting.accounting import invoice
+
+    return invoice.registrar_contracts(doc.doctype, doc.name)
+
+
+def _refresh_invoices(doc, keys=None):
+    """The Invoice states count the payments that no Invoice owns: recompute the contracts a registrar touched."""
+    from ua_accounting.accounting import invoice
+
+    invoice.refresh_registrar(doc.doctype, doc.name, keys)
 
 
 def repost_entries(doc, entries):

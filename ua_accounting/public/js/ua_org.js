@@ -184,7 +184,7 @@ frappe.provide("ua_accounting.shell");
 			`<div class="ua-home-summary-cards"></div><section><h2>${esc(__("Останні документи"))}</h2></section>` +
 			`<section><h2>${esc(__("Обране"))}</h2></section><section><h2>${esc(__("Нагадування"))}</h2></section>`;
 		const actions = root.querySelector(".ua-home-summary-actions");
-		for (const dt of ["UA Sales Invoice", "UA Purchase Receipt", "UA Cash Receipt", "UA Cash Payment"]) {
+		for (const dt of ["UA Payment Invoice", "UA Purchase Receipt", "UA Cash Receipt", "UA Cash Payment"]) {
 			if (!frappe.model.can_create(dt)) continue;
 			const btn = document.createElement("button");
 			btn.type = "button";

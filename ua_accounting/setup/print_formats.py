@@ -43,10 +43,24 @@ MACROS = """{% macro party(label, p) %}<div>{{ label }}: <b>{{ (p.title or "")|e
 SETUP = '{% set org = org_info(doc.organization) %}{% set cp = party_info(doc.counterparty) %}'
 
 
-def form(title, *parts, date="doc.posting_date"):
+def form(title, *parts, date="doc.posting_date", number="doc.name|e", pre=""):
     """A form: styles, macros, the heading with logo and the parts."""
-    return (STYLE + MACROS + SETUP + '<div class="ua-form">{{ head("' + title + ' № " ~ doc.name|e ~ " від " ~ uk_date('
+    return (STYLE + MACROS + SETUP + pre + '<div class="ua-form">{{ head("' + title + ' № " ~ ' + number + ' ~ " від " ~ uk_date('
             + date + ")) }}" + "".join(parts) + "</div>")
+
+
+# The primary documents of an event of the Invoice (waybill, TTN, act) print the chosen event: api.invoice.print_event
+# puts it in `doc.print_event` (its own number, date, lines and totals). Without it the form asks to choose one.
+EVENT = "{% set ev = doc.print_event %}"
+EVENT_FORM = dict(
+    date="(ev.posting_date if ev else doc.posting_date)", number='(ev.number if ev else "")|e', pre=EVENT
+)
+
+
+def event_form(title, *parts):
+    """A form of an event: the Invoice is the basis, the event gives the number, the date and the lines."""
+    body = '{% if not ev %}<p>Оберіть подію інвойсу для друку</p>{% else %}' + "".join(parts) + "{% endif %}"
+    return form(title, body, **EVENT_FORM)
 
 
 
@@ -68,13 +82,34 @@ ROWS = """
 <p class="words">Всього на суму: <b>{{ money_in_words(doc.total_amount, doc.currency) }}</b></p>
 """
 
+EVENT_ROWS = """
+{% set rows = ev.lines %}
+<table>
+<tr><th>№</th><th>Найменування</th><th>Од.</th><th class="n">Кількість</th><th class="n">Ціна</th>
+<th class="n">Знижка, %</th><th class="n">Сума без ПДВ</th><th class="n">ПДВ</th><th class="n">Всього</th></tr>
+{% for r in rows %}
+<tr><td>{{ loop.index }}</td><td>{{ (r.item_name or r.item or "")|e }}</td><td>{{ (r.uom or "")|e }}</td>
+<td class="n">{{ r.quantity }}</td><td class="n">{{ uk_money(r.price) }}</td>
+<td class="n">{{ r.discount_percent or 0 }}</td><td class="n">{{ uk_money(r.amount) }}</td>
+<td class="n">{{ uk_money(r.vat_amount) }}</td><td class="n">{{ uk_money(r.total) }}</td></tr>
+{% endfor %}
+{% for r in ev.packaging %}
+<tr><td></td><td>Тара: {{ (r.item_name or r.item or "")|e }}</td><td>{{ (r.uom or "")|e }}</td>
+<td class="n">{{ r.quantity }}</td><td class="n">{{ uk_money(r.price) }}</td><td></td><td></td><td></td><td class="n">{{ uk_money(r.amount) }}</td></tr>
+{% endfor %}
+</table>
+<div class="total">Разом без ПДВ: <b>{{ uk_money(ev.total_net) }}</b></div>
+<div class="total">ПДВ: <b>{{ uk_money(ev.vat_total) }}</b></div>
+<div class="total">Всього до сплати: <b>{{ uk_money(ev.total_amount) }}</b></div>
+<p class="words">Всього на суму: <b>{{ money_in_words(ev.total_amount, doc.currency) }}</b></p>
+"""
+
 REF = '<div class="ref">Довідково: код контрагента в системі {{ (doc.counterparty or "")|e }}</div>'
 
 SELLER = '{{ party("Постачальник", org) }}{{ bank(org.bank) }}{{ party("Покупець", cp) }}'
 CONTRACT = '{% if doc.contract %}<div>Договір: {{ doc.contract|e }}</div>{% endif %}'
-# an event made from an Invoice names it as the basis (T-533)
-INVOICE_BASIS = ('{% if doc.invoice %}<div>Підстава: рахунок № {{ doc.invoice|e }} від '
-                 '{{ uk_date(frappe.db.get_value("UA Payment Invoice", doc.invoice, "posting_date")) }}</div>{% endif %}')
+# an event names the Invoice as its basis (T-533, T-705)
+INVOICE_BASIS = '<div>Підстава: рахунок № {{ doc.name|e }} від {{ uk_date(doc.posting_date) }}</div>'
 TERMS = ('{% if doc.due_date %}<div>Оплатити до: {{ uk_date(doc.due_date) }}</div>{% endif %}'
          '{% if doc.payment_terms %}<div>Умови розрахунків: {{ doc.payment_terms|e }}</div>{% endif %}')
 
@@ -82,17 +117,17 @@ INVOICE = form("Рахунок на оплату", '<div class="meta">', SELLER,
                '{{ qr("UA-INV:" ~ doc.name ~ "|" ~ doc.posting_date ~ "|" ~ doc.total_amount) }}',
                '{{ sign("", "") }}', REF)
 
-ACT_WORKS = form(
+ACT_WORKS = event_form(
     "Акт виконаних робіт",
-    '<div class="meta">{{ party("Виконавець", org) }}{{ party("Замовник", cp) }}', CONTRACT, INVOICE_BASIS, "</div>", ROWS,
+    '<div class="meta">{{ party("Виконавець", org) }}{{ party("Замовник", cp) }}', CONTRACT, INVOICE_BASIS, "</div>", EVENT_ROWS,
     "<p>Зазначені послуги виконано в повному обсязі. Замовник претензій до обсягу, якості та строків "
     "надання послуг не має.</p>", '{{ sign("Виконавець", "Замовник ________________") }}', REF)
 
-SALES_INVOICE = form(
+SALES_INVOICE = event_form(
     "Видаткова накладна",
     '<div class="meta">', SELLER, CONTRACT, INVOICE_BASIS,
-    '{% if doc.warehouse %}<div>Склад: {{ title_of("UA Warehouse", doc.warehouse)|e }}</div>{% endif %}</div>',
-    ROWS, '{{ qr("UA-INV:" ~ doc.name ~ "|" ~ doc.posting_date ~ "|" ~ doc.total_amount) }}',
+    '{% if ev.warehouse %}<div>Склад: {{ title_of("UA Warehouse", ev.warehouse)|e }}</div>{% endif %}</div>',
+    EVENT_ROWS, '{{ qr("UA-INV:" ~ ev.number ~ "|" ~ ev.posting_date ~ "|" ~ ev.total_amount) }}',
     '{{ sign("Відвантажив", "Отримав ________________") }}', REF)
 
 RECEIPT = form(
@@ -100,28 +135,6 @@ RECEIPT = form(
     '<div class="meta">{{ party("Постачальник", cp) }}{{ party("Одержувач", org) }}', CONTRACT,
     '{% if doc.warehouse %}<div>Склад: {{ title_of("UA Warehouse", doc.warehouse)|e }}</div>{% endif %}</div>',
     ROWS, '{{ sign("Здав ________________", "Прийняв ________________") }}', REF)
-
-TAX_INVOICE = form(
-    "Податкова накладна",
-    """<div class="meta">{{ party("Постачальник (продавець)", org) }}{{ party("Одержувач (покупець)", cp) }}
-<div>Дата складення: {{ uk_date(doc.posting_date) }}</div></div>
-{% set rows = (doc.goods or []) + (doc.services or []) %}
-<table>
-<tr><th>№</th><th>Номенклатура постачання</th><th>Код УКТЗЕД</th><th>Од.</th><th class="n">Кількість</th>
-<th class="n">Ціна без ПДВ</th><th class="n">Ставка ПДВ, %</th><th class="n">Обсяг постачання без ПДВ</th>
-<th class="n">Сума ПДВ</th></tr>
-{% for r in rows %}
-<tr><td>{{ loop.index }}</td><td>{{ (r.item_name or r.item or "")|e }}</td><td>{{ uktzed(r.item)|e }}</td>
-<td>{{ (r.uom or "")|e }}</td><td class="n">{{ r.quantity }}</td><td class="n">{{ uk_money(r.price) }}</td>
-<td class="n">{{ (r.vat_rate or "")|e }}</td><td class="n">{{ uk_money(r.amount) }}</td>
-<td class="n">{{ uk_money(r.vat_amount) }}</td></tr>
-{% endfor %}
-</table>
-<div class="total">Усього обсяг постачання без ПДВ: <b>{{ uk_money(doc.total_net) }}</b></div>
-<div class="total">Сума ПДВ: <b>{{ uk_money(doc.vat_total) }}</b></div>
-<div class="total">Усього з ПДВ: <b>{{ uk_money(doc.total_amount) }}</b></div>
-<p class="words">Усього з ПДВ прописом: <b>{{ money_in_words(doc.total_amount, doc.currency) }}</b></p>
-""", '{{ sign("", "") }}', REF)
 
 # Tax invoice (ПН) of the document UA Tax Invoice: its own lines, the registration in ЄРПН and the basis (T-533)
 TAX_INVOICE_DOC = form(
@@ -148,15 +161,15 @@ TAX_INVOICE_DOC = form(
 <div>Реєстрація в ЄРПН: {{ (doc.erpn_status or "")|e }}{% if doc.erpn_reg_number %}, реєстраційний номер {{ doc.erpn_reg_number|e }}{% endif %}{% if doc.erpn_reg_date %} від {{ uk_date(doc.erpn_reg_date) }}{% endif %}</div>
 """, '{{ sign("", "") }}', REF)
 
-WAYBILL = form(
+WAYBILL = event_form(
     "Товарно-транспортна накладна",
     """<div class="meta">{{ party("Вантажовідправник", org) }}{{ bank(org.bank) }}{{ party("Вантажоодержувач", cp) }}
 <div>Пункт навантаження: {{ (org.legal_address or "")|e }}</div>
 <div>Пункт розвантаження: {{ (cp.legal_address or "")|e }}</div>
 """ + INVOICE_BASIS + """
-<div>Автомобіль: {{ (doc.vehicle_no or "")|e }}</div>
-<div>Водій: {{ (doc.driver_name or "")|e }}</div></div>
-{% set rows = (doc.goods or []) + (doc.services or []) %}
+<div>Автомобіль: {{ (ev.vehicle_no or "")|e }}</div>
+<div>Водій: {{ (ev.driver_name or "")|e }}</div></div>
+{% set rows = ev.lines %}
 <table>
 <tr><th>№</th><th>Найменування вантажу</th><th>Од.</th><th class="n">Кількість</th><th class="n">Ціна</th>
 <th class="n">Сума з ПДВ</th></tr>
@@ -165,8 +178,8 @@ WAYBILL = form(
 <td class="n">{{ r.quantity }}</td><td class="n">{{ uk_money(r.price) }}</td><td class="n">{{ uk_money(r.total) }}</td></tr>
 {% endfor %}
 </table>
-<div class="total">Всього: <b>{{ uk_money(doc.total_amount) }}</b></div>
-<p class="words">Вартість вантажу: <b>{{ money_in_words(doc.total_amount, doc.currency) }}</b></p>
+<div class="total">Всього: <b>{{ uk_money(ev.total_amount) }}</b></div>
+<p class="words">Вартість вантажу: <b>{{ money_in_words(ev.total_amount, doc.currency) }}</b></p>
 """, '{{ sign("Відправник ________________", "Водій ________________") }}',
     "<div>Вантаж одержав ________________</div>", REF)
 
@@ -262,12 +275,11 @@ RECONCILIATION = form(
     date="doc.date_to")
 
 FORMATS = (
-    ("UA Видаткова накладна", "UA Sales Invoice", SALES_INVOICE),
+    ("UA Видаткова накладна", "UA Payment Invoice", SALES_INVOICE),
     ("UA Рахунок на оплату", "UA Payment Invoice", INVOICE),
-    ("UA Акт виконаних робіт", "UA Service Act", ACT_WORKS),
-    ("UA Податкова накладна", "UA Sales Invoice", TAX_INVOICE),
+    ("UA Акт виконаних робіт", "UA Payment Invoice", ACT_WORKS),
     ("UA Податкова накладна (ПН)", "UA Tax Invoice", TAX_INVOICE_DOC),
-    ("UA ТТН", "UA Sales Invoice", WAYBILL),
+    ("UA ТТН", "UA Payment Invoice", WAYBILL),
     ("UA ПКО", "UA Cash Receipt", PKO),
     ("UA ВКО", "UA Cash Payment", VKO),
     ("UA Платіжне доручення", "UA Payment Order", PAYMENT_ORDER),
@@ -284,7 +296,14 @@ def _hash(html):
     return hashlib.sha256(html.encode("utf-8")).hexdigest()
 
 
+OBSOLETE = ("UA Податкова накладна",)  # the sale tax invoice form: the ПН is the document UA Tax Invoice
+
+
 def run():
+    for name in OBSOLETE:
+        if frappe.db.exists("Print Format", name):
+            frappe.delete_doc("Print Format", name, force=True, ignore_permissions=True)
+            frappe.db.delete("DefaultValue", {"defkey": HASH_KEY + name})
     # a cancelled document prints with the mark «Скасовано» instead of an error
     frappe.db.set_single_value("Print Settings", "allow_print_for_cancelled", 1)
     for name, doctype, html in FORMATS:
@@ -296,7 +315,7 @@ def run():
             current = frappe.db.get_value("Print Format", name, "html") or ""
             if stored is None or _hash(current) == stored:
                 frappe.db.set_value(
-                    "Print Format", name, {"html": html, "standard": "No", "custom_format": 1},
+                    "Print Format", name, {"html": html, "doc_type": doctype, "standard": "No", "custom_format": 1},
                     update_modified=False,
                 )
                 frappe.db.set_default(key, _hash(html))

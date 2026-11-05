@@ -44,7 +44,10 @@
   "adjustments",
   "sb_more",
   "comment",
-  "amended_from"
+  "amended_from",
+  "sb_events",
+  "events",
+  "event_lines"
  ],
  "fields": [
   {
@@ -233,7 +236,8 @@
    "fieldname": "sb_state",
    "fieldtype": "Section Break",
    "label": "Стан",
-   "depends_on": "eval:doc.docstatus>0"
+   "depends_on": "eval:doc.docstatus>0",
+   "collapsible": 1
   },
   {
    "fieldname": "commercial_status",
@@ -311,7 +315,7 @@
   {
    "fieldname": "sb_overview",
    "fieldtype": "Section Break",
-   "label": "Картка інвойсу",
+   "label": "Огляд",
    "depends_on": "eval:doc.docstatus>0"
   },
   {
@@ -334,12 +338,34 @@
    "allow_on_submit": 1,
    "read_only": 1,
    "no_copy": 1
+  },
+  {
+   "fieldname": "sb_events",
+   "fieldtype": "Section Break",
+   "label": "Події"
+  },
+  {
+   "fieldname": "events",
+   "fieldtype": "Table",
+   "label": "Події",
+   "options": "UA Invoice Event",
+   "allow_on_submit": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "event_lines",
+   "fieldtype": "Table",
+   "label": "Рядки подій",
+   "options": "UA Invoice Event Line",
+   "allow_on_submit": 1,
+   "read_only": 1,
+   "hidden": 1
   }
  ],
  "index_web_pages_for_search": 0,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-22 12:00:00.000000",
+ "modified": "2026-11-04 19:00:00.000000",
  "modified_by": "Administrator",
  "module": "UA Documents",
  "name": "UA Payment Invoice",

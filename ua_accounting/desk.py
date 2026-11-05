@@ -10,7 +10,7 @@ import frappe
 from frappe.utils import flt
 
 DOCUMENTS = (
-    "UA Sales Invoice",
+    "UA Payment Invoice",
     "UA Purchase Receipt",
     "UA Customer Order",
     "UA Supplier Order",
@@ -21,7 +21,6 @@ DOCUMENTS = (
 
 # effect of a posted document on "the counterparty owes us" (debit side of the settlement)
 SIGN = {
-    "UA Sales Invoice": ("total_amount", 1),
     "UA Purchase Receipt": ("total_amount", -1),
     "UA Cash Receipt": ("amount", -1),
     "UA Cash Payment": ("amount", 1),

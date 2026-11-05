@@ -53,6 +53,16 @@ class UATaxInvoice(AccountingDocument):
         basis = frappe.db.get_value(
             self.basis_type, self.basis, ["docstatus", "organization", "counterparty", "posting_date"], as_dict=True
         )
+        if basis and self.basis_part:
+            # the basis is one event of an Invoice: its date is the date of the ПН
+            event = frappe.db.get_value(
+                "UA Invoice Event",
+                {"parent": self.basis, "parenttype": self.basis_type, "number": self.basis_part, "status": "Проведено"},
+                "posting_date",
+            )
+            if not event:
+                frappe.throw(_("Подія {0} інвойсу {1} не проведена").format(self.basis_part, self.basis))
+            basis.posting_date = event
         if not basis or basis.docstatus != 1:
             frappe.throw(_("Документ-підстава {0} не проведений").format(self.basis))
         if basis.organization != self.organization:
@@ -65,7 +75,7 @@ class UATaxInvoice(AccountingDocument):
             frappe.throw(_("Дата податкової накладної не збігається з документом-підставою {0}").format(self.basis))
         rows = frappe.get_all(
             tax.register_of(self.direction),
-            filters={"registrar_type": self.basis_type, "registrar": self.basis, "event": ("!=", tax.EVENT_ADJUSTMENT)},
+            filters=tax.basis_filters(self.basis_type, self.basis, self.basis_part),
             fields=["base_amount", "vat_amount"],
             limit_page_length=0,
         )
@@ -84,6 +94,7 @@ class UATaxInvoice(AccountingDocument):
                 {
                     "basis_type": self.basis_type,
                     "basis": self.basis,
+                    "basis_part": self.basis_part or "",
                     "invoice_kind": tax.KIND_ORDINARY,
                     "docstatus": 1,
                     "name": ("!=", self.name),

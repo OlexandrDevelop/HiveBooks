@@ -4383,6 +4383,8 @@ UA Income Book Entry,Книга обліку доходів
 UA Intangible Asset,Нематеріальні активи
 UA Inventory Line,Рядок інвентаризації
 UA Invoice Adjustment,Коригування інвойсу
+UA Invoice Event,Подія інвойсу
+UA Invoice Event Line,Рядок події інвойсу
 UA Item,Номенклатура
 UA Item Specification,Специфікації номенклатури
 UA Journal Operation,Операція (бухгалтерська)
@@ -4416,7 +4418,7 @@ UA Packaging Balance,Розрахунки за тару
 UA Packaging Line,Рядок тари
 UA Packaging Return,Повернення тари
 UA Payment Allocation,Розподіл оплати за інвойсом
-UA Payment Invoice,Інвойс (рахунок на оплату)
+UA Payment Invoice,Інвойс
 UA Payment Order,Платіжне доручення
 UA Payroll,Нарахування зарплати
 UA Payroll Accruals Report,Звіт по нарахуваннях
@@ -4461,9 +4463,6 @@ UA Retail Sales Report,Звіт про роздрібні продажі
 UA Revaluation Line,Рядок переоцінки
 UA Salary Payment,Виплата зарплати
 UA Salary Payment Line,Рядок виплати зарплати
-UA Sales Invoice,Реалізація товарів та послуг
-UA Sales Return,Повернення товарів від покупця
-UA Service Act,Акт виконаних робіт (надання послуг)
 UA Service Line,Послуги
 UA Service Receipt,Отримання послуг сторонніх організацій
 UA Signed Document,Архів поданих документів

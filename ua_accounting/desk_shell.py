@@ -62,8 +62,7 @@ ROLE_DESKS = {
 
 COMMANDS = {
     'customer_order': ('Замовлення покупця', 'doctype', 'UA Customer Order'),
-    'invoice': ('Інвойс (рахунок на оплату)', 'doctype', 'UA Payment Invoice'),
-    'sales_invoice': ('Реалізація товарів та послуг', 'doctype', 'UA Sales Invoice'),
+    'invoice': ('Інвойси', 'doctype', 'UA Payment Invoice'),
     'supplier_order': ('Замовлення постачальнику', 'doctype', 'UA Supplier Order'),
     'purchase_receipt': ('Надходження товарів та послуг', 'doctype', 'UA Purchase Receipt'),
     'cash_receipt': ('Надходження коштів', 'doctype', 'UA Cash Receipt'),
@@ -239,10 +238,10 @@ SECTIONS = (
         },
     ),
     (
-        'sell', 'Продажі', 'Реалізація та покупці', 'trending',
-        ['invoice', 'sales_invoice', 'customer_order'],
+        'sell', 'Продажі', 'Інвойси та покупці', 'trending',
+        ['invoice', 'customer_order'],
         {
-            'docs': ['invoice', 'sales_invoice', 'customer_order', 'tax_invoice', 'tax_adjustment'],
+            'docs': ['invoice', 'customer_order', 'tax_invoice', 'tax_adjustment'],
             'refs': ['counterparty', 'contract', 'item'],
             'reps': ['osv_account', 'account_card'],
             'svc': ['vat_liability'],
@@ -250,9 +249,9 @@ SECTIONS = (
     ),
     (
         'stock', 'Склад', 'Рух і залишки товарів', 'package',
-        ['purchase_receipt', 'sales_invoice'],
+        ['purchase_receipt'],
         {
-            'docs': ['purchase_receipt', 'sales_invoice', 'stock_transfer', 'stock_writeoff', 'stock_surplus', 'stock_inventory', 'stock_assembly', 'low_value_issue', 'requirement_invoice', 'commission_receipt', 'commission_transfer', 'commission_agent_report', 'principal_report', 'commission_return', 'tolling_transfer', 'tolling_receipt', 'tolling_intake', 'tolling_output', 'packaging_return', 'special_wear_issue', 'special_wear_monthly', 'special_wear_return', 'special_wear_writeoff'],
+            'docs': ['purchase_receipt', 'stock_transfer', 'stock_writeoff', 'stock_surplus', 'stock_inventory', 'stock_assembly', 'low_value_issue', 'requirement_invoice', 'commission_receipt', 'commission_transfer', 'commission_agent_report', 'principal_report', 'commission_return', 'tolling_transfer', 'tolling_receipt', 'tolling_intake', 'tolling_output', 'packaging_return', 'special_wear_issue', 'special_wear_monthly', 'special_wear_return', 'special_wear_writeoff'],
             'refs': ['warehouse', 'item', 'uom'],
             'reps': ['stock_balance', 'stock_statement', 'packaging_balance', 'special_wear_in_use', 'osv_account', 'account_card'],
             'svc': [],
@@ -389,9 +388,9 @@ def beeone_widgets():
     return {
         "sources": [
             {
-                "id": "ua_sales_invoice",
-                "label": "Реалізація",
-                "doctype": "UA Sales Invoice",
+                "id": "ua_invoice",
+                "label": "Інвойси",
+                "doctype": "UA Payment Invoice",
                 "types": ["beeone.count", "beeone.number", "beeone.recent"],
                 "filters": {"docstatus": 1},
                 "number": {"field": "total_amount", "date_field": "posting_date", "currency": True},
@@ -413,25 +412,25 @@ def beeone_widgets():
         ],
         "defaults": {
             "System Manager": [
-                {"type": "beeone.number", "source": "ua_sales_invoice", "size": "m"},
+                {"type": "beeone.number", "source": "ua_invoice", "size": "m"},
                 {"type": "beeone.count", "source": "ua_customer_order", "size": "s"},
                 {"type": "beeone.count", "source": "ua_purchase_receipt", "size": "s"},
-                {"type": "beeone.recent", "source": "ua_sales_invoice", "size": "l"},
+                {"type": "beeone.recent", "source": "ua_invoice", "size": "l"},
             ],
             "UA Accountant": [
-                {"type": "beeone.number", "source": "ua_sales_invoice", "size": "m"},
+                {"type": "beeone.number", "source": "ua_invoice", "size": "m"},
                 {"type": "beeone.count", "source": "ua_customer_order", "size": "s"},
-                {"type": "beeone.recent", "source": "ua_sales_invoice", "size": "l"},
+                {"type": "beeone.recent", "source": "ua_invoice", "size": "l"},
             ],
             "UA Accounting Manager": [
-                {"type": "beeone.number", "source": "ua_sales_invoice", "size": "m"},
+                {"type": "beeone.number", "source": "ua_invoice", "size": "m"},
                 {"type": "beeone.count", "source": "ua_customer_order", "size": "s"},
-                {"type": "beeone.recent", "source": "ua_sales_invoice", "size": "l"},
+                {"type": "beeone.recent", "source": "ua_invoice", "size": "l"},
             ],
             "UA Chief Accountant": [
-                {"type": "beeone.number", "source": "ua_sales_invoice", "size": "m"},
+                {"type": "beeone.number", "source": "ua_invoice", "size": "m"},
                 {"type": "beeone.count", "source": "ua_purchase_receipt", "size": "s"},
-                {"type": "beeone.recent", "source": "ua_sales_invoice", "size": "l"},
+                {"type": "beeone.recent", "source": "ua_invoice", "size": "l"},
             ],
         },
     }

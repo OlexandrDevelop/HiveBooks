@@ -213,7 +213,101 @@ def stock_balance(organization, account, item, warehouse, date, ctx, lock=False)
 # ---------------------------------------------------------------- base class
 
 
-class AccountingDocument(Document):
+class EntryBuilder:
+    """Builders of accounting entries and VAT rows. The base of the posting documents and of an Invoice event.
+
+    The host provides `get(key)`, `doctype`, `name`, `organization`, `posting_date`, `_ctx`, `exchange_rate`.
+    """
+
+    def entry(self, dr, cr, amount, dr_sub=None, cr_sub=None, **extra):
+        """One accounting entry. Subconto not used by the account is dropped."""
+        e = {
+            "account_dr": dr,
+            "account_cr": cr,
+            "amount": flt(amount, 2),
+            "subconto_dr": subconto_for(dr, dr_sub or {}, self._ctx) if dr else {},
+            "subconto_cr": subconto_for(cr, cr_sub or {}, self._ctx) if cr else {},
+            "content": self.content_text(),
+        }
+        cur = self.get("currency")
+        cur_amount = extra.pop("cur_amount", 0)
+        if cur and cur != base_currency():
+            # the ledger uses these only for currency accounts
+            e.update(
+                currency_dr=cur,
+                currency_cr=cur,
+                currency_amount_dr=flt(cur_amount, 2),
+                currency_amount_cr=flt(cur_amount, 2),
+            )
+        e.update(extra)
+        return e
+
+    def content_text(self):
+        return f"{self.doc_title} {self.name}"[:140]
+
+    def vat_row(self, vat_rate, base, vat_amount, event, **extra):
+        row = {
+            "counterparty": self.get("counterparty"),
+            "contract": self.get("contract"),
+            "settlement_doc_type": self.doctype,
+            "settlement_doc": self.name,
+            "vat_rate": vat_rate,
+            "event": event,
+            "base_amount": flt(base, 2),
+            "vat_amount": flt(vat_amount, 2),
+            "content": self.content_text(),
+        }
+        row.update(extra)
+        return row
+
+
+    def uah(self, amount):
+        return flt(flt(amount) * (flt(self.exchange_rate) or 1), 2)
+
+    def row_amounts(self, row):
+        """(net, vat, gross) of a row in UAH."""
+        net = self.uah(row.total - row.vat_amount)
+        vat_amount = self.uah(row.vat_amount)
+        return net, vat_amount, flt(net + vat_amount, 2)
+
+    def add_group(self, groups, row, net, vat_amount, gross):
+        percent, taxable = vat_info(row.vat_rate, self.__dict__.setdefault("_vat_cache", {}))
+        g = groups.setdefault(
+            row.vat_rate or "",
+            {"net": 0.0, "vat": 0.0, "gross": 0.0, "percent": percent, "taxable": taxable},
+        )
+        g["net"] = flt(g["net"] + net, 2)
+        g["vat"] = flt(g["vat"] + vat_amount, 2)
+        g["gross"] = flt(g["gross"] + gross, 2)
+
+
+    @property
+    def settle_sub(self):
+        return {
+            "Counterparty": self.counterparty,
+            "Contract": self.contract,
+            "SettlementDoc": (self.doctype, self.name),
+        }
+
+    @property
+    def is_foreign(self):
+        return self.currency != base_currency()
+
+
+    def item_info(self, item):
+        cache = self.__dict__.setdefault("_items", {})
+        if item not in cache:
+            cache[item] = frappe.db.get_value(
+                "UA Item",
+                item,
+                ["item_name", "item_type", "uom", "vat_rate", "is_group"],
+                as_dict=True,
+            ) or frappe._dict()
+        return cache[item]
+
+
+
+class AccountingDocument(EntryBuilder, Document):
     """Base of the posting documents."""
 
     doc_code = ""
@@ -281,49 +375,6 @@ class AccountingDocument(Document):
         """Return (entries, vat liabilities, vat credits)."""
         raise NotImplementedError
 
-    # ------------------------------------------------------------ builders
-
-    def entry(self, dr, cr, amount, dr_sub=None, cr_sub=None, **extra):
-        """One accounting entry. Subconto not used by the account is dropped."""
-        e = {
-            "account_dr": dr,
-            "account_cr": cr,
-            "amount": flt(amount, 2),
-            "subconto_dr": subconto_for(dr, dr_sub or {}, self._ctx) if dr else {},
-            "subconto_cr": subconto_for(cr, cr_sub or {}, self._ctx) if cr else {},
-            "content": self.content_text(),
-        }
-        cur = self.get("currency")
-        cur_amount = extra.pop("cur_amount", 0)
-        if cur and cur != base_currency():
-            # the ledger uses these only for currency accounts
-            e.update(
-                currency_dr=cur,
-                currency_cr=cur,
-                currency_amount_dr=flt(cur_amount, 2),
-                currency_amount_cr=flt(cur_amount, 2),
-            )
-        e.update(extra)
-        return e
-
-    def content_text(self):
-        return f"{self.doc_title} {self.name}"[:140]
-
-    def vat_row(self, vat_rate, base, vat_amount, event, **extra):
-        row = {
-            "counterparty": self.get("counterparty"),
-            "contract": self.get("contract"),
-            "settlement_doc_type": self.doctype,
-            "settlement_doc": self.name,
-            "vat_rate": vat_rate,
-            "event": event,
-            "base_amount": flt(base, 2),
-            "vat_amount": flt(vat_amount, 2),
-            "content": self.content_text(),
-        }
-        row.update(extra)
-        return row
-
 
 # ---------------------------------------------------------------- trade documents
 
@@ -390,17 +441,6 @@ class TradeDocument(AccountingDocument):
             yield row, "goods"
         for row in self.get(self.service_table) or []:
             yield row, "services"
-
-    def item_info(self, item):
-        cache = self.__dict__.setdefault("_items", {})
-        if item not in cache:
-            cache[item] = frappe.db.get_value(
-                "UA Item",
-                item,
-                ["item_name", "item_type", "uom", "vat_rate", "is_group"],
-                as_dict=True,
-            ) or frappe._dict()
-        return cache[item]
 
     def validate_lines(self):
         if not any(True for _row in self.lines()):
@@ -477,9 +517,8 @@ class TradeDocument(AccountingDocument):
         ):
             terms.setdefault(r.item, []).append(r)
         left = {}  # (item, vat rate, price) -> source quantity still free for this document
-        link = "sales_invoice" if source_doctype == "UA Sales Invoice" else "purchase_receipt"
         others = frappe.get_all(
-            self.doctype, filters={link: source_name, "docstatus": 1, "name": ("!=", self.name or "")}, pluck="name"
+            self.doctype, filters={"purchase_receipt": source_name, "docstatus": 1, "name": ("!=", self.name or "")}, pluck="name"
         )
         taken = {}  # the same key -> quantity of the other submitted returns
         for r in frappe.get_all(
@@ -548,38 +587,7 @@ class TradeDocument(AccountingDocument):
         self.total_amount = flt(gross, 2)
         self.base_total = flt(base_total, 2)
 
-    def uah(self, amount):
-        return flt(flt(amount) * (flt(self.exchange_rate) or 1), 2)
-
-    def row_amounts(self, row):
-        """(net, vat, gross) of a row in UAH."""
-        net = self.uah(row.total - row.vat_amount)
-        vat_amount = self.uah(row.vat_amount)
-        return net, vat_amount, flt(net + vat_amount, 2)
-
-    def add_group(self, groups, row, net, vat_amount, gross):
-        percent, taxable = vat_info(row.vat_rate, self.__dict__.setdefault("_vat_cache", {}))
-        g = groups.setdefault(
-            row.vat_rate or "",
-            {"net": 0.0, "vat": 0.0, "gross": 0.0, "percent": percent, "taxable": taxable},
-        )
-        g["net"] = flt(g["net"] + net, 2)
-        g["vat"] = flt(g["vat"] + vat_amount, 2)
-        g["gross"] = flt(g["gross"] + gross, 2)
-
     # ------------------------------------------------------------ subconto
-
-    @property
-    def settle_sub(self):
-        return {
-            "Counterparty": self.counterparty,
-            "Contract": self.contract,
-            "SettlementDoc": (self.doctype, self.name),
-        }
-
-    @property
-    def is_foreign(self):
-        return self.currency != base_currency()
 
 
 HEADER_COPY = ("organization", "counterparty", "contract", "warehouse", "currency", "vat_mode")

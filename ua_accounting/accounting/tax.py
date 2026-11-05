@@ -15,14 +15,13 @@ RK = "UA Tax Adjustment"
 ISSUED = "Видана"
 RECEIVED = "Отримана"
 
-SALE = "UA Sales Invoice"
-SERVICE = "UA Service Act"
+INVOICE = "UA Payment Invoice"
 PURCHASE = "UA Purchase Receipt"
 CASH_IN = "UA Cash Receipt"
 CASH_OUT = "UA Cash Payment"
 
 # basis document -> direction of its tax invoice
-BASIS_DIRECTION = {SALE: ISSUED, SERVICE: ISSUED, CASH_IN: ISSUED, PURCHASE: RECEIVED, CASH_OUT: RECEIVED}
+BASIS_DIRECTION = {INVOICE: ISSUED, CASH_IN: ISSUED, PURCHASE: RECEIVED, CASH_OUT: RECEIVED}
 
 KIND_ORDINARY = "Звичайна"
 KIND_NO_PN = "Зведена: постачання без ПН"
@@ -42,11 +41,19 @@ def register_of(direction):
     return vat.LIABILITY if direction == ISSUED else vat.CREDIT
 
 
+def basis_filters(basis_type, basis, part=None):
+    """Filters of the VAT register rows of a basis: a document, or one event (part) of an Invoice."""
+    filters = {"registrar_type": basis_type, "registrar": basis, "event": ("!=", EVENT_ADJUSTMENT)}
+    if part:
+        filters["registrar_part"] = part
+    return filters
+
+
 # ---------------------------------------------------------------- cancel guards
 
 
 def check_cancel_allowed(doc):
-    """A basis document with a submitted ПН is cancelled only after the ПН."""
+    """A basis document with a submitted ПН is cancelled only after the ПН (an event of an Invoice: see invoice_events)."""
     if doc.doctype not in BASIS_DIRECTION:
         return
     name = frappe.db.exists(PN, {"basis_type": doc.doctype, "basis": doc.name, "docstatus": 1})
@@ -63,7 +70,7 @@ def link_registers(pn):
     if pn.invoice_kind == KIND_ORDINARY:
         if not pn.basis:
             return
-        filters = {"registrar_type": pn.basis_type, "registrar": pn.basis, "event": ("!=", EVENT_ADJUSTMENT)}
+        filters = basis_filters(pn.basis_type, pn.basis, pn.get("basis_part"))
     else:
         filters = consolidated_filters(pn.organization, pn.period_from, pn.period_to)
     for name in frappe.get_all(table, filters=filters, pluck="name", limit_page_length=0):
@@ -122,8 +129,8 @@ def _fit(lines, base, vat_amount):
     return lines
 
 
-def invoice_from_basis(basis):
-    """Values for a new ПН made from a submitted basis document."""
+def invoice_from_basis(basis, part=None):
+    """Values for a new ПН made from a submitted basis document (for an Invoice: from one of its events)."""
     if basis.doctype not in BASIS_DIRECTION:
         frappe.throw(_("Для документа {0} податкова накладна не створюється").format(basis.doctype))
     if basis.docstatus != 1:
@@ -131,7 +138,7 @@ def invoice_from_basis(basis):
     direction = BASIS_DIRECTION[basis.doctype]
     rows = frappe.get_all(
         register_of(direction),
-        filters={"registrar_type": basis.doctype, "registrar": basis.name, "event": ("!=", EVENT_ADJUSTMENT)},
+        filters=basis_filters(basis.doctype, basis.name, part),
         fields=["vat_rate", "base_amount", "vat_amount"],
         order_by="line_no asc",
         limit_page_length=0,
@@ -141,16 +148,30 @@ def invoice_from_basis(basis):
     reg = _group(rows)
 
     lines = []
-    if basis.doctype in (SALE, SERVICE, PURCHASE):
+    event = None
+    if basis.doctype == INVOICE:
+        if not part:
+            frappe.throw(_("Вкажіть подію інвойсу {0}, для якої потрібна податкова накладна").format(basis.name))
+        event = next((e for e in basis.get("events") or [] if e.number == part and e.status == "Проведено"), None)
+        if not event:
+            frappe.throw(_("Подія {0} інвойсу {1} не проведена").format(part, basis.name))
+        if event.kind == "Повернення":
+            frappe.throw(_("Для повернення податкова накладна не створюється: його виправляють розрахунком коригування"))
+    if basis.doctype in (INVOICE, PURCHASE):
         k = flt(basis.exchange_rate) or 1
         by_rate = {}
-        for table in ("goods", "services"):
-            for row in basis.get(table) or []:
+        if event:
+            sources = [[l for l in basis.get("event_lines") or [] if l.event == part and l.line_type in ("goods", "services")]]
+        else:
+            sources = [basis.get(table) or [] for table in ("goods", "services")]
+        for source in sources:
+            for row in source:
                 base = flt((flt(row.total) - flt(row.vat_amount)) * k, 2)
                 qty = flt(row.quantity, 3)
                 by_rate.setdefault(row.vat_rate, []).append(
                     {
                         "description": row.item_name,
+                        "ukt_zed": frappe.db.get_value("UA Item", row.item, "uktzed_code"),
                         "uom": row.uom,
                         "quantity": qty,
                         "price": flt(base / qty, 2) if qty else base,
@@ -171,7 +192,7 @@ def invoice_from_basis(basis):
 
     return {
         "organization": basis.organization,
-        "posting_date": basis.posting_date,
+        "posting_date": event.posting_date if event else basis.posting_date,
         "direction": direction,
         "invoice_kind": KIND_ORDINARY,
         "counterparty": basis.counterparty,
@@ -180,6 +201,7 @@ def invoice_from_basis(basis):
         "exchange_rate": basis.exchange_rate,
         "basis_type": basis.doctype,
         "basis": basis.name,
+        "basis_part": part or "",
         "lines": lines,
     }
 

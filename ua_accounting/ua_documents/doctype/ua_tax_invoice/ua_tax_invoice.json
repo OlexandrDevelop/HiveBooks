@@ -17,6 +17,7 @@
   "sb_basis",
   "basis_type",
   "basis",
+  "basis_part",
   "cb_basis",
   "period_from",
   "period_to",
@@ -128,6 +129,12 @@
    "fieldtype": "Dynamic Link",
    "label": "Документ-підстава",
    "options": "basis_type"
+  },
+  {
+   "fieldname": "basis_part",
+   "fieldtype": "Data",
+   "label": "Подія підстави",
+   "read_only": 1
   },
   {
    "fieldname": "cb_basis",
@@ -244,7 +251,7 @@
  "index_web_pages_for_search": 0,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-22 12:00:00.000000",
+ "modified": "2026-11-04 18:00:00.000000",
  "modified_by": "Administrator",
  "module": "UA Documents",
  "name": "UA Tax Invoice",

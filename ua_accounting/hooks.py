@@ -154,23 +154,19 @@ beeone_receipt_importers = {"checkbox": "ua_accounting.integrations.prro.Checkbo
 
 # beeone: "Create on basis" commands (core registry frappe.beeone.basis); each method returns an unsaved document
 basis_map = [
-    {"source": "UA Customer Order", "target": "UA Sales Invoice", "label": "Реалізація товарів та послуг", "method": "ua_accounting.ua_documents.doctype.ua_customer_order.ua_customer_order.make_sales_invoice", "submit_first": True},
     {"source": "UA Supplier Order", "target": "UA Purchase Receipt", "label": "Надходження товарів та послуг", "method": "ua_accounting.ua_documents.doctype.ua_supplier_order.ua_supplier_order.make_purchase_receipt", "submit_first": True},
-    {"source": "UA Sales Invoice", "target": "UA Cash Receipt", "label": "Надходження коштів", "method": "ua_accounting.ua_documents.doctype.ua_sales_invoice.ua_sales_invoice.make_cash_receipt", "submit_first": True},
-    {"source": "UA Sales Invoice", "target": "UA Tax Invoice", "label": "Податкова накладна", "method": "ua_accounting.api.tax_invoice.make_from_sale", "submit_first": True},
     {"source": "UA Purchase Receipt", "target": "UA Cash Payment", "label": "Витрата коштів", "method": "ua_accounting.ua_documents.doctype.ua_purchase_receipt.ua_purchase_receipt.make_cash_payment", "submit_first": True},
     {"source": "UA Purchase Receipt", "target": "UA Tax Invoice", "label": "Податкова накладна (отримана)", "method": "ua_accounting.api.tax_invoice.make_from_receipt", "submit_first": True},
     {"source": "UA Cash Receipt", "target": "UA Tax Invoice", "label": "Податкова накладна (аванс)", "method": "ua_accounting.api.tax_invoice.make_from_cash_receipt", "submit_first": True},
     {"source": "UA Cash Payment", "target": "UA Tax Invoice", "label": "Податкова накладна (аванс)", "method": "ua_accounting.api.tax_invoice.make_from_cash_payment", "submit_first": True},
     {"source": "UA Customer Order", "target": "UA Payment Invoice", "label": "Інвойс", "method": "ua_accounting.ua_documents.doctype.ua_customer_order.ua_customer_order.make_invoice", "submit_first": True},
     {"source": "UA Payment Invoice", "target": "UA Cash Receipt", "label": "Надходження коштів", "method": "ua_accounting.api.invoice.make_payment", "submit_first": True},
-    {"source": "UA Service Act", "target": "UA Tax Invoice", "label": "Податкова накладна", "method": "ua_accounting.api.tax_invoice.make_from_service_act", "submit_first": True},
     {"source": "UA Tax Invoice", "target": "UA Tax Adjustment", "label": "Розрахунок коригування", "method": "ua_accounting.api.tax_adjustment.make_adjustment", "submit_first": True},
 ]
 
 # beeone: subordination tree (T-538); documents supporting the structure of subordination
 beeone_documents = [
-    "UA Sales Invoice",
+    "UA Payment Invoice",
     "UA Purchase Receipt",
     "UA Customer Order",
     "UA Supplier Order",

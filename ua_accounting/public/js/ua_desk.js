@@ -41,7 +41,7 @@ ua_accounting.ui.REGISTERS = ["UA Accounting Entry", "UA Account Turnover", "UA 
 // Submittable documents (known before the meta is loaded, for list settings).
 ua_accounting.ui.DOCUMENTS = [
 	"UA Customer Order",
-	"UA Sales Invoice",
+	"UA Payment Invoice",
 	"UA Supplier Order",
 	"UA Purchase Receipt",
 	"UA Cash Receipt",

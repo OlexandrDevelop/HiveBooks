@@ -74,8 +74,8 @@ QUERY_DOCTYPES = (
     "UA Organization", "UA Warehouse", "UA Bank Account", "UA Cash Desk", "UA Counterparty Contract",
     "UA Fixed Asset", "UA Intangible Asset", "UA Low Value Asset", "UA Accounting Policy",
     "UA Numbering Setting", "UA Change Log", "UA Cash Receipt", "UA Cash Payment",
-    "UA Sales Invoice", "UA Purchase Receipt", "UA Customer Order", "UA Supplier Order",
-    "UA Payment Invoice", "UA Supplier Invoice", "UA Sales Return", "UA Purchase Return", "UA Service Act",
+    "UA Purchase Receipt", "UA Customer Order", "UA Supplier Order",
+    "UA Payment Invoice", "UA Supplier Invoice", "UA Purchase Return",
     "UA Service Receipt", "UA Debt Adjustment", "UA Reconciliation Act", "UA Power of Attorney", "UA Customs Import",
     "UA Journal Operation", "UA Month Closing", "UA Accounting Entry", "UA Account Turnover",
     "UA VAT Liability Entry", "UA VAT Credit Entry",
@@ -125,12 +125,8 @@ def check_access(doc, method=None):
 def check_period(doc, method=None):
     if doc.meta.module != "UA Documents" or frappe.flags.get("ua_month_closing"):
         return
-    # the settings DocType can be absent (fresh site): no bypass roles then, the lock still applies
-    allowed = set()
-    if frappe.db.exists("DocType", "UA Accounting Settings"):
-        allowed = {r.role for r in frappe.get_single("UA Accounting Settings").get("lock_allowed_roles") or []}
-    assigned = set(frappe.get_all("Has Role", filters={"parent": frappe.session.user, "parenttype": "User"}, pluck="role"))
-    if allowed.intersection(assigned):
+    if doc.get("flags") and doc.flags.get("invoice_action"):
+        # an event of an Invoice: its own date is checked when the event is posted or cancelled
         return
     pairs = [(doc.get("organization"), doc.get("posting_date"))]
     if not doc.is_new():
@@ -138,6 +134,20 @@ def check_period(doc, method=None):
         old = frappe.db.get_value(doc.doctype, doc.name, fields, as_dict=True) if fields else None
         if old:
             pairs.append((old.get("organization"), old.get("posting_date")))
+    check_lock_dates(pairs)
+
+
+def check_lock_dates(pairs):
+    """Throw when a date of (organization, date) is on or before the lock date of the organization (T-441)."""
+    if frappe.flags.get("ua_month_closing"):
+        return
+    # the settings DocType can be absent (fresh site): no bypass roles then, the lock still applies
+    allowed = set()
+    if frappe.db.exists("DocType", "UA Accounting Settings"):
+        allowed = {r.role for r in frappe.get_single("UA Accounting Settings").get("lock_allowed_roles") or []}
+    assigned = set(frappe.get_all("Has Role", filters={"parent": frappe.session.user, "parenttype": "User"}, pluck="role"))
+    if allowed.intersection(assigned):
+        return
     for organization, posting_date in pairs:
         if not organization or not posting_date:
             continue

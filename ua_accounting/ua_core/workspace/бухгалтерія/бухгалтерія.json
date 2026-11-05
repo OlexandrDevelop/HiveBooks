@@ -211,8 +211,8 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Реалізація товарів та послуг",
-   "link_to": "UA Sales Invoice",
+   "label": "Інвойси",
+   "link_to": "UA Payment Invoice",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"

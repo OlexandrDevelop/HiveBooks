@@ -35,7 +35,6 @@ class UACashReceipt(CashDocument):
             check_cash_balance(self.organization, self.cash_desk, self.posting_date, self.amount_uah)
         super().on_submit()
         simplified_tax.post_income(self)
-        self.refresh_invoices()
 
     def before_cancel(self):
         super().before_cancel()
@@ -45,21 +44,9 @@ class UACashReceipt(CashDocument):
     def on_cancel(self):
         super().on_cancel()
         simplified_tax.cancel_income(self)
-        self.refresh_invoices()
-
-    def refresh_invoices(self):
-        invoices.refresh_many(row.invoice for row in self.get("allocations") or [])
 
     def validate(self):
         super().validate()
-        if self.sales_invoice and not self.is_advance() and self.is_settlement():
-            sale = frappe.db.get_value("UA Sales Invoice", self.sales_invoice, ["counterparty", "docstatus"], as_dict=True)
-            if sale.docstatus != 1 or sale.counterparty != self.counterparty:
-                frappe.throw(_("Реалізація {0} не підходить до цієї оплати").format(self.sales_invoice))
-        if self.sales_invoice and not self.get("allocations") and frappe.db.get_value(
-            "UA Sales Invoice", self.sales_invoice, "invoice"
-        ):
-            frappe.throw(_("Оплату реалізації за інвойсом розподіляють за інвойсом: заповніть таблицю «Інвойси»"))
         self.check_allocations()
 
     def check_allocations(self):
@@ -68,8 +55,6 @@ class UACashReceipt(CashDocument):
             return
         if not self.is_settlement():
             frappe.throw(_("Розподіл за інвойсами є лише в оплаті від покупця"))
-        if self.sales_invoice:
-            frappe.throw(_("Оплату розподіляють або за реалізацією, або за інвойсами"))
         total = 0.0
         for row in rows:
             inv = frappe.db.get_value(
@@ -119,8 +104,6 @@ class UACashReceipt(CashDocument):
             entries.append(self.entry(self.cash_account, "681", amount, self.cash_sub, sub, cur_amount=self.amount))
         else:
             credit = "362" if self.is_foreign else "361"
-            if self.sales_invoice:
-                sub["SettlementDoc"] = ("UA Sales Invoice", self.sales_invoice)
             debt = max(settlement_balance(self.organization, credit, self.counterparty, self.contract, "dr", self.posting_date, self._ctx), 0)
             # the part above the debt is an advance
             # (only when there is a debt: a payment with no debt at all stays on the buyer account)

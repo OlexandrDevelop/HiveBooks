@@ -18,14 +18,14 @@ def _new_doc(doctype, values):
 
 
 @frappe.whitelist(methods=["POST"])
-def create_on_basis(basis_doctype, basis_name, direction=None):
-    """Draft ПН for a sale, a receipt or an advance payment. The direction follows the basis document."""
+def create_on_basis(basis_doctype, basis_name, direction=None, basis_part=None):
+    """Draft ПН for an event of an Invoice, a receipt or an advance payment. The direction follows the basis document."""
     if basis_doctype not in tax.BASIS_DIRECTION:
         frappe.throw(_("Для документа {0} податкова накладна не створюється").format(basis_doctype))
     frappe.has_permission(tax.PN, "create", throw=True)
     basis = frappe.get_doc(basis_doctype, basis_name)
     basis.check_permission("read")
-    return _new_doc(tax.PN, tax.invoice_from_basis(basis))
+    return _new_doc(tax.PN, tax.invoice_from_basis(basis, basis_part))
 
 
 @frappe.whitelist(methods=["POST"])
@@ -56,12 +56,12 @@ def export_xml(doctype, name):
     return tax_xml.export(doc)
 
 
-def _draft(basis_doctype, source_name):
+def _draft(basis_doctype, source_name, part=None):
     """Unsaved ПН for the button «Створити на підставі»."""
     frappe.has_permission(tax.PN, "create", throw=True)
     basis = frappe.get_doc(basis_doctype, source_name)
     basis.check_permission("read")
-    values = tax.invoice_from_basis(basis)
+    values = tax.invoice_from_basis(basis, part)
     doc = frappe.new_doc(tax.PN)
     lines = values.pop("lines")
     doc.update(values)
@@ -71,8 +71,9 @@ def _draft(basis_doctype, source_name):
 
 
 @frappe.whitelist()
-def make_from_sale(source_name):
-    return _draft(tax.SALE, source_name)
+def make_from_event(source_name, event):
+    """Draft ПН for one event (shipment, service provision) of an Invoice."""
+    return _draft(tax.INVOICE, source_name, event)
 
 
 @frappe.whitelist()
@@ -88,8 +89,3 @@ def make_from_cash_receipt(source_name):
 @frappe.whitelist()
 def make_from_cash_payment(source_name):
     return _draft(tax.CASH_OUT, source_name)
-
-
-@frappe.whitelist()
-def make_from_service_act(source_name):
-    return _draft(tax.SERVICE, source_name)

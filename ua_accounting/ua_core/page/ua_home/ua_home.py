@@ -10,7 +10,7 @@ from frappe.utils import add_months, cint, flt, get_first_day, getdate, nowdate
 from ua_accounting.reporting.titles import Titles
 
 DOCUMENTS = (
-    "UA Sales Invoice",
+    "UA Payment Invoice",
     "UA Purchase Receipt",
     "UA Customer Order",
     "UA Supplier Order",

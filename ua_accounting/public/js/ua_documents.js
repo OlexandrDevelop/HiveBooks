@@ -4,10 +4,9 @@ frappe.provide("ua_accounting.docs");
 
 ua_accounting.docs.VAT_NONE = "Без ПДВ";
 ua_accounting.docs.VAT_INCLUDED = "ПДВ у сумі";
-ua_accounting.docs.TRADE = ["UA Customer Order", "UA Sales Invoice", "UA Supplier Order", "UA Purchase Receipt"];
+ua_accounting.docs.TRADE = ["UA Customer Order", "UA Payment Invoice", "UA Supplier Order", "UA Purchase Receipt"];
 ua_accounting.docs.CASH = ["UA Cash Receipt", "UA Cash Payment"];
 ua_accounting.docs.POSTING = [
-	"UA Sales Invoice",
 	"UA Purchase Receipt",
 	"UA Cash Receipt",
 	"UA Cash Payment",
@@ -879,7 +878,8 @@ frappe.ui.form.on("UA Opening Balance Line", {
 	},
 });
 
-// ---------------------------------------------------------------- Invoice (T-533)
+// ---------------------------------------------------------------- Invoice (T-533, T-705)
+// There is no document of the sale: shipments, service provision and returns are events (rows) of the Invoice.
 
 frappe.ui.form.on("UA Payment Invoice", {
 	setup(frm) {
@@ -894,25 +894,58 @@ frappe.ui.form.on("UA Payment Invoice", {
 	refresh(frm) {
 		if (frm.doc.docstatus !== 1) return;
 		ua_accounting.invoice.render(frm);
-		const call = (method, args, done) =>
-			frappe.call({ method: `ua_accounting.api.invoice.${method}`, args, freeze: true }).then((r) => {
-				frappe.show_alert({ message: __("Готово: {0}", [r.message || ""]), indicator: "green" });
-				frm.reload_doc();
-				if (done) done(r.message);
-			});
-		const group = __("Дії");
-		frm.add_custom_button(__("Відвантажити"), () => ua_accounting.invoice.dialog(frm, "goods", __("Відвантаження товарів"), true,
-			(v, lines, key) => call("ship", { name: frm.doc.name, posting_date: v.posting_date, warehouse: v.warehouse, lines, event_key: key })), group);
-		frm.add_custom_button(__("Надати послуги"), () => ua_accounting.invoice.dialog(frm, "services", __("Надання послуг"), false,
-			(v, lines, key) => call("provide_services", { name: frm.doc.name, posting_date: v.posting_date, lines, event_key: key })), group);
-		frm.add_custom_button(__("Коригування"), () => ua_accounting.invoice.adjust_dialog(frm, call), group);
-		// the payment is made in the finance module: «Створити на підставі» → «Надходження коштів» (basis_map)
 	},
 });
+
+// the actions of the confirmed Invoice are buttons of the document toolbar (ua_form.js: EXTRA)
+(function () {
+	const I = () => ua_accounting.invoice;
+	const confirmed = (frm) => frm.doc.docstatus === 1;
+	const pay_entry = (frm) => beeone.basis.entries(frm).find((entry) => entry.target === "UA Cash Receipt");
+	const actions = [
+		[__("Відвантажити"), "arrow-up", (frm) => I().dialog(frm, "goods", __("Відвантаження товарів"), true,
+			(v, lines, key) => I().call(frm, "ship", { name: frm.doc.name, posting_date: v.posting_date, warehouse: v.warehouse, lines, event_key: key }))],
+		[__("Надати послуги"), "check-circle", (frm) => I().dialog(frm, "services", __("Надання послуг"), false,
+			(v, lines, key) => I().call(frm, "provide_services", { name: frm.doc.name, posting_date: v.posting_date, lines, event_key: key }))],
+		[__("Повернення"), "refresh", (frm) => I().return_dialog(frm)],
+		[__("Скасувати подію"), "trash", (frm) => I().cancel_dialog(frm)],
+		[__("Коригування"), "pencil", (frm) => I().adjust_dialog(frm)],
+		// the payment is a finance document: «Оплата» opens a Cash Receipt with the allocation (basis_map command)
+		[__("Оплата"), "branch", (frm) => beeone.basis.create(frm, pay_entry(frm)), (frm) => !!pay_entry(frm)],
+	];
+	// one toolbar button «Дії» with a menu: the toolbar stays on one row
+	ua_accounting.docs.EXTRA["UA Payment Invoice"] = [
+		["Дії", "more", (frm, el) => {
+			const list = actions.filter((a) => !a[3] || a[3](frm));
+			ua_accounting.ui.menu(
+				el,
+				list.map((a, i) => `<button class="bo-menu-item" data-i="${i}">${frappe.utils.escape_html(a[0])}</button>`).join(""),
+				(item) => {
+					const a = list[+item.getAttribute("data-i")];
+					if (a) a[2](frm);
+				}
+			);
+		}, confirmed, { icon_only: true, menu: true, tip: __("Дії інвойсу: відвантаження, послуги, повернення, скасування події, коригування, оплата") }],
+	];
+})();
 
 ua_accounting.invoice = {
 	e: (v) => frappe.utils.escape_html(v == null ? "" : String(v)),
 	money: (v, cur) => format_currency(v || 0, cur),
+	call(frm, method, args, done) {
+		return frappe.call({ method: `ua_accounting.api.invoice.${method}`, args, freeze: true }).then((r) => {
+			frappe.show_alert({ message: __("Готово: {0}", [r.message || ""]), indicator: "green" });
+			frm.reload_doc();
+			if (done) done(r.message);
+		});
+	},
+	print_url(p, name) {
+		const q = encodeURIComponent;
+		if (p.event) {
+			return `/api/method/ua_accounting.api.invoice.print_event?name=${q(name)}&event=${q(p.event)}&print_format=${q(p.format)}`;
+		}
+		return `/printview?doctype=${q(p.doctype)}&name=${q(p.name)}&format=${q(p.format)}&trigger_print=0`;
+	},
 	render(frm) {
 		frappe.call({ method: "ua_accounting.api.invoice.get_overview", args: { name: frm.doc.name } }).then((r) => {
 			const o = r.message, e = ua_accounting.invoice.e, cur = o.currency;
@@ -920,9 +953,9 @@ ua_accounting.invoice = {
 			const table = (head, rows) => rows.length
 				? `<table class="table table-bordered"><thead><tr>${head.map((h) => `<th>${e(h)}</th>`).join("")}</tr></thead><tbody>${rows.map((x) => `<tr>${x.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`
 				: `<p class="text-muted">${__("Немає")}</p>`;
-			const events = [];
-			Object.entries(o.events).forEach(([dt, list]) => list.forEach((x) => events.push(
-				[link(dt, x.name), e(__(dt)), e(x.posting_date), x.docstatus === 1 ? __("Проведено") : (x.docstatus === 2 ? __("Скасовано") : __("Чернетка")), ua_accounting.invoice.money(x.total_amount, cur)])));
+			const events = o.events.map((x) => [e(x.number), e(__(x.kind)), e(x.posting_date),
+				e(__(x.status)) + (x.cancel_reason ? ` <span class="text-muted">(${e(x.cancel_reason)})</span>` : ""),
+				ua_accounting.invoice.money(x.total_amount, cur)]);
 			const html = `
 			<div class="ua-invoice-card">
 			<p>${["commercial_status", "fulfilment_status", "payment_status"].map((k) => `<span class="indicator-pill blue" data-state="${k}">${e(o.states[k])}</span>`).join(" ")}</p>
@@ -931,24 +964,25 @@ ua_accounting.invoice = {
 			${table([__("Номенклатура"), __("Кількість"), __("Коригування"), __("Виконано"), __("Повернуто"), __("Залишок")],
 				o.lines.map((l) => [e(l.item_name || l.item), l.quantity, l.adjustment, l.shipped, l.returned, l.left]))}
 			<h6>${__("Відвантаження, послуги, повернення")}</h6>
-			${table([__("Документ"), __("Вид"), __("Дата"), __("Стан"), __("Сума")], events)}
+			${table([__("Номер"), __("Вид"), __("Дата"), __("Стан"), __("Сума")], events)}
 			<h6>${__("Податкові події")}</h6>
-			${table([__("Документ"), __("Подія"), __("Дата"), __("ПДВ"), __("Податкова накладна"), __("ЄРПН")],
-				o.tax_events.map((t) => [link(t.basis_doctype, t.basis), e(t.event), e(t.date), ua_accounting.invoice.money(t.vat_amount, cur),
-					t.tax_invoice ? `${link("UA Tax Invoice", t.tax_invoice)} (${e(t.formation)})` : `${e(t.formation)} <button class="btn btn-xs btn-default" data-pn="${e(t.basis_doctype)}|${e(t.basis)}">${__("Сформувати ПН")}</button>`,
+			${table([__("Подія"), __("Дата"), __("ПДВ"), __("Податкова накладна"), __("ЄРПН")],
+				o.tax_events.map((t) => [e(t.basis_part || t.basis), e(t.date), ua_accounting.invoice.money(t.vat_amount, cur),
+					t.tax_invoice ? `${link("UA Tax Invoice", t.tax_invoice)} (${e(t.formation)})` : `${e(t.formation)} <button class="btn btn-xs btn-default" data-pn="${e(t.basis_doctype)}|${e(t.basis)}|${e(t.basis_part || "")}">${__("Сформувати ПН")}</button>`,
 					e(t.erpn_status || "") + (t.erpn_reg_number ? ` ${e(t.erpn_reg_number)}` : "")]))}
 			<h6>${__("Оплати (ведуться у фінансових документах)")}</h6>
-			${table([__("Документ"), __("Дата"), __("Сума")], o.payments.map((p) => [link(p.registrar_type, p.registrar), e(p.date), ua_accounting.invoice.money(p.amount, cur)]))}
+			${table([__("Документ"), __("Дата"), __("Сума")], o.payments.map((p) => [p.registrar ? link(p.registrar_type, p.registrar) : e(__(p.label || "")), e(p.date), ua_accounting.invoice.money(p.amount, cur)]))}
 			<h6>${__("Друковані форми")}</h6>
-			<p>${o.prints.map((p) => `<a class="btn btn-xs btn-default" target="_blank" href="/printview?doctype=${encodeURIComponent(p.doctype)}&name=${encodeURIComponent(p.name)}&format=${encodeURIComponent(p.format)}&trigger_print=0">${e(p.label)} ${e(p.name)}</a>`).join(" ")}</p>
+			<p>${o.prints.map((p) => `<a class="btn btn-xs btn-default" target="_blank" data-print="${e(p.event || "")}" href="${ua_accounting.invoice.print_url(p, o.name)}">${e(p.label)} ${e(p.event || p.name)}</a>`).join(" ")}</p>
 			<h6>${__("Історія")}</h6>
-			${table([__("Документ"), __("Дія"), __("Користувач")], o.history.map((h) => [link(h.doctype, h.docname), e(h.action), e(h.user || h.owner || "")]))}
+			${table([__("Дія"), __("Користувач")], o.history.map((h) => [e(__(h.action)), e(h.user || h.owner || "")]))}
 			</div>`;
 			const $w = frm.fields_dict.overview.$wrapper;
 			$w.html(html);
 			$w.find("[data-pn]").on("click", function () {
-				const [dt, name] = $(this).data("pn").split("|");
-				frappe.call({ method: "ua_accounting.api.invoice.create_tax_invoice", args: { name: frm.doc.name, basis_doctype: dt, basis_name: name } })
+				const [dt, name, part] = $(this).data("pn").split("|");
+				const args = dt === "UA Payment Invoice" ? { name: frm.doc.name, event: part } : { name: frm.doc.name, payment: name };
+				frappe.call({ method: "ua_accounting.api.invoice.create_tax_invoice", args })
 					.then((res) => frappe.set_route("Form", "UA Tax Invoice", res.message));
 			});
 		});
@@ -957,7 +991,7 @@ ua_accounting.invoice = {
 		frappe.call({ method: "ua_accounting.api.invoice.get_overview", args: { name: frm.doc.name } }).then((r) => {
 			const rows = r.message.lines.filter((l) => l.table === table && l.left > 0);
 			if (!rows.length) return frappe.msgprint(__("Усе за інвойсом вже виконано"));
-			const key = frappe.utils.get_random(16); // one key per dialog: a repeated click makes no second document
+			const key = frappe.utils.get_random(16); // one key per dialog: a repeated click makes no second event
 			const fields = [{ fieldname: "posting_date", fieldtype: "Date", label: __("Дата"), default: frappe.datetime.get_today(), reqd: 1 }];
 			if (with_warehouse) fields.push({ fieldname: "warehouse", fieldtype: "Link", options: "UA Warehouse", label: __("Склад"), default: frm.doc.warehouse });
 			rows.forEach((l, i) => fields.push({ fieldname: `q${i}`, fieldtype: "Float", label: `${l.item_name || l.item} (${__("залишок")} ${l.left})`, default: l.left }));
@@ -972,7 +1006,60 @@ ua_accounting.invoice = {
 			d.show();
 		});
 	},
-	adjust_dialog(frm, call) {
+	return_dialog(frm) {
+		frappe.call({ method: "ua_accounting.api.invoice.get_overview", args: { name: frm.doc.name } }).then((r) => {
+			const shipments = r.message.events.filter((x) => x.kind === "Відвантаження" && x.status === "Проведено");
+			if (!shipments.length) return frappe.msgprint(__("Немає відвантажень, які можна повернути"));
+			const key = frappe.utils.get_random(16);
+			const d = new frappe.ui.Dialog({
+				title: __("Повернення товарів"),
+				fields: [
+					{ fieldname: "shipment", fieldtype: "Select", label: __("Відвантаження"), reqd: 1, options: shipments.map((x) => x.number) },
+					{ fieldname: "posting_date", fieldtype: "Date", label: __("Дата"), default: frappe.datetime.get_today(), reqd: 1 },
+					{ fieldname: "lines", fieldtype: "HTML" },
+				],
+				primary_action_label: __("Повернути"),
+				primary_action(v) {
+					const shipment = shipments.find((x) => x.number === v.shipment);
+					const lines = shipment.lines.map((l, i) => ({ row: l.row, quantity: flt(d.$wrapper.find(`[data-ret="${i}"]`).val()) }))
+						.filter((x) => x.quantity > 0);
+					if (!lines.length) return frappe.msgprint(__("Вкажіть, що повертається"));
+					d.hide();
+					ua_accounting.invoice.call(frm, "return_goods", { name: frm.doc.name, shipment: v.shipment, posting_date: v.posting_date, lines, event_key: key });
+				},
+			});
+			const draw = () => {
+				const shipment = shipments.find((x) => x.number === d.get_value("shipment")) || shipments[0];
+				d.fields_dict.lines.$wrapper.html(shipment.lines.map((l, i) =>
+					`<div class="form-group"><label>${frappe.utils.escape_html(l.item_name || l.item)} (${__("відвантажено")} ${l.quantity}, ${__("повернуто")} ${l.returned})</label>` +
+					`<input type="number" step="any" class="form-control" data-ret="${i}" value="0" min="0"></div>`).join(""));
+			};
+			d.show();
+			d.set_value("shipment", shipments[0].number);
+			d.fields_dict.shipment.$input.on("change", draw);
+			draw();
+		});
+	},
+	cancel_dialog(frm) {
+		frappe.call({ method: "ua_accounting.api.invoice.get_overview", args: { name: frm.doc.name } }).then((r) => {
+			const posted = r.message.events.filter((x) => x.status === "Проведено");
+			if (!posted.length) return frappe.msgprint(__("Немає проведених подій"));
+			const d = new frappe.ui.Dialog({
+				title: __("Скасування події"),
+				fields: [
+					{ fieldname: "event", fieldtype: "Select", label: __("Подія"), reqd: 1, options: posted.map((x) => x.number) },
+					{ fieldname: "reason", fieldtype: "Small Text", label: __("Причина"), reqd: 1 },
+				],
+				primary_action_label: __("Скасувати подію"),
+				primary_action(v) {
+					d.hide();
+					ua_accounting.invoice.call(frm, "cancel_event", { name: frm.doc.name, event: v.event, reason: v.reason });
+				},
+			});
+			d.show();
+		});
+	},
+	adjust_dialog(frm) {
 		const goods = (frm.doc.goods || []).concat(frm.doc.services || []);
 		const d = new frappe.ui.Dialog({
 			title: __("Коригування кількості"),
@@ -984,7 +1071,7 @@ ua_accounting.invoice = {
 			primary_action_label: __("Застосувати"),
 			primary_action(v) {
 				d.hide();
-				call("adjust", { name: frm.doc.name, rows: [{ row: v.row, quantity_delta: v.delta }], reason: v.reason });
+				ua_accounting.invoice.call(frm, "adjust", { name: frm.doc.name, rows: [{ row: v.row, quantity_delta: v.delta }], reason: v.reason });
 			},
 		});
 		d.show();

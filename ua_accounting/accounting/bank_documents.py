@@ -152,18 +152,11 @@ class UABankStatement(AccountingDocument):
         super().on_submit()
         self.update_orders("Сплачено")
         self.refresh_later()
-        self.refresh_invoices()
 
     def on_cancel(self):
         super().on_cancel()
         self.update_orders("Створено")
         self.refresh_later()
-        self.refresh_invoices()
-
-    def refresh_invoices(self):
-        from ua_accounting.accounting import invoice
-
-        invoice.refresh_many(row.get("invoice") for row in self.lines)
 
     def update_orders(self, status):
         for row in self.lines:

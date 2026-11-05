@@ -60,36 +60,6 @@ body.bo-shell .es-button:not([data-theme]) {
 /* ---------------------------------------------------------------- page head (all desk pages)
  * Frappe's title lives in the breadcrumbs (hidden: the top bar shows the path). Our pages put
  * their own title block (.ua-ph-block) into .page-title. The head is the mockup ".ph". */
-body.bo-shell .page-head {
-	position: sticky;
-	top: 0;
-	z-index: var(--bo-z-sticky);
-	background: var(--bo-bg);
-	border-bottom: 0;
-	box-shadow: none;
-}
-body.bo-shell .page-head .container,
-body.bo-shell .page-body.container,
-body.bo-shell .page-container > .container {
-	width: 100%;
-	max-width: none;
-	padding-left: var(--bo-s-8);
-	padding-right: var(--bo-s-8);
-}
-body.bo-shell .page-head .page-head-content {
-	height: auto;
-	min-height: 0;
-	padding: var(--bo-s-6) 0 var(--bo-s-3);
-	align-items: flex-start;
-}
-body.bo-shell .page-head .page-title {
-	flex: 1 1 0;
-	min-width: 0;
-}
-body.bo-shell .page-head .title-area {
-	gap: var(--bo-s-2);
-	align-items: center;
-}
 body.bo-shell .ua-ph-block {
 	min-width: 0;
 }
@@ -100,13 +70,6 @@ body.bo-shell .ua-ph-block .bo-ph-title {
 body.bo-shell .ua-ph-block .bo-tag {
 	font-size: var(--bo-fs-12);
 	font-weight: var(--bo-fw-medium);
-}
-body.bo-shell .page-head .page-actions {
-	gap: var(--bo-s-2);
-	align-items: center;
-}
-body.bo-shell .page-head .standard-actions {
-	gap: var(--bo-s-2);
 }
 
 /* ---------------------------------------------------------------- Frappe buttons -> .bo-btn */
@@ -458,34 +421,19 @@ body.bo-shell .ua-doc-list .layout-main-section {
 	box-shadow: none;
 }
 body.bo-shell .ua-doc-list .page-body {
-	padding-bottom: 0;
-}
-/* the card fills the window body (not the viewport): flex chain from the window down to the card */
-body.bo-shell .bo-win-body:has(> .ua-doc-list) {
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-}
-body.bo-shell .bo-win-body > .ua-doc-list {
-	flex: 1;
-	min-height: 0;
-	display: flex;
-	flex-direction: column;
-}
-body.bo-shell .ua-doc-list :is(.page-body, .page-body > .container, .page-wrapper, .page-content, .layout-main, .layout-main-section-wrapper, .layout-main-section):not(.ua-cat-grid) {
-	flex: 1;
-	min-height: 0;
-	display: flex;
-	flex-direction: column;
-}
-body.bo-shell .ua-doc-list .page-body > .container {
 	padding-bottom: var(--bo-s-4);
 }
-.ua-list-top .ua-views-row {
-	margin-bottom: 14px;
+.ua-ph-block .ua-views-row {
+	margin-bottom: 0;
+}
+.ua-ph-block .ua-views-row .bo-tabs {
+	border-bottom: 0;
 }
 .ua-list-top .ua-filters {
-	margin-bottom: 12px;
+	margin-bottom: var(--bo-s-2);
+}
+.ua-ph-block .ua-views-row .bo-tab {
+	height: 34px;
 }
 .ua-list-top .ua-filters .ua-search {
 	flex: 0 1 300px;
@@ -505,8 +453,9 @@ body.bo-shell .ua-list-card.frappe-list {
 	margin: 0;
 	display: flex;
 	flex-direction: column;
-	flex: 1;
-	min-height: 0;
+	/* the window decides the height (--bo-body-h, set by the shell), not the viewport; chrome = page head + filters + paddings */
+	height: calc(var(--bo-body-h, 100vh) - var(--bo-list-chrome, 136px));
+	min-height: 320px;
 	padding: 0;
 	border: 1px solid var(--bo-border);
 	border-radius: var(--bo-r-lg);
@@ -791,11 +740,15 @@ body.bo-shell .ua-bulk [hidden] {
 .ua-doc-title-row {
 	display: flex;
 	align-items: center;
-	gap: 12px;
-	margin-bottom: 12px;
+	gap: 8px;
+	flex: 0 1 auto;
+	min-width: 0;
+	margin: 0;
 }
 .ua-doc-title {
-	font-size: var(--bo-fs-20);
+	font-size: var(--bo-fs-16);
+	margin: 0;
+	line-height: 24px;
 	font-weight: var(--bo-fw-semibold);
 	letter-spacing: -0.015em;
 	white-space: nowrap;
@@ -831,16 +784,13 @@ body.bo-shell .ua-bulk [hidden] {
 		transform: translateX(-4px);
 	}
 }
-.ua-doc-title-row .bo-right {
-	margin-left: auto;
-	display: flex;
-	align-items: center;
-	gap: 4px;
-}
 .ua-doc-toolbar {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	flex-wrap: wrap;
+	flex: 1 1 auto;
+	min-width: 0;
+	gap: 6px 8px;
 }
 .ua-doc-toolbar .bo-right {
 	margin-left: auto;
@@ -857,7 +807,8 @@ body.bo-shell .ua-bulk [hidden] {
 .ua-doc-grid {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) 320px;
-	gap: 16px;
+	grid-template-rows: minmax(160px, auto);
+	gap: var(--bo-page-gap);
 	align-items: stretch;
 }
 .ua-fields {
@@ -982,9 +933,10 @@ tr.row-out td {
 .ua-doc-foot {
 	flex: none;
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	gap: 24px;
-	padding: 10px 32px;
+	padding: 8px var(--bo-page-pad-x);
 	background: var(--bo-surface);
 	border-top: 1px solid var(--bo-border);
 	box-shadow: 0 -6px 12px -10px rgb(16 24 40 / 0.25);
@@ -1145,14 +1097,17 @@ body.bo-shell .ua-form .page-head .standard-items-section {
 body.bo-shell .ua-form .page-head {
 	border-bottom: 1px solid var(--bo-border);
 }
-body.bo-shell .ua-form .page-head .page-head-content {
-	padding: 16px 0 12px;
-}
 body.bo-shell .ua-form .page-head .page-title {
 	display: block;
 	width: 100%;
 }
+/* one row: number + status, then the commands; the toolbar wraps below when the window is narrow */
 body.bo-shell .ua-doc-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: flex-start;
+	gap: 6px 12px;
 	padding: 0;
 	border: 0;
 	background: transparent;
@@ -1161,17 +1116,17 @@ body.bo-shell .ua-doc-title {
 	min-width: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-size: var(--bo-fs-20);
+	font-size: var(--bo-fs-16);
 	color: var(--bo-text);
 }
 body.bo-shell .ua-doc-title-row [hidden],
 body.bo-shell .ua-doc-head .bo-badge[hidden] {
 	display: none;
 }
-body.bo-shell .ua-doc-title-row .ua-fav.is-on {
+body.bo-shell .ua-doc-head .ua-fav.is-on {
 	color: var(--bo-violet);
 }
-body.bo-shell .ua-doc-title-row .ua-fav.is-on .bo-i {
+body.bo-shell .ua-doc-head .ua-fav.is-on .bo-i {
 	fill: currentColor;
 }
 body.bo-shell .ua-doc-toolbar .bo-toolbar-sep {
@@ -1188,16 +1143,20 @@ body.bo-shell .ua-form .layout-main-section {
 	box-shadow: none;
 }
 body.bo-shell .ua-form .page-body {
-	padding-top: 20px;
+	padding-top: var(--bo-page-gap);
 }
 body.bo-shell .ua-form .form-page {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: var(--bo-page-gap);
 	padding: 0;
 	border: 0;
 	background: transparent;
 	box-shadow: none;
+}
+/* the platform subordination block repeats the side card "Пов'язані документи" */
+body.bo-shell .ua-form--document .bo-subordination {
+	display: none;
 }
 body.bo-shell .ua-form .form-message,
 body.bo-shell .ua-form .form-dashboard,
@@ -1222,10 +1181,10 @@ body.bo-shell .ua-aside {
 	min-width: 0;
 }
 body.bo-shell .ua-main-body {
-	padding: 16px;
+	padding: 12px;
 	display: flex;
 	flex-direction: column;
-	gap: 14px;
+	gap: 8px;
 }
 body.bo-shell .ua-main-card .form-section,
 body.bo-shell .ua-tp .form-section {
@@ -1269,7 +1228,7 @@ body.bo-shell .ua-form .ua-main-card .section-body,
 body.bo-shell .ua-form .ua-sec-card .section-body {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 14px 16px;
+	gap: 8px 14px;
 	margin: 0;
 	max-width: none;
 }
@@ -1298,53 +1257,64 @@ body.bo-shell .ua-form .frappe-control .form-group {
 	margin: 0;
 }
 
-/* Dense desktop forms: three balanced columns keep the important header data visible
- * without wasting the wide BeeOne workspace. Long text keeps the complete row. */
-@media (min-width: 1440px) {
-	body.bo-shell .ua-form .ua-main-card .section-body,
-	body.bo-shell .ua-form .ua-sec-card .section-body {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 10px 14px;
-	}
-	body.bo-shell .ua-form .ua-main-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]),
-	body.bo-shell .ua-form .ua-sec-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]) {
-		grid-column: span 3;
-	}
-	body.bo-shell .ua-form .ua-main-body {
-		padding: 14px;
-		gap: 10px;
-	}
-	body.bo-shell .ua-form .ua-sec-card .section-body {
-		padding: 14px;
-	}
-	body.bo-shell .ua-form .frappe-control .control-label {
-		margin-bottom: 4px;
-		font-size: var(--bo-fs-11);
-	}
-	body.bo-shell .ua-form .frappe-control .form-control,
-	body.bo-shell .ua-form .frappe-control .input-with-feedback,
-	body.bo-shell .ua-form .frappe-control .like-disabled-input {
-		height: 30px;
-		padding-left: 8px;
-		padding-right: 8px;
-	}
-	body.bo-shell .ua-form .frappe-control textarea.form-control {
-		height: auto;
-		min-height: 52px;
-		padding: 6px 8px;
-	}
-	body.bo-shell .ua-tp .grid-heading-row .grid-row,
-	body.bo-shell .ua-tp .grid-heading-row .data-row {
-		height: 32px;
-		min-height: 32px;
-	}
-	body.bo-shell .ua-tp .grid-body .data-row {
-		min-height: 36px;
-	}
-	body.bo-shell .ua-tp .data-row > .grid-static-col[data-fieldtype] {
-		padding-left: 6px !important;
-		padding-right: 6px !important;
-	}
+/* Dense forms: the number of columns follows the WINDOW width (data-bw on .bo-win, set by the shell from the window body width), not the viewport.
+ * 1 column below 560 px, 2 up to 1023 px, 3 up to 1439 px, 4 from 1440 px. Long text keeps the complete row. */
+body.bo-shell .bo-win[data-bw~="lt560"] .ua-form .ua-main-card .section-body,
+body.bo-shell .bo-win[data-bw~="lt560"] .ua-form .ua-sec-card .section-body {
+	grid-template-columns: minmax(0, 1fr);
+}
+body.bo-shell .bo-win[data-bw~="lt560"] .ua-form .ua-main-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]),
+body.bo-shell .bo-win[data-bw~="lt560"] .ua-form .ua-sec-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]) {
+	grid-column: span 1;
+}
+body.bo-shell .bo-win:not([data-bw~="lt1024"]) .ua-form .ua-main-card .section-body,
+body.bo-shell .bo-win:not([data-bw~="lt1024"]) .ua-form .ua-sec-card .section-body {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px 14px;
+}
+body.bo-shell .bo-win:not([data-bw~="lt1024"]) .ua-form .ua-main-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]),
+body.bo-shell .bo-win:not([data-bw~="lt1024"]) .ua-form .ua-sec-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]) {
+	grid-column: span 3;
+}
+body.bo-shell .bo-win:not([data-bw~="lt1440"]) .ua-form .ua-main-card .section-body,
+body.bo-shell .bo-win:not([data-bw~="lt1440"]) .ua-form .ua-sec-card .section-body {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+body.bo-shell .bo-win:not([data-bw~="lt1440"]) .ua-form .ua-main-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]),
+body.bo-shell .bo-win:not([data-bw~="lt1440"]) .ua-form .ua-sec-card .frappe-control:is([data-fieldtype="Small Text"], [data-fieldtype="Text"], [data-fieldtype="Text Editor"]) {
+	grid-column: span 4;
+}
+/* dense controls at every size */
+body.bo-shell .ua-form .ua-sec-card .section-body {
+	padding: 12px;
+}
+body.bo-shell .ua-form .frappe-control .control-label {
+	margin-bottom: 4px;
+	font-size: var(--bo-fs-11);
+}
+body.bo-shell .ua-form .frappe-control .form-control,
+body.bo-shell .ua-form .frappe-control .input-with-feedback,
+body.bo-shell .ua-form .frappe-control .like-disabled-input {
+	height: 30px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+body.bo-shell .ua-form .frappe-control textarea.form-control {
+	height: auto;
+	min-height: 52px;
+	padding: 6px 8px;
+}
+body.bo-shell .ua-tp .grid-heading-row .grid-row,
+body.bo-shell .ua-tp .grid-heading-row .data-row {
+	height: 32px;
+	min-height: 32px;
+}
+body.bo-shell .ua-tp .grid-body .data-row {
+	min-height: 36px;
+}
+body.bo-shell .ua-tp .data-row > .grid-static-col[data-fieldtype] {
+	padding-left: 6px !important;
+	padding-right: 6px !important;
 }
 /* Frappe limits number and date inputs (.input-max-width); the grid cell sets the width here */
 body.bo-shell .ua-form .ua-main-card .frappe-control,
@@ -1496,18 +1466,52 @@ body.bo-shell a.ua-rel:hover {
 body.bo-shell .ua-rel .bo-grow {
 	min-width: 0;
 }
-@media (max-width: 1279px) {
-	body.bo-shell .ua-doc-grid {
-		grid-template-columns: minmax(0, 1fr);
-	}
+/* the side card never sets the height of the fields row: it scrolls inside it */
+body.bo-shell .ua-doc-grid:not(.ua-doc-grid--single) > .ua-aside {
+	contain: size;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+}
+/* a window narrower than 1024 px: the side card goes after the table part */
+body.bo-shell .bo-win[data-bw~="lt1024"] .ua-doc-grid {
+	display: contents;
+}
+body.bo-shell .bo-win[data-bw~="lt1024"] .ua-doc-grid:not(.ua-doc-grid--single) > .ua-aside {
+	order: 1;
+	contain: none;
+	overflow: visible;
 }
 
 /* table part card: tabs + toolbar + Frappe grid restyled as the mockup table */
 body.bo-shell .ua-tp {
 	overflow: hidden;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	grid-template-areas: "tabs tools" "body body";
+	align-items: center;
 }
 body.bo-shell .ua-tp-tabs {
+	grid-area: tabs;
 	padding: 0 12px;
+	min-width: 0;
+}
+body.bo-shell .ua-tp .ua-tp-toolbar {
+	grid-area: tools;
+	border-bottom: 0;
+	padding: 4px 12px;
+}
+body.bo-shell .ua-tp .ua-tp-body {
+	grid-area: body;
+	min-width: 0;
+	border-top: 1px solid var(--bo-border);
+}
+body.bo-shell .bo-win[data-bw~="lt720"] .ua-tp {
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas: "tabs" "tools" "body";
+}
+body.bo-shell .bo-win[data-bw~="lt720"] .ua-tp .ua-tp-toolbar {
+	flex-wrap: wrap;
+	border-top: 1px solid var(--bo-border);
 }
 body.bo-shell .ua-tp-section.ua-tp-off {
 	display: none !important;
@@ -1670,14 +1674,14 @@ body.bo-shell .ua-tp-empty .bo-empty {
 body.bo-shell .ua-form--document .layout-main-section-wrapper {
 	display: flex;
 	flex-direction: column;
-	min-height: calc(100vh - var(--bo-h-topbar) - 125px);
+	min-height: calc(var(--bo-body-h, 100vh) - 80px);
 }
 body.bo-shell .ua-doc-foot {
 	margin-top: auto !important;
 	position: sticky;
 	bottom: 0;
 	z-index: var(--bo-z-sticky);
-	margin: 16px calc(-1 * var(--bo-s-8)) 0;
+	margin: var(--bo-page-gap) calc(-1 * var(--bo-page-pad-x)) 0;
 }
 body.bo-shell .ua-doc-foot .ua-comment input[readonly] {
 	color: var(--bo-text-2);
@@ -1981,7 +1985,8 @@ body.bo-shell .ua-doc-list:not(.ua-cat-tree) .ua-cat-grid {
 }
 body.bo-shell .ua-cat-grid > .ua-tree-card,
 body.bo-shell .ua-cat-grid > .ua-list-card.frappe-list {
-	min-height: 0;
+	height: calc(100vh - var(--bo-h-topbar) - 190px);
+	min-height: 320px;
 }
 body.bo-shell .ua-list-top--catalog .ua-filters {
 	margin-bottom: var(--bo-s-4);
@@ -2081,3 +2086,29 @@ body.bo-shell .ua-home-task small { display: block; color: var(--bo-text-3); }
 body.bo-shell .ua-home-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bo-accent); }
 body.bo-shell .ua-home-dot--danger { background: var(--bo-danger); }
 body.bo-shell .ua-home-dot--warning { background: var(--bo-warning); }
+
+/* narrow window: the labels of secondary head buttons are hidden (aria-label and the tooltip keep the name) */
+body.bo-shell .bo-win[data-bw~="lt560"] .ua-doc-toolbar .bo-btn:not(.bo-btn--primary):not(.bo-btn--icon):not([data-ua-cmd="close_list"]) .ua-btn-l {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+}
+
+/* medium window: the secondary commands keep only their icon; the name stays in aria-label and the tooltip */
+body.bo-shell .bo-win[data-bw~="lt1600"] .ua-doc-toolbar :is([data-ua-cmd="dtkt"], [data-ua-cmd="movements"], [data-ua-cmd="print"], [data-ua-cmd="basis"]) .ua-btn-l {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+}
+body.bo-shell .bo-win[data-bw~="lt720"] .ua-doc-foot .ua-totals {
+	flex-wrap: wrap;
+	gap: 4px 16px;
+}
+/* a narrow window: the three-row head scrolls away instead of covering the table */
+body.bo-shell .bo-win[data-bw~="lt900"] .ua-form .page-head {
+	position: static;
+}

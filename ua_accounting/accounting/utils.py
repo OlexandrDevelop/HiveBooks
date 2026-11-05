@@ -49,20 +49,25 @@ def next_names(doctype, count):
         _synced.add(doctype)
     return [frappe.db.get_next_sequence_val(doctype) for _i in range(count)]
 
+def part_of(doc):
+    """The part of the registrar that `doc` posts: an event of an Invoice has one, a document has none."""
+    return doc.get("part") or None
+
+
 def register_append(register, doc, rows):
     """Append rows of a registrar to a register through the core RecordSet; blank strings stay as they are."""
     from frappe.beeone.registers import record_set
 
     # moves the name sequence over rows made with AUTO_INCREMENT, once per process
     next_names(register, 0)
-    return record_set(register, doc.doctype, doc.name, keep_blank=True).append(rows)
+    return record_set(register, doc.doctype, doc.name, keep_blank=True, part=part_of(doc)).append(rows)
 
 
 def register_delete(register, doc):
     """Delete the rows of a registrar from a register through the core RecordSet."""
     from frappe.beeone.registers import record_set
 
-    return record_set(register, doc.doctype, doc.name).delete()
+    return record_set(register, doc.doctype, doc.name, part=part_of(doc)).delete()
 
 
 # ---------------------------------------------------------------- print forms (Jinja methods)

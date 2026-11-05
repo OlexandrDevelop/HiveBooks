@@ -13161,6 +13161,12 @@ msgstr "Рядок інвентаризації"
 msgid "UA Invoice Adjustment"
 msgstr "Коригування інвойсу"
 
+msgid "UA Invoice Event"
+msgstr "Подія інвойсу"
+
+msgid "UA Invoice Event Line"
+msgstr "Рядок події інвойсу"
+
 msgid "UA Item"
 msgstr "Номенклатура"
 
@@ -13261,7 +13267,7 @@ msgid "UA Payment Allocation"
 msgstr "Розподіл оплати за інвойсом"
 
 msgid "UA Payment Invoice"
-msgstr "Інвойс (рахунок на оплату)"
+msgstr "Інвойс"
 
 msgid "UA Payment Order"
 msgstr "Платіжне доручення"
@@ -13394,15 +13400,6 @@ msgstr "Виплата зарплати"
 
 msgid "UA Salary Payment Line"
 msgstr "Рядок виплати зарплати"
-
-msgid "UA Sales Invoice"
-msgstr "Реалізація товарів та послуг"
-
-msgid "UA Sales Return"
-msgstr "Повернення товарів від покупця"
-
-msgid "UA Service Act"
-msgstr "Акт виконаних робіт (надання послуг)"
 
 msgid "UA Service Line"
 msgstr "Послуги"

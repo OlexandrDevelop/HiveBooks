@@ -1,0 +1,177 @@
+{
+ "actions": [],
+ "creation": "2026-11-04 12:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "kind",
+  "number",
+  "posting_date",
+  "warehouse",
+  "return_of",
+  "offset_advance",
+  "vehicle_no",
+  "driver_name",
+  "status",
+  "total_net",
+  "vat_total",
+  "total_amount",
+  "base_total",
+  "cost_amount",
+  "event_key",
+  "moment",
+  "cancelled_on",
+  "cancelled_by",
+  "cancel_reason",
+  "comment"
+ ],
+ "fields": [
+  {
+   "fieldname": "kind",
+   "fieldtype": "Select",
+   "label": "Вид",
+   "read_only": 1,
+   "options": "Відвантаження\nНадання послуг\nПовернення",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "number",
+   "fieldtype": "Data",
+   "label": "Номер",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Дата",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Склад",
+   "read_only": 1,
+   "options": "UA Warehouse"
+  },
+  {
+   "fieldname": "return_of",
+   "fieldtype": "Data",
+   "label": "Повернення події",
+   "read_only": 1
+  },
+  {
+   "fieldname": "offset_advance",
+   "fieldtype": "Check",
+   "label": "Зарахувати аванс",
+   "read_only": 1
+  },
+  {
+   "fieldname": "vehicle_no",
+   "fieldtype": "Data",
+   "label": "Автомобіль",
+   "read_only": 1
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Водій",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Стан",
+   "read_only": 1,
+   "options": "Проведено\nСкасовано",
+   "in_list_view": 1,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "total_net",
+   "fieldtype": "Currency",
+   "label": "Сума без ПДВ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "vat_total",
+   "fieldtype": "Currency",
+   "label": "ПДВ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Разом",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "base_total",
+   "fieldtype": "Currency",
+   "label": "Разом, UAH",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cost_amount",
+   "fieldtype": "Currency",
+   "label": "Собівартість",
+   "read_only": 1
+  },
+  {
+   "fieldname": "event_key",
+   "fieldtype": "Data",
+   "label": "Ключ події",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "moment",
+   "fieldtype": "Datetime",
+   "label": "Момент проведення",
+   "read_only": 1,
+   "hidden": 1,
+   "precision": "6"
+  },
+  {
+   "fieldname": "cancelled_on",
+   "fieldtype": "Datetime",
+   "label": "Скасовано",
+   "read_only": 1,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "cancelled_by",
+   "fieldtype": "Link",
+   "label": "Скасував",
+   "read_only": 1,
+   "options": "User",
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "cancel_reason",
+   "fieldtype": "Small Text",
+   "label": "Причина скасування",
+   "read_only": 1,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Коментар",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-11-04 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "UA Documents",
+ "name": "UA Invoice Event",
+ "owner": "Administrator",
+ "states": [],
+ "permissions": []
+}

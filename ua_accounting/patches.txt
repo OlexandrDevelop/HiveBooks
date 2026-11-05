@@ -11,4 +11,5 @@ ua_accounting.patches.off_balance_quantity
 ua_accounting.patches.seed_regulated_report_forms
 ua_accounting.patches.register_currency_rates
 ua_accounting.patches.describe_subconto_types_as_characteristics
+ua_accounting.patches.t705_drop_sale_documents
 ua_accounting.patches.rebuild_stock_cost_sequence

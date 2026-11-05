@@ -125,11 +125,12 @@
   }
  ],
  "line_no_field": "line_no",
- "modified": "2026-11-01 00:00:00.000000",
+ "modified": "2026-11-04 18:00:00.000000",
  "modified_by": "Administrator",
  "module": "UA Core",
  "name": "UA Accounting Entry",
  "owner": "Administrator",
+ "part_field": "registrar_part",
  "register_doctype": "UA Accounting Entry",
  "register_kind": "Accounting",
  "registrar_field": "registrar",

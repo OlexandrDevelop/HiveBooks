@@ -25,7 +25,7 @@ FIFO = "ФІФО"
 KIND_ASSEMBLY = "Комплектація"
 KIND_DISASSEMBLY = "Розкомплектація"
 COST_DOCTYPES = (
-    "UA Sales Invoice",
+    "UA Payment Invoice",
     "UA Stock Transfer",
     "UA Stock Writeoff",
     "UA Stock Assembly",
@@ -49,7 +49,7 @@ def fifo_cost(doc, account, item, warehouse, quantity, already_taken):
         sum(quantity_dr) as qty, sum(amount) as amount
         from `tabUA Accounting Entry` where organization = %s and account_dr = %s
         and subconto_dr{item_slot} = %s and subconto_dr{warehouse_slot} = %s and posting_date <= %s
-        group by registrar_type, registrar, case when registrar_type = 'UA Stock Assembly' then 0 else line_no end
+        group by registrar_type, registrar, registrar_part, case when registrar_type = 'UA Stock Assembly' then 0 else line_no end
         having sum(quantity_dr) > 0 order by min(posting_date), min(creation), min(line_no)""",
         (doc.organization, account, item, warehouse, doc.posting_date),
         as_dict=True,
@@ -481,8 +481,18 @@ def restore_sequence_stock_cost(sequence_name, key, after, until, trigger):
     """
     organization = key[0]
     if trigger is not None:
-        items = entry_items(trigger.doctype, trigger.name)
-        if trigger.docstatus == 2:
+        trigger_part = trigger.get("part") or ""
+        items = entry_items(trigger.doctype, trigger.name, trigger_part)
+        if trigger.docstatus == 2 and trigger_part:
+            # a cancelled part of an Invoice: its entries are gone, the rows of the event stay
+            items.update(
+                frappe.get_all(
+                    "UA Invoice Event Line",
+                    filters={"parent": trigger.name, "parenttype": trigger.doctype, "event": trigger_part},
+                    pluck="item",
+                )
+            )
+        elif trigger.docstatus == 2:
             # entries are gone already: take the items from the document rows
             for table in trigger.meta.get_table_fields():
                 for row in trigger.get(table.fieldname) or []:
@@ -493,7 +503,7 @@ def restore_sequence_stock_cost(sequence_name, key, after, until, trigger):
         if not items:
             return
         start = (getdate(trigger.posting_date), get_datetime(trigger.creation))
-        done = {(trigger.doctype, trigger.name)}
+        done = {(trigger.doctype, trigger.name, trigger_part)}
     else:
         items = None
         start = (after.date, after.creation) if after else (getdate("1900-01-01"), get_datetime("1900-01-01"))
@@ -504,7 +514,8 @@ def restore_sequence_stock_cost(sequence_name, key, after, until, trigger):
         if items is not None:
             values.append(tuple(items))
         rows = frappe.db.sql(
-            f"""select distinct registrar_type, registrar from `tabUA Accounting Entry`
+            f"""select distinct registrar_type, registrar, coalesce(registrar_part, '') as registrar_part
+            from `tabUA Accounting Entry`
             where organization = %s and posting_date >= %s and registrar_type in %s
             and account_cr in %s {item_filter}""",
             values,
@@ -512,29 +523,48 @@ def restore_sequence_stock_cost(sequence_name, key, after, until, trigger):
         )
         later = []
         for r in rows:
-            if (r.registrar_type, r.registrar) in done:
+            if (r.registrar_type, r.registrar, r.registrar_part) in done:
                 continue
-            info = frappe.db.get_value(r.registrar_type, r.registrar, ["posting_date", "creation"], as_dict=True)
+            info = moment_of(r.registrar_type, r.registrar, r.registrar_part)
             if not info or (getdate(info.posting_date), get_datetime(info.creation)) <= start:
                 continue
-            later.append((getdate(info.posting_date), get_datetime(info.creation), r.registrar_type, r.registrar))
+            later.append(
+                (getdate(info.posting_date), get_datetime(info.creation), r.registrar_type, r.registrar, r.registrar_part)
+            )
         if not later:
             return
-        _date, _created, doctype, name = min(later)
-        done.add((doctype, name))
-        frappe.get_doc(doctype, name).repost_in_sequence(sequence_name)
+        _date, _created, doctype, name, part = min(later)
+        done.add((doctype, name, part))
+        doc = frappe.get_doc(doctype, name)
+        if part:
+            doc.repost_part_in_sequence(part, sequence_name)
+        else:
+            doc.repost_in_sequence(sequence_name)
         if items is not None:
             # what the re-posted document produced (assembly output, transfer target) changes later withdrawals too
-            items |= entry_items(doctype, name)
+            items |= entry_items(doctype, name, part)
 
 
-def _vat_links(doctype, name):
-    """{(register, line_no): (tax_invoice_type, tax_invoice)} of the VAT register rows of a document."""
+def moment_of(doctype, name, part=""):
+    """posting_date and creation that order a document, or one part (event) of an Invoice, in the sequence."""
+    if part:
+        row = frappe.db.get_value(
+            "UA Invoice Event", {"parent": name, "parenttype": doctype, "number": part}, ["posting_date", "moment"], as_dict=True
+        )
+        return frappe._dict(posting_date=row.posting_date, creation=row.moment) if row else None
+    return frappe.db.get_value(doctype, name, ["posting_date", "creation"], as_dict=True)
+
+
+def _vat_links(doctype, name, part=""):
+    """{(register, line_no): (tax_invoice_type, tax_invoice)} of the VAT register rows of a document (or one part)."""
     links = {}
     for table in (vat.LIABILITY, vat.CREDIT):
+        filters = {"registrar_type": doctype, "registrar": name, "tax_invoice": ("is", "set")}
+        if part:
+            filters["registrar_part"] = part
         for r in frappe.get_all(
             table,
-            filters={"registrar_type": doctype, "registrar": name, "tax_invoice": ("is", "set")},
+            filters=filters,
             fields=["line_no", "tax_invoice_type", "tax_invoice"],
             limit_page_length=0,
         ):
@@ -542,26 +572,30 @@ def _vat_links(doctype, name):
     return links
 
 
-def _restore_vat_links(doctype, name, links):
+def _restore_vat_links(doctype, name, links, part=""):
     """Put the tax invoice links back on the rewritten VAT register rows (amounts stay as posted)."""
     for (table, line_no), (link_type, link) in links.items():
+        filters = {"registrar_type": doctype, "registrar": name, "line_no": line_no, "tax_invoice": ("is", "not set")}
+        if part:
+            filters["registrar_part"] = part
         frappe.db.set_value(
             table,
-            {"registrar_type": doctype, "registrar": name, "line_no": line_no, "tax_invoice": ("is", "not set")},
+            filters,
             {"tax_invoice_type": link_type, "tax_invoice": link},
             update_modified=False,
         )
 
 
-def entry_items(doctype, name):
-    """Items on stock accounts in the entries of a document."""
+def entry_items(doctype, name, part=""):
+    """Items on stock accounts in the entries of a document (or of one part of it)."""
     items = set()
     for side in ("dr", "cr"):
         items.update(
             frappe.db.sql_list(
                 f"""select distinct subconto_{side}1 from `tabUA Accounting Entry`
-                where registrar_type = %s and registrar = %s and account_{side} in %s and subconto_{side}1 != ''""",
-                (doctype, name, STOCK_ACCOUNTS),
+                where registrar_type = %s and registrar = %s and coalesce(registrar_part, '') = %s
+                and account_{side} in %s and subconto_{side}1 != ''""",
+                (doctype, name, part or "", STOCK_ACCOUNTS),
             )
         )
     return items

@@ -50,7 +50,7 @@ Each sync adds one snapshot commit. No force push is needed.
 | Document | DocType | Entries |
 |---|---|---|
 | Замовлення покупця / постачальнику | `UA Customer Order`, `UA Supplier Order` | none, only status |
-| Реалізація товарів та послуг | `UA Sales Invoice` | Dt 361 Ct 70x, Dt 704 Ct 641, Dt 90x Ct 281/26 (average cost), Dt 681 Ct 361, Dt 641 Ct 643 |
+| Інвойс (продаж): відвантаження, надання послуг і повернення — події-рядки інвойсу, не документи | `UA Payment Invoice` | per event: Dt 361 Ct 70x, Dt 704 Ct 641, Dt 90x Ct 281/26 (average cost), Dt 681 Ct 361, Dt 704 Ct 643; return is the reverse |
 | Надходження товарів та послуг | `UA Purchase Receipt` | Dt 281/201/26/92 Ct 631, Dt 644 Ct 631, Dt 641 Ct 644, Dt 631 Ct 371 |
 | Надходження коштів | `UA Cash Receipt` | Dt 311/301 Ct 361 or 681, Dt 643 Ct 641 on an advance |
 | Витрата коштів | `UA Cash Payment` | Dt 631 or 371 Ct 311/301, Dt 641 Ct 644 on an advance |

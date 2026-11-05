@@ -152,6 +152,10 @@
   },
   {
    "doctype": "Sequence Document",
+   "document_type": "UA Payment Invoice"
+  },
+  {
+   "doctype": "Sequence Document",
    "document_type": "UA Payroll"
   },
   {
@@ -201,18 +205,6 @@
   {
    "doctype": "Sequence Document",
    "document_type": "UA Salary Payment"
-  },
-  {
-   "doctype": "Sequence Document",
-   "document_type": "UA Sales Invoice"
-  },
-  {
-   "doctype": "Sequence Document",
-   "document_type": "UA Sales Return"
-  },
-  {
-   "doctype": "Sequence Document",
-   "document_type": "UA Service Act"
   },
   {
    "doctype": "Sequence Document",
@@ -283,5 +275,6 @@
    "document_type": "UA VAT Allocation"
   }
  ],
- "registers": []
+ "registers": [],
+ "modified": "2026-11-04 18:00:00.000000"
 }

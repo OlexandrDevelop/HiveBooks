@@ -22,6 +22,10 @@ import frappe
 from frappe.beeone.demo import run_demo, tag_records, tagged
 from frappe.utils import add_months, flt, get_first_day, getdate, today
 
+from ua_accounting.accounting import invoice as invoice_logic
+from ua_accounting.api import invoice as invoice_api
+from ua_accounting.api import tax_invoice as tax_api
+
 TAG = "ua-demo"
 ORG_NAME = "ТОВ «Демо Трейд»"
 
@@ -45,11 +49,13 @@ SCALES = {
     },
 }
 
-# documents are cancelled in this order (links go from the last to the first)
+# documents are cancelled in this order (links go from the last to the first): a tax invoice before its basis,
+# the payments before the Invoice; cancelling an Invoice cancels its events (shipments, acts, returns) itself
 DOC_ORDER = [
+    "UA Tax Invoice",
     "UA Cash Payment",
     "UA Cash Receipt",
-    "UA Sales Invoice",
+    "UA Payment Invoice",
     "UA Customer Order",
     "UA Purchase Receipt",
     "UA Supplier Order",
@@ -257,8 +263,50 @@ def clear_main_contracts():
 
 
 def self_check(result):
-    """The OSV of the demo period must balance (turnover and closing, Dt = Kt)."""
-    return {"ok": result["osv"]["balanced"], "osv": result["osv"]}
+    """The OSV of the demo period must balance (turnover and closing, Dt = Kt), the stored states of every Invoice
+    must equal their recomputation from its events and the ledger, and every posted event must have its movements
+    while a cancelled one has none (T-705)."""
+    invoices = result["invoices"]
+    return {"ok": result["osv"]["balanced"] and not invoices["mismatch"], "osv": result["osv"], "invoices": invoices}
+
+
+STATE_FIELDS = ("commercial_status", "fulfilment_status", "payment_status")
+AMOUNT_FIELDS = ("effective_total", "fulfilled_amount", "paid_amount", "debt_amount")
+
+
+def check_invoices(org):
+    """Counts of the Invoices by fulfilment and payment state, and the Invoices whose stored states differ
+    from the recomputed ones (`mismatch`)."""
+    fulfilment, payment, mismatch = {}, {}, []
+    events, multi = {}, 0
+    for name in frappe.get_all("UA Payment Invoice", filters={"organization": org, "docstatus": 1}, pluck="name"):
+        inv = frappe.get_doc("UA Payment Invoice", name)
+        want = invoice_logic.states(inv)
+        shipments = 0
+        for event in inv.events:
+            rows = frappe.db.count(
+                "UA Accounting Entry", {"registrar_type": "UA Payment Invoice", "registrar": name, "registrar_part": event.number}
+            )
+            if event.status == invoice_logic.POSTED:
+                events[event.kind] = events.get(event.kind, 0) + 1
+                shipments += event.kind == invoice_logic.KIND_SHIPMENT
+                if not rows:
+                    mismatch.append(f"{name}: the posted event {event.number} has no movements")
+            elif rows:
+                mismatch.append(f"{name}: the cancelled event {event.number} has movements")
+        multi += shipments >= 2
+        for field in STATE_FIELDS:
+            if (inv.get(field) or "") != want[field]:
+                mismatch.append(f"{name}: {field} {inv.get(field)!r} != {want[field]!r}")
+        for field in AMOUNT_FIELDS:
+            if abs(flt(inv.get(field)) - flt(want[field])) > 0.01:
+                mismatch.append(f"{name}: {field} {inv.get(field)} != {want[field]}")
+        fulfilment[want["fulfilment_status"]] = fulfilment.get(want["fulfilment_status"], 0) + 1
+        payment[want["payment_status"]] = payment.get(want["payment_status"], 0) + 1
+    return {
+        "count": sum(fulfilment.values()), "fulfilment": fulfilment, "payment": payment, "events": events,
+        "partial_shipments": multi, "mismatch": mismatch,
+    }
 
 
 def check_osv():
@@ -306,6 +354,10 @@ def print_summary(result):
           f"closing Dt {osv['close_dr']} Kt {osv['close_cr']}, balanced: {osv['balanced']}")
     for code, v in osv["accounts"].items():
         print(f"  {code}: Dt {v['turn_dr']} Kt {v['turn_cr']}")
+    inv = result["invoices"]
+    print(f"Invoices: {inv['count']}; fulfilment {inv['fulfilment']}; payment {inv['payment']}; "
+          f"events {inv['events']}; Invoices with several shipments: {inv['partial_shipments']}; "
+          f"states differ from the recomputation: {len(inv['mismatch'])}")
 
 
 # ------------------------------------------------------------------ generator
@@ -353,6 +405,9 @@ class Generator:
         self.others = []
         self.rates = {}  # currency -> {date: rate}
         self.stock = {}  # (item name, warehouse) -> quantity
+        self.open_invoices = {}  # customer name -> Invoices that may still have a debt
+        self.shipments = 0  # shipments made: the returns and the adjustment are placed by this count
+        self.adjusted = False
         self.account_types = {}
 
     # ---------------------------------------------------------------- helpers
@@ -377,13 +432,22 @@ class Generator:
         doc = self.add(doctype, **values)
         if submit:
             doc.submit()
+        self.counted(doctype, submit)
+        return doc
+
+    def counted(self, doctype, submit=True):
         self.counts.setdefault(doctype, [0, 0])[0 if submit else 1] += 1
         self.since_commit += 1
         if self.since_commit >= 40:
             self.flush_tags()
             frappe.db.commit()
             self.since_commit = 0
-        return doc
+
+    def made(self, doctype, name):
+        """A submitted document that an api function made: it gets the tag and is counted like the others."""
+        self.created.setdefault(doctype, []).append(name)
+        self.counted(doctype)
+        return frappe.get_doc(doctype, name)
 
     def flush_tags(self):
         for doctype, names in self.created.items():
@@ -791,7 +855,7 @@ class Generator:
     def simulate(self):
         cfg = self.cfg
         per_day = cfg["docs_per_day"]
-        sales_rate = per_day * 0.6 / 3.2
+        sales_rate = per_day * 0.6 / 3.6  # documents of one sale: order, Invoice, payments, tax invoices (events are rows of the Invoice)
         purchase_rate = per_day * 0.27 / 3.0
         self.schedule_monthly()
         d = self.start + datetime.timedelta(days=1)
@@ -817,8 +881,11 @@ class Generator:
                 return key
         return None
 
-    def money_in(self, date, cp, amount, currency, doc_link=None, advance=False, vat=None):
-        """Cash receipt from a buyer. Cash desk for small UAH amounts, otherwise bank."""
+    def money_in(self, date, cp, amount, currency, allocations=None, advance=False, vat=None):
+        """Cash receipt from a buyer. Cash desk for small UAH amounts, otherwise bank.
+
+        `allocations` = [(Invoice, amount)]: the payment is allocated to Invoices (with `advance` it is an
+        allocated prepayment). Without them the payment is unlinked: the Invoices count it by FIFO."""
         amount = flt(amount, 2)
         if amount <= 0:
             return None
@@ -833,10 +900,10 @@ class Generator:
             "cash_flow_item": self.cash_flow["Оплата від покупців"],
             "settlement_type": "Передоплата (аванс)" if advance else "Оплата за реалізацію",
         }
-        if advance:
-            values["vat_rate"] = vat or "20"
-        if doc_link:
-            values["sales_invoice"] = doc_link
+        if (advance or allocations) and currency == "UAH":
+            values["vat_rate"] = vat or "20"  # the part above the debt is an advance: its VAT is the first event
+        if allocations:
+            values["allocations"] = [{"invoice": name, "amount": flt(part, 2)} for name, part in allocations]
         if currency == "UAH" and amount <= 20000 and self.chance(0.2):
             values.update(cash_type="Каса", cash_desk=self.cash_desk)
             self.cash_balance += amount
@@ -844,7 +911,10 @@ class Generator:
             key = {"UAH": self.rng.choice(["uah1", "uah1", "uah2"]), "USD": "usd", "EUR": "eur"}[currency]
             values.update(cash_type="Банк", bank_account=self.bank_accounts[key])
             self.bank_balance[key] += amount
-        return self.post("UA Cash Receipt", **values)
+        doc = self.post("UA Cash Receipt", **values)
+        if advance and currency == "UAH":
+            self.tax_invoice("UA Cash Receipt", doc.name)  # the first VAT event of an advance is the payment
+        return doc
 
     def money_out(self, date, cp, amount, currency, doc_link=None, advance=False, vat=None, retry=3):
         """Cash payment to a supplier. Postponed when there is not enough money."""
@@ -969,7 +1039,10 @@ class Generator:
     # ------------------------------------------------ sales
 
     def sales_chain(self, d):
+        """Order -> Invoice -> shipments / act -> payments (T-705): every sale goes through the Invoice."""
         rng = self.rng
+        if self.items["sold_services"] and self.chance(0.05):
+            return self.service_invoice(d)
         export = [c for c in self.customers if c["extra"].startswith("export:")]
         domestic = [c for c in self.customers if not c["extra"].startswith("export:")]
         cust = rng.choice(export) if export and self.chance(0.07) else rng.choice(domestic)
@@ -1000,7 +1073,8 @@ class Generator:
         header = {"organization": self.org, "counterparty": cust["name"], "contract": cust["contract"],
                   "warehouse": wh, "currency": currency, "vat_mode": "ПДВ зверху"}
         order = self.post("UA Customer Order", posting_date=d, goods=lines, **header)
-        if currency == "UAH" and self.chance(0.12):
+        if currency == "UAH" and self.chance(0.04):
+            # a prepayment that no Invoice owns: the shipment takes it (offset_advance)
             est = sum(l["quantity"] * l["price"] * (1 + float(l["vat_rate"]) / 100) for l in lines)
             self.money_in(d, cust, est * rng.uniform(0.3, 0.7), "UAH", advance=True)
         if self.chance(0.1):
@@ -1009,42 +1083,175 @@ class Generator:
         if invoice_day > self.end:
             return
         if invoice_day == d:
-            self.sales_invoice(d, cust, header, lines, order.name)
+            self.invoice_chain(d, cust, header, lines, order.name)
         else:
-            self.later(invoice_day, lambda: self.sales_invoice(invoice_day, cust, header, lines, order.name))
+            self.later(invoice_day, lambda: self.invoice_chain(invoice_day, cust, header, lines, order.name))
 
-    def sales_invoice(self, d, cust, header, lines, order_name):
+    def service_rows(self, currency, d):
+        svc = self.rng.choice(self.items["sold_services"])
+        price = round(svc["price"] * self.rng.uniform(0.9, 1.1), 2)
+        return [{"item": svc["name"], "quantity": 1,
+                 "price": round(price / self.rate_on(currency, d), 2) if currency != "UAH" else price,
+                 "vat_rate": "0" if currency != "UAH" else "20"}]
+
+    def service_invoice(self, d):
+        """An Invoice of services only: no order, no shipment, one act."""
+        cust = self.rng.choice([c for c in self.customers if c["currency"] == "UAH"])
+        header = {"organization": self.org, "counterparty": cust["name"], "contract": cust["contract"],
+                  "warehouse": self.warehouses[0]["name"], "currency": "UAH", "vat_mode": "ПДВ зверху"}
+        inv = self.post("UA Payment Invoice", posting_date=d, services=self.service_rows("UAH", d), **header)
+        self.open_invoices.setdefault(cust["name"], []).append(inv.name)
+        self.provide_services(inv.name, d)
+        self.schedule_payment(d, cust, inv.name)
+
+    def invoice_chain(self, d, cust, header, lines, order_name):
         rng = self.rng
         currency = cust["currency"]
         rows = []
         for l in lines:
-            key = (l["item"], l["warehouse"])
-            qty = min(l["quantity"], self.stock.get(key, 0.0))
+            qty = min(l["quantity"], self.stock.get((l["item"], l["warehouse"]), 0.0))
             if qty > 0:
                 rows.append({**l, "quantity": qty})
         if not rows:
             return  # no stock left: the order stays open
-        services = []
-        if self.items["sold_services"] and self.chance(0.25):
-            svc = rng.choice(self.items["sold_services"])
-            price = round(svc["price"] * rng.uniform(0.9, 1.1), 2)
-            services.append({"item": svc["name"], "quantity": 1,
-                             "price": round(price / self.rate_on(currency, d), 2) if currency != "UAH" else price,
-                             "vat_rate": "0" if currency != "UAH" else "20"})
-        doc = self.post("UA Sales Invoice", posting_date=d, goods=rows, services=services,
-                        customer_order=order_name, offset_advance=1, **header)
-        for r in rows:
-            key = (r["item"], r["warehouse"])
-            self.stock[key] = self.stock[key] - r["quantity"]
-        applied = self.applied_advance(doc, "681", "361") if currency == "UAH" else 0
-        due = flt(doc.total_amount - applied, 2)
-        if due <= 0 or self.chance(0.1):
+        services = self.service_rows(currency, d) if self.items["sold_services"] and self.chance(0.25) else []
+        inv = self.post("UA Payment Invoice", posting_date=d, goods=rows, services=services,
+                        customer_order=order_name, **header)
+        self.open_invoices.setdefault(cust["name"], []).append(inv.name)
+        if currency == "UAH" and self.chance(0.08):
+            # a prepayment allocated to this Invoice, before the shipment
+            est = flt(inv.total_amount * rng.uniform(0.3, 0.7), 2)
+            self.money_in(d, cust, est, "UAH", allocations=[(inv.name, est)], advance=True,
+                          vat=(inv.goods or inv.services)[0].vat_rate)
+        partial = self.chance(0.2) and any(r["quantity"] >= 2 for r in rows)
+        shipped = self.ship_goods(inv.name, d, half=partial)
+        if services:
+            self.provide_services(inv.name, d)
+        if shipped and partial:
+            self.partial_invoice(inv.name, d)
+        elif shipped:
+            self.maybe_return(inv.name, shipped, d)
+        self.schedule_payment(d, cust, inv.name)
+
+    def partial_invoice(self, invoice, d):
+        """After a partial shipment: one Invoice is reduced by the agreement with the buyer, the rest ships later."""
+        if not self.adjusted:
+            inv = frappe.get_doc("UA Payment Invoice", invoice)
+            line = next((l for l in invoice_logic.effective_lines(inv) if l.table == "goods" and l.left >= 2), None)
+            if line:
+                invoice_api.adjust(invoice, [{"row": line.row, "quantity_delta": -1}],
+                                   "Зменшення кількості за погодженням з покупцем")
+                self.adjusted = True
+        day = self.cur_day_after(d, self.rng.randint(2, 7))
+        self.later(day, lambda: self.ship_goods(invoice, day))
+
+    def ship_goods(self, invoice, d, half=False):
+        """Shipment of what is left of the goods of an Invoice and is in stock (half of the rows when `half`)."""
+        inv = frappe.get_doc("UA Payment Invoice", invoice)
+        lines = []
+        for line in invoice_logic.effective_lines(inv):
+            if line.table != "goods" or line.left <= 0:
+                continue
+            warehouse = line.source.warehouse or inv.warehouse
+            qty = min(line.left, self.stock.get((line.item, warehouse), 0.0))
+            if half and line.left >= 2:
+                qty = min(qty, float(int(line.left // 2)))
+            if qty > 0:
+                lines.append({"row": line.row, "quantity": qty})
+        if not lines:
+            return None
+        number = invoice_api.ship(invoice, posting_date=d, lines=lines)
+        self.event_made()
+        for row in self.event_goods(invoice, number):
+            key = (row.item, row.warehouse or inv.warehouse)
+            self.stock[key] = self.stock.get(key, 0.0) - row.quantity
+        self.shipments += 1
+        self.tax_invoice("UA Payment Invoice", invoice, number)
+        return number
+
+    def event_made(self):
+        """An event of an Invoice was made by an api function: it is a row of the Invoice, not a document."""
+        self.since_commit += 1
+        if self.since_commit >= 40:
+            self.flush_tags()
+            frappe.db.commit()
+            self.since_commit = 0
+
+    @staticmethod
+    def event_goods(invoice, number):
+        return frappe.get_all(
+            "UA Invoice Event Line",
+            filters={"parent": invoice, "parenttype": "UA Payment Invoice", "event": number, "line_type": "goods"},
+            fields=["item", "quantity", "warehouse", "invoice_row"], order_by="idx",
+        )
+
+    def provide_services(self, invoice, d):
+        number = invoice_api.provide_services(invoice, posting_date=d)
+        self.event_made()
+        self.tax_invoice("UA Payment Invoice", invoice, number)
+        return number
+
+    def maybe_return(self, invoice, shipment, d):
+        """Three returns in the demo period (by the number of the shipment): one unit comes back, the Invoice is reduced."""
+        if self.shipments not in (6, 21, 40):
             return
-        if self.chance(0.1):
-            due = flt(due * rng.uniform(0.4, 0.8), 2)
-        pay_day = self.cur_day_after(d, rng.randint(2, 25))
+        day = self.cur_day_after(d, self.rng.randint(3, 10))
+        self.later(day, lambda: self.return_unit(invoice, shipment, day))
+
+    def return_unit(self, invoice, shipment, d):
+        row = next((r for r in self.event_goods(invoice, shipment) if r.quantity >= 1), None)
+        if not row:
+            return
+        invoice_api.return_goods(invoice, shipment, posting_date=d,
+                                 lines=[{"row": row.invoice_row, "quantity": 1}], reduce_invoice=1)
+        self.event_made()
+        warehouse = row.warehouse or frappe.db.get_value("UA Payment Invoice", invoice, "warehouse")
+        key = (row.item, warehouse)
+        self.stock[key] = self.stock.get(key, 0.0) + 1
+
+    def tax_invoice(self, doctype, name, part=None):
+        """A tax invoice of an event (or of an advance payment): for 60 % of the UAH ones that have a VAT liability."""
+        if not self.chance(0.6):
+            return
+        if frappe.db.get_value(doctype, name, "currency") != "UAH":
+            return
+        frappe.db.savepoint("demo_tax_invoice")
+        try:
+            pn = frappe.get_doc("UA Tax Invoice", tax_api.create_on_basis(doctype, name, basis_part=part))
+            pn.submit()
+        except frappe.ValidationError:
+            frappe.db.rollback(save_point="demo_tax_invoice")  # no VAT liability: the advance covered it
+            return
+        self.created.setdefault("UA Tax Invoice", []).append(pn.name)
+        self.counted("UA Tax Invoice")
+
+    def schedule_payment(self, d, cust, invoice):
+        pay_day = self.cur_day_after(d, self.rng.randint(2, 25))
         if pay_day <= self.end:
-            self.later(pay_day, lambda: self.money_in(pay_day, cust, due, currency, doc_link=doc.name))
+            kind = self.rng.random()
+            self.later(pay_day, lambda: self.pay_invoice(pay_day, cust, invoice, kind))
+
+    def pay_invoice(self, d, cust, invoice, kind):
+        """Payments of an Invoice: allocated (full, partial), one receipt for two Invoices, unlinked (FIFO), none."""
+        currency = cust["currency"]
+        debt = lambda name: flt(frappe.db.get_value("UA Payment Invoice", name, "debt_amount"), 2)
+        due = debt(invoice)
+        if due <= 0 or kind >= 0.88 or (kind >= 0.80 and currency != "UAH"):
+            return  # paid by the advances, or left unpaid
+        vat = frappe.db.get_value("UA Goods Line", {"parent": invoice, "parenttype": "UA Payment Invoice"}, "vat_rate")
+        vat = vat or frappe.db.get_value("UA Service Line", {"parent": invoice, "parenttype": "UA Payment Invoice"}, "vat_rate")
+        if kind < 0.65:
+            self.money_in(d, cust, due, currency, allocations=[(invoice, due)], vat=vat)
+        elif kind < 0.75:
+            part = flt(due * self.rng.uniform(0.4, 0.8), 2)
+            self.money_in(d, cust, part, currency, allocations=[(invoice, part)], vat=vat)
+        elif kind < 0.80:
+            other = next((n for n in reversed(self.open_invoices.get(cust["name"], []))
+                          if n != invoice and debt(n) > 0), None)
+            rows = [(invoice, due)] + ([(other, debt(other))] if other else [])
+            self.money_in(d, cust, sum(a for _n, a in rows), currency, allocations=rows, vat=vat)
+        else:
+            self.money_in(d, cust, due, currency)  # unlinked: «Оплата за реалізацію», counted by FIFO
 
     # ------------------------------------------------ monthly documents
 
@@ -1118,6 +1325,7 @@ class Generator:
             header = {"organization": self.org, "counterparty": cust["name"], "contract": cust["contract"],
                       "warehouse": wh, "currency": "UAH", "vat_mode": "ПДВ зверху"}
             self.post("UA Customer Order", submit=False, posting_date=d, goods=lines, **header)
+            self.post("UA Payment Invoice", submit=False, posting_date=d, goods=lines, **header)
         sup = next((s for s in self.suppliers if s["extra"] == "goods"), None)
         if sup:
             info = self.items["goods"][0]
@@ -1145,4 +1353,5 @@ class Generator:
             "documents": documents,
             "documents_total": total,
             "osv": check_osv(),
+            "invoices": check_invoices(self.org),
         }

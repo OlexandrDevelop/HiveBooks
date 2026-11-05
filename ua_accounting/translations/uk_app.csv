@@ -40,7 +40,6 @@ UA Numbering Setting,Налаштування нумерації
 UA Change Log,Журнал реєстрації змін
 UA Change Log Row,Зміна поля
 UA Customer Order,Замовлення покупця
-UA Sales Invoice,Реалізація товарів та послуг
 UA Supplier Order,Замовлення постачальнику
 UA Purchase Receipt,Надходження товарів та послуг
 UA Cash Receipt,Надходження коштів
@@ -316,13 +315,13 @@ Roles,Ролі
 User,Користувач
 Users,Користувачі
 "Get PDF","Отримати PDF"
-UA Payment Invoice,Інвойс (рахунок на оплату)
+UA Payment Invoice,Інвойс
 UA Invoice Adjustment,Коригування інвойсу
+UA Invoice Event,Подія інвойсу
+UA Invoice Event Line,Рядок події інвойсу
 UA Payment Allocation,Розподіл оплати за інвойсом
 UA Supplier Invoice,Рахунок постачальника
-UA Sales Return,Повернення товарів від покупця
 UA Purchase Return,Повернення товарів постачальнику
-UA Service Act,Акт виконаних робіт (надання послуг)
 UA Service Receipt,Отримання послуг сторонніх організацій
 UA Debt Adjustment,Коригування боргу
 UA Reconciliation Act,Акт звірки взаєморозрахунків

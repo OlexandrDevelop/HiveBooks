@@ -10,6 +10,7 @@
   "organization",
   "registrar_type",
   "registrar",
+  "registrar_part",
   "line_no",
   "account_dr",
   "account_cr",
@@ -52,6 +53,12 @@
    "label": "Документ",
    "options": "registrar_type",
    "in_list_view": 1
+  },
+  {
+   "fieldname": "registrar_part",
+   "fieldtype": "Data",
+   "label": "Частина реєстратора",
+   "read_only": 1
   },
   {
    "fieldname": "line_no",
@@ -98,7 +105,7 @@
  ],
  "index_web_pages_for_search": 0,
  "links": [],
- "modified": "2026-10-22 15:00:00.000000",
+ "modified": "2026-11-04 18:00:00.000000",
  "modified_by": "Administrator",
  "module": "UA Core",
  "name": "UA Tax Ledger Entry",

@@ -21,7 +21,6 @@
   "contract",
   "settlement_type",
   "cb_settle",
-  "sales_invoice",
   "vat_rate",
   "vat_amount",
   "sb_alloc",
@@ -160,14 +159,6 @@
    "fieldname": "cb_settle",
    "fieldtype": "Column Break",
    "label": ""
-  },
-  {
-   "depends_on": "eval:doc.operation_type==='Оплата від покупця'",
-   "fieldname": "sales_invoice",
-   "fieldtype": "Link",
-   "label": "Реалізація",
-   "no_copy": 1,
-   "options": "UA Sales Invoice"
   },
   {
    "depends_on": "eval:doc.operation_type==='Оплата від покупця'",
